@@ -258,6 +258,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 @media (pointer:coarse){
   .tool .hk,.thumb .hk{display:none}
+  #langFlag{display:none}
+  #langCode{margin-left:0!important}
 }
 @media (max-width:520px){
   #langFlag{display:none}
@@ -426,6 +428,13 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .tool span{font-size:9px}
   .zoomer{bottom:6px;right:6px}
   .zoomer button{width:34px;height:30px}
+  .overlay.sheetwrap{padding:6px}
+  .sheet{height:96vh;max-height:96vh;padding:10px 12px;border-radius:12px}
+  .sheet-head{margin-bottom:6px}
+  #pickSearch{padding:8px 10px}
+  .sevrow{margin:8px 0 6px}
+  .tabs{margin-bottom:6px}
+  .eladd{margin:2px 0 6px}
 }
 
 /* element add row in picker */
@@ -451,6 +460,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   pointer-events:auto;
 }
 .langmenu.hidden{display:none}
+#fmtMenu{min-width:96px}
+#fmtMenu button{justify-content:center}
+#fmtMenu .lname{flex:0 0 auto}
 .langmenu button{
   display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--r-sm);
   font-size:13px;text-align:left;width:100%;
@@ -3642,7 +3654,7 @@ function addPhotoFile(file,cb){
   im.onload=()=>{
     const rid=pid++;
     let fn=(file.name||'').replace(/\.[^.]+$/,'').slice(0,60);
-    if(!fn||/^\d+$/.test(fn)) fn='photo-'+rid;
+    if(!fn) fn='photo-'+rid;
     const rec={ id:rid, blob:file, img:im, iw:im.naturalWidth, ih:im.naturalHeight,
       baseW:Math.max(2,Math.round(Math.max(im.naturalWidth,im.naturalHeight)/450)),
       fileName:fn,
@@ -3866,7 +3878,7 @@ function renderSev(){
 }
 function sevLabel(s){ const w=trSev(s.word); return s.code? (s.code+' '+w) : w; }
 function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
-function tnLabel(fn){ const s=String(fn||''); return '{'+(s.length>6?('...'+s.slice(-6)):s)+'}'; }
+function tnLabel(fn){ const s=String(fn||''); if(/^photo-\d+$/.test(s)) return s; return s.length>6?('...'+s.slice(-6)):s; }
 function row(term,cat){ const fav=S.favs.includes(term); const disp=(pickTab==='elements')?esc(term):esc(trTerm(term));
   return '<div class="prow" data-term="'+esc(term)+'"><button class="star'+(fav?' on':'')+'" data-star="'+esc(term)+'">'+(fav?'★':'☆')+'</button><span class="pterm">'+disp+'</span>'+(cat?'<span class="pcat">'+esc(trCat(cat))+'</span>':'')+'</div>'; }
 function renderPicker(){
