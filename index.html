@@ -260,6 +260,11 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .tool .hk,.thumb .hk{display:none}
 }
 @media (max-width:520px){
+  #langFlag{display:none}
+  #langCode{margin-left:0!important}
+  .props{gap:8px}
+  .grp{gap:5px}
+  .props .swatch{width:24px;height:24px}
   .brand h1{font-size:16px;letter-spacing:.16em}
   .btn span.hide-sm{display:none}
   .btn{padding:0 8px;gap:5px}
@@ -437,6 +442,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* ── Language switcher ────────────────────────────────── */
 .langwrap{position:relative}
+.fmtwrap{position:relative}
 .langmenu{
   position:fixed;z-index:70;min-width:180px;
   max-height:calc(100vh - 90px);overflow-y:auto;-webkit-overflow-scrolling:touch;
@@ -482,9 +488,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h1"/></svg>
       </button>
       <div class="divider"></div>
-      <div class="seg" title="Export format">
-        <button id="fmt-jpg" class="on">JPG</button>
-        <button id="fmt-png">PNG</button>
+      <div class="fmtwrap">
+        <button class="btn" id="fmtBtn" title="Export format" aria-label="Export format" data-i18n-title="export_format"><span id="fmtCur">JPG</span> <span aria-hidden="true">▾</span></button>
       </div>
       <button class="btn primary" id="export" disabled>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
@@ -834,7 +839,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     <button class="gclose" id="aboutClose" aria-label="Close">&times;</button>
     <h3 data-i18n="about_title">About &amp; support</h3>
     <div class="gbody">
-      <p><b style="color:var(--text)">Mark<span style="color:var(--accent)">up</span></b> — bridge-inspection photo annotation. Works locally on your device, nothing is uploaded.</p>
+      <p data-i18n-html="about_intro"><b style="color:var(--text)">Mark<span style="color:var(--accent)">up</span></b> — bridge-inspection photo annotation. Works locally on your device, nothing is uploaded.</p>
 
       <h4 data-i18n="about_author_h">Author</h4>
       <div class="links">
@@ -849,16 +854,16 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       </div>
 
       <h4 data-i18n="about_licence_h">Licence</h4>
-      <p>Released under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. Free to use, share, and adapt, as long as credit is given to the author.</p>
+      <p data-i18n-html="about_licence">Released under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. Free to use, share, and adapt, as long as credit is given to the author.</p>
 
       <h4 data-i18n="about_report_h">Report a bug</h4>
       <p><a href="https://github.com/volkov596/markup/issues" target="_blank" rel="noopener">github.com/volkov596/markup/issues</a></p>
 
       <h4 data-i18n="about_support_h">Support this tool</h4>
-      <p>The tool is free. If it saves you time, a contribution keeps it maintained.</p>
+      <p data-i18n-html="about_support">The tool is free. If it saves you time, a contribution keeps it maintained.</p>
       <div class="give">
         <a href="https://ko-fi.com/yegorv" target="_blank" rel="noopener">Ko-fi</a>
-        <a href="https://buy.stripe.com/fZu00iemkeuX4wo2GUb7y00" target="_blank" rel="noopener">Card / invoice</a>
+        <a href="https://buy.stripe.com/fZu00iemkeuX4wo2GUb7y00" target="_blank" rel="noopener">Card / Stripe</a>
       </div>
     </div>
   </div>
@@ -912,6 +917,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </div>
 
 <div class="langmenu hidden" id="langMenu"></div>
+<div class="langmenu hidden" id="fmtMenu"></div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -986,6 +992,13 @@ const I18N={
     "from_list":"From list…",
     "cancel":"Cancel",
     "add":"Add",
+    "export_format":"Export format",
+    "personal_group":"Personal",
+    "add_own_placeholder":"e.g. Hairline crack, Custom note…",
+    "about_report_h":"Report a bug",
+    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — bridge-inspection photo annotation. Works locally on your device, nothing is uploaded.",
+    "about_licence":"Released under <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a>. Free to use, share, and adapt, as long as credit is given to the author.",
+    "about_support":"The tool is free. If it saves you time, a contribution keeps it maintained.",
     "save":"Save",
     "defect_tags_title":"Defect & tags",
     "search_placeholder":"Search terms…",
@@ -1219,6 +1232,17 @@ const I18N={
     "from_list":"从列表选择…",
     "cancel":"取消",
     "add":"添加",
+    "export_format":"导出格式",
+    "personal_group":"自定义",
+    "add_own_placeholder":"例如：细微裂缝、自定义备注…",
+    "about_title":"关于与支持",
+    "about_author_h":"作者",
+    "about_licence_h":"许可",
+    "about_report_h":"报告问题",
+    "about_support_h":"支持本工具",
+    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — 桥梁检测照片标注。完全在您的设备上本地运行，不会上传任何内容。",
+    "about_licence":"依据 <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a> 发布。可自由使用、分享和修改，只需注明作者。",
+    "about_support":"本工具免费。如果它为您节省了时间，您的捐助将帮助其持续维护。",
     "save":"保存",
     "defect_tags_title":"缺陷与标签",
     "search_placeholder":"搜索术语…",
@@ -1452,6 +1476,17 @@ const I18N={
     "from_list":"Desde la lista…",
     "cancel":"Cancelar",
     "add":"Añadir",
+    "export_format":"Formato de exportación",
+    "personal_group":"Personales",
+    "add_own_placeholder":"p. ej. Fisura capilar, Nota personalizada…",
+    "about_title":"Acerca de y apoyo",
+    "about_author_h":"Autor",
+    "about_licence_h":"Licencia",
+    "about_report_h":"Informar de un error",
+    "about_support_h":"Apoya esta herramienta",
+    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — anotación de fotos de inspección de puentes. Funciona localmente en tu dispositivo; no se sube nada.",
+    "about_licence":"Publicado bajo <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a>. Libre de usar, compartir y adaptar, siempre que se cite al autor.",
+    "about_support":"La herramienta es gratuita. Si te ahorra tiempo, una contribución ayuda a mantenerla.",
     "save":"Guardar",
     "defect_tags_title":"Defectos y etiquetas",
     "search_placeholder":"Buscar términos…",
@@ -1685,6 +1720,17 @@ const I18N={
     "from_list":"सूची से…",
     "cancel":"रद्द करें",
     "add":"जोड़ें",
+    "export_format":"निर्यात प्रारूप",
+    "personal_group":"व्यक्तिगत",
+    "add_own_placeholder":"उदा. महीन दरार, कस्टम नोट…",
+    "about_title":"परिचय और सहयोग",
+    "about_author_h":"लेखक",
+    "about_licence_h":"लाइसेंस",
+    "about_report_h":"बग की रिपोर्ट करें",
+    "about_support_h":"इस टूल का समर्थन करें",
+    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — पुल-निरीक्षण फ़ोटो एनोटेशन। आपके डिवाइस पर स्थानीय रूप से काम करता है, कुछ भी अपलोड नहीं होता।",
+    "about_licence":"<a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a> के अंतर्गत जारी। लेखक को श्रेय देने की शर्त पर उपयोग, साझा और अनुकूलन के लिए स्वतंत्र।",
+    "about_support":"यह टूल निःशुल्क है। यदि यह आपका समय बचाता है, तो आपका योगदान इसे बनाए रखने में मदद करता है।",
     "save":"सेव करें",
     "defect_tags_title":"दोष और टैग",
     "search_placeholder":"शब्द खोजें…",
@@ -1918,6 +1964,17 @@ const I18N={
     "from_list":"من القائمة…",
     "cancel":"إلغاء",
     "add":"إضافة",
+    "export_format":"صيغة التصدير",
+    "personal_group":"مخصص",
+    "add_own_placeholder":"مثل: شرخ شعري، ملاحظة مخصصة…",
+    "about_title":"حول والدعم",
+    "about_author_h":"المؤلف",
+    "about_licence_h":"الترخيص",
+    "about_report_h":"الإبلاغ عن خطأ",
+    "about_support_h":"ادعم هذه الأداة",
+    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — التعليق على صور فحص الجسور. يعمل محليًا على جهازك، ولا يتم رفع أي شيء.",
+    "about_licence":"منشور بموجب <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a>. حرّ في الاستخدام والمشاركة والتعديل، شريطة نسب العمل إلى المؤلف.",
+    "about_support":"الأداة مجانية. إذا وفّرت وقتك، فإن مساهمتك تساعد على استمرار صيانتها.",
     "save":"حفظ",
     "defect_tags_title":"العيوب والوسوم",
     "search_placeholder":"ابحث عن مصطلح…",
@@ -2151,6 +2208,17 @@ const I18N={
     "from_list":"Из списка…",
     "cancel":"Отмена",
     "add":"Добавить",
+    "export_format":"Формат экспорта",
+    "personal_group":"Свои",
+    "add_own_placeholder":"напр. Волосяная трещина, своя пометка…",
+    "about_title":"О программе и поддержка",
+    "about_author_h":"Автор",
+    "about_licence_h":"Лицензия",
+    "about_report_h":"Сообщить об ошибке",
+    "about_support_h":"Поддержать инструмент",
+    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — разметка фотографий для обследования мостов. Работает локально на вашем устройстве, ничего не загружается.",
+    "about_licence":"Распространяется по лицензии <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a>. Свободно использовать, делиться и адаптировать при условии указания автора.",
+    "about_support":"Инструмент бесплатный. Если он экономит ваше время, поддержка помогает его развивать.",
     "save":"Сохранить",
     "defect_tags_title":"Дефекты и метки",
     "search_placeholder":"Поиск терминов…",
@@ -2335,7 +2403,6 @@ const I18N={
 };
 const TERM_TR={
   zh:{
-    "Map cracking":"龟裂（网状裂缝）",
     "Longitudinal crack":"纵向裂缝",
     "Transverse crack":"横向裂缝",
     "Diagonal crack":"斜向裂缝",
@@ -2416,7 +2483,6 @@ const TERM_TR={
     "Safety concern":"安全隐患"
   },
   es:{
-    "Map cracking":"Agrietamiento tipo mapa",
     "Longitudinal crack":"Grieta longitudinal",
     "Transverse crack":"Grieta transversal",
     "Diagonal crack":"Grieta diagonal",
@@ -2497,7 +2563,6 @@ const TERM_TR={
     "Safety concern":"Preocupación de seguridad"
   },
   hi:{
-    "Map cracking":"जाल जैसी दरारें",
     "Longitudinal crack":"अनुदैर्ध्य दरार",
     "Transverse crack":"अनुप्रस्थ दरार",
     "Diagonal crack":"विकर्ण दरार",
@@ -2578,7 +2643,6 @@ const TERM_TR={
     "Safety concern":"सुरक्षा चिंता"
   },
   ar:{
-    "Map cracking":"تشقق شبكي (نمط خرائطي)",
     "Longitudinal crack":"تشقق طولي",
     "Transverse crack":"تشقق عرضي",
     "Diagonal crack":"تشقق قطري (مائل)",
@@ -2659,7 +2723,6 @@ const TERM_TR={
     "Safety concern":"مخاوف تتعلق بالسلامة"
   },
   ru:{
-    "Map cracking":"Сетка трещин",
     "Longitudinal crack":"Продольная трещина",
     "Transverse crack":"Поперечная трещина",
     "Diagonal crack":"Диагональная трещина",
@@ -2882,6 +2945,7 @@ function applyI18n(){
   document.documentElement.lang=curLang;
   document.documentElement.dir=(curLang==='ar')?'rtl':'ltr';
   document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent=t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{ el.innerHTML=t(el.dataset.i18nHtml); });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{ el.placeholder=t(el.dataset.i18nPlaceholder); });
   document.querySelectorAll('[data-i18n-title]').forEach(el=>{ const tx=t(el.dataset.i18nTitle); el.title=tx; if(el.hasAttribute('aria-label'))el.setAttribute('aria-label',tx); });
   const lg=LANGS.find(l=>l.code===curLang)||LANGS[0];
@@ -2908,7 +2972,7 @@ $('langBtn').addEventListener('click',e=>{ e.stopPropagation(); renderLangMenu()
   else { m.style.right=Math.max(8, window.innerWidth-r.right)+'px'; m.style.left='auto'; }
   m.classList.toggle('hidden'); });
 $('langMenu').addEventListener('click',e=>{ const b=e.target.closest('[data-lang]'); if(!b)return; setLang(b.dataset.lang); $('langMenu').classList.add('hidden'); });
-document.addEventListener('click',e=>{ if(!e.target.closest('.langwrap')&&!e.target.closest('.langmenu')) $('langMenu').classList.add('hidden'); });
+document.addEventListener('click',e=>{ if(!e.target.closest('.langwrap')&&!e.target.closest('.langmenu')) $('langMenu').classList.add('hidden'); if(!e.target.closest('.fmtwrap')&&!e.target.closest('#fmtMenu')) $('fmtMenu').classList.add('hidden'); });
 renderLangMenu();
 
 
@@ -2933,7 +2997,7 @@ const S = {
   fmt:'jpg',
   counter:1, angleDraft:null, polyDraft:null, polyFill:true, textFill:true, numPrefix:'',
   armedDefect:null, recent:[], recentTags:[], favs:[],
-  photos:[], curId:null, elements:[],
+  photos:[], curId:null, elements:[], personal:[],
   undo:[], redo:[], pending:null,
   scale:null, measMode:'line', measUnitLine:'mm', measUnitArea:'m2', cams:[],
 };
@@ -3636,7 +3700,7 @@ function renderTray(){
     '<div class="thumb'+(p.id===S.curId?' on':'')+'" data-pid="'+p.id+'" style="background-image:url('+p.thumb+')">'+
     (i<10?'<span class="hk">'+((i+1)%10)+'</span>':'')+
     '<button class="tx" data-del="'+p.id+'" title="Remove">&times;</button>'+
-    '<span class="tn">'+p.fileName.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</span></div>'
+    '<span class="tn">'+esc(tnLabel(p.fileName))+'</span></div>'
   ).join('') + '<button class="thumb add" id="trayAdd" title="Add photos">+</button>';
 }
 $('tray').addEventListener('click',e=>{
@@ -3711,15 +3775,15 @@ function dirty(){ clearTimeout(dirtyT); dirtyT=setTimeout(saveSession,1000); }
 function saveSession(){
   if(!db)return; stashCur();
   idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counter:p.counter,scale:p.scale||null})),
-    curId:S.curId, favs:S.favs, recent:S.recent, recentTags:S.recentTags, elements:S.elements, fmt:S.fmt, numPrefix:S.numPrefix, uid, pid });
+    curId:S.curId, favs:S.favs, recent:S.recent, recentTags:S.recentTags, elements:S.elements, personal:S.personal, fmt:S.fmt, numPrefix:S.numPrefix, uid, pid });
 }
 function clearSession(){ if(!db)return; try{ db.transaction('session','readwrite').objectStore('session').clear(); }catch(e){} }
 async function restoreSession(){
   const d=await idbGet('current'); if(!d||!d.photos||!d.photos.length)return;
   uid=d.uid||uid; pid=d.pid||pid;
-  S.favs=d.favs||[]; S.recent=d.recent||[]; S.recentTags=d.recentTags||[]; S.elements=d.elements||[];
+  S.favs=d.favs||[]; S.recent=d.recent||[]; S.recentTags=d.recentTags||[]; S.elements=d.elements||[]; S.personal=d.personal||[];
   S.numPrefix=d.numPrefix||''; $('numpre').value=S.numPrefix;
-  if(d.fmt){ S.fmt=d.fmt; $('fmt-jpg').classList.toggle('on',S.fmt==='jpg'); $('fmt-png').classList.toggle('on',S.fmt==='png'); }
+  if(d.fmt){ S.fmt=d.fmt; } $('fmtCur').textContent=(S.fmt==='png'?'PNG':'JPG');
   const recs=[];
   for(const pd of d.photos){
     const blob=await idbGet('blob:'+pd.id); if(!blob) continue;
@@ -3754,7 +3818,7 @@ function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('sho
 // ── Defect vocabulary (working list; align to NZTA / AS when grounding) ──
 const DEFECTS={
   material:{
-    Concrete:['Map cracking','Longitudinal crack','Transverse crack','Diagonal crack','Shrinkage cracking','Spalling','Delamination','Scaling','Honeycombing','Efflorescence','Exposed reinforcement','Corrosion staining','Section loss','Popout','Alkali-silica reaction','Leaching','Active leakage'],
+    Concrete:['Longitudinal crack','Transverse crack','Diagonal crack','Shrinkage cracking','Spalling','Delamination','Scaling','Honeycombing','Efflorescence','Exposed reinforcement','Corrosion staining','Section loss','Popout','Alkali-silica reaction','Leaching','Active leakage'],
     Steel:['Surface corrosion','Pitting','Section loss','Coating breakdown','Fatigue crack','Cracked weld','Loose bolt','Missing bolt','Distortion','Impact damage','Pack rust'],
     Timber:['Decay / rot','Splitting','Checking','Insect attack','Crushing','Loose fastening','Fire damage'],
     Masonry:['Cracking','Spalling','Mortar loss','Displacement','Vegetation growth','Weathering'],
@@ -3763,7 +3827,7 @@ const DEFECTS={
     General:['Scour','Settlement','Drainage blockage','Debris accumulation','Vegetation','Impact damage','Fire damage','Graffiti','Water staining']
   },
   component:{
-    Deck:['Map cracking','Spalling','Delamination','Scaling','Pothole','Exposed reinforcement','Water staining','Wearing-surface defect'],
+    Deck:['Spalling','Delamination','Scaling','Pothole','Exposed reinforcement','Water staining','Wearing-surface defect'],
     'Girder / Beam':['Cracking','Spalling','Corrosion staining','Exposed reinforcement','Section loss','Fatigue crack','Impact damage','Excessive deflection'],
     'Pier / Column':['Cracking','Spalling','Delamination','Corrosion staining','Scour','Impact damage','Honeycombing'],
     Abutment:['Cracking','Spalling','Settlement','Displacement','Drainage blockage','Erosion','Vegetation'],
@@ -3802,6 +3866,7 @@ function renderSev(){
 }
 function sevLabel(s){ const w=trSev(s.word); return s.code? (s.code+' '+w) : w; }
 function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+function tnLabel(fn){ const s=String(fn||''); return '{'+(s.length>6?('...'+s.slice(-6)):s)+'}'; }
 function row(term,cat){ const fav=S.favs.includes(term); const disp=(pickTab==='elements')?esc(term):esc(trTerm(term));
   return '<div class="prow" data-term="'+esc(term)+'"><button class="star'+(fav?' on':'')+'" data-star="'+esc(term)+'">'+(fav?'★':'☆')+'</button><span class="pterm">'+disp+'</span>'+(cat?'<span class="pcat">'+esc(trCat(cat))+'</span>':'')+'</div>'; }
 function renderPicker(){
@@ -3817,10 +3882,16 @@ function renderPicker(){
     $('pickList').innerHTML=html; return;
   }
   const data=DEFECTS[pickTab];
+  const addRow='<div class="eladd"><input id="newPersonal" placeholder="'+esc(t('add_own_placeholder'))+'" autocomplete="off"><button id="addPersonal">'+t('add')+'</button></div>';
+  const plist=q? S.personal.filter(x=>x.toLowerCase().includes(q)) : S.personal;
+  const persHtml=plist.length? '<div class="pgroup">'+t('personal_group')+'</div>'+plist.map(tm=>row(tm,'')).join('') : '';
   if(q){
     const hits=[]; for(const cat in data) for(const tm of data[cat]) if(trTerm(tm).toLowerCase().includes(q)||tm.toLowerCase().includes(q)) hits.push([tm,cat]);
-    html = hits.length? hits.map(h=>row(h[0],h[1])).join('') : '<div class="pempty">'+t('no_matches_custom')+'</div>';
+    const builtin = hits.length? hits.map(h=>row(h[0],h[1])).join('') : '';
+    html = addRow+persHtml+builtin;
+    if(!persHtml&&!builtin) html = addRow+'<div class="pempty">'+t('no_matches_custom')+'</div>';
   } else {
+    html = addRow+persHtml;
     const rec = pickTab==='tags' ? S.recentTags : S.recent;
     if(S.favs.length){ html+='<div class="pgroup">'+t('favourites')+'</div>'+ (S.favs.map(tm=>row(tm,'')).join('')); }
     if(rec.length){ html+='<div class="pgroup">'+t('recent')+'</div>'+ rec.map(tm=>row(tm,'')).join(''); }
@@ -3833,6 +3904,12 @@ function addElement(){
   if(!S.elements.includes(v)) S.elements=[v,...S.elements].slice(0,100);
   inp.value=''; dirty(); renderPicker();
   const again=$('newElem'); if(again) again.focus();
+}
+function addPersonal(){
+  const inp=$('newPersonal'); if(!inp) return; const v=inp.value.trim(); if(!v) return;
+  if(!S.personal.includes(v)) S.personal=[v,...S.personal].slice(0,100);
+  inp.value=''; dirty(); renderPicker();
+  const again=$('newPersonal'); if(again) again.focus();
 }
 function addRecent(t){
   if(pickTab==='tags') S.recentTags=[t,...S.recentTags.filter(x=>x!==t)].slice(0,8);
@@ -3913,8 +3990,14 @@ $('shoot').onclick=()=>$('cam').click();
 $('file').onchange=e=>{ addFiles(e.target.files); e.target.value=''; };
 $('cam').onchange=e=>{ addFiles(e.target.files); e.target.value=''; };
 
-$('fmt-jpg').onclick=()=>{ S.fmt='jpg'; $('fmt-jpg').classList.add('on'); $('fmt-png').classList.remove('on'); dirty(); };
-$('fmt-png').onclick=()=>{ S.fmt='png'; $('fmt-png').classList.add('on'); $('fmt-jpg').classList.remove('on'); dirty(); };
+const FMTS=[{k:'jpg',label:'JPG'},{k:'png',label:'PNG'}];
+function setFmt(f){ S.fmt=(f==='png')?'png':'jpg'; $('fmtCur').textContent=S.fmt.toUpperCase(); dirty(); }
+function renderFmtMenu(){ $('fmtMenu').innerHTML=FMTS.map(f=>'<button data-fmt="'+f.k+'"'+(f.k===S.fmt?' class="on"':'')+'><span class="lname">'+f.label+'</span></button>').join(''); }
+$('fmtBtn').addEventListener('click',e=>{ e.stopPropagation(); renderFmtMenu();
+  const m=$('fmtMenu'), r=$('fmtBtn').getBoundingClientRect();
+  m.style.top=(r.bottom+6)+'px'; m.style.left='auto'; m.style.right=Math.max(8,window.innerWidth-r.right)+'px';
+  $('langMenu').classList.add('hidden'); m.classList.toggle('hidden'); });
+$('fmtMenu').addEventListener('click',e=>{ const b=e.target.closest('[data-fmt]'); if(!b)return; setFmt(b.dataset.fmt); $('fmtMenu').classList.add('hidden'); });
 $('export').onclick=exportImg;
 $('exportall').onclick=exportAll;
 $('undo').onclick=undo; $('redo').onclick=redo;
@@ -3945,7 +4028,7 @@ $('clearall').onclick=()=>{
 };
 $('startover').onclick=()=>confirmBox(t('start_over_title'), t('start_over_body'),()=>{
   S.photos=[]; S.curId=null; S.img=null; S.objects=[]; S.sel=null; S.undo=[]; S.redo=[];
-  S.counter=1; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.elements=[]; S.recent=[]; S.recentTags=[]; S.favs=[];
+  S.counter=1; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.elements=[]; S.personal=[]; S.recent=[]; S.recentTags=[]; S.favs=[];
   S.scale=null; S.measMode='line';
   S.numPrefix=''; $('numpre').value='';
   clearTimeout(dirtyT); clearSession();
@@ -3981,8 +4064,8 @@ $('pickClose').onclick=()=>hideOverlay('pickOverlay');
 $('pickSearch').addEventListener('input',renderPicker);
 $('sevRow').addEventListener('click',e=>{ const b=e.target.closest('[data-sev]'); if(!b)return; curSev=b.dataset.sev; renderSev(); });
 $('pickTabs').addEventListener('click',e=>{ const b=e.target.closest('[data-tab]'); if(!b)return; pickTab=b.dataset.tab; document.querySelectorAll('#pickTabs button').forEach(x=>x.classList.toggle('on',x===b)); $('pickSearch').value=''; renderPicker(); });
-$('pickList').addEventListener('click',e=>{ if(e.target.closest('#addElem')){ addElement(); return; } const s=e.target.closest('[data-star]'); if(s){ e.stopPropagation(); toggleFav(s.dataset.star); return; } const r=e.target.closest('[data-term]'); if(r) chooseTerm(r.dataset.term); });
-$('pickList').addEventListener('keydown',e=>{ if(e.key==='Enter'&&e.target.id==='newElem') addElement(); });
+$('pickList').addEventListener('click',e=>{ if(e.target.closest('#addElem')){ addElement(); return; } if(e.target.closest('#addPersonal')){ addPersonal(); return; } const s=e.target.closest('[data-star]'); if(s){ e.stopPropagation(); toggleFav(s.dataset.star); return; } const r=e.target.closest('[data-term]'); if(r) chooseTerm(r.dataset.term); });
+$('pickList').addEventListener('keydown',e=>{ if(e.key==='Enter'&&e.target.id==='newElem') addElement(); if(e.key==='Enter'&&e.target.id==='newPersonal') addPersonal(); });
 $('defchange').onclick=()=>openPicker('arm');
 $('txtDefect').onclick=()=>openPicker('feed',(term,color)=>{ $('txtInput').value=term; if(color&&editTarget){ editTarget.color=color; } });
 
