@@ -40,7 +40,7 @@ button{font-family:var(--font-ui);color:var(--text);cursor:pointer;border:none;b
 button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* ── App shell ─────────────────────────────────────────── */
-.app{display:flex;flex-direction:column;height:100vh;height:100svh;overflow:hidden}
+.app{display:flex;flex-direction:column;height:100vh;height:100svh;height:100dvh;overflow:hidden}
 
 /* ── Top bar ───────────────────────────────────────────── */
 .topbar{
@@ -256,13 +256,23 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 }
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+@media (pointer:coarse){
+  .tool .hk,.thumb .hk{display:none}
+}
 @media (max-width:520px){
   .brand h1{font-size:16px;letter-spacing:.16em}
   .btn span.hide-sm{display:none}
-  .btn{padding:0 10px}
+  .btn{padding:0 8px;gap:5px}
+  .btn.icon{width:34px}
   .tool .hk,.thumb .hk{display:none}
-  .topbar{flex-wrap:wrap;row-gap:6px}
-  .tb-actions{flex-wrap:wrap;row-gap:6px;justify-content:flex-end}
+  .topbar{gap:6px}
+  .tb-actions{gap:5px;justify-content:flex-end;min-width:0}
+  .seg button{padding:0 9px}
+}
+@media (max-width:380px){
+  .btn{padding:0 6px}
+  .tb-actions{gap:4px}
+  .seg button{padding:0 7px;font-size:11px}
 }
 
 /* unit selector in value modal */
@@ -387,6 +397,32 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .thumb.add:hover{color:var(--accent);border-color:var(--panel-border)}
 .tray.hidden{display:none}
 
+@media (max-height:480px) and (orientation:landscape){
+  .app{height:100vh;height:100svh;height:100dvh}
+  .topbar{padding:3px 8px;padding-top:max(3px,env(safe-area-inset-top));gap:6px;flex:0 0 auto}
+  .brand h1{font-size:13px;letter-spacing:.1em}
+  .brand .ver{display:none}
+  .btn{height:28px;padding:0 7px}
+  .btn.icon{width:30px}
+  .btn span.hide-sm{display:none}
+  .seg button{height:26px;padding:0 8px}
+  .stage{flex:1 1 auto;min-height:0}
+  .props{padding:3px 8px;gap:8px;flex:0 0 auto}
+  .props .lbl{display:none}
+  .swatch{width:20px;height:20px}
+  .wbtn{height:24px;min-width:28px}
+  .mini{height:26px;padding:0 8px;font-size:11.5px}
+  .divider{height:20px}
+  .tray{display:none!important}
+  .rail{flex-wrap:nowrap;overflow-x:auto;gap:4px;padding:3px 8px;padding-bottom:max(3px,env(safe-area-inset-bottom));flex:0 0 auto}
+  .rail::-webkit-scrollbar{height:0}
+  .tool{flex:0 0 auto;min-width:50px;max-width:none;height:32px;flex-direction:row;gap:5px;padding:0 8px}
+  .tool svg{width:14px;height:14px}
+  .tool span{font-size:9px}
+  .zoomer{bottom:6px;right:6px}
+  .zoomer button{width:34px;height:30px}
+}
+
 /* element add row in picker */
 .eladd{display:flex;gap:8px;margin:2px 4px 4px}
 .eladd input{
@@ -435,7 +471,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.0.0 · BETA · multilingual</span>
+        <span class="ver">v1.0.2 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -446,10 +482,6 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h1"/></svg>
       </button>
       <div class="divider"></div>
-      <button class="btn" id="load">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3Z"/><circle cx="12" cy="13" r="3"/></svg>
-        <span class="hide-sm" data-i18n="photo_btn">Photo</span>
-      </button>
       <div class="seg" title="Export format">
         <button id="fmt-jpg" class="on">JPG</button>
         <button id="fmt-png">PNG</button>
@@ -819,11 +851,14 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <h4 data-i18n="about_licence_h">Licence</h4>
       <p>Released under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. Free to use, share, and adapt, as long as credit is given to the author.</p>
 
+      <h4 data-i18n="about_report_h">Report a bug</h4>
+      <p><a href="https://github.com/volkov596/markup/issues" target="_blank" rel="noopener">github.com/volkov596/markup/issues</a></p>
+
       <h4 data-i18n="about_support_h">Support this tool</h4>
       <p>The tool is free. If it saves you time, a contribution keeps it maintained.</p>
       <div class="give">
         <a href="https://ko-fi.com/yegorv" target="_blank" rel="noopener">Ko-fi</a>
-        <a href="https://buy.stripe.com/fZu00iemkeuX4wo2GUb7y00" target="_blank" rel="noopener">Stripe</a>
+        <a href="https://buy.stripe.com/fZu00iemkeuX4wo2GUb7y00" target="_blank" rel="noopener">Card / invoice</a>
       </div>
     </div>
   </div>
@@ -2916,8 +2951,10 @@ function widthPx(){ return S.baseW * WIDTHS[S.style.w]; }
 function fontPx(){ return S.baseW * FONTS[S.style.w]; }
 
 // ── Sizing / view ───────────────────────────────────────
+let lastFitW=0, lastFitH=0, refitT=null;
 function resize(){
   const st=$('stage'); const w=st.clientWidth, h=st.clientHeight;
+  if(!w||!h) return;
   dpr = Math.max(1, Math.min(3, window.devicePixelRatio||1));
   cssW=w; cssH=h;
   canvas.width=Math.round(w*dpr); canvas.height=Math.round(h*dpr);
@@ -2926,10 +2963,12 @@ function resize(){
 function fit(){
   if(!S.img) return;
   const st=$('stage'); const w=st.clientWidth, h=st.clientHeight;
-  const pad=28;
+  if(!w||!h) return;
+  const pad=(w<700||h<520)?3:28;
   const s=Math.min((w-pad*2)/S.iw, (h-pad*2)/S.ih);
   S.fitS=s; S.view.s=s;
   S.view.ox=(w-S.iw*s)/2; S.view.oy=(h-S.ih*s)/2;
+  lastFitW=w; lastFitH=h;
   render();
 }
 function clampScale(s){ return Math.max(S.fitS*0.25, Math.min(S.fitS*25, s)); }
@@ -3537,9 +3576,12 @@ function addPhotoFile(file,cb){
   if(!file||!file.type.startsWith('image/')){ if(cb)cb(); return; }
   const url=URL.createObjectURL(file); const im=new Image();
   im.onload=()=>{
-    const rec={ id:pid++, blob:file, img:im, iw:im.naturalWidth, ih:im.naturalHeight,
+    const rid=pid++;
+    let fn=(file.name||'').replace(/\.[^.]+$/,'').slice(0,60);
+    if(!fn||/^\d+$/.test(fn)) fn='photo-'+rid;
+    const rec={ id:rid, blob:file, img:im, iw:im.naturalWidth, ih:im.naturalHeight,
       baseW:Math.max(2,Math.round(Math.max(im.naturalWidth,im.naturalHeight)/450)),
-      fileName:(file.name||'photo').replace(/\.[^.]+$/,'').slice(0,60)||'photo',
+      fileName:fn,
       objects:[], undo:[], redo:[], counter:1, scale:null, thumb:makeThumb(im) };
     S.photos.push(rec); URL.revokeObjectURL(url);
     persistBlob(rec);
@@ -3866,7 +3908,7 @@ INKS.forEach(col=>{ const b=document.createElement('button'); b.className='swatc
 document.querySelectorAll('.wbtn').forEach(b=>b.addEventListener('click',()=>{ S.style.w=b.dataset.w; document.querySelectorAll('.wbtn').forEach(x=>x.classList.remove('on')); b.classList.add('on');
   if(S.sel!=null){ const o=getObj(S.sel); if(o){ beginEdit(); if(o.type==='text'||o.type==='tag')o.size=fontPx(); else if(o.type==='note'||o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea'){o.w=widthPx();o.size=fontPx();} else if(o.type==='number')o.r=S.baseW*NUMR[S.style.w]; else o.w=widthPx(); commit(); render(); } } }));
 
-$('load').onclick=$('load2').onclick=()=>$('file').click();
+$('load2').onclick=()=>$('file').click();
 $('shoot').onclick=()=>$('cam').click();
 $('file').onchange=e=>{ addFiles(e.target.files); e.target.value=''; };
 $('cam').onchange=e=>{ addFiles(e.target.files); e.target.value=''; };
@@ -4248,9 +4290,20 @@ const stage=$('stage');
 ['dragover','drop'].forEach(ev=>stage.addEventListener(ev,e=>e.preventDefault()));
 stage.addEventListener('drop',e=>{ addFiles(e.dataTransfer.files); });
 
-window.addEventListener('resize',()=>{ resize(); if(S.img)fit(); });
-if(window.ResizeObserver){ new ResizeObserver(()=>resize()).observe($('stage')); }
-document.addEventListener('fullscreenchange',()=>{ resize(); });
+function stageChanged(){
+  const st=$('stage'); const w=st.clientWidth, h=st.clientHeight;
+  if(!w||!h) return;
+  const ae=document.activeElement;
+  const kb=ae&&(ae.tagName==='INPUT'||ae.tagName==='TEXTAREA');
+  resize();
+  if(S.img&&!kb&&(w!==lastFitW||h!==lastFitH)){
+    clearTimeout(refitT); refitT=setTimeout(()=>{ resize(); fit(); },120);
+  }
+}
+window.addEventListener('resize',stageChanged);
+if(window.ResizeObserver){ new ResizeObserver(stageChanged).observe($('stage')); }
+window.addEventListener('orientationchange',()=>{ setTimeout(stageChanged,250); setTimeout(stageChanged,650); });
+document.addEventListener('fullscreenchange',stageChanged);
 resize();
 })();
 </script>
