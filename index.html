@@ -489,7 +489,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.0.2 · BETA · multilingual</span>
+        <span class="ver">v1.1.0 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -539,6 +539,10 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
         <button class="btn" id="shoot">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 8v8M8 12h8"/></svg>
           <span data-i18n="new_photo">New photo</span>
+        </button>
+        <button class="btn" id="paste2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="8" height="4" rx="1"/><path d="M16 5h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"/></svg>
+          <span data-i18n="paste_btn">Paste</span>
         </button>
       </div>
     </div>
@@ -604,7 +608,13 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <button class="mini" id="measclose" style="display:none" data-i18n="close_area">Close area</button>
       <button class="mini" id="meascams" data-i18n="cameras_ellipsis">Cameras…</button>
     </div>
+    <div class="ctx hidden" id="qrctl">
+      <span class="lbl" data-i18n="qr_link">Link</span>
+      <span class="nn" id="qrcur" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;justify-content:flex-start" data-i18n="choose_ellipsis">Choose…</span>
+      <button class="mini" id="qrchange" data-i18n="change">Change</button>
+    </div>
     <div style="flex:1 1 auto"></div>
+    <button class="btn ghost" id="paste1" style="flex:0 0 auto;height:32px;font-size:12px" data-i18n="paste_btn">Paste</button>
     <button class="btn ghost" id="divider" style="flex:0 0 auto;height:32px;font-size:12px" data-i18n="divider_btn">Divider</button>
     <button class="btn ghost" id="clearall" style="flex:0 0 auto;height:32px;font-size:12px" data-i18n="clear_all">Clear all</button>
     <button class="btn ghost" id="startover" style="flex:0 0 auto;height:32px;font-size:12px" data-i18n="start_over">Start over</button>
@@ -672,6 +682,12 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     
       <span class="hk">F</span>
     </button>
+    <button class="tool" data-tool="qr">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM21 14v3M18 21h3M14 21h1"/></svg>
+      <span data-i18n="tool_qr">QR</span>
+    
+      <span class="hk">Q</span>
+    </button>
   </nav>
 </div>
 
@@ -688,6 +704,18 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <button class="btn ghost" id="txtDefect" style="margin-right:auto" data-i18n="from_list">From list…</button>
       <button class="btn ghost" id="txtCancel" data-i18n="cancel">Cancel</button>
       <button class="btn primary" id="txtOk" data-i18n="add">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- QR modal -->
+<div class="overlay" id="qrOverlay">
+  <div class="modal">
+    <h3 id="qrTitle" data-i18n="qr_title">QR code</h3>
+    <input id="qrInput" type="text" dir="ltr" placeholder="https://…" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="300" data-i18n-placeholder="qr_placeholder">
+    <div class="actions">
+      <button class="btn ghost" id="qrCancel" data-i18n="cancel">Cancel</button>
+      <button class="btn primary" id="qrOk" data-i18n="add">Add</button>
     </div>
   </div>
 </div>
@@ -899,6 +927,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
         <div class="grow"><b data-i18n="help_angle_b">Angle</b><span data-i18n="help_angle_d">Draw one side from the corner, then the second. The measured angle is written in the arc.</span></div>
         <div class="grow"><b data-i18n="help_number_b">Number</b><span data-i18n="help_number_d">Drops auto-incrementing markers for a legend or defect schedule. Set a prefix (e.g. B) and the counter continues B1, B2, B3. Clear all resets the count.</span></div>
         <div class="grow"><b data-i18n="help_defect_b">Defect</b><span data-i18n="help_defect_d">Tags with a severity colour. Build your own list of defect types and materials; they're remembered between sessions.</span></div>
+        <div class="grow"><b data-i18n="help_qr_b">QR</b><span data-i18n="help_qr_d">Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are drawn in black so the code still scans.</span></div>
       </div>
       <div class="gsec">
         <h4 data-i18n="help_options_h">Options</h4>
@@ -911,6 +940,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <div class="gsec">
         <h4 data-i18n="help_around_h">Getting around</h4>
         <div class="grow"><b data-i18n="help_zoom_b">Zoom &amp; pan</b><span data-i18n="help_zoom_d">Pinch or scroll to zoom; drag with two fingers, or use the +, fit, − buttons. Fit re-centres the photo.</span></div>
+        <div class="grow"><b data-i18n="help_paste_b">Paste</b><span data-i18n="help_paste_d">Adds an image copied to the clipboard as a new photo. Press Ctrl/Cmd+V, or use the Paste button. Phones will ask for clipboard permission the first time.</span></div>
         <div class="grow"><b data-i18n="help_photos_b">Photos</b><span data-i18n="help_photos_d">Thumbnails along the bottom switch between loaded photos. Everything is saved on this device automatically — nothing is uploaded.</span></div>
       </div>
       <div class="gsec">
@@ -997,6 +1027,23 @@ const I18N={
     "tool_angle":"Angle",
     "tool_number":"Number",
     "tool_defect":"Defect",
+    "paste_btn":"Paste",
+    "tool_qr":"QR",
+    "qr_title":"QR code",
+    "qr_edit_title":"Edit QR link",
+    "qr_placeholder":"https://…",
+    "qr_link":"Link",
+    "toast_qr_empty":"Enter a link or text",
+    "toast_qr_long":"Too long for a QR code",
+    "toast_no_clip_img":"No image in the clipboard",
+    "toast_paste_denied":"Clipboard access denied",
+    "toast_paste_unsup":"This browser can't paste images",
+    "toast_pasted":"Pasted",
+    "ctx_label_qr":"Link",
+    "help_qr_b":"QR",
+    "help_qr_d":"Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are drawn in black so the code still scans.",
+    "help_paste_b":"Paste",
+    "help_paste_d":"Adds an image copied to the clipboard as a new photo. Press Ctrl/Cmd+V, or use the Paste button. Phones will ask for clipboard permission the first time.",
     "add_label":"Add label",
     "edit_label":"Edit label",
     "note_text":"Note text",
@@ -1237,6 +1284,23 @@ const I18N={
     "tool_angle":"角度",
     "tool_number":"编号",
     "tool_defect":"缺陷",
+    "paste_btn":"粘贴",
+    "tool_qr":"二维码",
+    "qr_title":"二维码",
+    "qr_edit_title":"编辑二维码链接",
+    "qr_placeholder":"https://…",
+    "qr_link":"链接",
+    "toast_qr_empty":"请输入链接或文本",
+    "toast_qr_long":"内容过长，无法生成二维码",
+    "toast_no_clip_img":"剪贴板中没有图片",
+    "toast_paste_denied":"剪贴板访问被拒绝",
+    "toast_paste_unsup":"此浏览器无法粘贴图片",
+    "toast_pasted":"已粘贴",
+    "ctx_label_qr":"链接",
+    "help_qr_b":"二维码",
+    "help_qr_d":"在照片上放置可扫描的二维码——输入链接后点击放置。使用当前墨水颜色和 S/M/L 尺寸。双击可更改链接。浅色会以黑色绘制，以保证可扫描。",
+    "help_paste_b":"粘贴",
+    "help_paste_d":"将复制到剪贴板的图片添加为新照片。按 Ctrl/Cmd+V，或使用粘贴按钮。手机首次使用时会请求剪贴板权限。",
     "add_label":"添加标签",
     "edit_label":"编辑标签",
     "note_text":"备注文字",
@@ -1481,6 +1545,23 @@ const I18N={
     "tool_angle":"Ángulo",
     "tool_number":"Número",
     "tool_defect":"Defecto",
+    "paste_btn":"Pegar",
+    "tool_qr":"QR",
+    "qr_title":"Código QR",
+    "qr_edit_title":"Editar enlace QR",
+    "qr_placeholder":"https://…",
+    "qr_link":"Enlace",
+    "toast_qr_empty":"Introduce un enlace o texto",
+    "toast_qr_long":"Demasiado largo para un código QR",
+    "toast_no_clip_img":"No hay ninguna imagen en el portapapeles",
+    "toast_paste_denied":"Acceso al portapapeles denegado",
+    "toast_paste_unsup":"Este navegador no puede pegar imágenes",
+    "toast_pasted":"Pegado",
+    "ctx_label_qr":"Enlace",
+    "help_qr_b":"QR",
+    "help_qr_d":"Coloca un código escaneable sobre la foto: introduce un enlace y luego toca para situarlo. Usa el color de tinta actual y el tamaño S/M/L. Toca dos veces para cambiar el enlace. Los colores claros se dibujan en negro para que el código siga siendo legible.",
+    "help_paste_b":"Pegar",
+    "help_paste_d":"Añade como foto nueva una imagen copiada al portapapeles. Pulsa Ctrl/Cmd+V o usa el botón Pegar. Los móviles pedirán permiso del portapapeles la primera vez.",
     "add_label":"Añadir etiqueta",
     "edit_label":"Editar etiqueta",
     "note_text":"Texto de la nota",
@@ -1725,6 +1806,23 @@ const I18N={
     "tool_angle":"कोण",
     "tool_number":"संख्या",
     "tool_defect":"दोष",
+    "paste_btn":"पेस्ट करें",
+    "tool_qr":"QR",
+    "qr_title":"QR कोड",
+    "qr_edit_title":"QR लिंक संपादित करें",
+    "qr_placeholder":"https://…",
+    "qr_link":"लिंक",
+    "toast_qr_empty":"एक लिंक या टेक्स्ट दर्ज करें",
+    "toast_qr_long":"QR कोड के लिए बहुत लंबा",
+    "toast_no_clip_img":"क्लिपबोर्ड में कोई छवि नहीं है",
+    "toast_paste_denied":"क्लिपबोर्ड पहुँच अस्वीकृत",
+    "toast_paste_unsup":"यह ब्राउज़र छवियाँ पेस्ट नहीं कर सकता",
+    "toast_pasted":"पेस्ट किया गया",
+    "ctx_label_qr":"लिंक",
+    "help_qr_b":"QR",
+    "help_qr_d":"फ़ोटो पर स्कैन करने योग्य कोड रखता है — एक लिंक दर्ज करें, फिर रखने के लिए टैप करें। वर्तमान स्याही रंग और S/M/L आकार का उपयोग करता है। लिंक बदलने के लिए डबल-टैप करें। हल्के रंग काले रंग में बनाए जाते हैं ताकि कोड स्कैन होता रहे।",
+    "help_paste_b":"पेस्ट करें",
+    "help_paste_d":"क्लिपबोर्ड में कॉपी की गई छवि को नई फ़ोटो के रूप में जोड़ता है। Ctrl/Cmd+V दबाएँ, या पेस्ट बटन का उपयोग करें। फ़ोन पहली बार क्लिपबोर्ड अनुमति माँगेंगे।",
     "add_label":"लेबल जोड़ें",
     "edit_label":"लेबल संपादित करें",
     "note_text":"नोट टेक्स्ट",
@@ -1969,6 +2067,23 @@ const I18N={
     "tool_angle":"زاوية",
     "tool_number":"رقم",
     "tool_defect":"عيب",
+    "paste_btn":"لصق",
+    "tool_qr":"رمز QR",
+    "qr_title":"رمز QR",
+    "qr_edit_title":"تعديل رابط QR",
+    "qr_placeholder":"https://…",
+    "qr_link":"الرابط",
+    "toast_qr_empty":"أدخل رابطًا أو نصًا",
+    "toast_qr_long":"طويل جدًا لرمز QR",
+    "toast_no_clip_img":"لا توجد صورة في الحافظة",
+    "toast_paste_denied":"تم رفض الوصول إلى الحافظة",
+    "toast_paste_unsup":"لا يمكن لهذا المتصفح لصق الصور",
+    "toast_pasted":"تم اللصق",
+    "ctx_label_qr":"الرابط",
+    "help_qr_b":"رمز QR",
+    "help_qr_d":"يضع رمزًا قابلاً للمسح على الصورة — أدخل رابطًا ثم اضغط لوضعه. يستخدم لون الحبر الحالي والحجم S/M/L. اضغط مرتين لتغيير الرابط. تُرسم الألوان الفاتحة بالأسود ليظل الرمز قابلاً للمسح.",
+    "help_paste_b":"لصق",
+    "help_paste_d":"يضيف صورة منسوخة إلى الحافظة كصورة جديدة. اضغط Ctrl/Cmd+V أو استخدم زر اللصق. ستطلب الهواتف إذن الحافظة في المرة الأولى.",
     "add_label":"إضافة تسمية",
     "edit_label":"تعديل التسمية",
     "note_text":"نص الملاحظة",
@@ -2213,6 +2328,23 @@ const I18N={
     "tool_angle":"Угол",
     "tool_number":"Номер",
     "tool_defect":"Дефект",
+    "paste_btn":"Вставить",
+    "tool_qr":"QR",
+    "qr_title":"QR-код",
+    "qr_edit_title":"Изменить ссылку QR",
+    "qr_placeholder":"https://…",
+    "qr_link":"Ссылка",
+    "toast_qr_empty":"Введите ссылку или текст",
+    "toast_qr_long":"Слишком длинно для QR-кода",
+    "toast_no_clip_img":"В буфере обмена нет изображения",
+    "toast_paste_denied":"Доступ к буферу обмена запрещён",
+    "toast_paste_unsup":"Этот браузер не может вставлять изображения",
+    "toast_pasted":"Вставлено",
+    "ctx_label_qr":"Ссылка",
+    "help_qr_b":"QR",
+    "help_qr_d":"Размещает сканируемый код на фото — введите ссылку, затем нажмите для размещения. Использует текущий цвет чернил и размер S/M/L. Двойное нажатие меняет ссылку. Светлые цвета рисуются чёрным, чтобы код читался.",
+    "help_paste_b":"Вставить",
+    "help_paste_d":"Добавляет изображение из буфера обмена как новое фото. Нажмите Ctrl/Cmd+V или кнопку «Вставить». Телефоны при первом использовании запросят разрешение на доступ к буферу.",
     "add_label":"Добавить подпись",
     "edit_label":"Изменить подпись",
     "note_text":"Текст заметки",
@@ -2963,6 +3095,7 @@ function applyI18n(){
   const lg=LANGS.find(l=>l.code===curLang)||LANGS[0];
   $('langFlag').textContent=lg.flag; $('langCode').textContent=lg.code.toUpperCase();
   if(typeof updateDef==='function') updateDef();
+  if(typeof updateQr==='function') updateQr();
   if(typeof updateNext==='function') updateNext();
   if(typeof syncCtx==='function') syncCtx();
   if(typeof renderSev==='function') renderSev();
@@ -2993,6 +3126,7 @@ const INKS = ['#ffffff','#111418','#66bb6a','#ffee58','#f57c00','#d32f2f','#42a5
 const WIDTHS = {S:0.4,  M:0.75, L:1.3};     // multipliers of baseW
 const FONTS  = {S:4,    M:6,    L:8};        // multipliers of baseW (text size)
 const NUMR   = {S:3,    M:4.5, L:6.5};      // multipliers of baseW (number badge radius)
+const QRR    = {S:12,   M:18,  L:28};       // multipliers of baseW (QR half-size)
 const UIFONT = (getComputedStyle(document.body).getPropertyValue('--font-ui')||'sans-serif').trim();
 
 // ── State ───────────────────────────────────────────────
@@ -3004,7 +3138,7 @@ let cssW=0, cssH=0;
 const S = {
   img:null, iw:0, ih:0, baseW:6, fileName:'photo',
   view:{s:1, ox:0, oy:0}, fitS:1,
-  objects:[], sel:null, tool:'select',
+  objects:[], sel:null, tool:'select', armedQR:null,
   style:{color:INKS[0], w:'M'},
   fmt:'jpg',
   counter:1, angleDraft:null, polyDraft:null, polyFill:true, textFill:true, numPrefix:'',
@@ -3087,6 +3221,7 @@ function drawObj(ctx,o,tf){
   else if(o.type==='tag') drawTag(ctx,o,tf);
   else if(o.type==='mline') drawMLine(ctx,o,tf);
   else if(o.type==='marea') drawMArea(ctx,o,tf);
+  else if(o.type==='qr') drawQR(ctx,o,tf);
 }
 
 function strokePath(ctx,pts,w,col){
@@ -3270,11 +3405,129 @@ function drawAngleDraft(ctx,tf){
   ctx.beginPath(); ctx.arc(v.x,v.y,Math.max(4,w*0.9),0,7); ctx.fillStyle='#f5a623'; ctx.fill(); ctx.lineWidth=2; ctx.strokeStyle='#1a1206'; ctx.stroke();
 }
 
+
+// ── QR (byte mode, level L) ─────────────────────────────
+const QRGen=(()=>{
+  const EXP=new Array(512),LOG=new Array(256);
+  (()=>{let x=1;for(let i=0;i<255;i++){EXP[i]=x;LOG[x]=i;x<<=1;if(x&0x100)x^=0x11d;}for(let i=255;i<512;i++)EXP[i]=EXP[i-255];})();
+  const mul=(a,b)=>(a===0||b===0)?0:EXP[LOG[a]+LOG[b]];
+  function rsPoly(n){let p=[1];for(let i=0;i<n;i++){const r=new Array(p.length+1).fill(0);for(let j=0;j<p.length;j++){r[j]^=mul(p[j],1);r[j+1]^=mul(p[j],EXP[i]);}p=r;}return p;}
+  function rsEnc(d,n){const g=rsPoly(n),r=new Array(n).fill(0);
+    for(const b of d){const f=b^r[0];r.shift();r.push(0);if(f)for(let i=0;i<n;i++)r[i]^=mul(g[i+1],f);}return r;}
+  const RSB=[[26,7,1,19,0,0],[44,10,1,34,0,0],[70,15,1,55,0,0],[100,20,1,80,0,0],[134,26,1,108,0,0],[172,18,2,68,0,0],[196,20,2,78,0,0],[242,24,2,97,0,0],[292,30,2,116,0,0],[346,18,2,68,2,69],[404,20,4,81,0,0],[466,24,2,92,2,93],[532,26,4,107,0,0],[581,30,3,115,1,116],[655,22,5,87,1,88],[733,24,5,98,1,99],[815,28,1,107,5,108],[901,30,5,120,1,121],[991,28,3,113,4,114],[1085,28,3,107,5,108],[1156,28,4,116,4,117],[1258,28,2,111,7,112],[1364,30,4,121,5,122],[1474,30,6,117,4,118],[1588,26,8,106,4,107],[1706,28,10,114,2,115],[1828,30,8,122,4,123],[1921,30,3,117,10,118],[2051,30,7,116,7,117],[2185,30,5,115,10,116],[2323,30,13,115,3,116],[2465,30,17,115,0,0],[2611,30,17,115,1,116],[2761,30,13,115,6,116],[2876,30,12,121,7,122],[3034,30,6,121,14,122],[3196,30,17,122,4,123],[3362,30,4,122,18,123],[3532,30,20,117,4,118],[3706,30,19,118,6,119]];
+  const ALG=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]];
+  function utf8(str){const o=[];for(let i=0;i<str.length;i++){let c=str.codePointAt(i);if(c>0xffff)i++;
+    if(c<0x80)o.push(c);
+    else if(c<0x800)o.push(0xc0|c>>6,0x80|c&63);
+    else if(c<0x10000)o.push(0xe0|c>>12,0x80|(c>>6&63),0x80|c&63);
+    else o.push(0xf0|c>>18,0x80|(c>>12&63),0x80|(c>>6&63),0x80|c&63);}return o;}
+  function codewords(text){
+    const by=utf8(text);let ver=0;
+    for(let v=1;v<=40;v++){const t=RSB[v-1];
+      if(4+(v<10?8:16)+by.length*8<=(t[2]*t[3]+t[4]*t[5])*8){ver=v;break;}}
+    if(!ver)return null;
+    const t=RSB[ver-1],ec=t[1],b1=t[2],d1=t[3],b2=t[4],d2=t[5],tot=b1*d1+b2*d2;
+    const bits=[],put=(v,n)=>{for(let i=n-1;i>=0;i--)bits.push(v>>i&1);};
+    put(4,4);put(by.length,ver<10?8:16);for(const b of by)put(b,8);
+    for(let i=0;i<4&&bits.length<tot*8;i++)bits.push(0);
+    while(bits.length%8)bits.push(0);
+    const dat=[];for(let i=0;i<bits.length;i+=8){let b=0;for(let j=0;j<8;j++)b=b<<1|bits[i+j];dat.push(b);}
+    for(let i=0;dat.length<tot;i++)dat.push(i%2?0x11:0xEC);
+    const blk=[];let o=0;
+    for(let i=0;i<b1;i++){blk.push(dat.slice(o,o+d1));o+=d1;}
+    for(let i=0;i<b2;i++){blk.push(dat.slice(o,o+d2));o+=d2;}
+    const ecb=blk.map(b=>rsEnc(b,ec)),out=[],mx=Math.max(d1,d2);
+    for(let i=0;i<mx;i++)for(const b of blk)if(i<b.length)out.push(b[i]);
+    for(let i=0;i<ec;i++)for(const e of ecb)out.push(e[i]);
+    return{ver,cw:out};
+  }
+  function maskAt(k,r,c){
+    switch(k){case 0:return (r+c)%2===0;case 1:return r%2===0;case 2:return c%3===0;case 3:return (r+c)%3===0;
+      case 4:return (((r/2)|0)+((c/3)|0))%2===0;case 5:return (r*c)%2+(r*c)%3===0;
+      case 6:return ((r*c)%2+(r*c)%3)%2===0;default:return ((r+c)%2+(r*c)%3)%2===0;}
+  }
+  function build(ver,cw,mask){
+    const n=ver*4+17;
+    const m=Array.from({length:n},()=>new Array(n).fill(false));
+    const fx=Array.from({length:n},()=>new Array(n).fill(false));
+    const F=(r,c,v)=>{if(r<0||c<0||r>=n||c>=n)return;m[r][c]=v;fx[r][c]=true;};
+    const fnd=(r0,c0)=>{for(let r=-1;r<=7;r++)for(let c=-1;c<=7;c++)
+      F(r0+r,c0+c,(r>=0&&r<=6&&(c===0||c===6))||(c>=0&&c<=6&&(r===0||r===6))||(r>=2&&r<=4&&c>=2&&c<=4));};
+    fnd(0,0);fnd(0,n-7);fnd(n-7,0);
+    for(let i=8;i<n-8;i++){F(6,i,i%2===0);F(i,6,i%2===0);}
+    const ap=ALG[ver-1];
+    for(const r of ap)for(const c of ap){
+      if((r===6&&c===6)||(r===6&&c===n-7)||(r===n-7&&c===6))continue;
+      for(let a=-2;a<=2;a++)for(let b=-2;b<=2;b++)F(r+a,c+b,Math.max(Math.abs(a),Math.abs(b))!==1);}
+    for(let i=0;i<=8;i++){if(i!==6){F(i,8,false);F(8,i,false);}}
+    for(let i=0;i<8;i++){F(8,n-1-i,false);F(n-1-i,8,false);}
+    if(ver>=7){let r=ver;for(let i=0;i<12;i++)r=(r<<1)^((r>>>11)*0x1F25);
+      const vb=ver<<12|(r&0xFFF);
+      for(let i=0;i<18;i++){const b=(vb>>i&1)===1;F((i/3)|0,n-11+i%3,b);F(n-11+i%3,(i/3)|0,b);}}
+    let i=0;const bit=k=>k<cw.length*8&&((cw[k>>3]>>(7-(k&7)))&1)===1;
+    for(let right=n-1;right>=1;right-=2){
+      if(right===6)right=5;
+      for(let v=0;v<n;v++)for(let j=0;j<2;j++){
+        const c=right-j,up=((right+1)&2)===0,r=up?n-1-v:v;
+        if(!fx[r][c]){let b=bit(i++);if(maskAt(mask,r,c))b=!b;m[r][c]=b;}}
+    }
+    const fd=(1<<3)|mask;let rr=fd;
+    for(let k=0;k<10;k++)rr=(rr<<1)^((rr>>>9)*0x537);
+    const fb=((fd<<10)|(rr&0x3FF))^0x5412;
+    for(let k=0;k<15;k++){const b=(fb>>k&1)===1;
+      if(k<6)m[k][8]=b;else if(k===6)m[7][8]=b;else if(k===7)m[8][8]=b;else if(k===8)m[8][7]=b;else m[8][14-k]=b;
+      if(k<8)m[8][n-1-k]=b;else m[n-15+k][8]=b;}
+    m[n-8][8]=true;
+    return m;
+  }
+  const PAT=[1,0,1,1,1,0,1,0,0,0,0];
+  function pen(m){
+    const n=m.length;let p=0;
+    const scan=a=>{let s=0,r=1;for(let i=1;i<n;i++){if(a[i]===a[i-1])r++;else{if(r>=5)s+=r-2;r=1;}}if(r>=5)s+=r-2;
+      for(let i=0;i+11<=n;i++){let f=true,b=true;
+        for(let j=0;j<11;j++){const v=a[i+j]?1:0;if(v!==PAT[j])f=false;if(v!==PAT[10-j])b=false;}
+        if(f)s+=40;if(b)s+=40;}return s;};
+    for(let r=0;r<n;r++)p+=scan(m[r]);
+    for(let c=0;c<n;c++){const col=[];for(let r=0;r<n;r++)col.push(m[r][c]);p+=scan(col);}
+    for(let r=0;r<n-1;r++)for(let c=0;c<n-1;c++){const v=m[r][c];if(v===m[r][c+1]&&v===m[r+1][c]&&v===m[r+1][c+1])p+=3;}
+    let d=0;for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(m[r][c])d++;
+    p+=(Math.abs(d*20-n*n*10)/(n*n)|0)*10;
+    return p;
+  }
+  return text=>{
+    const b=codewords(text);if(!b)return null;
+    let best=null,bp=Infinity;
+    for(let k=0;k<8;k++){const m=build(b.ver,b.cw,k),s=pen(m);if(s<bp){bp=s;best=m;}}
+    return best;
+  };
+})();
+const QR_MAX=300, QR_QUIET=4;
+const qrCache=new Map();
+function qrMatrix(text){
+  if(!text)return null;
+  if(qrCache.has(text))return qrCache.get(text);
+  let m=null; try{ m=QRGen(text); }catch(e){ m=null; }
+  if(qrCache.size>40)qrCache.clear();
+  qrCache.set(text,m); return m;
+}
+const qrInk = col => isLight(col) ? '#111418' : col;
+function drawQR(ctx,o,tf){
+  const m=qrMatrix(o.text); if(!m)return;
+  const n=m.length, tot=n+QR_QUIET*2;
+  const p=mapPt(tf,o.x,o.y), half=mapLen(tf,o.r), box=half*2, cell=box/tot;
+  const x0=p.x-half, y0=p.y-half;
+  ctx.fillStyle='#ffffff'; ctx.fillRect(x0,y0,box,box);
+  ctx.fillStyle=qrInk(o.color);
+  const gx=i=>Math.round(x0+(i+QR_QUIET)*cell), gy=i=>Math.round(y0+(i+QR_QUIET)*cell);
+  for(let r=0;r<n;r++){ const ya=gy(r), yb=gy(r+1);
+    for(let c=0;c<n;c++) if(m[r][c]){ const xa=gx(c); ctx.fillRect(xa,ya,gx(c+1)-xa,yb-ya); } }
+}
+
 // ── Selection UI ────────────────────────────────────────
 function drawSel(ctx,o,tf){
   ctx.save(); ctx.setLineDash([5,4]); ctx.lineWidth=1.4; ctx.strokeStyle='#f5a623';
   const hs=handlePts(o).map(p=>mapPt(tf,p.x,p.y));
-  if(o.type==='text'||o.type==='pen'||o.type==='poly'||o.type==='marea'||o.type==='note'||o.type==='number'||o.type==='tag'){
+  if(o.type==='text'||o.type==='pen'||o.type==='poly'||o.type==='marea'||o.type==='note'||o.type==='number'||o.type==='tag'||o.type==='qr'){
     const bb=bboxScreen(o,tf); ctx.strokeRect(bb.x,bb.y,bb.w,bb.h);
   }
   ctx.setLineDash([]);
@@ -3302,6 +3555,7 @@ function bboxImg(o){
   if(o.type==='dim'){ const x=Math.min(o.x1,o.x2),y=Math.min(o.y1,o.y2); return {x,y,w:Math.abs(o.x2-o.x1),h:Math.abs(o.y2-o.y1)}; }
   if(o.type==='angle'){ const xs=[o.vx,o.ax,o.bx],ys=[o.vy,o.ay,o.by]; const x=Math.min(...xs),y=Math.min(...ys); return {x,y,w:Math.max(...xs)-x,h:Math.max(...ys)-y}; }
   if(o.type==='number'){ const hw=numHalf(o); return {x:o.x-hw,y:o.y-o.r,w:hw*2,h:o.r*2}; }
+  if(o.type==='qr'){ return {x:o.x-o.r,y:o.y-o.r,w:o.r*2,h:o.r*2}; }
   return {x:0,y:0,w:0,h:0};
 }
 const _mc=document.createElement('canvas').getContext('2d');
@@ -3330,6 +3584,7 @@ function hitTest(ip){
       if(distSeg(ip,{x:o.x1,y:o.y1},{x:o.x2,y:o.y2})<Math.max(tol,o.w)) return {id:o.id}; }
     else if(o.type==='angle'){ if(distSeg(ip,{x:o.vx,y:o.vy},{x:o.ax,y:o.ay})<Math.max(tol,o.w)||distSeg(ip,{x:o.vx,y:o.vy},{x:o.bx,y:o.by})<Math.max(tol,o.w)) return {id:o.id}; }
     else if(o.type==='number'){ if(Math.abs(ip.y-o.y)<o.r+tol && Math.abs(ip.x-o.x)<numHalf(o)+tol) return {id:o.id}; }
+    else if(o.type==='qr'){ if(Math.abs(ip.y-o.y)<o.r+tol && Math.abs(ip.x-o.x)<o.r+tol) return {id:o.id}; }
     else if(o.type==='poly'){ const n=o.pts.length;
       for(let j=0;j<n;j++){ if(distSeg(ip,o.pts[j],o.pts[(j+1)%n])<Math.max(tol,o.w)) return {id:o.id}; }
       if(o.fill && pointInPoly(ip,o.pts)) return {id:o.id}; }
@@ -3396,6 +3651,7 @@ function onDown(p){
     }
     const h=hitTest(ip); if(h){ const o=getObj(h.id);
       if(o&&(o.type==='text'||o.type==='note'||o.type==='tag')){ S.sel=o.id; syncCtx(); render(); editLabel(); lastTap=0; return; }
+      if(o&&o.type==='qr'){ S.sel=o.id; syncCtx(); render(); openQr(o); lastTap=0; return; }
       if(o&&(o.type==='dim'||o.type==='angle'||o.type==='number'||o.type==='mline'||o.type==='marea')){ S.sel=o.id; syncCtx(); render(); editValue(o); lastTap=0; return; }
     }
   }
@@ -3445,6 +3701,12 @@ function onDown(p){
       const o={id:newId(),type:'mline',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),size:fontPx(),fill:S.textFill,pxMm:S.scale.pxMm,unit:'mm'};
       act={mode:'draw',o,startImg:ip}; S.objects.push(o); render();
     }
+  } else if(S.tool==='qr'){
+    act=null; if(trySelect(ip)) return;
+    if(!S.armedQR){ openQr(null); return; }
+    beginEdit();
+    const o={id:newId(),type:'qr',x:ip.x,y:ip.y,r:S.baseW*QRR[S.style.w],text:S.armedQR.text,color:S.style.color};
+    S.objects.push(o); S.sel=o.id; commit(); syncCtx(); render();
   } else if(S.tool==='defect'){
     act=null; if(trySelect(ip)) return;
     if(!S.armedDefect){ openPicker('arm'); }
@@ -3520,7 +3782,7 @@ function onUp(){
 function applyMove(o,orig,dx,dy){
   if(o.type==='note'||o.type==='dim'){ o.x1=orig.x1+dx;o.y1=orig.y1+dy;o.x2=orig.x2+dx;o.y2=orig.y2+dy; if(orig.lx!=null){o.lx=orig.lx+dx;o.ly=orig.ly+dy;} }
   else if(o.type==='angle'){ o.vx=orig.vx+dx;o.vy=orig.vy+dy;o.ax=orig.ax+dx;o.ay=orig.ay+dy;o.bx=orig.bx+dx;o.by=orig.by+dy; }
-  else if(o.type==='text'||o.type==='number'||o.type==='tag'){ o.x=orig.x+dx;o.y=orig.y+dy; }
+  else if(o.type==='text'||o.type==='number'||o.type==='tag'||o.type==='qr'){ o.x=orig.x+dx;o.y=orig.y+dy; }
   else if(o.type==='pen'||o.type==='poly'||o.type==='marea'){ o.pts=orig.pts.map(p=>({x:p.x+dx,y:p.y+dy})); }
   else if(o.type==='mline'){ o.x1=orig.x1+dx;o.y1=orig.y1+dy;o.x2=orig.x2+dx;o.y2=orig.y2+dy; }
 }
@@ -3553,6 +3815,26 @@ function cancelLabel(){
   }
   hideOverlay('txtOverlay'); editTarget=null;
 }
+
+// ── QR link editing ─────────────────────────────────────
+let qrTarget=null;
+function openQr(o){
+  qrTarget=o||null;
+  $('qrTitle').textContent = o ? t('qr_edit_title') : t('qr_title');
+  $('qrInput').value = o ? (o.text||'') : (S.armedQR ? S.armedQR.text : '');
+  $('qrOk').textContent = o ? t('save') : t('add');
+  showOverlay('qrOverlay'); setTimeout(()=>{$('qrInput').focus();$('qrInput').select();},40);
+}
+function commitQr(){
+  const v=$('qrInput').value.trim();
+  if(!v){ toast(t('toast_qr_empty')); return; }
+  if(v.length>QR_MAX || !qrMatrix(v)){ toast(t('toast_qr_long')); return; }
+  if(qrTarget){ beginEdit(); qrTarget.text=v; commit(); render(); }
+  else { S.armedQR={text:v}; updateQr(); toast(t('toast_tap_to_place')); }
+  qrTarget=null; hideOverlay('qrOverlay');
+}
+function cancelQr(){ qrTarget=null; hideOverlay('qrOverlay'); }
+function updateQr(){ $('qrcur').textContent = S.armedQR ? S.armedQR.text : t('choose_ellipsis'); }
 
 // ── Value editing (dimension / angle / number) ──────────
 let valTarget=null, valUnit='mm';
@@ -3603,11 +3885,17 @@ function syncCtx(){
     let label=null;
     if(o.type==='note')label=t('ctx_label_text'); else if(o.type==='text'||o.type==='tag')label=t('ctx_label_edit');
     else if(o.type==='dim')label=t('ctx_label_value'); else if(o.type==='angle')label=t('ctx_label_angle'); else if(o.type==='number')label=t('ctx_label_number');
-    else if(o.type==='mline'||o.type==='marea')label=t('ctx_label_unit');
+    else if(o.type==='mline'||o.type==='marea')label=t('ctx_label_unit'); else if(o.type==='qr')label=t('ctx_label_qr');
     if(label){ btn.style.display='inline-flex'; btn.lastChild.textContent=' '+label; }
     else btn.style.display='none';
   } else { ctxEl.classList.add('hidden'); div.classList.add('hidden'); }
-  updatePolyCtl(); updateTextCtl(); updateMeasCtl();
+  updatePolyCtl(); updateTextCtl(); updateMeasCtl(); updateQrCtl();
+}
+function updateQrCtl(){
+  const o=S.sel!=null?getObj(S.sel):null;
+  const show = S.tool==='qr' || (o&&o.type==='qr');
+  $('qrctl').classList.toggle('hidden',!show);
+  if(show) updateQr();
 }
 function updateTextCtl(){
   const o=S.sel!=null?getObj(S.sel):null;
@@ -3666,6 +3954,37 @@ function addPhotoFile(file,cb){
   im.onerror=()=>{ toast(t('toast_could_not_read_file',{name:(file.name||'an image')})); URL.revokeObjectURL(url); if(cb)cb(); };
   im.src=url;
 }
+let pasteN=0;
+function addPastedBlob(blob,cb){
+  const type=blob.type||'image/png';
+  const ext=(type.split('/')[1]||'png').split('+')[0];
+  let f;
+  try{ f=new File([blob],'pasted-'+(++pasteN)+'.'+ext,{type}); }
+  catch(e){ f=blob; f.name='pasted-'+pasteN+'.'+ext; }
+  addPhotoFile(f,cb);
+}
+function pasteFromEvent(e){
+  const items=e.clipboardData&&e.clipboardData.items; if(!items) return false;
+  const blobs=[];
+  for(const it of items){ if(it.type&&it.type.indexOf('image/')===0){ const f=it.getAsFile(); if(f)blobs.push(f); } }
+  if(!blobs.length) return false;
+  blobs.forEach(b=>addPastedBlob(b));
+  toast(t('toast_pasted'));
+  return true;
+}
+async function pasteFromClipboard(){
+  if(!navigator.clipboard||!navigator.clipboard.read){ toast(t('toast_paste_unsup')); return; }
+  let items;
+  try{ items=await navigator.clipboard.read(); }
+  catch(err){ toast(t('toast_paste_denied')); return; }
+  let n=0;
+  for(const it of items){
+    const type=(it.types||[]).find(x=>x.indexOf('image/')===0);
+    if(!type) continue;
+    try{ const b=await it.getType(type); addPastedBlob(b); n++; }catch(err){}
+  }
+  if(n) toast(t('toast_pasted')); else toast(t('toast_no_clip_img'));
+}
 function addFiles(list){
   const files=[...list].filter(f=>f.type.startsWith('image/'));
   if(!files.length) return;
@@ -3682,6 +4001,7 @@ function switchTo(id){
     editTarget=null; hideOverlay('txtOverlay');
   }
   if(valTarget){ valTarget=null; hideOverlay('valOverlay'); }
+  if(qrTarget){ qrTarget=null; hideOverlay('qrOverlay'); }
   stashCur();
   const r=S.photos.find(p=>p.id===id); if(!r) return;
   S.curId=id; S.img=r.img; S.iw=r.iw; S.ih=r.ih; S.baseW=r.baseW; S.fileName=r.fileName;
@@ -3977,11 +4297,12 @@ function setTool(tl){
   S.tool=tl; document.querySelectorAll('.tool').forEach(b=>b.classList.toggle('on',b.dataset.tool===tl));
   $('numctl').classList.toggle('hidden',tl!=='number'); if(tl==='number')updateNext();
   $('defctl').classList.toggle('hidden',tl!=='defect'); if(tl==='defect'){ updateDef(); openPicker('arm'); }
+  if(tl==='qr'){ updateQr(); openQr(null); }
   $('measctl').classList.toggle('hidden',tl!=='measure');
   if(tl==='angle')toast(t('toast_draw_first_then_second'));
   if(tl==='measure'){ updateMeasCtl(); if(!(S.scale&&S.scale.pxMm>0)) toast(t('toast_set_scale_to_measure')); }
   if(tl!=='select'){S.sel=null;syncCtx();}
-  updatePolyCtl(); updateTextCtl();
+  updatePolyCtl(); updateTextCtl(); updateQrCtl();
   render();
 }
 function updateNext(){ $('nextn').textContent=(S.numPrefix||'')+S.counter; }
@@ -3995,9 +4316,16 @@ INKS.forEach(col=>{ const b=document.createElement('button'); b.className='swatc
   sw.appendChild(b); });
 // widths
 document.querySelectorAll('.wbtn').forEach(b=>b.addEventListener('click',()=>{ S.style.w=b.dataset.w; document.querySelectorAll('.wbtn').forEach(x=>x.classList.remove('on')); b.classList.add('on');
-  if(S.sel!=null){ const o=getObj(S.sel); if(o){ beginEdit(); if(o.type==='text'||o.type==='tag')o.size=fontPx(); else if(o.type==='note'||o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea'){o.w=widthPx();o.size=fontPx();} else if(o.type==='number')o.r=S.baseW*NUMR[S.style.w]; else o.w=widthPx(); commit(); render(); } } }));
+  if(S.sel!=null){ const o=getObj(S.sel); if(o){ beginEdit(); if(o.type==='text'||o.type==='tag')o.size=fontPx(); else if(o.type==='note'||o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea'){o.w=widthPx();o.size=fontPx();} else if(o.type==='number')o.r=S.baseW*NUMR[S.style.w]; else if(o.type==='qr')o.r=S.baseW*QRR[S.style.w]; else o.w=widthPx(); commit(); render(); } } }));
 
 $('load2').onclick=()=>$('file').click();
+$('paste1').onclick=pasteFromClipboard;
+$('paste2').onclick=pasteFromClipboard;
+document.addEventListener('paste',e=>{
+  const a=document.activeElement;
+  if(a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA'||a.isContentEditable)) return;
+  if(pasteFromEvent(e)) e.preventDefault();
+});
 $('shoot').onclick=()=>$('cam').click();
 $('file').onchange=e=>{ addFiles(e.target.files); e.target.value=''; };
 $('cam').onchange=e=>{ addFiles(e.target.files); e.target.value=''; };
@@ -4015,7 +4343,7 @@ $('exportall').onclick=exportAll;
 $('undo').onclick=undo; $('redo').onclick=redo;
 function setObjects(arr){ S.objects=arr; const r=curRec(); if(r)r.objects=arr; }
 $('del').onclick=()=>{ if(S.sel!=null){ beginEdit(); setObjects(S.objects.filter(o=>o.id!==S.sel)); S.sel=null; commit(); syncCtx(); render(); } };
-$('editText').onclick=()=>{ if(S.sel==null)return; const o=getObj(S.sel); if(!o)return; if(o.type==='text'||o.type==='note'||o.type==='tag')editLabel(); else editValue(o); };
+$('editText').onclick=()=>{ if(S.sel==null)return; const o=getObj(S.sel); if(!o)return; if(o.type==='qr')openQr(o); else if(o.type==='text'||o.type==='note'||o.type==='tag')editLabel(); else editValue(o); };
 $('resetn').onclick=()=>{ S.counter=1; updateNext(); toast(t('toast_numbering_reset')); };
 $('numpre').addEventListener('input',()=>{ S.numPrefix=$('numpre').value.trim(); updateNext(); dirty(); });
 $('polyfill').onclick=()=>{
@@ -4040,7 +4368,7 @@ $('clearall').onclick=()=>{
 };
 $('startover').onclick=()=>confirmBox(t('start_over_title'), t('start_over_body'),()=>{
   S.photos=[]; S.curId=null; S.img=null; S.objects=[]; S.sel=null; S.undo=[]; S.redo=[];
-  S.counter=1; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.elements=[]; S.personal=[]; S.recent=[]; S.recentTags=[]; S.favs=[];
+  S.counter=1; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.armedQR=null; S.elements=[]; S.personal=[]; S.recent=[]; S.recentTags=[]; S.favs=[];
   S.scale=null; S.measMode='line';
   S.numPrefix=''; $('numpre').value='';
   clearTimeout(dirtyT); clearSession();
@@ -4055,6 +4383,10 @@ $('zfit').onclick=fit;
 canvas.addEventListener('wheel',e=>{ if(!S.img)return; e.preventDefault(); const p=getPos(e); zoomAt(p.x,p.y, e.deltaY<0?1.1:1/1.1); },{passive:false});
 
 // modal buttons
+$('qrOk').onclick=commitQr;
+$('qrCancel').onclick=cancelQr;
+$('qrchange').onclick=()=>openQr(null);
+$('qrInput').addEventListener('keydown',e=>{ if(e.key==='Enter')commitQr(); if(e.key==='Escape')cancelQr(); });
 $('txtOk').onclick=commitLabel;
 $('txtCancel').onclick=cancelLabel;
 $('txtInput').addEventListener('keydown',e=>{ if(e.key==='Enter')commitLabel(); if(e.key==='Escape')cancelLabel(); });
@@ -4104,9 +4436,9 @@ window.addEventListener('keydown',e=>{
     if(ph){ e.preventDefault(); switchTo(ph.id); }
     return;
   }
-  const overlays=['txtOverlay','valOverlay','pickOverlay','phOverlay','cfmOverlay'];
+  const overlays=['txtOverlay','valOverlay','pickOverlay','phOverlay','cfmOverlay','qrOverlay'];
   if(overlays.some(id=>$(id).classList.contains('show'))){
-    if(e.key==='Escape'){ if($('txtOverlay').classList.contains('show'))cancelLabel(); if($('valOverlay').classList.contains('show')){hideOverlay('valOverlay');valTarget=null;} hideOverlay('pickOverlay'); hideOverlay('phOverlay'); hideOverlay('cfmOverlay'); cfmCb=null; }
+    if(e.key==='Escape'){ if($('qrOverlay').classList.contains('show'))cancelQr(); if($('txtOverlay').classList.contains('show'))cancelLabel(); if($('valOverlay').classList.contains('show')){hideOverlay('valOverlay');valTarget=null;} hideOverlay('pickOverlay'); hideOverlay('phOverlay'); hideOverlay('cfmOverlay'); cfmCb=null; }
     return;
   }
   if((e.key==='Delete'||e.key==='Backspace')&&S.sel!=null){ e.preventDefault(); $('del').onclick(); }
@@ -4116,7 +4448,7 @@ window.addEventListener('keydown',e=>{
   else if(e.key==='s')setTool('select'); else if(e.key==='t')setTool('text'); else if(e.key==='d')setTool('pen');
   else if(e.key==='l')setTool('dim'); else if(e.key==='n')setTool('note'); else if(e.key==='p')setTool('poly');
   else if(e.key==='g')setTool('angle'); else if(e.key==='#')setTool('number'); else if(e.key==='f')setTool('defect');
-  else if(e.key==='m')setTool('measure');
+  else if(e.key==='m')setTool('measure'); else if(e.key==='q')setTool('qr');
 });
 
 // ══ Measure: cameras, scale, calibration ════════════════
