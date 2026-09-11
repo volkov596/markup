@@ -479,6 +479,82 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 [dir="rtl"] .hk{margin-left:0;margin-right:auto}
 [dir="rtl"] .prow{flex-direction:row-reverse}
 [dir="rtl"] .pcat{margin-left:0;margin-right:auto}
+
+/* ── Report ────────────────────────────────────────────── */
+.rp-exp{
+  align-self:center;margin:0 auto 0 10px;padding:3px 8px;border-radius:999px;
+  font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--accent-soft);color:var(--accent);border:1px solid var(--panel-border);white-space:nowrap;
+}
+[dir="rtl"] .rp-exp{margin:0 10px 0 auto}
+.rp-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px}
+.rp-sec{margin:0 0 16px}
+.rp-h{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted-2);margin:0 0 8px}
+.rp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.rp-body input[type=text],.rp-body textarea,.rp-body select{
+  width:100%;box-sizing:border-box;height:38px;padding:0 10px;border-radius:var(--r-sm);
+  background:rgba(0,0,0,.3);border:1px solid var(--panel-border);color:var(--text);
+  font-size:13px;font-family:var(--font-ui);
+}
+.rp-body textarea{height:74px;padding:8px 10px;resize:vertical;line-height:1.45}
+.rp-body input:focus,.rp-body textarea:focus,.rp-body select:focus{outline:2px solid var(--accent)}
+.rp-opts{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+.rp-chk{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text)}
+.rp-chk input{width:17px;height:17px;accent-color:var(--accent)}
+.rp-photo{display:flex;gap:10px;align-items:flex-start;padding:8px;border:1px solid var(--panel-border);border-radius:var(--r-sm);margin-bottom:8px;background:rgba(0,0,0,.16)}
+.rp-photo .rp-th{width:64px;height:48px;flex:0 0 auto;border-radius:4px;background-size:cover;background-position:center}
+.rp-photo .rp-f{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.rp-photo .rp-n{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rp-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.rp-tbl th{text-align:left;font-weight:600;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted-2);padding:4px 5px;border-bottom:1px solid var(--panel-border);white-space:nowrap}
+.rp-tbl td{padding:3px 4px;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:middle}
+.rp-tbl td input[type=text]{height:32px;font-size:12px;padding:0 7px}
+.rp-tbl input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent)}
+.rp-tbl .rp-it{font-weight:600;color:var(--accent);white-space:nowrap;padding-left:2px}
+.rp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.rp-body .rp-cs{height:32px;font-size:12px;padding:0 6px;min-width:74px}
+.rp-x{width:28px;height:28px;border-radius:var(--r-sm);color:var(--muted);font-size:18px;display:grid;place-items:center}
+.rp-x:hover{background:var(--panel);color:var(--text)}
+.rp-empty{font-size:13px;color:var(--muted);padding:12px 2px;line-height:1.5}
+.rp-foot{flex:0 0 auto;display:flex;gap:8px;align-items:center;padding-top:10px;border-top:1px solid var(--panel-border);margin-top:6px}
+.rp-count{font-size:12px;color:var(--muted);margin-right:auto}
+@media (max-width:640px){ .rp-tbl{font-size:11px} .rp-photo .rp-th{width:52px;height:40px} }
+
+/* printable document (hidden on screen) */
+#reportDoc{display:none}
+@media print{
+  html,body{background:#fff!important;height:auto!important;overflow:visible!important}
+  body>.app,.overlay,.langmenu,#toast,#fmtMenu{display:none!important}
+  #reportDoc{display:block!important;color:#000;font-family:var(--font-ui);font-size:10pt;line-height:1.45}
+  @page{margin:14mm}
+}
+#reportDoc .pg{page-break-after:always;break-after:page}
+#reportDoc .pg:last-child{page-break-after:auto;break-after:auto}
+#reportDoc h1{font-size:19pt;font-weight:300;margin:0 0 2mm;letter-spacing:.01em}
+#reportDoc h2{font-size:12pt;font-weight:600;margin:0 0 3mm}
+#reportDoc h3{font-size:10pt;font-weight:600;margin:0 0 1.5mm}
+#reportDoc .sub{font-size:9pt;color:#555;margin:0 0 8mm}
+#reportDoc .meta{width:100%;border-collapse:collapse;margin:0 0 8mm}
+#reportDoc .meta td{padding:1.6mm 0;border-bottom:.4pt solid #ccc;font-size:10pt;vertical-align:top}
+#reportDoc .meta td:first-child{width:34mm;color:#555;font-size:9pt;padding-right:4mm}
+#reportDoc .ov{white-space:pre-wrap;font-size:10pt;margin:0 0 8mm}
+#reportDoc .sum{display:flex;gap:6mm;flex-wrap:wrap;margin:0 0 6mm}
+#reportDoc .sum div{border:.6pt solid #bbb;border-radius:1.5mm;padding:2mm 4mm;font-size:9pt;min-width:22mm}
+#reportDoc .sum b{display:block;font-size:15pt;font-weight:600;line-height:1.2}
+#reportDoc .ph{margin:0 0 4mm;page-break-inside:avoid;break-inside:avoid}
+#reportDoc .ph img{display:block;width:auto;max-width:100%;max-height:150mm;margin:0 auto;border:.4pt solid #ddd}
+#reportDoc .two .ph img{max-height:95mm}
+#reportDoc .cap{font-size:9pt;margin:1.5mm 0 0}
+#reportDoc .cap .no{font-weight:600}
+#reportDoc .cap .loc{color:#555}
+#reportDoc table.sch{width:100%;border-collapse:collapse;font-size:8.5pt;margin-top:2mm}
+#reportDoc table.sch th,#reportDoc table.sch td{border:.4pt solid #999;padding:1.2mm 1.6mm;text-align:left;vertical-align:top}
+#reportDoc table.sch th{background:#eee;font-weight:600;font-size:8pt}
+#reportDoc table.sch thead{display:table-header-group}
+#reportDoc table.sch tr{page-break-inside:avoid;break-inside:avoid}
+#reportDoc table.sch td.it{white-space:nowrap;font-weight:600}
+#reportDoc .cs{display:inline-block;padding:.3mm 1.4mm;border-radius:1mm;font-weight:600;font-size:8pt;border:.4pt solid #666}
+#reportDoc .foot{font-size:7.5pt;color:#666;margin-top:6mm;border-top:.4pt solid #ccc;padding-top:2mm}
 </style>
 </head>
 <body>
@@ -489,7 +565,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.1.0 · BETA · multilingual</span>
+        <span class="ver">v1.2.0 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -510,6 +586,10 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <button class="btn" id="exportall" style="display:none">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m6 8 3 3 3-3"/><path d="M9 11V3"/><path d="m12 10 3 3 3-3"/><path d="M15 13V5"/></svg>
         <span class="hide-sm" data-i18n="export_all">Export all</span>
+      </button>
+      <button class="btn" id="reportbtn" style="display:none" title="Report" data-i18n-title="report_title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+        <span class="hide-sm" data-i18n="report_btn">Report</span>
       </button>
       <button class="btn icon" id="help" title="Guide" aria-label="Guide" data-i18n-title="guide_title">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 4.5 1.5c0 1.5-2 2-2 3.5"/><path d="M12 17h.01"/></svg>
@@ -739,6 +819,23 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   </div>
 </div>
 
+<!-- report -->
+<div class="overlay sheetwrap" id="repOverlay">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h3 data-i18n="report_title">Report</h3>
+      <span class="rp-exp" data-i18n="rep_exp">Experimental</span>
+      <button class="x" id="repClose">&times;</button>
+    </div>
+    <div class="rp-body" id="repBody"></div>
+    <div class="rp-foot">
+      <span class="rp-count" id="repCount"></span>
+      <button class="btn ghost" id="repReset" data-i18n="rep_reset">Reset edits</button>
+      <button class="btn primary" id="repPrint" data-i18n="rep_print">Print / PDF</button>
+    </div>
+  </div>
+</div>
+
 <!-- divider card generator -->
 <div class="overlay" id="phOverlay">
   <div class="modal">
@@ -938,6 +1035,12 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
         <div class="grow"><b data-i18n="help_startover_b">Start over</b><span data-i18n="help_startover_d">Wipes all photos and annotations and returns to a blank session.</span></div>
       </div>
       <div class="gsec">
+        <h4 data-i18n="help_report_h">Report</h4>
+        <div class="grow"><b data-i18n="help_rep_rows_b">What fills the table</b><span data-i18n="help_rep_rows_d">Every defect placed from the Material or Component tab becomes one row. Tags, elements, measurements, notes and number badges near it fill that row's columns. Freehand marks and dividers stay decoration. Rows can also be typed by hand for things observed but not photographed.</span></div>
+        <div class="grow"><b data-i18n="help_rep_edit_b">Review before printing</b><span data-i18n="help_rep_edit_d">Fill in the header, caption each photo, then correct any cell by typing in it. Untick a row or a photo to leave it out. Edits are remembered; Reset edits rebuilds the table from the photos.</span></div>
+        <div class="grow"><b data-i18n="help_rep_print_b">Print / PDF</b><span data-i18n="help_rep_print_d">Builds a cover page, photo sheets and a defect schedule, then opens the print dialog — choose "Save as PDF". Photos are reduced for printing; the normal export is untouched.</span></div>
+      </div>
+      <div class="gsec">
         <h4 data-i18n="help_around_h">Getting around</h4>
         <div class="grow"><b data-i18n="help_zoom_b">Zoom &amp; pan</b><span data-i18n="help_zoom_d">Pinch or scroll to zoom; drag with two fingers, or use the +, fit, − buttons. Fit re-centres the photo.</span></div>
         <div class="grow"><b data-i18n="help_paste_b">Paste</b><span data-i18n="help_paste_d">Adds an image copied to the clipboard as a new photo. Press Ctrl/Cmd+V, or use the Paste button. Phones will ask for clipboard permission the first time.</span></div>
@@ -962,6 +1065,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 <div class="langmenu hidden" id="fmtMenu"></div>
 <div class="toast" id="toast"></div>
 
+<div id="reportDoc"></div>
 <script>
 (function(){
 "use strict";
@@ -979,6 +1083,58 @@ const LANGS=[
 ];
 const I18N={
   en:{
+    "rep_add_row":"Add row",
+    "report_title":"Report",
+    "report_btn":"Report",
+    "rep_print":"Print / PDF",
+    "rep_reset":"Reset edits",
+    "rep_header":"Report header",
+    "rep_structure":"Structure / site",
+    "rep_ref":"Reference / ID",
+    "rep_date":"Date",
+    "rep_inspector":"Inspector",
+    "rep_weather":"Weather / access",
+    "rep_overall":"Overall comment",
+    "rep_overall_ph":"General condition, scope, limitations…",
+    "rep_options":"Contents",
+    "rep_sheets":"Photo sheets",
+    "rep_per_page":"per page",
+    "rep_schedule":"Defect schedule",
+    "rep_stamp":"Number defects on report photos",
+    "rep_photos":"Photos",
+    "rep_location_ph":"Location / chainage",
+    "rep_caption_ph":"Caption",
+    "rep_findings":"Findings",
+    "rep_none":"No findings yet.",
+    "rep_none_body":"A row appears here for every defect placed from the Material or Component tab. Tags and elements are picked up as columns, not rows.",
+    "rep_no_photos":"Load a photo first.",
+    "col_item":"Item",
+    "col_photo":"Photo",
+    "rep_exp":"Experimental",
+    "col_element":"Element",
+    "col_defect":"Defect",
+    "col_cs":"CS",
+    "col_extent":"Extent",
+    "col_comment":"Comment",
+    "col_action":"Action",
+    "rep_counts":"{f} findings · {p} photos",
+    "rep_photo_n":"Photo {n}",
+    "help_report_h":"Report",
+    "help_rep_rows_b":"What fills the table",
+    "help_rep_rows_d":"Every defect placed from the Material or Component tab becomes one row. Tags, elements, measurements, notes and number badges near it fill that row's columns. Freehand marks and dividers stay decoration. Rows can also be typed by hand for things observed but not photographed.",
+    "help_rep_edit_b":"Review before printing",
+    "help_rep_edit_d":"Fill in the header, caption each photo, then correct any cell by typing in it. Untick a row or a photo to leave it out. Edits are remembered; Reset edits rebuilds the table from the photos.",
+    "help_rep_print_b":"Print / PDF",
+    "help_rep_print_d":"Builds a cover page, photo sheets and a defect schedule, then opens the print dialog — choose \"Save as PDF\". Photos are reduced for printing; the normal export is untouched.",
+    "rep_doc_title":"Inspection report",
+    "rep_summary":"Summary",
+    "rep_total":"Findings",
+    "rep_photos_word":"Photos",
+    "rep_generated":"Generated {date} · annotations and measurements as recorded on the source photos.",
+    "rep_preparing":"Preparing report…",
+    "rep_reset_title":"Reset report edits?",
+    "rep_reset_body":"Typed changes to the findings table are discarded and the table is rebuilt from the photos. Header fields and captions are kept.",
+    "rep_print_hint":"In the print dialog choose “Save as PDF”. Turn off headers and footers for a cleaner page.",
     "undo_title":"Undo",
     "redo_title":"Redo",
     "photo_btn":"Photo",
@@ -1240,6 +1396,58 @@ const I18N={
     "scale_colon":"Scale: {value} px/mm"
   },
   zh:{
+    "rep_add_row":"添加行",
+    "report_title":"报告",
+    "report_btn":"报告",
+    "rep_exp":"实验性",
+    "rep_print":"打印 / PDF",
+    "rep_reset":"重置修改",
+    "rep_header":"报告抬头",
+    "rep_structure":"结构 / 地点",
+    "rep_ref":"编号 / ID",
+    "rep_date":"日期",
+    "rep_inspector":"检查人",
+    "rep_weather":"天气 / 通道",
+    "rep_overall":"总体意见",
+    "rep_overall_ph":"总体状况、范围、限制…",
+    "rep_options":"内容",
+    "rep_sheets":"照片页",
+    "rep_per_page":"张/页",
+    "rep_schedule":"缺陷清单",
+    "rep_stamp":"在报告照片上标注编号",
+    "rep_photos":"照片",
+    "rep_location_ph":"位置 / 桩号",
+    "rep_caption_ph":"图注",
+    "rep_findings":"检查结果",
+    "rep_none":"暂无结果。",
+    "rep_none_body":"从“材料”或“构件”选项卡放置的每个缺陷都会在此生成一行。标签和部位只填入列，不生成行。",
+    "rep_no_photos":"请先加载照片。",
+    "col_item":"序号",
+    "col_photo":"照片",
+    "col_element":"部位",
+    "col_defect":"缺陷",
+    "col_cs":"CS",
+    "col_extent":"范围",
+    "col_comment":"备注",
+    "col_action":"措施",
+    "rep_counts":"{f} 项结果 · {p} 张照片",
+    "rep_photo_n":"照片 {n}",
+    "rep_doc_title":"检查报告",
+    "rep_summary":"汇总",
+    "rep_total":"结果",
+    "rep_photos_word":"照片",
+    "rep_generated":"生成于 {date} · 标注与测量按源照片记录。",
+    "rep_preparing":"正在生成报告…",
+    "rep_reset_title":"重置报告修改？",
+    "rep_reset_body":"将放弃对结果表格的手动修改，并根据照片重新生成。抬头字段和图注将保留。",
+    "rep_print_hint":"在打印对话框中选择“另存为 PDF”。关闭页眉页脚可获得更整洁的版面。",
+    "help_report_h":"报告",
+    "help_rep_rows_b":"表格如何填充",
+    "help_rep_rows_d":"从“材料”或“构件”选项卡放置的每个缺陷生成一行。其附近的标签、部位、测量、注释和编号徽章会填入该行各列。徒手标记和分隔线仅作标注，不入表。未拍照的观察项也可手动添加为行。",
+    "help_rep_edit_b":"打印前复核",
+    "help_rep_edit_d":"填写抬头，为每张照片添加图注，然后直接在单元格中输入以修改。取消勾选可排除某行或某张照片。修改会被保存；“重置修改”将根据照片重新生成表格。",
+    "help_rep_print_b":"打印 / PDF",
+    "help_rep_print_d":"生成封面、照片页和缺陷清单，然后打开打印对话框 — 选择“另存为 PDF”。打印用照片会压缩；常规导出不受影响。",
     "undo_title":"撤销",
     "redo_title":"重做",
     "photo_btn":"照片",
@@ -1501,6 +1709,58 @@ const I18N={
     "scale_colon":"比例：{value} 像素/毫米"
   },
   es:{
+    "rep_add_row":"Añadir fila",
+    "report_title":"Informe",
+    "report_btn":"Informe",
+    "rep_exp":"Experimental",
+    "rep_print":"Imprimir / PDF",
+    "rep_reset":"Restablecer ediciones",
+    "rep_header":"Encabezado del informe",
+    "rep_structure":"Estructura / sitio",
+    "rep_ref":"Referencia / ID",
+    "rep_date":"Fecha",
+    "rep_inspector":"Inspector",
+    "rep_weather":"Clima / acceso",
+    "rep_overall":"Comentario general",
+    "rep_overall_ph":"Estado general, alcance, limitaciones…",
+    "rep_options":"Contenido",
+    "rep_sheets":"Fichas de fotos",
+    "rep_per_page":"por página",
+    "rep_schedule":"Listado de defectos",
+    "rep_stamp":"Numerar defectos en las fotos del informe",
+    "rep_photos":"Fotos",
+    "rep_location_ph":"Ubicación / progresiva",
+    "rep_caption_ph":"Pie de foto",
+    "rep_findings":"Hallazgos",
+    "rep_none":"Aún no hay hallazgos.",
+    "rep_none_body":"Aparece una fila por cada defecto colocado desde la pestaña Material o Componente. Las etiquetas y los elementos llenan columnas, no crean filas.",
+    "rep_no_photos":"Cargue una foto primero.",
+    "col_item":"N.º",
+    "col_photo":"Foto",
+    "col_element":"Elemento",
+    "col_defect":"Defecto",
+    "col_cs":"CS",
+    "col_extent":"Extensión",
+    "col_comment":"Comentario",
+    "col_action":"Acción",
+    "rep_counts":"{f} hallazgos · {p} fotos",
+    "rep_photo_n":"Foto {n}",
+    "rep_doc_title":"Informe de inspección",
+    "rep_summary":"Resumen",
+    "rep_total":"Hallazgos",
+    "rep_photos_word":"Fotos",
+    "rep_generated":"Generado el {date} · anotaciones y mediciones según las fotos de origen.",
+    "rep_preparing":"Preparando el informe…",
+    "rep_reset_title":"¿Restablecer las ediciones del informe?",
+    "rep_reset_body":"Se descartan los cambios escritos en la tabla de hallazgos y la tabla se reconstruye a partir de las fotos. Se conservan el encabezado y los pies de foto.",
+    "rep_print_hint":"En el diálogo de impresión elija «Guardar como PDF». Desactive encabezados y pies de página para una hoja más limpia.",
+    "help_report_h":"Informe",
+    "help_rep_rows_b":"Qué llena la tabla",
+    "help_rep_rows_d":"Cada defecto colocado desde la pestaña Material o Componente genera una fila. Las etiquetas, elementos, mediciones, notas y números cercanos llenan las columnas de esa fila. Los trazos a mano alzada y los divisores quedan como decoración. También se pueden escribir filas a mano para lo observado sin foto.",
+    "help_rep_edit_b":"Revisar antes de imprimir",
+    "help_rep_edit_d":"Complete el encabezado, ponga un pie a cada foto y corrija cualquier celda escribiendo en ella. Desmarque una fila o una foto para excluirla. Las ediciones se recuerdan; «Restablecer ediciones» reconstruye la tabla a partir de las fotos.",
+    "help_rep_print_b":"Imprimir / PDF",
+    "help_rep_print_d":"Crea una portada, fichas de fotos y un listado de defectos, y abre el diálogo de impresión: elija «Guardar como PDF». Las fotos se reducen para imprimir; la exportación normal no cambia.",
     "undo_title":"Deshacer",
     "redo_title":"Rehacer",
     "photo_btn":"Foto",
@@ -1762,6 +2022,58 @@ const I18N={
     "scale_colon":"Escala: {value} px/mm"
   },
   hi:{
+    "rep_add_row":"पंक्ति जोड़ें",
+    "report_title":"रिपोर्ट",
+    "report_btn":"रिपोर्ट",
+    "rep_exp":"प्रायोगिक",
+    "rep_print":"प्रिंट / PDF",
+    "rep_reset":"बदलाव रीसेट करें",
+    "rep_header":"रिपोर्ट शीर्षक",
+    "rep_structure":"संरचना / स्थल",
+    "rep_ref":"संदर्भ / आईडी",
+    "rep_date":"दिनांक",
+    "rep_inspector":"निरीक्षक",
+    "rep_weather":"मौसम / पहुँच",
+    "rep_overall":"समग्र टिप्पणी",
+    "rep_overall_ph":"सामान्य स्थिति, दायरा, सीमाएँ…",
+    "rep_options":"सामग्री",
+    "rep_sheets":"फ़ोटो शीट",
+    "rep_per_page":"प्रति पृष्ठ",
+    "rep_schedule":"दोष सूची",
+    "rep_stamp":"रिपोर्ट फ़ोटो पर दोषों को क्रमांकित करें",
+    "rep_photos":"फ़ोटो",
+    "rep_location_ph":"स्थान / चेनेज",
+    "rep_caption_ph":"कैप्शन",
+    "rep_findings":"निष्कर्ष",
+    "rep_none":"अभी कोई निष्कर्ष नहीं।",
+    "rep_none_body":"सामग्री या घटक टैब से रखे गए हर दोष के लिए यहाँ एक पंक्ति बनती है। टैग और तत्व पंक्ति नहीं, केवल कॉलम भरते हैं।",
+    "rep_no_photos":"पहले एक फ़ोटो लोड करें।",
+    "col_item":"क्रम",
+    "col_photo":"फ़ोटो",
+    "col_element":"तत्व",
+    "col_defect":"दोष",
+    "col_cs":"CS",
+    "col_extent":"विस्तार",
+    "col_comment":"टिप्पणी",
+    "col_action":"कार्रवाई",
+    "rep_counts":"{f} निष्कर्ष · {p} फ़ोटो",
+    "rep_photo_n":"फ़ोटो {n}",
+    "rep_doc_title":"निरीक्षण रिपोर्ट",
+    "rep_summary":"सारांश",
+    "rep_total":"निष्कर्ष",
+    "rep_photos_word":"फ़ोटो",
+    "rep_generated":"{date} को बनाई गई · एनोटेशन और माप स्रोत फ़ोटो के अनुसार।",
+    "rep_preparing":"रिपोर्ट तैयार हो रही है…",
+    "rep_reset_title":"रिपोर्ट के बदलाव रीसेट करें?",
+    "rep_reset_body":"निष्कर्ष तालिका में टाइप किए गए बदलाव हटा दिए जाएँगे और तालिका फ़ोटो से दोबारा बनेगी। शीर्षक फ़ील्ड और कैप्शन बने रहेंगे।",
+    "rep_print_hint":"प्रिंट डायलॉग में “Save as PDF” चुनें। साफ़ पृष्ठ के लिए हेडर और फ़ुटर बंद करें।",
+    "help_report_h":"रिपोर्ट",
+    "help_rep_rows_b":"तालिका कैसे भरती है",
+    "help_rep_rows_d":"सामग्री या घटक टैब से रखा गया हर दोष एक पंक्ति बनाता है। उसके पास मौजूद टैग, तत्व, माप, नोट और नंबर बैज उस पंक्ति के कॉलम भरते हैं। फ़्रीहैंड निशान और डिवाइडर केवल चिह्न रहते हैं। बिना फ़ोटो के देखी गई बातों के लिए पंक्तियाँ हाथ से भी जोड़ी जा सकती हैं।",
+    "help_rep_edit_b":"प्रिंट से पहले समीक्षा",
+    "help_rep_edit_d":"शीर्षक भरें, हर फ़ोटो को कैप्शन दें, फिर किसी भी सेल में टाइप करके सुधार करें। किसी पंक्ति या फ़ोटो को छोड़ने के लिए टिक हटाएँ। बदलाव याद रहते हैं; “बदलाव रीसेट करें” तालिका को फ़ोटो से दोबारा बनाता है।",
+    "help_rep_print_b":"प्रिंट / PDF",
+    "help_rep_print_d":"कवर पेज, फ़ोटो शीट और दोष सूची बनाकर प्रिंट डायलॉग खोलता है — “Save as PDF” चुनें। प्रिंट के लिए फ़ोटो छोटी की जाती हैं; सामान्य एक्सपोर्ट अपरिवर्तित रहता है।",
     "undo_title":"पूर्ववत करें",
     "redo_title":"फिर से करें",
     "photo_btn":"फ़ोटो",
@@ -2023,6 +2335,58 @@ const I18N={
     "scale_colon":"स्केल: {value} px/mm"
   },
   ar:{
+    "rep_add_row":"إضافة صف",
+    "report_title":"تقرير",
+    "report_btn":"تقرير",
+    "rep_exp":"تجريبي",
+    "rep_print":"طباعة / PDF",
+    "rep_reset":"إعادة تعيين التعديلات",
+    "rep_header":"ترويسة التقرير",
+    "rep_structure":"المنشأ / الموقع",
+    "rep_ref":"المرجع / المعرّف",
+    "rep_date":"التاريخ",
+    "rep_inspector":"المفتّش",
+    "rep_weather":"الطقس / إمكانية الوصول",
+    "rep_overall":"ملاحظة عامة",
+    "rep_overall_ph":"الحالة العامة، النطاق، القيود…",
+    "rep_options":"المحتويات",
+    "rep_sheets":"صفحات الصور",
+    "rep_per_page":"لكل صفحة",
+    "rep_schedule":"جدول العيوب",
+    "rep_stamp":"ترقيم العيوب على صور التقرير",
+    "rep_photos":"الصور",
+    "rep_location_ph":"الموقع / الكيلومتر",
+    "rep_caption_ph":"تعليق",
+    "rep_findings":"النتائج",
+    "rep_none":"لا توجد نتائج بعد.",
+    "rep_none_body":"يظهر صف لكل عيب يُوضع من تبويب «المادة» أو «العنصر». أما الوسوم والعناصر فتملأ الأعمدة ولا تنشئ صفوفًا.",
+    "rep_no_photos":"حمّل صورة أولًا.",
+    "col_item":"رقم",
+    "col_photo":"الصورة",
+    "col_element":"العنصر",
+    "col_defect":"العيب",
+    "col_cs":"CS",
+    "col_extent":"المدى",
+    "col_comment":"ملاحظة",
+    "col_action":"الإجراء",
+    "rep_counts":"{f} نتائج · {p} صور",
+    "rep_photo_n":"صورة {n}",
+    "rep_doc_title":"تقرير فحص",
+    "rep_summary":"ملخّص",
+    "rep_total":"النتائج",
+    "rep_photos_word":"الصور",
+    "rep_generated":"أُنشئ في {date} · التعليقات والقياسات كما سُجّلت على الصور الأصلية.",
+    "rep_preparing":"جارٍ تجهيز التقرير…",
+    "rep_reset_title":"إعادة تعيين تعديلات التقرير؟",
+    "rep_reset_body":"ستُلغى التعديلات المكتوبة في جدول النتائج ويُعاد بناء الجدول من الصور. تبقى حقول الترويسة والتعليقات.",
+    "rep_print_hint":"في مربّع الطباعة اختر «حفظ بصيغة PDF». أوقف الرأس والتذييل للحصول على صفحة أنظف.",
+    "help_report_h":"التقرير",
+    "help_rep_rows_b":"ما الذي يملأ الجدول",
+    "help_rep_rows_d":"كل عيب يُوضع من تبويب «المادة» أو «العنصر» ينشئ صفًا واحدًا. والوسوم والعناصر والقياسات والملاحظات وشارات الأرقام القريبة منه تملأ أعمدة ذلك الصف. أما الرسم الحر والفواصل فتبقى للتوضيح فقط. ويمكن أيضًا كتابة صفوف يدويًا لما لوحظ دون تصوير.",
+    "help_rep_edit_b":"المراجعة قبل الطباعة",
+    "help_rep_edit_d":"املأ الترويسة، وأضف تعليقًا لكل صورة، ثم صحّح أي خانة بالكتابة فيها. أزل علامة الاختيار لاستبعاد صف أو صورة. تُحفظ التعديلات؛ و«إعادة تعيين التعديلات» تعيد بناء الجدول من الصور.",
+    "help_rep_print_b":"طباعة / PDF",
+    "help_rep_print_d":"ينشئ صفحة غلاف وصفحات صور وجدول عيوب، ثم يفتح مربّع الطباعة — اختر «حفظ بصيغة PDF». تُصغَّر الصور للطباعة؛ ولا يتغيّر التصدير العادي.",
     "undo_title":"تراجع",
     "redo_title":"إعادة",
     "photo_btn":"صورة",
@@ -2284,6 +2648,58 @@ const I18N={
     "scale_colon":"المقياس: {value} بكسل/مم"
   },
   ru:{
+    "rep_add_row":"Добавить строку",
+    "report_title":"Отчёт",
+    "report_btn":"Отчёт",
+    "rep_exp":"Экспериментально",
+    "rep_print":"Печать / PDF",
+    "rep_reset":"Сбросить правки",
+    "rep_header":"Шапка отчёта",
+    "rep_structure":"Сооружение / объект",
+    "rep_ref":"Шифр / ID",
+    "rep_date":"Дата",
+    "rep_inspector":"Обследователь",
+    "rep_weather":"Погода / доступ",
+    "rep_overall":"Общий комментарий",
+    "rep_overall_ph":"Общее состояние, объём, ограничения…",
+    "rep_options":"Состав",
+    "rep_sheets":"Фотолисты",
+    "rep_per_page":"на страницу",
+    "rep_schedule":"Ведомость дефектов",
+    "rep_stamp":"Нумеровать дефекты на фото отчёта",
+    "rep_photos":"Фотографии",
+    "rep_location_ph":"Место / пикет",
+    "rep_caption_ph":"Подпись",
+    "rep_findings":"Дефекты",
+    "rep_none":"Дефектов пока нет.",
+    "rep_none_body":"Строка появляется для каждого дефекта, поставленного на вкладке «Материал» или «Элемент». Метки и конструктивные элементы заполняют столбцы, но строк не создают.",
+    "rep_no_photos":"Сначала загрузите фото.",
+    "col_item":"№",
+    "col_photo":"Фото",
+    "col_element":"Констр. элемент",
+    "col_defect":"Дефект",
+    "col_cs":"CS",
+    "col_extent":"Размер",
+    "col_comment":"Комментарий",
+    "col_action":"Меры",
+    "rep_counts":"{f} дефектов · {p} фото",
+    "rep_photo_n":"Фото {n}",
+    "rep_doc_title":"Отчёт об обследовании",
+    "rep_summary":"Сводка",
+    "rep_total":"Дефектов",
+    "rep_photos_word":"Фото",
+    "rep_generated":"Сформировано {date} · разметка и измерения — по исходным фотографиям.",
+    "rep_preparing":"Подготовка отчёта…",
+    "rep_reset_title":"Сбросить правки отчёта?",
+    "rep_reset_body":"Ручные изменения в таблице дефектов будут отменены, таблица соберётся заново из фотографий. Шапка и подписи сохранятся.",
+    "rep_print_hint":"В окне печати выберите «Сохранить как PDF». Отключите колонтитулы для более чистой страницы.",
+    "help_report_h":"Отчёт",
+    "help_rep_rows_b":"Чем заполняется таблица",
+    "help_rep_rows_d":"Каждый дефект, поставленный на вкладке «Материал» или «Элемент», даёт одну строку. Ближайшие метки, конструктивные элементы, измерения, заметки и номерные значки заполняют столбцы этой строки. Рисунок от руки и разделители остаются оформлением. Строки можно также добавить вручную для замеченного, но не сфотографированного.",
+    "help_rep_edit_b":"Проверка перед печатью",
+    "help_rep_edit_d":"Заполните шапку, подпишите каждое фото, затем исправьте любую ячейку, вводя текст прямо в ней. Снимите галочку, чтобы исключить строку или фото. Правки сохраняются; «Сбросить правки» пересобирает таблицу из фотографий.",
+    "help_rep_print_b":"Печать / PDF",
+    "help_rep_print_d":"Собирает титульную страницу, фотолисты и ведомость дефектов и открывает окно печати — выберите «Сохранить как PDF». Фото уменьшаются для печати; обычный экспорт не меняется.",
     "undo_title":"Отменить",
     "redo_title":"Повторить",
     "photo_btn":"Фото",
@@ -3146,6 +3562,8 @@ const S = {
   photos:[], curId:null, elements:[], personal:[],
   undo:[], redo:[], pending:null,
   scale:null, measMode:'line', measUnitLine:'mm', measUnitArea:'m2', cams:[],
+  rep:{ structure:'', ref:'', date:'', inspector:'', weather:'', overall:'',
+        sheets:true, perPage:1, schedule:true, stampNums:true, ov:{}, manual:[] },
 };
 
 // ── Geometry helpers ────────────────────────────────────
@@ -3711,7 +4129,7 @@ function onDown(p){
     act=null; if(trySelect(ip)) return;
     if(!S.armedDefect){ openPicker('arm'); }
     else { beginEdit(); const a=S.armedDefect;
-      const o={id:newId(),type:'tag',x:ip.x,y:ip.y,text:a.text,color:a.color||S.style.color,size:fontPx(),sev:a.sev};
+      const o={id:newId(),type:'tag',x:ip.x,y:ip.y,text:a.text,color:a.color||S.style.color,size:fontPx(),sev:a.sev,cat:a.cat||'',term:a.term||a.text,grp:a.grp||''};
       S.objects.push(o); S.sel=o.id; commit(); syncCtx(); render(); }
   } else {
     beginEdit();
@@ -3946,7 +4364,8 @@ function addPhotoFile(file,cb){
     const rec={ id:rid, blob:file, img:im, iw:im.naturalWidth, ih:im.naturalHeight,
       baseW:Math.max(2,Math.round(Math.max(im.naturalWidth,im.naturalHeight)/450)),
       fileName:fn,
-      objects:[], undo:[], redo:[], counter:1, scale:null, thumb:makeThumb(im) };
+      objects:[], undo:[], redo:[], counter:1, scale:null,
+      caption:'', loc:'', repEx:false, thumb:makeThumb(im) };
     S.photos.push(rec); URL.revokeObjectURL(url);
     persistBlob(rec);
     switchTo(rec.id); dirty(); if(cb)cb();
@@ -4025,9 +4444,10 @@ function deletePhoto(id){
 }
 function renderTray(){
   const tr=$('tray');
-  if(!S.photos.length){ tr.classList.add('hidden'); $('exportall').style.display='none'; return; }
+  if(!S.photos.length){ tr.classList.add('hidden'); $('exportall').style.display='none'; $('reportbtn').style.display='none'; return; }
   tr.classList.remove('hidden');
   $('exportall').style.display = S.photos.length>1 ? '' : 'none';
+  $('reportbtn').style.display='';
   tr.innerHTML = S.photos.map((p,i)=>
     '<div class="thumb'+(p.id===S.curId?' on':'')+'" data-pid="'+p.id+'" style="background-image:url('+p.thumb+')">'+
     (i<10?'<span class="hk">'+((i+1)%10)+'</span>':'')+
@@ -4106,8 +4526,8 @@ function persistBlob(rec){ idbPut('blob:'+rec.id, rec.blob); }
 function dirty(){ clearTimeout(dirtyT); dirtyT=setTimeout(saveSession,1000); }
 function saveSession(){
   if(!db)return; stashCur();
-  idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counter:p.counter,scale:p.scale||null})),
-    curId:S.curId, favs:S.favs, recent:S.recent, recentTags:S.recentTags, elements:S.elements, personal:S.personal, fmt:S.fmt, numPrefix:S.numPrefix, uid, pid });
+  idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counter:p.counter,scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',repEx:!!p.repEx})),
+    curId:S.curId, favs:S.favs, recent:S.recent, recentTags:S.recentTags, elements:S.elements, personal:S.personal, fmt:S.fmt, numPrefix:S.numPrefix, rep:S.rep, uid, pid });
 }
 function clearSession(){ if(!db)return; try{ db.transaction('session','readwrite').objectStore('session').clear(); }catch(e){} }
 async function restoreSession(){
@@ -4115,6 +4535,7 @@ async function restoreSession(){
   uid=d.uid||uid; pid=d.pid||pid;
   S.favs=d.favs||[]; S.recent=d.recent||[]; S.recentTags=d.recentTags||[]; S.elements=d.elements||[]; S.personal=d.personal||[];
   S.numPrefix=d.numPrefix||''; $('numpre').value=S.numPrefix;
+  if(d.rep) S.rep=Object.assign(S.rep,d.rep); if(!S.rep.ov) S.rep.ov={}; if(!S.rep.manual) S.rep.manual=[];
   if(d.fmt){ S.fmt=d.fmt; } $('fmtCur').textContent=(S.fmt==='png'?'PNG':'JPG');
   const recs=[];
   for(const pd of d.photos){
@@ -4123,7 +4544,8 @@ async function restoreSession(){
       const url=URL.createObjectURL(blob); const im=new Image();
       im.onload=()=>{ res({ id:pd.id, blob, img:im, iw:im.naturalWidth, ih:im.naturalHeight,
         baseW:Math.max(2,Math.round(Math.max(im.naturalWidth,im.naturalHeight)/450)),
-        fileName:pd.fileName, objects:pd.objects||[], undo:[], redo:[], counter:pd.counter||1, scale:pd.scale||null, thumb:makeThumb(im) });
+        fileName:pd.fileName, objects:pd.objects||[], undo:[], redo:[], counter:pd.counter||1, scale:pd.scale||null,
+        caption:pd.caption||'', loc:pd.loc||'', repEx:!!pd.repEx, thumb:makeThumb(im) });
         URL.revokeObjectURL(url); };
       im.onerror=()=>{ URL.revokeObjectURL(url); res(null); };
       im.src=url;
@@ -4249,12 +4671,13 @@ function addRecent(t){
   dirty();
 }
 function toggleFav(t){ if(S.favs.includes(t)) S.favs=S.favs.filter(x=>x!==t); else S.favs=[t,...S.favs].slice(0,20); dirty(); renderPicker(); }
+function grpOf(tab,term){ const d=DEFECTS[tab]; if(!d) return ''; for(const c in d){ if(d[c].indexOf(term)>=0) return c; } return ''; }
 function chooseTerm(term){
   const effSevK=(pickTab==='tags'||pickTab==='elements')?'none':curSev;
   const sev=SEV.find(s=>s.k===effSevK); addRecent(term);
   const label=(pickTab==='elements')?term:trTerm(term);
   if(pickMode==='feed'){ if(pickFeed) pickFeed(label, sev.color); }
-  else { S.armedDefect={text:label, sev:effSevK, color:sev.color}; updateDef(); toast(t('toast_tap_to_place')); }
+  else { S.armedDefect={text:label, sev:effSevK, color:sev.color, cat:pickTab, term:term, grp:grpOf(pickTab,term)}; updateDef(); toast(t('toast_tap_to_place')); }
   hideOverlay('pickOverlay');
 }
 function updateDef(){
@@ -4370,6 +4793,7 @@ $('startover').onclick=()=>confirmBox(t('start_over_title'), t('start_over_body'
   S.photos=[]; S.curId=null; S.img=null; S.objects=[]; S.sel=null; S.undo=[]; S.redo=[];
   S.counter=1; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.armedQR=null; S.elements=[]; S.personal=[]; S.recent=[]; S.recentTags=[]; S.favs=[];
   S.scale=null; S.measMode='line';
+  S.rep={ structure:'', ref:'', date:'', inspector:'', weather:'', overall:'', sheets:true, perPage:1, schedule:true, stampNums:true, ov:{}, manual:[] };
   S.numPrefix=''; $('numpre').value='';
   clearTimeout(dirtyT); clearSession();
   updateUndo(); syncCtx(); updateNext(); updateDef(); renderTray();
@@ -4425,7 +4849,8 @@ $('phColors').addEventListener('click',e=>{ const b=e.target.closest('[data-c]')
 // keyboard
 window.addEventListener('keydown',e=>{
   const tgt=e.target;
-  if(tgt&&(tgt.tagName==='INPUT'||tgt.tagName==='TEXTAREA'))return; // typing — never hijack
+  if(tgt&&((tgt.tagName==='INPUT'&&tgt.type!=='checkbox')||tgt.tagName==='TEXTAREA'||tgt.tagName==='SELECT'))return; // typing — never hijack
+  if($('repOverlay').classList.contains('show')&&!$('cfmOverlay').classList.contains('show')){ if(e.key==='Escape')hideOverlay('repOverlay'); return; }
   if($('aboutOverlay').classList.contains('show')){ if(e.key==='Escape')hideOverlay('aboutOverlay'); return; }
   if($('helpOverlay').classList.contains('show')){ if(e.key==='Escape')hideOverlay('helpOverlay'); return; }
   if($('calOverlay').classList.contains('show')){ if(e.key==='Escape')closeCal(); return; }
@@ -4711,6 +5136,300 @@ calCanvas.addEventListener('wheel',e=>{ if(!calS.img)return; e.preventDefault();
   calS.view.s=calClampScale(calS.view.s*f); calS.view.ox=p.x-before.x*calS.view.s; calS.view.oy=p.y-before.y*calS.view.s; calUpdateZoom(); calRender(); },{passive:false});
 
 loadCams();
+
+// ── Report ──────────────────────────────────────────────
+const SEV_CS={good:'CS1',fair:'CS2',poor:'CS3',severe:'CS4'};
+const CS_COL={CS1:'#dff0df',CS2:'#fbf6cf',CS3:'#fbe2c8',CS4:'#f6d3d3'};
+const CS_KEYS=['','CS1','CS2','CS3','CS4'];
+
+// A row is created by a defect chip from Material or Component only.
+// Legacy chips carry no category — severity is then the only signal.
+function isFinding(o){
+  if(!o||o.type!=='tag') return false;
+  if(o.cat) return o.cat==='material'||o.cat==='component';
+  return !!(o.sev&&o.sev!=='none');
+}
+// the point an object "is about": note tip, angle vertex, otherwise its centre
+function anchorOf(o){
+  if(o.type==='note') return {x:o.x1,y:o.y1};
+  if(o.type==='angle') return {x:o.vx,y:o.vy};
+  if(o.type==='number'||o.type==='tag'||o.type==='text') return {x:o.x,y:o.y};
+  if(o.type==='marea'||o.type==='poly') return polyCentroid(o.pts);
+  const b=bboxImg(o); return {x:b.x+b.w/2,y:b.y+b.h/2};
+}
+function auxText(o){
+  if(o.type==='mline') return (o.pxMm>0)?mlineLabel(o):'';
+  if(o.type==='marea') return (o.pxMm>0)?mareaLabel(o):'';
+  if(o.type==='dim') return o.value?(o.value+' '+(o.unit||'')):'';
+  if(o.type==='angle') return o.value?(o.value+'°'):'';
+  return o.text||'';
+}
+// legacy chips have no category — recognise element names and tag words by text
+const TAG_WORDS=DEFECTS.tags.Tags;
+function tagBucket(o){
+  if(o.cat) return o.cat==='elements'?'el':(o.cat==='tags'?'act':'com');
+  const tx=o.text||'';
+  if(S.elements.includes(tx)) return 'el';
+  if(TAG_WORDS.some(w=>w===tx||trTerm(w)===tx)) return 'act';
+  return 'com';
+}
+function repOv(id){ if(!S.rep.ov)S.rep.ov={}; if(!S.rep.ov[id])S.rep.ov[id]={}; return S.rep.ov[id]; }
+function rowFromOv(id,base){
+  const e=(S.rep.ov||{})[id]||{};
+  return { id:id, item:'',
+    el: e.el!=null?e.el:base.el, grp: e.grp!=null?e.grp:base.grp, def: e.def!=null?e.def:base.def,
+    cs: e.cs!=null?e.cs:base.cs, ext: e.ext!=null?e.ext:base.ext, com: e.com!=null?e.com:base.com,
+    act: e.act!=null?e.act:base.act, ex: !!e.ex };
+}
+
+let repBlocks=[], repManual=[];
+function harvest(){
+  stashCur();
+  const blocks=[]; let seq=1; const savedBase=S.baseW;
+  S.photos.forEach((rec,pi)=>{
+    S.baseW=rec.baseW;
+    const objs=rec.objects||[];
+    const rad=0.30*Math.min(rec.iw,rec.ih);
+    const cand=objs.filter(isFinding).map(f=>({o:f,c:anchorOf(f),el:[],act:[],ext:[],com:[],num:null}));
+    const loose=[], elems=[];
+    for(const o of objs){
+      if(isFinding(o)) continue;
+      let bucket='';
+      if(o.type==='tag') bucket=tagBucket(o);
+      else if(o.type==='mline'||o.type==='marea'||o.type==='dim'||o.type==='angle') bucket='ext';
+      else if(o.type==='note'||o.type==='text') bucket='com';
+      else if(o.type==='number') bucket='num';
+      else continue;
+      const txt=(bucket==='num')?'':auxText(o);
+      if(bucket!=='num'&&!txt) continue;
+      const c=anchorOf(o);
+      if(bucket==='el'){ elems.push({c:c,txt:txt}); continue; }
+      let best=null,bd=Infinity;
+      for(const cd of cand){ const d=Math.hypot(c.x-cd.c.x,c.y-cd.c.y); if(d<bd){bd=d;best=cd;} }
+      if(!best||bd>rad){ if(bucket==='com'||bucket==='ext') loose.push(txt); continue; }
+      if(bucket==='num'){ if(best.num==null) best.num=numLabel(o); }
+      else best[bucket].push(txt);
+    }
+    // element chips name a location: every finding takes its nearest one, no distance limit
+    if(elems.length) for(const cd of cand){
+      let best=null,bd=Infinity;
+      for(const el of elems){ const d=Math.hypot(el.c.x-cd.c.x,el.c.y-cd.c.y); if(d<bd){bd=d;best=el;} }
+      if(best) cd.el.push(best.txt);
+    }
+    const rows=cand.map(cd=>{
+      const row=rowFromOv(String(cd.o.id),{ el:cd.el.join(', '), grp:trCat(cd.o.grp||''), def:cd.o.text||'',
+        cs:SEV_CS[cd.o.sev]||'', ext:cd.ext.join(' · '), com:cd.com.join('; '), act:cd.act.join(', ') });
+      row.pi=pi; row.oid=cd.o.id; row.badge=cd.num; return row;
+    });
+    blocks.push({pi:pi, rec:rec, rows:rows, loose:loose, ex:!!rec.repEx});
+  });
+  S.baseW=savedBase;
+  let n=0;
+  for(const b of blocks){ if(b.ex) continue; b.n=++n;
+    for(const r of b.rows){ if(r.ex) continue; if(r.badge!=null) r.item=r.badge; else r.item=String(seq++); } }
+  // rows typed by hand in the review screen — no photo behind them
+  repManual=(S.rep.manual||[]).map(id=>rowFromOv(id,{el:'',grp:'',def:'',cs:'',ext:'',com:'',act:''}));
+  for(const r of repManual){ if(!r.ex) r.item=String(seq++); }
+  return blocks;
+}
+
+function repFld(key,label){
+  return '<label style="display:block"><span class="rp-h" style="display:block;margin-bottom:4px">'+esc(label)+'</span>'+
+    '<input type="text" data-rep="'+key+'" value="'+esc(S.rep[key]||'')+'" autocomplete="off"></label>';
+}
+function csSelect(row){
+  return '<select class="rp-cs" data-rid="'+row.id+'" data-f="cs">'+
+    CS_KEYS.map(k=>'<option value="'+k+'"'+(k===row.cs?' selected':'')+'>'+(k||'—')+'</option>').join('')+'</select>';
+}
+function cell(row,f,w){
+  return '<td><input type="text" data-rid="'+row.id+'" data-f="'+f+'" value="'+esc(row[f]||'')+'" autocomplete="off"'+(w?' style="min-width:'+w+'px"':'')+'></td>';
+}
+function localISODate(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function openReport(){
+  if(!S.photos.length){ toast(t('rep_no_photos')); return; }
+  if(!S.rep.date){ S.rep.date=localISODate(); dirty(); }
+  renderReport(); showOverlay('repOverlay'); $('repBody').scrollTop=0;
+}
+function renderReport(){
+  const keepScroll=$('repBody').scrollTop;
+  repBlocks=harvest();
+  const r=S.rep;
+  const inc=repBlocks.filter(b=>!b.ex);
+  const nF=inc.reduce((s,b)=>s+b.rows.filter(x=>!x.ex).length,0)+repManual.filter(x=>!x.ex).length;
+  $('repCount').textContent=t('rep_counts',{f:nF,p:inc.length});
+
+  let h='<div class="rp-sec"><div class="rp-h">'+t('rep_header')+'</div><div class="rp-grid">'+
+    repFld('structure',t('rep_structure'))+repFld('ref',t('rep_ref'))+repFld('date',t('rep_date'))+
+    repFld('inspector',t('rep_inspector'))+repFld('weather',t('rep_weather'))+'</div>'+
+    '<label style="display:block;margin-top:8px"><span class="rp-h" style="display:block;margin-bottom:4px">'+t('rep_overall')+'</span>'+
+    '<textarea data-rep="overall" placeholder="'+esc(t('rep_overall_ph'))+'">'+esc(r.overall||'')+'</textarea></label></div>';
+
+  h+='<div class="rp-sec"><div class="rp-h">'+t('rep_options')+'</div><div class="rp-opts">'+
+    '<label class="rp-chk"><input type="checkbox" data-opt="sheets"'+(r.sheets?' checked':'')+'>'+t('rep_sheets')+'</label>'+
+    '<select data-opt="perPage" style="width:auto;height:32px;font-size:12px"><option value="1"'+(r.perPage!==2?' selected':'')+'>1 '+t('rep_per_page')+'</option><option value="2"'+(r.perPage===2?' selected':'')+'>2 '+t('rep_per_page')+'</option></select>'+
+    '<label class="rp-chk"><input type="checkbox" data-opt="schedule"'+(r.schedule?' checked':'')+'>'+t('rep_schedule')+'</label>'+
+    '<label class="rp-chk"><input type="checkbox" data-opt="stampNums"'+(r.stampNums?' checked':'')+'>'+t('rep_stamp')+'</label>'+
+    '</div><div class="rp-empty" style="padding:8px 0 0">'+t('rep_print_hint')+'</div></div>';
+
+  h+='<div class="rp-sec"><div class="rp-h">'+t('rep_photos')+'</div>';
+  repBlocks.forEach(b=>{
+    const n=b.rows.filter(x=>!x.ex).length;
+    h+='<div class="rp-photo"><div class="rp-th" style="background-image:url('+b.rec.thumb+')"></div>'+
+      '<div class="rp-f"><div class="rp-n">'+(b.ex?'—':b.n)+' · '+esc(b.rec.fileName)+' · '+n+'</div>'+
+      '<input type="text" data-pid="'+b.rec.id+'" data-pf="loc" placeholder="'+esc(t('rep_location_ph'))+'" value="'+esc(b.rec.loc||'')+'" autocomplete="off">'+
+      '<input type="text" data-pid="'+b.rec.id+'" data-pf="caption" placeholder="'+esc(t('rep_caption_ph'))+'" value="'+esc(b.rec.caption||'')+'" autocomplete="off">'+
+      '</div><label class="rp-chk"><input type="checkbox" data-pinc="'+b.rec.id+'"'+(b.ex?'':' checked')+'></label></div>';
+  });
+  h+='</div>';
+
+  h+='<div class="rp-sec"><div class="rp-h">'+t('rep_findings')+'</div>';
+  const anyRows=repBlocks.some(b=>!b.ex&&b.rows.length)||repManual.length;
+  if(!anyRows){ h+='<div class="rp-empty">'+t('rep_none')+'<br>'+t('rep_none_body')+'</div>'; }
+  else{
+    const tr=(row,photo,manual)=>'<tr><td><input type="checkbox" data-rinc="'+row.id+'"'+(row.ex?'':' checked')+'></td>'+
+      '<td class="rp-it">'+esc(row.item||'—')+'</td><td class="rp-it" style="color:var(--muted)">'+photo+'</td>'+
+      cell(row,'el',110)+cell(row,'def',130)+'<td>'+csSelect(row)+'</td>'+
+      cell(row,'ext',90)+cell(row,'com',150)+cell(row,'act',90)+
+      (manual?'<td><button class="x rp-x" data-mdel="'+row.id+'" title="&times;">&times;</button></td>':'<td></td>')+'</tr>';
+    h+='<div class="rp-scroll"><table class="rp-tbl"><thead><tr><th></th><th>'+t('col_item')+'</th><th>'+t('col_photo')+'</th><th>'+
+      t('col_element')+'</th><th>'+t('col_defect')+'</th><th>'+t('col_cs')+'</th><th>'+t('col_extent')+'</th><th>'+
+      t('col_comment')+'</th><th>'+t('col_action')+'</th><th></th></tr></thead><tbody>';
+    repBlocks.forEach(b=>{ if(b.ex) return; b.rows.forEach(row=>{ h+=tr(row,b.n,false); }); });
+    repManual.forEach(row=>{ h+=tr(row,'—',true); });
+    h+='</tbody></table></div>';
+  }
+  h+='<button class="btn ghost" id="repAddRow" style="height:34px;font-size:12px;margin-top:8px">+ '+t('rep_add_row')+'</button></div>';
+  $('repBody').innerHTML=h;
+  $('repBody').scrollTop=keepScroll;
+}
+let mseq=0;
+function addManualRow(){
+  if(!S.rep.manual) S.rep.manual=[];
+  let id; do{ id='m'+(++mseq); }while(S.rep.manual.includes(id));
+  S.rep.manual.push(id); dirty(); renderReport();
+  const body=$('repBody'); body.scrollTop=body.scrollHeight;
+  const inp=body.querySelector('input[data-rid="'+id+'"][data-f="def"]'); if(inp) inp.focus();
+}
+
+$('repBody').addEventListener('input',e=>{
+  const el=e.target;
+  if(el.dataset.rep!=null&&el.dataset.rep!==''){ S.rep[el.dataset.rep]=el.value; dirty(); return; }
+  if(el.dataset.pf){ const rec=S.photos.find(p=>p.id===+el.dataset.pid); if(rec){ rec[el.dataset.pf]=el.value; dirty(); } return; }
+  if(el.dataset.rid&&el.dataset.f){ repOv(el.dataset.rid)[el.dataset.f]=el.value; dirty(); return; }
+});
+$('repBody').addEventListener('change',e=>{
+  const el=e.target;
+  if(el.dataset.opt){
+    const k=el.dataset.opt;
+    S.rep[k]= (el.type==='checkbox') ? el.checked : (k==='perPage'? (+el.value||1) : el.value);
+    dirty(); return;
+  }
+  if(el.dataset.rid&&el.dataset.f==='cs'){ repOv(el.dataset.rid).cs=el.value; dirty(); return; }
+  if(el.dataset.pinc){ const rec=S.photos.find(p=>p.id===+el.dataset.pinc); if(rec){ rec.repEx=!el.checked; dirty(); renderReport(); } return; }
+  if(el.dataset.rinc){ repOv(el.dataset.rinc).ex=!el.checked; dirty(); renderReport(); return; }
+});
+$('repBody').addEventListener('click',e=>{
+  if(e.target.closest('#repAddRow')){ addManualRow(); return; }
+  const d=e.target.closest('[data-mdel]');
+  if(d){ const id=d.dataset.mdel; S.rep.manual=(S.rep.manual||[]).filter(x=>x!==id); if(S.rep.ov) delete S.rep.ov[id]; dirty(); renderReport(); }
+});
+$('repClose').onclick=()=>hideOverlay('repOverlay');
+$('reportbtn').onclick=openReport;
+$('repReset').onclick=()=>confirmBox(t('rep_reset_title'),t('rep_reset_body'),()=>{ S.rep.ov={}; S.rep.manual=[]; dirty(); renderReport(); });
+$('repPrint').onclick=()=>{ printReport(); };
+
+// item badge drawn on the report image only — never on the photo itself
+function stampNum(cx,o,tf,label){
+  const b=bboxImg(o), rr=(o.size||S.baseW*FONTS.M)*0.62;
+  const x=Math.max(rr*1.35, b.x-rr*1.3), y=b.y+b.h/2;
+  drawNumber(cx,{type:'number',x:x,y:y,r:rr,n:label,pre:'',color:o.color},tf);
+}
+function repImg(rec,rows,maxPx){
+  const k=Math.min(1, maxPx/Math.max(rec.iw,rec.ih));
+  const c=document.createElement('canvas');
+  c.width=Math.max(1,Math.round(rec.iw*k)); c.height=Math.max(1,Math.round(rec.ih*k));
+  const cx=c.getContext('2d'); cx.imageSmoothingQuality='high';
+  cx.drawImage(rec.img,0,0,c.width,c.height);
+  const savedSel=S.sel, savedBase=S.baseW; S.sel=null; S.baseW=rec.baseW;
+  const tf={s:k,ox:0,oy:0};
+  for(const o of rec.objects) drawObj(cx,o,tf);
+  if(S.rep.stampNums){
+    for(const row of rows){ if(row.ex||row.badge!=null||!row.item) continue;
+      const o=rec.objects.find(z=>z.id===row.oid); if(o) stampNum(cx,o,tf,row.item); }
+  }
+  S.sel=savedSel; S.baseW=savedBase;
+  return c.toDataURL('image/jpeg',0.85);
+}
+function csTd(cs){ return cs? '<span class="cs" style="background:'+(CS_COL[cs]||'#eee')+'">'+cs+'</span>' : ''; }
+function schRows(list){
+  return list.map(x=>'<tr><td class="it">'+esc(x.r.item||'')+'</td><td class="it">'+(x.n)+'</td><td>'+esc(x.r.el||'')+'</td>'+
+    '<td>'+esc(x.r.def||'')+(x.r.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.r.grp)+'</span>':'')+'</td>'+
+    '<td>'+csTd(x.r.cs)+'</td><td>'+esc(x.r.ext||'')+'</td><td>'+esc(x.r.com||'')+'</td><td>'+esc(x.r.act||'')+'</td></tr>').join('');
+}
+async function printReport(){
+  const r=S.rep, doc=$('reportDoc');
+  const blocks=repBlocks.filter(b=>!b.ex);
+  if(!blocks.length){ toast(t('rep_no_photos')); return; }
+  if(typeof window.print!=='function'){ toast(t('toast_failed')); return; }
+  toast(t('rep_preparing'));
+  doc.innerHTML='';
+  const all=[]; blocks.forEach(b=>b.rows.forEach(x=>{ if(!x.ex) all.push({b:b,r:x,n:b.n}); }));
+  repManual.forEach(x=>{ if(!x.ex) all.push({b:null,r:x,n:'—'}); });
+  const counts={CS1:0,CS2:0,CS3:0,CS4:0};
+  all.forEach(x=>{ if(counts[x.r.cs]!=null) counts[x.r.cs]++; });
+
+  const meta=[[t('rep_structure'),r.structure],[t('rep_ref'),r.ref],[t('rep_date'),r.date],
+              [t('rep_inspector'),r.inspector],[t('rep_weather'),r.weather]]
+    .filter(m=>m[1]).map(m=>'<tr><td>'+esc(m[0])+'</td><td>'+esc(m[1])+'</td></tr>').join('');
+  let cover='<div class="pg"><h1>'+esc(r.structure||t('rep_doc_title'))+'</h1>'+
+    '<p class="sub">'+esc(r.structure?t('rep_doc_title'):'')+'</p>'+
+    (meta?'<table class="meta">'+meta+'</table>':'')+
+    '<h2>'+t('rep_summary')+'</h2><div class="sum">'+
+      '<div><b>'+all.length+'</b>'+t('rep_total')+'</div>'+
+      '<div><b>'+blocks.length+'</b>'+t('rep_photos_word')+'</div>'+
+      CS_KEYS.filter(k=>k).map(k=>'<div style="background:'+CS_COL[k]+'"><b>'+counts[k]+'</b>'+k+'</div>').join('')+
+    '</div>'+
+    (r.overall?'<h2>'+t('rep_overall')+'</h2><div class="ov">'+esc(r.overall)+'</div>':'')+
+    '<div class="foot">'+esc(t('rep_generated',{date:new Date().toLocaleString()}))+'</div></div>';
+  doc.innerHTML=cover;
+
+  if(r.sheets){
+    const per=(r.perPage===2)?2:1;
+    for(let i=0;i<blocks.length;i+=per){
+      const pg=document.createElement('div'); pg.className='pg'+(per===2?' two':'');
+      for(let j=i;j<Math.min(i+per,blocks.length);j++){
+        const b=blocks[j], n=b.n;
+        const url=repImg(b.rec,b.rows,per===2?1400:1800);
+        const rows=b.rows.filter(x=>!x.ex);
+        const cap='<div class="cap"><span class="no">'+esc(t('rep_photo_n',{n:n}))+'</span> · '+esc(b.rec.fileName)+
+          (b.rec.loc?' · <span class="loc">'+esc(b.rec.loc)+'</span>':'')+
+          (b.rec.caption?'<br>'+esc(b.rec.caption):'')+
+          (b.loose.length?'<br><span class="loc">'+esc(b.loose.join(' · '))+'</span>':'')+'</div>';
+        const tbl=rows.length? '<table class="sch"><thead><tr><th style="width:11mm">'+t('col_item')+'</th><th>'+t('col_element')+'</th><th>'+
+          t('col_defect')+'</th><th style="width:13mm">'+t('col_cs')+'</th><th>'+t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead><tbody>'+
+          rows.map(x=>'<tr><td class="it">'+esc(x.item||'')+'</td><td>'+esc(x.el||'')+'</td><td>'+esc(x.def||'')+'</td><td>'+csTd(x.cs)+
+            '</td><td>'+esc(x.ext||'')+'</td><td>'+esc(x.com||'')+'</td><td>'+esc(x.act||'')+'</td></tr>').join('')+'</tbody></table>' : '';
+        const wrap=document.createElement('div'); wrap.className='ph';
+        wrap.innerHTML='<img src="'+url+'">'+cap+tbl;
+        pg.appendChild(wrap);
+      }
+      doc.appendChild(pg);
+      await new Promise(res=>setTimeout(res,0));
+    }
+  }
+  if(r.schedule&&all.length){
+    const pg=document.createElement('div'); pg.className='pg';
+    pg.innerHTML='<h2>'+t('rep_schedule')+'</h2><table class="sch"><thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
+      t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:13mm">'+t('col_cs')+'</th><th>'+
+      t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead><tbody>'+schRows(all)+'</tbody></table>';
+    doc.appendChild(pg);
+  }
+  // let every image decode before the print snapshot is taken
+  await Promise.all(Array.from(doc.querySelectorAll('img')).map(im=>(im.decode?im.decode():Promise.resolve()).catch(()=>{})));
+  await new Promise(res=>setTimeout(res,60));
+  window.print();
+}
+window.addEventListener('afterprint',()=>{ const d=$('reportDoc'); if(d) d.innerHTML=''; });
 
 // drag & drop (desktop)
 const stage=$('stage');
