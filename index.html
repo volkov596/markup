@@ -40,7 +40,7 @@ button{font-family:var(--font-ui);color:var(--text);cursor:pointer;border:none;b
 button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* ── App shell ─────────────────────────────────────────── */
-.app{display:flex;flex-direction:column;height:100vh;height:100svh;height:100dvh;overflow:hidden}
+.app{display:flex;flex-direction:column;height:100vh;height:100svh;height:100dvh;height:var(--apph,100dvh);overflow:hidden}
 
 /* ── Top bar ───────────────────────────────────────────── */
 .topbar{
@@ -319,15 +319,17 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* next-number control */
 #numctl{align-items:center}
-#numctl .nn{
-  min-width:30px;height:26px;padding:0 8px;border-radius:var(--r-sm);
+.ctx .nn{
+  min-width:30px;height:32px;padding:0 10px;border-radius:var(--r-sm);
   background:var(--accent-soft);border:1px solid var(--panel-border);color:var(--accent);
-  font-weight:600;font-size:13px;display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--font-ui);font-weight:600;font-size:12.5px;line-height:1;
+  display:inline-flex;align-items:center;justify-content:center;
 }
+#numctl .nn{height:30px;padding:0 8px;justify-content:center}
 .pfx{
-  width:56px;height:30px;padding:0 8px;border-radius:var(--r-sm);text-align:center;
+  width:56px;height:32px;padding:0 8px;border-radius:var(--r-sm);text-align:center;
   background:rgba(0,0,0,.3);border:1px solid var(--panel-border);color:var(--text);
-  font-size:13px;font-weight:600;font-family:var(--font-ui);
+  font-size:12.5px;font-weight:600;font-family:var(--font-ui);
 }
 .pfx:focus{outline:2px solid var(--accent)}
 
@@ -405,7 +407,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .tray.hidden{display:none}
 
 @media (max-height:480px) and (orientation:landscape){
-  .app{height:100vh;height:100svh;height:100dvh}
+  .app{height:100vh;height:100svh;height:100dvh;height:var(--apph,100dvh)}
   .topbar{padding:3px 8px;padding-top:max(3px,env(safe-area-inset-top));gap:6px;flex:0 0 auto}
   .brand h1{font-size:13px;letter-spacing:.1em}
   .brand .ver{display:none}
@@ -521,21 +523,64 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (max-width:640px){ .rp-tbl{font-size:11px} .rp-photo .rp-th{width:52px;height:40px} }
 
 /* printable document (hidden on screen) */
-#reportDoc{display:none}
+#reportDoc{display:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+/* laid out off-screen while page heights are measured */
+#reportDoc.measuring{
+  display:block;position:fixed;left:-20000px;top:0;z-index:-1;
+  visibility:hidden;pointer-events:none;background:#fff;
+  color:#000;font-family:var(--font-ui);font-size:10pt;line-height:1.45;
+}
 @media print{
   html,body{background:#fff!important;height:auto!important;overflow:visible!important}
   body>.app,.overlay,.langmenu,#toast,#fmtMenu{display:none!important}
-  #reportDoc{display:block!important;color:#000;font-family:var(--font-ui);font-size:10pt;line-height:1.45}
-  @page{margin:14mm}
+  #reportDoc{display:block!important;position:static!important;left:auto!important;top:auto!important;
+    visibility:visible!important;color:#000;font-family:var(--font-ui);font-size:10pt;line-height:1.45}
+  @page{size:A4;margin:0}
 }
-#reportDoc .pg{page-break-after:always;break-after:page}
+#reportDoc .pg{
+  position:relative;box-sizing:border-box;width:210mm;height:296.5mm;
+  padding:20mm 14mm 18mm;overflow:hidden;background:#fff;
+  page-break-after:always;break-after:page;page-break-inside:avoid;break-inside:avoid;
+}
 #reportDoc .pg:last-child{page-break-after:auto;break-after:auto}
+#reportDoc .pg-body{height:100%;overflow:hidden}
+/* running header / footer — drawn by the app, not the browser */
+#reportDoc .pg-h{
+  position:absolute;left:14mm;right:14mm;top:11mm;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:6mm;
+  border-bottom:.5pt solid #bbb;padding-bottom:1.6mm;font-size:8.5pt;color:#333;
+}
+#reportDoc .pg-h .hl{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#reportDoc .pg-h .hr{color:#666;white-space:nowrap;font-size:8pt;flex:0 0 auto}
+#reportDoc .pg-f{
+  position:absolute;left:14mm;right:14mm;bottom:9mm;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:5mm;
+  border-top:.5pt solid #bbb;padding-top:1.6mm;font-size:7.5pt;color:#666;
+}
+#reportDoc .pg-f .fl{white-space:nowrap;font-weight:600;color:#333;flex:0 0 auto}
+#reportDoc .pg-f .fc{flex:1 1 auto;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#reportDoc .pg-f .fr{white-space:nowrap;flex:0 0 auto}
+/* wordmark */
+#reportDoc .brandmark{font-family:var(--font-display);font-weight:300;font-size:13pt;letter-spacing:.2em;color:#111}
+#reportDoc .brandmark b{font-weight:600}
+#reportDoc .coverbrand{
+  display:flex;align-items:baseline;justify-content:space-between;gap:8mm;
+  margin:0 0 7mm;padding-bottom:2.5mm;border-bottom:.8pt solid #222;
+}
+#reportDoc .coverbrand .cbv{font-size:8pt;color:#666;letter-spacing:.03em;white-space:nowrap;direction:ltr;unicode-bidi:isolate}
+#reportDoc .pg-f .fr,#reportDoc .brandmark,#reportDoc .qrbox .qu{direction:ltr;unicode-bidi:isolate}
+/* location-link QR */
+#reportDoc .qrbox{float:right;width:34mm;margin:0 0 5mm 7mm;text-align:center}
+#reportDoc .qrbox img{width:30mm;height:30mm;display:block;margin:0 auto;border:.4pt solid #ddd}
+#reportDoc .qrbox .ql{display:block;font-size:7pt;color:#333;margin-top:1.2mm;letter-spacing:.04em}
+#reportDoc .qrbox .qu{display:block;font-size:6.5pt;color:#666;line-height:1.3;word-break:break-all;margin-top:.8mm}
 #reportDoc h1{font-size:19pt;font-weight:300;margin:0 0 2mm;letter-spacing:.01em}
 #reportDoc h2{font-size:12pt;font-weight:600;margin:0 0 3mm}
 #reportDoc h3{font-size:10pt;font-weight:600;margin:0 0 1.5mm}
 #reportDoc .sub{font-size:9pt;color:#555;margin:0 0 8mm}
 #reportDoc .meta{width:100%;border-collapse:collapse;margin:0 0 8mm}
-#reportDoc .meta td{padding:1.6mm 0;border-bottom:.4pt solid #ccc;font-size:10pt;vertical-align:top}
+#reportDoc .meta td{padding:1.6mm 0;border-bottom:.4pt solid #ccc;font-size:10pt;vertical-align:top;
+  overflow-wrap:anywhere;word-break:break-word}
 #reportDoc .meta td:first-child{width:34mm;color:#555;font-size:9pt;padding-right:4mm}
 #reportDoc .ov{white-space:pre-wrap;font-size:10pt;margin:0 0 8mm}
 #reportDoc .sum{display:flex;gap:6mm;flex-wrap:wrap;margin:0 0 6mm}
@@ -553,8 +598,20 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #reportDoc table.sch thead{display:table-header-group}
 #reportDoc table.sch tr{page-break-inside:avoid;break-inside:avoid}
 #reportDoc table.sch td.it{white-space:nowrap;font-weight:600}
-#reportDoc .cs{display:inline-block;padding:.3mm 1.4mm;border-radius:1mm;font-weight:600;font-size:8pt;border:.4pt solid #666}
+#reportDoc .cs{display:inline-block;padding:.3mm 1.4mm;border-radius:1mm;font-weight:600;font-size:8pt;border:.4pt solid #666;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+#reportDoc .sum div,#reportDoc table.sch th,#reportDoc .pg{
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
 #reportDoc .foot{font-size:7.5pt;color:#666;margin-top:6mm;border-top:.4pt solid #ccc;padding-top:2mm}
+
+/* narrow screens: keep every props-strip control on one type scale */
+@media (max-width:520px){
+  .ctx .nn{height:28px;padding:0 8px;font-size:11.5px;max-width:120px!important}
+  #numctl .nn{height:26px;padding:0 7px}
+  .pfx{height:28px;width:50px;font-size:11.5px}
+  .mini{height:28px;padding:0 9px;font-size:11.5px}
+  .props .lbl{font-size:9px}
+}
 </style>
 </head>
 <body>
@@ -565,7 +622,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.2.0 · BETA · multilingual</span>
+        <span class="ver">v1.2.1 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -1094,6 +1151,7 @@ const I18N={
     "rep_date":"Date",
     "rep_inspector":"Inspector",
     "rep_weather":"Weather / access",
+    "rep_loclink":"Location link",
     "rep_overall":"Overall comment",
     "rep_overall_ph":"General condition, scope, limitations…",
     "rep_options":"Contents",
@@ -1113,7 +1171,9 @@ const I18N={
     "rep_exp":"Experimental",
     "col_element":"Element",
     "col_defect":"Defect",
-    "col_cs":"CS",
+    "col_cs":"Condition state",
+    "rep_page_n_of_m":"Page {n} of {m}",
+    "rep_cont":"(cont.)",
     "col_extent":"Extent",
     "col_comment":"Comment",
     "col_action":"Action",
@@ -1408,6 +1468,7 @@ const I18N={
     "rep_date":"日期",
     "rep_inspector":"检查人",
     "rep_weather":"天气 / 通道",
+    "rep_loclink":"位置链接",
     "rep_overall":"总体意见",
     "rep_overall_ph":"总体状况、范围、限制…",
     "rep_options":"内容",
@@ -1426,7 +1487,9 @@ const I18N={
     "col_photo":"照片",
     "col_element":"部位",
     "col_defect":"缺陷",
-    "col_cs":"CS",
+    "col_cs":"状况等级",
+    "rep_page_n_of_m":"第 {n} 页 / 共 {m} 页",
+    "rep_cont":"(续)",
     "col_extent":"范围",
     "col_comment":"备注",
     "col_action":"措施",
@@ -1721,6 +1784,7 @@ const I18N={
     "rep_date":"Fecha",
     "rep_inspector":"Inspector",
     "rep_weather":"Clima / acceso",
+    "rep_loclink":"Enlace de ubicación",
     "rep_overall":"Comentario general",
     "rep_overall_ph":"Estado general, alcance, limitaciones…",
     "rep_options":"Contenido",
@@ -1739,7 +1803,9 @@ const I18N={
     "col_photo":"Foto",
     "col_element":"Elemento",
     "col_defect":"Defecto",
-    "col_cs":"CS",
+    "col_cs":"Estado de condición",
+    "rep_page_n_of_m":"Página {n} de {m}",
+    "rep_cont":"(cont.)",
     "col_extent":"Extensión",
     "col_comment":"Comentario",
     "col_action":"Acción",
@@ -2034,6 +2100,7 @@ const I18N={
     "rep_date":"दिनांक",
     "rep_inspector":"निरीक्षक",
     "rep_weather":"मौसम / पहुँच",
+    "rep_loclink":"स्थान लिंक",
     "rep_overall":"समग्र टिप्पणी",
     "rep_overall_ph":"सामान्य स्थिति, दायरा, सीमाएँ…",
     "rep_options":"सामग्री",
@@ -2052,7 +2119,9 @@ const I18N={
     "col_photo":"फ़ोटो",
     "col_element":"तत्व",
     "col_defect":"दोष",
-    "col_cs":"CS",
+    "col_cs":"स्थिति स्तर",
+    "rep_page_n_of_m":"पृष्ठ {n} / {m}",
+    "rep_cont":"(जारी)",
     "col_extent":"विस्तार",
     "col_comment":"टिप्पणी",
     "col_action":"कार्रवाई",
@@ -2347,6 +2416,7 @@ const I18N={
     "rep_date":"التاريخ",
     "rep_inspector":"المفتّش",
     "rep_weather":"الطقس / إمكانية الوصول",
+    "rep_loclink":"رابط الموقع",
     "rep_overall":"ملاحظة عامة",
     "rep_overall_ph":"الحالة العامة، النطاق، القيود…",
     "rep_options":"المحتويات",
@@ -2365,7 +2435,9 @@ const I18N={
     "col_photo":"الصورة",
     "col_element":"العنصر",
     "col_defect":"العيب",
-    "col_cs":"CS",
+    "col_cs":"حالة العنصر",
+    "rep_page_n_of_m":"صفحة {n} من {m}",
+    "rep_cont":"(تابع)",
     "col_extent":"المدى",
     "col_comment":"ملاحظة",
     "col_action":"الإجراء",
@@ -2660,6 +2732,7 @@ const I18N={
     "rep_date":"Дата",
     "rep_inspector":"Обследователь",
     "rep_weather":"Погода / доступ",
+    "rep_loclink":"Ссылка на место",
     "rep_overall":"Общий комментарий",
     "rep_overall_ph":"Общее состояние, объём, ограничения…",
     "rep_options":"Состав",
@@ -2678,7 +2751,9 @@ const I18N={
     "col_photo":"Фото",
     "col_element":"Констр. элемент",
     "col_defect":"Дефект",
-    "col_cs":"CS",
+    "col_cs":"Состояние",
+    "rep_page_n_of_m":"Страница {n} из {m}",
+    "rep_cont":"(прод.)",
     "col_extent":"Размер",
     "col_comment":"Комментарий",
     "col_action":"Меры",
@@ -3562,7 +3637,7 @@ const S = {
   photos:[], curId:null, elements:[], personal:[],
   undo:[], redo:[], pending:null,
   scale:null, measMode:'line', measUnitLine:'mm', measUnitArea:'m2', cams:[],
-  rep:{ structure:'', ref:'', date:'', inspector:'', weather:'', overall:'',
+  rep:{ structure:'', ref:'', date:'', inspector:'', weather:'', loclink:'', overall:'',
         sheets:true, perPage:1, schedule:true, stampNums:true, ov:{}, manual:[] },
 };
 
@@ -3929,6 +4004,18 @@ function qrMatrix(text){
   qrCache.set(text,m); return m;
 }
 const qrInk = col => isLight(col) ? '#111418' : col;
+// flat black-on-white QR for the printed report
+function qrDataURL(text,px){
+  const m=qrMatrix(text); if(!m) return '';
+  const n=m.length, tot=n+QR_QUIET*2;
+  const cell=Math.max(2,Math.floor((px||360)/tot)), size=cell*tot;
+  const c=document.createElement('canvas'); c.width=c.height=size;
+  const cx=c.getContext('2d');
+  cx.fillStyle='#ffffff'; cx.fillRect(0,0,size,size);
+  cx.fillStyle='#000000';
+  for(let r=0;r<n;r++) for(let q=0;q<n;q++) if(m[r][q]) cx.fillRect((q+QR_QUIET)*cell,(r+QR_QUIET)*cell,cell,cell);
+  return c.toDataURL('image/png');
+}
 function drawQR(ctx,o,tf){
   const m=qrMatrix(o.text); if(!m)return;
   const n=m.length, tot=n+QR_QUIET*2;
@@ -4793,7 +4880,7 @@ $('startover').onclick=()=>confirmBox(t('start_over_title'), t('start_over_body'
   S.photos=[]; S.curId=null; S.img=null; S.objects=[]; S.sel=null; S.undo=[]; S.redo=[];
   S.counter=1; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.armedQR=null; S.elements=[]; S.personal=[]; S.recent=[]; S.recentTags=[]; S.favs=[];
   S.scale=null; S.measMode='line';
-  S.rep={ structure:'', ref:'', date:'', inspector:'', weather:'', overall:'', sheets:true, perPage:1, schedule:true, stampNums:true, ov:{}, manual:[] };
+  S.rep={ structure:'', ref:'', date:'', inspector:'', weather:'', loclink:'', overall:'', sheets:true, perPage:1, schedule:true, stampNums:true, ov:{}, manual:[] };
   S.numPrefix=''; $('numpre').value='';
   clearTimeout(dirtyT); clearSession();
   updateUndo(); syncCtx(); updateNext(); updateDef(); renderTray();
@@ -5260,7 +5347,8 @@ function renderReport(){
 
   let h='<div class="rp-sec"><div class="rp-h">'+t('rep_header')+'</div><div class="rp-grid">'+
     repFld('structure',t('rep_structure'))+repFld('ref',t('rep_ref'))+repFld('date',t('rep_date'))+
-    repFld('inspector',t('rep_inspector'))+repFld('weather',t('rep_weather'))+'</div>'+
+    repFld('inspector',t('rep_inspector'))+repFld('weather',t('rep_weather'))+
+    repFld('loclink',t('rep_loclink'))+'</div>'+
     '<label style="display:block;margin-top:8px"><span class="rp-h" style="display:block;margin-bottom:4px">'+t('rep_overall')+'</span>'+
     '<textarea data-rep="overall" placeholder="'+esc(t('rep_overall_ph'))+'">'+esc(r.overall||'')+'</textarea></label></div>';
 
@@ -5361,10 +5449,61 @@ function repImg(rec,rows,maxPx){
   return c.toDataURL('image/jpeg',0.85);
 }
 function csTd(cs){ return cs? '<span class="cs" style="background:'+(CS_COL[cs]||'#eee')+'">'+cs+'</span>' : ''; }
-function schRows(list){
-  return list.map(x=>'<tr><td class="it">'+esc(x.r.item||'')+'</td><td class="it">'+(x.n)+'</td><td>'+esc(x.r.el||'')+'</td>'+
-    '<td>'+esc(x.r.def||'')+(x.r.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.r.grp)+'</span>':'')+'</td>'+
-    '<td>'+csTd(x.r.cs)+'</td><td>'+esc(x.r.ext||'')+'</td><td>'+esc(x.r.com||'')+'</td><td>'+esc(x.r.act||'')+'</td></tr>').join('');
+function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th>'+t('col_element')+'</th><th>'+
+  t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+t('col_extent')+'</th><th>'+
+  t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
+function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
+  t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+
+  t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
+const MARKUP_VER='1.2.1';
+const MARKUP_URL='volkov596.github.io/markup/';
+
+function newPage(cls){
+  const pg=document.createElement('div'); pg.className='pg'+(cls?' '+cls:'');
+  const body=document.createElement('div'); body.className='pg-body';
+  pg.appendChild(body); return pg;
+}
+function pgBody(pg){ return pg.querySelector('.pg-body'); }
+function tooTall(pg){ const b=pgBody(pg); return b.scrollHeight>b.clientHeight+1; }
+async function decodeIn(node){
+  await Promise.all(Array.from(node.querySelectorAll('img'))
+    .map(im=>(im.decode?im.decode():Promise.resolve()).catch(()=>{})));
+}
+// running header / footer — drawn by the app so they sit inside the margin on every device
+function pageChrome(pg,n,total,c){
+  const h=document.createElement('div'); h.className='pg-h';
+  h.innerHTML='<span class="hl">'+esc(c.structure||t('rep_doc_title'))+'</span>'+
+              (c.ref?'<span class="hr">'+esc(c.ref)+'</span>':'');
+  const f=document.createElement('div'); f.className='pg-f';
+  f.innerHTML='<span class="fl">'+esc(t('rep_page_n_of_m',{n:n,m:total}))+'</span>'+
+              '<span class="fc">'+esc([c.date,c.inspector].filter(Boolean).join(' · '))+'</span>'+
+              '<span class="fr">Markup v'+MARKUP_VER+' · '+MARKUP_URL+'</span>';
+  pg.appendChild(h); pg.appendChild(f);
+}
+// Lay rows onto as many pages as they need, measuring each one.
+// Chrome has no @page margin boxes, so page counts are only honest if one .pg is one sheet.
+function flowRows(doc,pages,titleHTML,headHTML,rows){
+  let i=0,first=true,guard=0;
+  while(i<rows.length && guard++<600){
+    const pg=newPage(); doc.appendChild(pg); pages.push(pg);
+    const body=pgBody(pg);
+    const contTag=' <span style="font-weight:400;color:#777">'+esc(t('rep_cont'))+'</span>';
+    body.innerHTML=(titleHTML?(first?titleHTML:titleHTML.replace(/<\/h([23])>/,contTag+'</h$1>')):'')+
+      '<table class="sch">'+headHTML+'<tbody></tbody></table>';
+    first=false;
+    const tb=body.querySelector('tbody');
+    let placed=0;
+    while(i<rows.length){
+      tb.insertAdjacentHTML('beforeend',rows[i]);
+      if(tooTall(pg)){
+        if(placed===0){ i++; placed++; }       // single row taller than a page — keep it, don't loop
+        else tb.removeChild(tb.lastElementChild);
+        break;
+      }
+      i++; placed++;
+    }
+    if(placed===0) break;
+  }
 }
 async function printReport(){
   const r=S.rep, doc=$('reportDoc');
@@ -5372,60 +5511,100 @@ async function printReport(){
   if(!blocks.length){ toast(t('rep_no_photos')); return; }
   if(typeof window.print!=='function'){ toast(t('toast_failed')); return; }
   toast(t('rep_preparing'));
-  doc.innerHTML='';
-  const all=[]; blocks.forEach(b=>b.rows.forEach(x=>{ if(!x.ex) all.push({b:b,r:x,n:b.n}); }));
-  repManual.forEach(x=>{ if(!x.ex) all.push({b:null,r:x,n:'—'}); });
-  const counts={CS1:0,CS2:0,CS3:0,CS4:0};
-  all.forEach(x=>{ if(counts[x.r.cs]!=null) counts[x.r.cs]++; });
+  doc.innerHTML=''; doc.classList.add('measuring');
+  const pages=[];
+  try{
+    const all=[]; blocks.forEach(b=>b.rows.forEach(x=>{ if(!x.ex) all.push({b:b,r:x,n:b.n}); }));
+    repManual.forEach(x=>{ if(!x.ex) all.push({b:null,r:x,n:'—'}); });
+    const counts={CS1:0,CS2:0,CS3:0,CS4:0};
+    all.forEach(x=>{ if(counts[x.r.cs]!=null) counts[x.r.cs]++; });
 
-  const meta=[[t('rep_structure'),r.structure],[t('rep_ref'),r.ref],[t('rep_date'),r.date],
-              [t('rep_inspector'),r.inspector],[t('rep_weather'),r.weather]]
-    .filter(m=>m[1]).map(m=>'<tr><td>'+esc(m[0])+'</td><td>'+esc(m[1])+'</td></tr>').join('');
-  let cover='<div class="pg"><h1>'+esc(r.structure||t('rep_doc_title'))+'</h1>'+
-    '<p class="sub">'+esc(r.structure?t('rep_doc_title'):'')+'</p>'+
-    (meta?'<table class="meta">'+meta+'</table>':'')+
-    '<h2>'+t('rep_summary')+'</h2><div class="sum">'+
-      '<div><b>'+all.length+'</b>'+t('rep_total')+'</div>'+
-      '<div><b>'+blocks.length+'</b>'+t('rep_photos_word')+'</div>'+
-      CS_KEYS.filter(k=>k).map(k=>'<div style="background:'+CS_COL[k]+'"><b>'+counts[k]+'</b>'+k+'</div>').join('')+
-    '</div>'+
-    (r.overall?'<h2>'+t('rep_overall')+'</h2><div class="ov">'+esc(r.overall)+'</div>':'')+
-    '<div class="foot">'+esc(t('rep_generated',{date:new Date().toLocaleString()}))+'</div></div>';
-  doc.innerHTML=cover;
+    // ── cover ──
+    const link=(r.loclink||'').trim();
+    const qr=(link&&link.length<=QR_MAX)?qrDataURL(link,360):'';
+    const metaRows=[[t('rep_structure'),r.structure],[t('rep_ref'),r.ref],[t('rep_date'),r.date],
+                    [t('rep_inspector'),r.inspector],[t('rep_weather'),r.weather]];
+    if(link&&!qr) metaRows.push([t('rep_loclink'),link]);   // too long to encode — print it as text
+    const meta=metaRows.filter(m=>m[1]).map(m=>'<tr><td>'+esc(m[0])+'</td><td>'+esc(m[1])+'</td></tr>').join('');
+    const cov=newPage(); doc.appendChild(cov); pages.push(cov);
+    pgBody(cov).innerHTML=
+      '<div class="coverbrand"><span class="brandmark">Mark<b>up</b></span>'+
+        '<span class="cbv">v'+MARKUP_VER+' · '+MARKUP_URL+'</span></div>'+
+      (qr?'<div class="qrbox"><img src="'+qr+'"><span class="ql">'+esc(t('rep_loclink'))+'</span>'+
+          '<span class="qu">'+esc(link)+'</span></div>':'')+
+      '<h1>'+esc(r.structure||t('rep_doc_title'))+'</h1>'+
+      '<p class="sub">'+esc(r.structure?t('rep_doc_title'):'')+'</p>'+
+      (meta?'<table class="meta">'+meta+'</table>':'')+
+      '<h2>'+t('rep_summary')+'</h2><div class="sum">'+
+        '<div><b>'+all.length+'</b>'+t('rep_total')+'</div>'+
+        '<div><b>'+blocks.length+'</b>'+t('rep_photos_word')+'</div>'+
+        CS_KEYS.filter(k=>k).map(k=>'<div style="background:'+CS_COL[k]+'"><b>'+counts[k]+'</b>'+k+'</div>').join('')+
+      '</div>'+
+      (r.overall?'<h2>'+t('rep_overall')+'</h2><div class="ov">'+esc(r.overall)+'</div>':'')+
+      '<div class="foot">'+esc(t('rep_generated',{date:new Date().toLocaleString()}))+'</div>';
 
-  if(r.sheets){
-    const per=(r.perPage===2)?2:1;
-    for(let i=0;i<blocks.length;i+=per){
-      const pg=document.createElement('div'); pg.className='pg'+(per===2?' two':'');
-      for(let j=i;j<Math.min(i+per,blocks.length);j++){
-        const b=blocks[j], n=b.n;
-        const url=repImg(b.rec,b.rows,per===2?1400:1800);
-        const rows=b.rows.filter(x=>!x.ex);
-        const cap='<div class="cap"><span class="no">'+esc(t('rep_photo_n',{n:n}))+'</span> · '+esc(b.rec.fileName)+
-          (b.rec.loc?' · <span class="loc">'+esc(b.rec.loc)+'</span>':'')+
-          (b.rec.caption?'<br>'+esc(b.rec.caption):'')+
-          (b.loose.length?'<br><span class="loc">'+esc(b.loose.join(' · '))+'</span>':'')+'</div>';
-        const tbl=rows.length? '<table class="sch"><thead><tr><th style="width:11mm">'+t('col_item')+'</th><th>'+t('col_element')+'</th><th>'+
-          t('col_defect')+'</th><th style="width:13mm">'+t('col_cs')+'</th><th>'+t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead><tbody>'+
-          rows.map(x=>'<tr><td class="it">'+esc(x.item||'')+'</td><td>'+esc(x.el||'')+'</td><td>'+esc(x.def||'')+'</td><td>'+csTd(x.cs)+
-            '</td><td>'+esc(x.ext||'')+'</td><td>'+esc(x.com||'')+'</td><td>'+esc(x.act||'')+'</td></tr>').join('')+'</tbody></table>' : '';
-        const wrap=document.createElement('div'); wrap.className='ph';
-        wrap.innerHTML='<img src="'+url+'">'+cap+tbl;
-        pg.appendChild(wrap);
+    // ── photo sheets ──
+    if(r.sheets){
+      const per=(r.perPage===2)?2:1;
+      const capMax=per===2?95:150;
+      for(let i=0;i<blocks.length;i+=per){
+        const pg=newPage(per===2?'two':''); doc.appendChild(pg); pages.push(pg);
+        let inner='';
+        const spill=[];
+        for(let j=i;j<Math.min(i+per,blocks.length);j++){
+          const b=blocks[j], n=b.n;
+          const url=repImg(b.rec,b.rows,per===2?1400:1800);
+          const rows=b.rows.filter(x=>!x.ex);
+          const cap='<div class="cap"><span class="no">'+esc(t('rep_photo_n',{n:n}))+'</span> · '+esc(b.rec.fileName)+
+            (b.rec.loc?' · <span class="loc">'+esc(b.rec.loc)+'</span>':'')+
+            (b.rec.caption?'<br>'+esc(b.rec.caption):'')+
+            (b.loose.length?'<br><span class="loc">'+esc(b.loose.join(' · '))+'</span>':'')+'</div>';
+          const rowHTML=rows.map(x=>'<tr><td class="it">'+esc(x.item||'')+'</td><td>'+esc(x.el||'')+'</td><td>'+esc(x.def||'')+'</td><td>'+csTd(x.cs)+
+              '</td><td>'+esc(x.ext||'')+'</td><td>'+esc(x.com||'')+'</td><td>'+esc(x.act||'')+'</td></tr>');
+          const tbl=rows.length?('<table class="sch">'+PH_HEAD()+'<tbody>'+rowHTML.join('')+'</tbody></table>'):'';
+          spill.push(rows.length?{n:n,rows:rowHTML}:null);
+          inner+='<div class="ph"><img src="'+url+'">'+cap+tbl+'</div>';
+        }
+        pgBody(pg).innerHTML=inner;
+        await decodeIn(pg);
+        // 1. trim the photo a little — usually enough
+        const imgs=Array.from(pg.querySelectorAll('.ph img'));
+        if(tooTall(pg)) for(let cap=capMax-8; cap>=capMax*0.62 && tooTall(pg); cap-=7) imgs.forEach(im=>im.style.maxHeight=cap+'mm');
+        // 2. still short? the table is what does not fit — give the photo its size back
+        //    and move the tallest tables to a continuation page instead
+        const moved=[];
+        if(tooTall(pg)){
+          imgs.forEach(im=>im.style.maxHeight='');
+          const phs=Array.from(pg.querySelectorAll('.ph'));
+          const tbls=Array.from(pg.querySelectorAll('.ph table.sch'))
+            .map(tb=>({tb:tb,i:phs.indexOf(tb.closest('.ph')),h:tb.offsetHeight}))
+            .sort((a,b)=>b.h-a.h);
+          for(const e of tbls){ if(!tooTall(pg)) break; e.tb.remove(); moved.push(e.i); }
+          // 3. last resort
+          if(tooTall(pg)) for(let cap=capMax-8; cap>=55 && tooTall(pg); cap-=7) imgs.forEach(im=>im.style.maxHeight=cap+'mm');
+        }
+        moved.sort((a,b)=>a-b).forEach(i=>{ const sp=spill[i];
+          if(sp) flowRows(doc,pages,'<h3 style="margin-bottom:2mm">'+esc(t('rep_photo_n',{n:sp.n}))+'</h3>',PH_HEAD(),sp.rows); });
+        await new Promise(res=>setTimeout(res,0));
       }
-      doc.appendChild(pg);
-      await new Promise(res=>setTimeout(res,0));
     }
+
+    // ── defect schedule ──
+    if(r.schedule&&all.length){
+      flowRows(doc,pages,'<h2>'+t('rep_schedule')+'</h2>',SCH_HEAD(),
+        all.map(x=>'<tr><td class="it">'+esc(x.r.item||'')+'</td><td class="it">'+(x.n)+'</td><td>'+esc(x.r.el||'')+'</td>'+
+          '<td>'+esc(x.r.def||'')+(x.r.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.r.grp)+'</span>':'')+'</td>'+
+          '<td>'+csTd(x.r.cs)+'</td><td>'+esc(x.r.ext||'')+'</td><td>'+esc(x.r.com||'')+'</td><td>'+esc(x.r.act||'')+'</td></tr>'));
+    }
+
+    // ── header / footer last: page count is only known now ──
+    const ctx={structure:r.structure,ref:r.ref,date:r.date,inspector:r.inspector};
+    pages.forEach((pg,i)=>pageChrome(pg,i+1,pages.length,ctx));
+  }catch(err){
+    doc.classList.remove('measuring'); doc.innerHTML=''; toast(t('toast_failed')); return;
   }
-  if(r.schedule&&all.length){
-    const pg=document.createElement('div'); pg.className='pg';
-    pg.innerHTML='<h2>'+t('rep_schedule')+'</h2><table class="sch"><thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
-      t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:13mm">'+t('col_cs')+'</th><th>'+
-      t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead><tbody>'+schRows(all)+'</tbody></table>';
-    doc.appendChild(pg);
-  }
-  // let every image decode before the print snapshot is taken
-  await Promise.all(Array.from(doc.querySelectorAll('img')).map(im=>(im.decode?im.decode():Promise.resolve()).catch(()=>{})));
+  doc.classList.remove('measuring');
+  await decodeIn(doc);
   await new Promise(res=>setTimeout(res,60));
   window.print();
 }
@@ -5446,10 +5625,35 @@ function stageChanged(){
     clearTimeout(refitT); refitT=setTimeout(()=>{ resize(); fit(); },120);
   }
 }
-window.addEventListener('resize',stageChanged);
+// dvh goes stale on Android when the URL bar or the keyboard moves, and the app shell is
+// overflow:hidden — a stale value silently clips the last row of the tool rail.
+// Re-measure the real viewport instead of trusting the cached unit.
+let lastAppH=0;
+function syncAppHeight(){
+  const vv=window.visualViewport;
+  let h=window.innerHeight||0;
+  if(vv&&vv.height){
+    // keyboard open: vv.height collapses — take it, the shell must stay inside what is visible
+    h=Math.min(h||vv.height, Math.round(vv.height+(vv.offsetTop||0)));
+  }
+  if(!(h>0)) return;
+  h=Math.max(320,Math.round(h));
+  if(Math.abs(h-lastAppH)<1) return;
+  lastAppH=h;
+  document.documentElement.style.setProperty('--apph',h+'px');
+}
+function viewportChanged(){ syncAppHeight(); stageChanged(); }
+window.addEventListener('resize',viewportChanged);
+if(window.visualViewport){
+  window.visualViewport.addEventListener('resize',viewportChanged);
+  window.visualViewport.addEventListener('scroll',syncAppHeight);
+}
 if(window.ResizeObserver){ new ResizeObserver(stageChanged).observe($('stage')); }
-window.addEventListener('orientationchange',()=>{ setTimeout(stageChanged,250); setTimeout(stageChanged,650); });
-document.addEventListener('fullscreenchange',stageChanged);
+window.addEventListener('orientationchange',()=>{ setTimeout(viewportChanged,250); setTimeout(viewportChanged,650); });
+document.addEventListener('fullscreenchange',viewportChanged);
+window.addEventListener('pageshow',viewportChanged);
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') setTimeout(viewportChanged,60); });
+syncAppHeight();
 resize();
 })();
 </script>
