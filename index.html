@@ -50,14 +50,14 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   background:rgba(14,17,20,.35);backdrop-filter:blur(8px);
   flex:0 0 auto;
 }
-.brand{display:flex;flex-direction:column;line-height:1;margin-right:auto;min-width:0}
+.brand{display:flex;flex-direction:column;line-height:1;margin-right:auto;min-width:0;overflow:hidden}
 .brand h1{
   font-family:var(--font-display);font-weight:300;font-size:19px;
   letter-spacing:.22em;text-transform:uppercase;white-space:nowrap;
 }
 .brand h1 b{font-weight:600;color:var(--accent)}
-.brand .ver{font-size:10px;letter-spacing:.14em;color:var(--muted-2);margin-top:3px;text-transform:uppercase}
-.brandrow{display:flex;align-items:center;gap:8px;margin-right:auto}
+.brand .ver{font-size:10px;letter-spacing:.14em;color:var(--muted-2);margin-top:3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:ltr;unicode-bidi:isolate;text-align:start}
+.brandrow{display:flex;align-items:center;gap:8px;margin-right:auto;min-width:0}
 .brandrow .brand{margin-right:0}
 .infobtn{
   flex:0 0 auto;width:26px;height:26px;border-radius:50%;
@@ -85,7 +85,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 }
 .about .give a:hover{background:var(--panel-2);text-decoration:none}
 
-.tb-actions{display:flex;align-items:center;gap:6px}
+.tb-actions{display:flex;align-items:center;gap:6px;flex:0 0 auto}
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:7px;
   height:38px;padding:0 13px;border-radius:var(--r-sm);
@@ -105,6 +105,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 /* segmented format toggle */
 .seg{display:inline-flex;border:1px solid var(--panel-border);border-radius:var(--r-sm);overflow:hidden;background:var(--panel)}
 .seg button{height:38px;padding:0 11px;font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--muted)}
+.props .seg button{height:32px;padding:0 10px}
 .seg button.on{background:var(--accent-soft);color:var(--accent)}
 
 /* ── Stage ─────────────────────────────────────────────── */
@@ -143,7 +144,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 }
 .props::-webkit-scrollbar{height:0}
 .grp{display:flex;align-items:center;gap:7px;flex:0 0 auto}
-.grp .lbl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2)}
+.grp .lbl,.ctx .lbl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);flex:0 0 auto}
 .swatch{
   width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,.25);
   transition:transform .1s;position:relative;
@@ -151,7 +152,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .swatch.on{border-color:#fff;transform:scale(1.14)}
 .swatch.on::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:1.5px solid var(--accent)}
 .wbtn{
-  min-width:34px;height:30px;padding:0 8px;border-radius:var(--r-sm);
+  min-width:34px;height:32px;padding:0 10px;border-radius:var(--r-sm);
   background:var(--panel);border:1px solid var(--hairline);
   font-size:12px;font-weight:600;color:var(--muted);
 }
@@ -160,7 +161,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .ctx{display:flex;align-items:center;gap:7px;flex:0 0 auto}
 .ctx.hidden{display:none}
 .mini{
-  height:32px;padding:0 11px;border-radius:var(--r-sm);font-size:12.5px;font-weight:500;
+  height:32px;padding:0 11px;border-radius:var(--r-sm);font-size:12px;font-weight:500;
   background:var(--panel);border:1px solid var(--hairline);display:inline-flex;align-items:center;gap:6px;
 }
 .mini svg{width:15px;height:15px}
@@ -261,6 +262,11 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   #langFlag{display:none}
   #langCode{margin-left:0!important}
 }
+@media (max-width:720px){
+  .btn span.hide-sm{display:none}
+  .btn{padding:0 8px;gap:5px}
+  .btn.icon{width:34px}
+}
 @media (max-width:520px){
   #langFlag{display:none}
   #langCode{margin-left:0!important}
@@ -268,13 +274,17 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .grp{gap:5px}
   .props .swatch{width:24px;height:24px}
   .brand h1{font-size:16px;letter-spacing:.16em}
-  .btn span.hide-sm{display:none}
-  .btn{padding:0 8px;gap:5px}
-  .btn.icon{width:34px}
+  .brand .ver{display:none}
   .tool .hk,.thumb .hk{display:none}
   .topbar{gap:6px}
   .tb-actions{gap:5px;justify-content:flex-end;min-width:0}
   .seg button{padding:0 9px}
+}
+@media (max-width:430px){
+  .brand h1{display:none}
+  /* too narrow for ten controls — let the row scroll rather than overlap */
+  .tb-actions{flex:1 1 auto;min-width:0;overflow-x:auto;justify-content:flex-end}
+  .tb-actions::-webkit-scrollbar{height:0}
 }
 @media (max-width:380px){
   .btn{padding:0 6px}
@@ -322,14 +332,14 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .ctx .nn{
   min-width:30px;height:32px;padding:0 10px;border-radius:var(--r-sm);
   background:var(--accent-soft);border:1px solid var(--panel-border);color:var(--accent);
-  font-family:var(--font-ui);font-weight:600;font-size:12.5px;line-height:1;
+  font-family:var(--font-ui);font-weight:600;font-size:12px;line-height:1;
   display:inline-flex;align-items:center;justify-content:center;
 }
-#numctl .nn{height:30px;padding:0 8px;justify-content:center}
+#numctl .nn{justify-content:center}
 .pfx{
   width:56px;height:32px;padding:0 8px;border-radius:var(--r-sm);text-align:center;
   background:rgba(0,0,0,.3);border:1px solid var(--panel-border);color:var(--text);
-  font-size:12.5px;font-weight:600;font-family:var(--font-ui);
+  font-size:12px;font-weight:600;font-family:var(--font-ui);
 }
 .pfx:focus{outline:2px solid var(--accent)}
 
@@ -538,42 +548,48 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   @page{size:A4;margin:0}
 }
 #reportDoc .pg{
-  position:relative;box-sizing:border-box;width:210mm;height:296.5mm;
-  padding:20mm 14mm 18mm;overflow:hidden;background:#fff;
+  position:relative;box-sizing:border-box;width:auto;height:245mm;
+  padding:15mm 10mm 13mm;overflow:hidden;background:#fff;
   page-break-after:always;break-after:page;page-break-inside:avoid;break-inside:avoid;
 }
+/* box and measuring width fit A4 inside 1in browser margins, so on paper a page can
+   only come out shorter than it measured here — never taller */
+#reportDoc.measuring .pg{width:159mm}
 #reportDoc .pg:last-child{page-break-after:auto;break-after:auto}
 #reportDoc .pg-body{height:100%;overflow:hidden}
 /* running header / footer — drawn by the app, not the browser */
 #reportDoc .pg-h{
-  position:absolute;left:14mm;right:14mm;top:11mm;
+  position:absolute;left:10mm;right:10mm;top:6mm;
   display:flex;align-items:flex-end;justify-content:space-between;gap:6mm;
-  border-bottom:.5pt solid #bbb;padding-bottom:1.6mm;font-size:8.5pt;color:#333;
+  border-bottom:.5pt solid #bbb;padding-bottom:1.6mm;font-size:9.5pt;color:#222;
 }
 #reportDoc .pg-h .hl{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #reportDoc .pg-h .hr{color:#666;white-space:nowrap;font-size:8pt;flex:0 0 auto}
 #reportDoc .pg-f{
-  position:absolute;left:14mm;right:14mm;bottom:9mm;
+  position:absolute;left:10mm;right:10mm;bottom:4mm;
   display:flex;align-items:flex-start;justify-content:space-between;gap:5mm;
   border-top:.5pt solid #bbb;padding-top:1.6mm;font-size:7.5pt;color:#666;
 }
 #reportDoc .pg-f .fl{white-space:nowrap;font-weight:600;color:#333;flex:0 0 auto}
 #reportDoc .pg-f .fc{flex:1 1 auto;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#reportDoc .pg-f .fr{white-space:nowrap;flex:0 0 auto}
+#reportDoc .pg-f .fr{white-space:nowrap;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
 /* wordmark */
-#reportDoc .brandmark{font-family:var(--font-display);font-weight:300;font-size:13pt;letter-spacing:.2em;color:#111}
-#reportDoc .brandmark b{font-weight:600}
+#reportDoc .brandmark{font-family:var(--font-display);font-weight:300;font-size:14pt;
+  letter-spacing:.22em;text-transform:uppercase;color:#111;white-space:nowrap;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+#reportDoc .brandmark b{font-weight:600;color:#f5a623}
 #reportDoc .coverbrand{
-  display:flex;align-items:baseline;justify-content:space-between;gap:8mm;
+  display:flex;align-items:baseline;justify-content:space-between;gap:6mm;
   margin:0 0 7mm;padding-bottom:2.5mm;border-bottom:.8pt solid #222;
 }
-#reportDoc .coverbrand .cbv{font-size:8pt;color:#666;letter-spacing:.03em;white-space:nowrap;direction:ltr;unicode-bidi:isolate}
-#reportDoc .pg-f .fr,#reportDoc .brandmark,#reportDoc .qrbox .qu{direction:ltr;unicode-bidi:isolate}
-/* location-link QR */
-#reportDoc .qrbox{float:right;width:34mm;margin:0 0 5mm 7mm;text-align:center}
-#reportDoc .qrbox img{width:30mm;height:30mm;display:block;margin:0 auto;border:.4pt solid #ddd}
-#reportDoc .qrbox .ql{display:block;font-size:7pt;color:#333;margin-top:1.2mm;letter-spacing:.04em}
-#reportDoc .qrbox .qu{display:block;font-size:6.5pt;color:#666;line-height:1.3;word-break:break-all;margin-top:.8mm}
+#reportDoc .coverbrand .cbv{font-size:8pt;color:#666;letter-spacing:.1em;text-transform:uppercase;
+  direction:ltr;unicode-bidi:isolate;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+#reportDoc .pg-f .fr,#reportDoc .brandmark{direction:ltr;unicode-bidi:isolate}
+/* location-link QR — sits in the meta table beside reference / date / inspector */
+#reportDoc .meta td.qrcell img{width:22mm;height:22mm;display:block;border:.4pt solid #ddd;margin:.5mm 0 1.2mm;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+#reportDoc .meta td.qrcell .qu{display:block;font-size:7pt;color:#666;line-height:1.3;
+  overflow-wrap:anywhere;word-break:break-word;direction:ltr;unicode-bidi:isolate}
 #reportDoc h1{font-size:19pt;font-weight:300;margin:0 0 2mm;letter-spacing:.01em}
 #reportDoc h2{font-size:12pt;font-weight:600;margin:0 0 3mm}
 #reportDoc h3{font-size:10pt;font-weight:600;margin:0 0 1.5mm}
@@ -587,13 +603,13 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #reportDoc .sum div{border:.6pt solid #bbb;border-radius:1.5mm;padding:2mm 4mm;font-size:9pt;min-width:22mm}
 #reportDoc .sum b{display:block;font-size:15pt;font-weight:600;line-height:1.2}
 #reportDoc .ph{margin:0 0 4mm;page-break-inside:avoid;break-inside:avoid}
-#reportDoc .ph img{display:block;width:auto;max-width:100%;max-height:150mm;margin:0 auto;border:.4pt solid #ddd}
-#reportDoc .two .ph img{max-height:95mm}
+#reportDoc .ph img{display:block;width:auto;max-width:min(100%,139mm);max-height:132mm;margin:0 auto;border:.4pt solid #ddd}
+#reportDoc .two .ph img{max-height:80mm}
 #reportDoc .cap{font-size:9pt;margin:1.5mm 0 0}
 #reportDoc .cap .no{font-weight:600}
 #reportDoc .cap .loc{color:#555}
 #reportDoc table.sch{width:100%;border-collapse:collapse;font-size:8.5pt;margin-top:2mm}
-#reportDoc table.sch th,#reportDoc table.sch td{border:.4pt solid #999;padding:1.2mm 1.6mm;text-align:left;vertical-align:top}
+#reportDoc table.sch th,#reportDoc table.sch td{border:.4pt solid #999;padding:1.2mm 1.6mm;text-align:start;vertical-align:top}
 #reportDoc table.sch th{background:#eee;font-weight:600;font-size:8pt}
 #reportDoc table.sch thead{display:table-header-group}
 #reportDoc table.sch tr{page-break-inside:avoid;break-inside:avoid}
@@ -603,15 +619,11 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #reportDoc .sum div,#reportDoc table.sch th,#reportDoc .pg{
   -webkit-print-color-adjust:exact;print-color-adjust:exact}
 #reportDoc .foot{font-size:7.5pt;color:#666;margin-top:6mm;border-top:.4pt solid #ccc;padding-top:2mm}
+#reportDoc .cutmark{position:absolute;right:10mm;bottom:12.5mm;font-size:7.5pt;font-weight:600;color:#b00;
+  background:#fff;padding:.4mm 1.5mm;border:.4pt solid #b00;border-radius:1mm}
+/* numbers and units read left-to-right whatever the page direction */
+#reportDoc table.sch td,#reportDoc .cap,#reportDoc .meta td{unicode-bidi:plaintext}
 
-/* narrow screens: keep every props-strip control on one type scale */
-@media (max-width:520px){
-  .ctx .nn{height:28px;padding:0 8px;font-size:11.5px;max-width:120px!important}
-  #numctl .nn{height:26px;padding:0 7px}
-  .pfx{height:28px;width:50px;font-size:11.5px}
-  .mini{height:28px;padding:0 9px;font-size:11.5px}
-  .props .lbl{font-size:9px}
-}
 </style>
 </head>
 <body>
@@ -622,7 +634,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.2.1 · BETA · multilingual</span>
+        <span class="ver">v1.2.3 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -1190,7 +1202,8 @@ const I18N={
     "rep_summary":"Summary",
     "rep_total":"Findings",
     "rep_photos_word":"Photos",
-    "rep_generated":"Generated {date} · annotations and measurements as recorded on the source photos.",
+    "rep_generated":"Generated {date}",
+    "rep_cut":"May be cut off at wide margins — shorten this entry",
     "rep_preparing":"Preparing report…",
     "rep_reset_title":"Reset report edits?",
     "rep_reset_body":"Typed changes to the findings table are discarded and the table is rebuilt from the photos. Header fields and captions are kept.",
@@ -1499,7 +1512,8 @@ const I18N={
     "rep_summary":"汇总",
     "rep_total":"结果",
     "rep_photos_word":"照片",
-    "rep_generated":"生成于 {date} · 标注与测量按源照片记录。",
+    "rep_generated":"生成于 {date}",
+    "rep_cut":"页边距较大时可能被截断——请缩短此条目",
     "rep_preparing":"正在生成报告…",
     "rep_reset_title":"重置报告修改？",
     "rep_reset_body":"将放弃对结果表格的手动修改，并根据照片重新生成。抬头字段和图注将保留。",
@@ -1815,7 +1829,8 @@ const I18N={
     "rep_summary":"Resumen",
     "rep_total":"Hallazgos",
     "rep_photos_word":"Fotos",
-    "rep_generated":"Generado el {date} · anotaciones y mediciones según las fotos de origen.",
+    "rep_generated":"Generado el {date}",
+    "rep_cut":"Puede cortarse con márgenes amplios: acorte esta entrada",
     "rep_preparing":"Preparando el informe…",
     "rep_reset_title":"¿Restablecer las ediciones del informe?",
     "rep_reset_body":"Se descartan los cambios escritos en la tabla de hallazgos y la tabla se reconstruye a partir de las fotos. Se conservan el encabezado y los pies de foto.",
@@ -2131,7 +2146,8 @@ const I18N={
     "rep_summary":"सारांश",
     "rep_total":"निष्कर्ष",
     "rep_photos_word":"फ़ोटो",
-    "rep_generated":"{date} को बनाई गई · एनोटेशन और माप स्रोत फ़ोटो के अनुसार।",
+    "rep_generated":"{date} को बनाई गई",
+    "rep_cut":"चौड़े हाशिये पर कट सकता है — इस प्रविष्टि को छोटा करें",
     "rep_preparing":"रिपोर्ट तैयार हो रही है…",
     "rep_reset_title":"रिपोर्ट के बदलाव रीसेट करें?",
     "rep_reset_body":"निष्कर्ष तालिका में टाइप किए गए बदलाव हटा दिए जाएँगे और तालिका फ़ोटो से दोबारा बनेगी। शीर्षक फ़ील्ड और कैप्शन बने रहेंगे।",
@@ -2447,7 +2463,8 @@ const I18N={
     "rep_summary":"ملخّص",
     "rep_total":"النتائج",
     "rep_photos_word":"الصور",
-    "rep_generated":"أُنشئ في {date} · التعليقات والقياسات كما سُجّلت على الصور الأصلية.",
+    "rep_generated":"أُنشئ في {date}",
+    "rep_cut":"قد يُقتطع عند الهوامش الواسعة — اختصر هذا الإدخال",
     "rep_preparing":"جارٍ تجهيز التقرير…",
     "rep_reset_title":"إعادة تعيين تعديلات التقرير؟",
     "rep_reset_body":"ستُلغى التعديلات المكتوبة في جدول النتائج ويُعاد بناء الجدول من الصور. تبقى حقول الترويسة والتعليقات.",
@@ -2763,7 +2780,8 @@ const I18N={
     "rep_summary":"Сводка",
     "rep_total":"Дефектов",
     "rep_photos_word":"Фото",
-    "rep_generated":"Сформировано {date} · разметка и измерения — по исходным фотографиям.",
+    "rep_generated":"Сформировано {date}",
+    "rep_cut":"При широких полях может обрезаться — сократите запись",
     "rep_preparing":"Подготовка отчёта…",
     "rep_reset_title":"Сбросить правки отчёта?",
     "rep_reset_body":"Ручные изменения в таблице дефектов будут отменены, таблица соберётся заново из фотографий. Шапка и подписи сохранятся.",
@@ -3704,6 +3722,7 @@ function render(){
 
 function drawObj(ctx,o,tf){
   ctx.lineJoin='round'; ctx.lineCap='round';
+  ctx.direction=(o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea'||o.type==='number')?'ltr':'inherit';
   if(o.type==='note') drawNote(ctx,o,tf);
   else if(o.type==='poly') drawPoly(ctx,o,tf);
   else if(o.type==='pen') drawPen(ctx,o,tf);
@@ -4391,14 +4410,20 @@ function syncCtx(){
     if(o.type==='note')label=t('ctx_label_text'); else if(o.type==='text'||o.type==='tag')label=t('ctx_label_edit');
     else if(o.type==='dim')label=t('ctx_label_value'); else if(o.type==='angle')label=t('ctx_label_angle'); else if(o.type==='number')label=t('ctx_label_number');
     else if(o.type==='mline'||o.type==='marea')label=t('ctx_label_unit'); else if(o.type==='qr')label=t('ctx_label_qr');
-    if(label){ btn.style.display='inline-flex'; btn.lastChild.textContent=' '+label; }
+    if(label){ btn.style.display='inline-flex';
+      const sp=btn.querySelector('span');
+      // a selected QR reads "Link Edit", everything else keeps "Label <thing>"
+      if(o.type==='qr'){ if(sp)sp.textContent=label; btn.lastChild.textContent=' '+t('ctx_label_edit'); }
+      else { if(sp)sp.textContent=t('label_btn'); btn.lastChild.textContent=' '+label; }
+    }
     else btn.style.display='none';
   } else { ctxEl.classList.add('hidden'); div.classList.add('hidden'); }
   updatePolyCtl(); updateTextCtl(); updateMeasCtl(); updateQrCtl();
 }
 function updateQrCtl(){
   const o=S.sel!=null?getObj(S.sel):null;
-  const show = S.tool==='qr' || (o&&o.type==='qr');
+  // the arming readout only exists to set the NEXT stamp — redundant once one is selected
+  const show = S.tool==='qr' && !(o&&o.type==='qr');
   $('qrctl').classList.toggle('hidden',!show);
   if(show) updateQr();
 }
@@ -5329,7 +5354,7 @@ function csSelect(row){
     CS_KEYS.map(k=>'<option value="'+k+'"'+(k===row.cs?' selected':'')+'>'+(k||'—')+'</option>').join('')+'</select>';
 }
 function cell(row,f,w){
-  return '<td><input type="text" data-rid="'+row.id+'" data-f="'+f+'" value="'+esc(row[f]||'')+'" autocomplete="off"'+(w?' style="min-width:'+w+'px"':'')+'></td>';
+  return '<td><input type="text" dir="auto" data-rid="'+row.id+'" data-f="'+f+'" value="'+esc(row[f]||'')+'" autocomplete="off"'+(w?' style="min-width:'+w+'px"':'')+'></td>';
 }
 function localISODate(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function openReport(){
@@ -5455,7 +5480,7 @@ function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'<
 function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
   t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+
   t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
-const MARKUP_VER='1.2.1';
+const MARKUP_VER='1.2.3';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
@@ -5471,14 +5496,27 @@ async function decodeIn(node){
 }
 // running header / footer — drawn by the app so they sit inside the margin on every device
 function pageChrome(pg,n,total,c){
-  const h=document.createElement('div'); h.className='pg-h';
-  h.innerHTML='<span class="hl">'+esc(c.structure||t('rep_doc_title'))+'</span>'+
-              (c.ref?'<span class="hr">'+esc(c.ref)+'</span>':'');
+  // the cover already carries the title as its H1 — no running header repeating it
+  if(!pg.classList.contains('cover')){
+    const h=document.createElement('div'); h.className='pg-h';
+    h.innerHTML='<span class="hl">'+esc(c.structure||t('rep_doc_title'))+'</span>'+
+                (c.ref?'<span class="hr">'+esc(c.ref)+'</span>':'');
+    pg.appendChild(h);
+  }
   const f=document.createElement('div'); f.className='pg-f';
   f.innerHTML='<span class="fl">'+esc(t('rep_page_n_of_m',{n:n,m:total}))+'</span>'+
               '<span class="fc">'+esc([c.date,c.inspector].filter(Boolean).join(' · '))+'</span>'+
               '<span class="fr">Markup v'+MARKUP_VER+' · '+MARKUP_URL+'</span>';
-  pg.appendChild(h); pg.appendChild(f);
+  pg.appendChild(f);
+}
+function contTitle(titleHTML,first){
+  if(!titleHTML||first) return titleHTML||'';
+  return titleHTML.replace(/<\/h([23])>/,' <span style="font-weight:400;color:#777">'+esc(t('rep_cont'))+'</span></h$1>');
+}
+// something on this page could not be made to fit — say so rather than trim in silence
+function markCut(pg){
+  if(pg.querySelector('.cutmark')) return;
+  const m=document.createElement('div'); m.className='cutmark'; m.textContent=t('rep_cut'); pg.appendChild(m);
 }
 // Lay rows onto as many pages as they need, measuring each one.
 // Chrome has no @page margin boxes, so page counts are only honest if one .pg is one sheet.
@@ -5487,16 +5525,14 @@ function flowRows(doc,pages,titleHTML,headHTML,rows){
   while(i<rows.length && guard++<600){
     const pg=newPage(); doc.appendChild(pg); pages.push(pg);
     const body=pgBody(pg);
-    const contTag=' <span style="font-weight:400;color:#777">'+esc(t('rep_cont'))+'</span>';
-    body.innerHTML=(titleHTML?(first?titleHTML:titleHTML.replace(/<\/h([23])>/,contTag+'</h$1>')):'')+
-      '<table class="sch">'+headHTML+'<tbody></tbody></table>';
+    body.innerHTML=contTitle(titleHTML,first)+'<table class="sch">'+headHTML+'<tbody></tbody></table>';
     first=false;
     const tb=body.querySelector('tbody');
     let placed=0;
     while(i<rows.length){
       tb.insertAdjacentHTML('beforeend',rows[i]);
       if(tooTall(pg)){
-        if(placed===0){ i++; placed++; }       // single row taller than a page — keep it, don't loop
+        if(placed===0){ i++; placed++; markCut(pg); }   // single row taller than a page — keep it, flag it
         else tb.removeChild(tb.lastElementChild);
         break;
       }
@@ -5505,8 +5541,55 @@ function flowRows(doc,pages,titleHTML,headHTML,rows){
     if(placed===0) break;
   }
 }
+// free text in sentence-sized pieces; paragraph breaks kept as their own piece
+function textUnits(s){
+  const out=[];
+  String(s).split('\n').forEach((p,k)=>{
+    if(k) out.push('\n');
+    (p.match(/[^.!?。؟]+[.!?。؟]*\s*|[.!?。؟]+\s*/g)||[]).forEach(u=>{
+      const w=u.split(/(\s+)/);
+      for(let j=0;j<w.length;j+=80) out.push(w.slice(j,j+80).join(''));
+    });
+  });
+  return out;
+}
+// Fill the page a piece at a time, continuing on new pages; tailHTML goes after the last piece.
+function flowText(doc,pages,pg,titleHTML,text,tailHTML){
+  const units=textUnits(text);
+  let body=pgBody(pg), first=true, i=0, guard=0, cur='';
+  const open=()=>{ body.insertAdjacentHTML('beforeend',contTitle(titleHTML,first)+'<div class="ov"></div>'); first=false; cur=''; return body.lastElementChild; };
+  let ov=open();
+  while(i<units.length && guard++<200){
+    let placed=0;
+    while(i<units.length){
+      ov.textContent=cur+units[i];
+      if(tooTall(pg)){
+        if(placed===0){ cur+=units[i]; i++; placed++; markCut(pg); }
+        else ov.textContent=cur;
+        break;
+      }
+      cur+=units[i]; i++; placed++;
+    }
+    if(i>=units.length) break;
+    pg=newPage(); doc.appendChild(pg); pages.push(pg); body=pgBody(pg); ov=open();
+  }
+  if(tailHTML){
+    body.insertAdjacentHTML('beforeend',tailHTML);
+    if(tooTall(pg)){ body.removeChild(body.lastElementChild); pg=newPage(); doc.appendChild(pg); pages.push(pg); pgBody(pg).innerHTML=tailHTML; }
+  }
+}
+// the PDF takes its name from the document title
+function reportFileName(){
+  const r=S.rep;
+  const parts=[r.date,r.structure,r.inspector].map(x=>String(x||'').trim()).filter(Boolean);
+  if(!parts.length) return 'Markup';
+  return parts.join(' - ').replace(/[\\/:*?"<>|\u0000-\u001f]+/g,'-').replace(/\s+/g,' ').trim().slice(0,120);
+}
+let repTitle=null;
+function restoreTitle(){ if(repTitle!=null){ document.title=repTitle; repTitle=null; } }
 async function printReport(){
   const r=S.rep, doc=$('reportDoc');
+  repBlocks=harvest();                       // pick up anything typed into the review table
   const blocks=repBlocks.filter(b=>!b.ex);
   if(!blocks.length){ toast(t('rep_no_photos')); return; }
   if(typeof window.print!=='function'){ toast(t('toast_failed')); return; }
@@ -5525,13 +5608,13 @@ async function printReport(){
     const metaRows=[[t('rep_structure'),r.structure],[t('rep_ref'),r.ref],[t('rep_date'),r.date],
                     [t('rep_inspector'),r.inspector],[t('rep_weather'),r.weather]];
     if(link&&!qr) metaRows.push([t('rep_loclink'),link]);   // too long to encode — print it as text
-    const meta=metaRows.filter(m=>m[1]).map(m=>'<tr><td>'+esc(m[0])+'</td><td>'+esc(m[1])+'</td></tr>').join('');
-    const cov=newPage(); doc.appendChild(cov); pages.push(cov);
+    let meta=metaRows.filter(m=>m[1]).map(m=>'<tr><td>'+esc(m[0])+'</td><td>'+esc(m[1])+'</td></tr>').join('');
+    if(qr) meta+='<tr><td>'+esc(t('rep_loclink'))+'</td><td class="qrcell"><img src="'+qr+'">'+
+                 '<span class="qu">'+esc(link)+'</span></td></tr>';
+    const cov=newPage('cover'); doc.appendChild(cov); pages.push(cov);
     pgBody(cov).innerHTML=
       '<div class="coverbrand"><span class="brandmark">Mark<b>up</b></span>'+
         '<span class="cbv">v'+MARKUP_VER+' · '+MARKUP_URL+'</span></div>'+
-      (qr?'<div class="qrbox"><img src="'+qr+'"><span class="ql">'+esc(t('rep_loclink'))+'</span>'+
-          '<span class="qu">'+esc(link)+'</span></div>':'')+
       '<h1>'+esc(r.structure||t('rep_doc_title'))+'</h1>'+
       '<p class="sub">'+esc(r.structure?t('rep_doc_title'):'')+'</p>'+
       (meta?'<table class="meta">'+meta+'</table>':'')+
@@ -5540,13 +5623,16 @@ async function printReport(){
         '<div><b>'+blocks.length+'</b>'+t('rep_photos_word')+'</div>'+
         CS_KEYS.filter(k=>k).map(k=>'<div style="background:'+CS_COL[k]+'"><b>'+counts[k]+'</b>'+k+'</div>').join('')+
       '</div>'+
-      (r.overall?'<h2>'+t('rep_overall')+'</h2><div class="ov">'+esc(r.overall)+'</div>':'')+
-      '<div class="foot">'+esc(t('rep_generated',{date:new Date().toLocaleString()}))+'</div>';
+      '';
+    await decodeIn(cov);
+    const footHTML='<div class="foot">'+esc(t('rep_generated',{date:new Date().toLocaleString()}))+'</div>';
+    if(r.overall) flowText(doc,pages,cov,'<h2>'+t('rep_overall')+'</h2>',r.overall,footHTML);
+    else { pgBody(cov).insertAdjacentHTML('beforeend',footHTML); if(tooTall(cov)) markCut(cov); }
 
     // ── photo sheets ──
     if(r.sheets){
       const per=(r.perPage===2)?2:1;
-      const capMax=per===2?95:150;
+      const capMax=per===2?80:132;
       for(let i=0;i<blocks.length;i+=per){
         const pg=newPage(per===2?'two':''); doc.appendChild(pg); pages.push(pg);
         let inner='';
@@ -5582,6 +5668,7 @@ async function printReport(){
           for(const e of tbls){ if(!tooTall(pg)) break; e.tb.remove(); moved.push(e.i); }
           // 3. last resort
           if(tooTall(pg)) for(let cap=capMax-8; cap>=55 && tooTall(pg); cap-=7) imgs.forEach(im=>im.style.maxHeight=cap+'mm');
+          if(tooTall(pg)) markCut(pg);
         }
         moved.sort((a,b)=>a-b).forEach(i=>{ const sp=spill[i];
           if(sp) flowRows(doc,pages,'<h3 style="margin-bottom:2mm">'+esc(t('rep_photo_n',{n:sp.n}))+'</h3>',PH_HEAD(),sp.rows); });
@@ -5601,14 +5688,16 @@ async function printReport(){
     const ctx={structure:r.structure,ref:r.ref,date:r.date,inspector:r.inspector};
     pages.forEach((pg,i)=>pageChrome(pg,i+1,pages.length,ctx));
   }catch(err){
-    doc.classList.remove('measuring'); doc.innerHTML=''; toast(t('toast_failed')); return;
+    doc.classList.remove('measuring'); doc.innerHTML=''; restoreTitle(); toast(t('toast_failed')); return;
   }
   doc.classList.remove('measuring');
   await decodeIn(doc);
   await new Promise(res=>setTimeout(res,60));
+  repTitle=document.title; document.title=reportFileName();
   window.print();
+  setTimeout(restoreTitle,4000);
 }
-window.addEventListener('afterprint',()=>{ const d=$('reportDoc'); if(d) d.innerHTML=''; });
+window.addEventListener('afterprint',()=>{ const d=$('reportDoc'); if(d) d.innerHTML=''; restoreTitle(); });
 
 // drag & drop (desktop)
 const stage=$('stage');
