@@ -174,6 +174,17 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   padding:8px 12px;padding-bottom:max(8px,env(safe-area-inset-bottom));
   border-top:1px solid var(--panel-border);background:rgba(14,17,20,.45);backdrop-filter:blur(8px);
 }
+.brandfoot{
+  display:none;flex:1 0 100%;text-align:center;line-height:1;padding-top:2px;
+  font-family:var(--font-display);font-weight:300;font-size:13px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2);
+  direction:ltr;unicode-bidi:isolate;pointer-events:none;user-select:none;
+}
+.brandfoot b{font-weight:600;color:var(--accent);opacity:.75}
+.brandfoot .fv{font-size:9px;letter-spacing:.14em;margin-left:7px;color:var(--muted-2);opacity:.8}
+@media (max-width:430px) and (orientation:portrait) and (min-height:620px){
+  .brandfoot{display:block}
+}
 .tool{
   flex:1 1 calc(25% - 6px);min-width:66px;max-width:130px;height:48px;border-radius:var(--r);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
@@ -203,7 +214,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   position:fixed;inset:0;z-index:50;display:none;
   align-items:center;justify-content:center;padding:24px;
   background:rgba(6,8,10,.6);backdrop-filter:blur(4px);
+  overscroll-behavior:contain;touch-action:pan-y;
 }
+.overlay *{overscroll-behavior:contain}
 .overlay.show{display:flex}
 .modal{
   width:100%;max-width:400px;background:linear-gradient(160deg,#232a31,#171b20);
@@ -293,6 +306,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 }
 
 /* unit selector in value modal */
+.emotip{display:none;margin-top:9px;font-size:11.5px;line-height:1.45;color:var(--muted-2)}
+body.hasfine .emotip{display:block}
+
 .units{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 .units button{
   flex:1;height:38px;border-radius:var(--r-sm);font-size:13px;font-weight:600;
@@ -346,7 +362,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 /* defect picker bottom sheet */
 .overlay.sheetwrap{align-items:flex-end;padding:12px}
 .sheet{
-  width:100%;max-width:520px;height:82vh;max-height:82vh;display:flex;flex-direction:column;
+  width:100%;max-width:520px;display:flex;flex-direction:column;
+  height:calc(var(--apph,100dvh) * .82);max-height:calc(var(--apph,100dvh) - 24px);
   background:linear-gradient(160deg,#232a31,#141a1f);border:1px solid var(--panel-border);
   border-radius:16px;padding:16px;box-shadow:0 -12px 50px rgba(0,0,0,.5);
 }
@@ -441,7 +458,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .zoomer{bottom:6px;right:6px}
   .zoomer button{width:34px;height:30px}
   .overlay.sheetwrap{padding:6px}
-  .sheet{height:96vh;max-height:96vh;padding:10px 12px;border-radius:12px}
+  .sheet{height:calc(var(--apph,100dvh) * .96);max-height:calc(var(--apph,100dvh) - 12px);padding:10px 12px;border-radius:12px}
   .sheet-head{margin-bottom:6px}
   #pickSearch{padding:8px 10px}
   .sevrow{margin:8px 0 6px}
@@ -634,7 +651,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.2.3 · BETA · multilingual</span>
+        <span class="ver">v1.2.4 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -837,6 +854,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     
       <span class="hk">Q</span>
     </button>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.2.4</span></div>
   </nav>
 </div>
 
@@ -849,6 +867,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   <div class="modal">
     <h3 id="txtTitle" data-i18n="add_label">Add label</h3>
     <input id="txtInput" type="text" placeholder="e.g. Spalling — exposed rebar" autocomplete="off" data-i18n-placeholder="txt_placeholder">
+    <p class="emotip" data-i18n="emoji_tip">Emoji: press Win + . on Windows, or Control + Command + Space on Mac.</p>
     <div class="actions">
       <button class="btn ghost" id="txtDefect" style="margin-right:auto" data-i18n="from_list">From list…</button>
       <button class="btn ghost" id="txtCancel" data-i18n="cancel">Cancel</button>
@@ -1257,6 +1276,7 @@ const I18N={
     "tool_number":"Number",
     "tool_defect":"Defect",
     "paste_btn":"Paste",
+    "emoji_tip":"Emoji: press Win + . on Windows, or Control + Command + Space on Mac.",
     "tool_qr":"QR",
     "qr_title":"QR code",
     "qr_edit_title":"Edit QR link",
@@ -1570,6 +1590,7 @@ const I18N={
     "tool_number":"编号",
     "tool_defect":"缺陷",
     "paste_btn":"粘贴",
+    "emoji_tip":"表情符号：Windows 按 Win + .，Mac 按 Control + Command + 空格。",
     "tool_qr":"二维码",
     "qr_title":"二维码",
     "qr_edit_title":"编辑二维码链接",
@@ -1887,6 +1908,7 @@ const I18N={
     "tool_number":"Número",
     "tool_defect":"Defecto",
     "paste_btn":"Pegar",
+    "emoji_tip":"Emoji: pulse Win + . en Windows, o Control + Comando + Espacio en Mac.",
     "tool_qr":"QR",
     "qr_title":"Código QR",
     "qr_edit_title":"Editar enlace QR",
@@ -2204,6 +2226,7 @@ const I18N={
     "tool_number":"संख्या",
     "tool_defect":"दोष",
     "paste_btn":"पेस्ट करें",
+    "emoji_tip":"इमोजी: Windows पर Win + . दबाएँ, या Mac पर Control + Command + Space।",
     "tool_qr":"QR",
     "qr_title":"QR कोड",
     "qr_edit_title":"QR लिंक संपादित करें",
@@ -2521,6 +2544,7 @@ const I18N={
     "tool_number":"رقم",
     "tool_defect":"عيب",
     "paste_btn":"لصق",
+    "emoji_tip":"الرموز التعبيرية: اضغط Win + ‎.‎ على ويندوز، أو Control + Command + Space على ماك.",
     "tool_qr":"رمز QR",
     "qr_title":"رمز QR",
     "qr_edit_title":"تعديل رابط QR",
@@ -2838,6 +2862,7 @@ const I18N={
     "tool_number":"Номер",
     "tool_defect":"Дефект",
     "paste_btn":"Вставить",
+    "emoji_tip":"Эмодзи: нажмите Win + . в Windows или Control + Command + Пробел в Mac.",
     "tool_qr":"QR",
     "qr_title":"QR-код",
     "qr_edit_title":"Изменить ссылку QR",
@@ -4674,8 +4699,8 @@ openDB().then(d=>{ db=d; idbGet('lang').then(l=>{ if(l) setLang(l,true); }); res
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'&&S.photos.length){ clearTimeout(dirtyT); saveSession(); } });
 
 // ── Overlays / toast ────────────────────────────────────
-function showOverlay(id){ $(id).classList.add('show'); }
-function hideOverlay(id){ $(id).classList.remove('show'); }
+function showOverlay(id){ $(id).classList.add('show'); scheduleAppSync(); }
+function hideOverlay(id){ $(id).classList.remove('show'); scheduleAppSync(); }
 let cfmCb=null;
 function confirmBox(title,body,cb){ $('cfmTitle').textContent=title; $('cfmBody').textContent=body; cfmCb=cb; showOverlay('cfmOverlay'); }
 let toastT=null;
@@ -5480,7 +5505,7 @@ function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'<
 function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
   t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+
   t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
-const MARKUP_VER='1.2.3';
+const MARKUP_VER='1.2.4';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
@@ -5717,19 +5742,49 @@ function stageChanged(){
 // dvh goes stale on Android when the URL bar or the keyboard moves, and the app shell is
 // overflow:hidden — a stale value silently clips the last row of the tool rail.
 // Re-measure the real viewport instead of trusting the cached unit.
+// Emoji hint is keyboard advice — only for pointer devices with a physical keyboard.
+if(window.matchMedia('(pointer:fine)').matches) document.body.classList.add('hasfine');
+
+// Paste: drop the props-strip button where the platform cannot read images from the
+// clipboard at all, and on phones, where it only eats width.
+(function(){
+  const canRead=!!(navigator.clipboard&&navigator.clipboard.read);
+  const sc=window.screen||{};
+  const short=Math.min(sc.width||window.innerWidth, sc.height||window.innerHeight);
+  const phone=window.matchMedia('(pointer:coarse)').matches && short<=500;
+  if(!canRead||phone){ const b=$('paste1'); if(b) b.style.display='none'; }
+  if(!canRead){ const b2=$('paste2'); if(b2) b2.style.display='none'; }
+})();
+
 let lastAppH=0;
 function syncAppHeight(){
   const vv=window.visualViewport;
+  // Take the smallest credible measure of what is actually on screen. Never add offsetTop:
+  // a dynamic toolbar or an overscroll bounce makes it transiently positive, and a shell
+  // taller than the viewport pushes the tool rail off the bottom with no event to undo it.
   let h=window.innerHeight||0;
-  if(vv&&vv.height){
-    // keyboard open: vv.height collapses — take it, the shell must stay inside what is visible
-    h=Math.min(h||vv.height, Math.round(vv.height+(vv.offsetTop||0)));
-  }
+  const dc=document.documentElement.clientHeight||0;
+  if(dc>0) h=h?Math.min(h,dc):dc;
+  if(vv&&vv.height>0) h=h?Math.min(h,Math.round(vv.height)):Math.round(vv.height);
   if(!(h>0)) return;
   h=Math.max(320,Math.round(h));
-  if(Math.abs(h-lastAppH)<1) return;
+  // Compare against what is actually set, not a cached number: a cache that disagrees with
+  // the DOM is how a wrong height survives every later event.
+  const cur=parseFloat(document.documentElement.style.getPropertyValue('--apph'))||0;
+  if(Math.abs(h-lastAppH)<1 && Math.abs(h-cur)<1) return;
   lastAppH=h;
   document.documentElement.style.setProperty('--apph',h+'px');
+}
+// A dynamic toolbar settles after the gesture ends and often fires no further event.
+// Re-measure on the next frame and again once the animation has had time to finish.
+// Height only — the ResizeObserver on the stage picks up any knock-on canvas resize,
+// so this stays cheap enough to run after every gesture.
+let syncPend=null;
+function scheduleAppSync(){
+  if(syncPend) return;
+  syncPend=requestAnimationFrame(()=>{ syncPend=null; syncAppHeight(); });
+  setTimeout(syncAppHeight,120);
+  setTimeout(syncAppHeight,420);
 }
 function viewportChanged(){ syncAppHeight(); stageChanged(); }
 window.addEventListener('resize',viewportChanged);
@@ -5741,6 +5796,10 @@ if(window.ResizeObserver){ new ResizeObserver(stageChanged).observe($('stage'));
 window.addEventListener('orientationchange',()=>{ setTimeout(viewportChanged,250); setTimeout(viewportChanged,650); });
 document.addEventListener('fullscreenchange',viewportChanged);
 window.addEventListener('pageshow',viewportChanged);
+document.addEventListener('touchend',scheduleAppSync,{passive:true});
+document.addEventListener('touchcancel',scheduleAppSync,{passive:true});
+document.addEventListener('pointerup',scheduleAppSync,{passive:true});
+window.addEventListener('focusout',scheduleAppSync);
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') setTimeout(viewportChanged,60); });
 syncAppHeight();
 resize();
