@@ -651,7 +651,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.2.6 · BETA · multilingual</span>
+        <span class="ver">v1.2.7 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -763,6 +763,10 @@ body.hasfine .emotip{display:block}
     <div class="ctx hidden" id="textctl">
       <button class="mini" id="textfill" data-i18n="fill_on">Fill: On</button>
     </div>
+    <div class="ctx hidden" id="tipctl">
+      <span class="lbl" data-i18n="tip_label">Tip</span>
+      <div class="seg" id="tipseg"><button data-tip="off" class="on" data-i18n="tip_off">Off</button><button data-tip="arrow" data-i18n="tip_arrow">Arrow</button><button data-tip="round" data-i18n="tip_round">Round</button></div>
+    </div>
     <div class="ctx hidden" id="defctl">
       <span class="lbl" data-i18n="defect_label">Defect</span>
       <span class="nn" id="defcur" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;justify-content:flex-start" data-i18n="choose_ellipsis">Choose…</span>
@@ -855,7 +859,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.2.6</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.2.7</span></div>
   </nav>
 </div>
 
@@ -1268,6 +1272,10 @@ const I18N={
     "reset":"Reset",
     "close_shape":"Close shape",
     "fill_on":"Fill: On",
+    "tip_label":"Tip",
+    "tip_off":"Off",
+    "tip_arrow":"Arrow",
+    "tip_round":"Round",
     "fill_off":"Fill: Off",
     "defect_label":"Defect",
     "choose_ellipsis":"Choose…",
@@ -1590,6 +1598,10 @@ const I18N={
     "reset":"重置",
     "close_shape":"闭合图形",
     "fill_on":"填充：开",
+    "tip_label":"端点",
+    "tip_off":"无",
+    "tip_arrow":"箭头",
+    "tip_round":"圆点",
     "fill_off":"填充：关",
     "defect_label":"缺陷",
     "choose_ellipsis":"选择…",
@@ -1916,6 +1928,10 @@ const I18N={
     "reset":"Restablecer",
     "close_shape":"Cerrar forma",
     "fill_on":"Relleno: Activado",
+    "tip_label":"Punta",
+    "tip_off":"Sin",
+    "tip_arrow":"Flecha",
+    "tip_round":"Punto",
     "fill_off":"Relleno: Desactivado",
     "defect_label":"Defecto",
     "choose_ellipsis":"Elegir…",
@@ -2242,6 +2258,10 @@ const I18N={
     "reset":"रीसेट करें",
     "close_shape":"आकृति बंद करें",
     "fill_on":"फ़िल: चालू",
+    "tip_label":"सिरा",
+    "tip_off":"बंद",
+    "tip_arrow":"तीर",
+    "tip_round":"गोल",
     "fill_off":"फ़िल: बंद",
     "defect_label":"दोष",
     "choose_ellipsis":"चुनें…",
@@ -2568,6 +2588,10 @@ const I18N={
     "reset":"إعادة ضبط",
     "close_shape":"إغلاق الشكل",
     "fill_on":"التعبئة: مفعّلة",
+    "tip_label":"الطرف",
+    "tip_off":"بدون",
+    "tip_arrow":"سهم",
+    "tip_round":"دائرة",
     "fill_off":"التعبئة: متوقفة",
     "defect_label":"العيب",
     "choose_ellipsis":"اختر…",
@@ -2894,6 +2918,10 @@ const I18N={
     "reset":"Сбросить",
     "close_shape":"Замкнуть фигуру",
     "fill_on":"Заливка: вкл",
+    "tip_label":"Конец",
+    "tip_off":"Нет",
+    "tip_arrow":"Стрелка",
+    "tip_round":"Точка",
     "fill_off":"Заливка: выкл",
     "defect_label":"Дефект",
     "choose_ellipsis":"Выбрать…",
@@ -3736,7 +3764,7 @@ const S = {
   img:null, iw:0, ih:0, baseW:6, fileName:'photo',
   view:{s:1, ox:0, oy:0}, fitS:1,
   objects:[], sel:null, tool:'select', armedQR:null,
-  style:{color:INKS[0], w:'M'},
+  style:{color:INKS[0], w:'M', tip:'off'},
   fmt:'jpg',
   counter:1, angleDraft:null, polyDraft:null, polyFill:true, textFill:true, numPrefix:'',
   armedDefect:null, recent:[], recentTags:[], favs:[],
@@ -3839,6 +3867,35 @@ function drawObj(ctx,o,tf){
   else if(o.type==='qr') drawQR(ctx,o,tf);
 }
 
+// Tip ornament: apex sits exactly on the point, body trails back along the line.
+// Sized from the stroke width, so it follows S/M/L without a second control.
+function drawTip(ctx,p,ang,w,col,kind){
+  if(!kind||kind==='off') return;
+  const hw=Math.max(2.5,w*0.7);
+  ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(ang);
+  ctx.lineJoin='round'; ctx.lineCap='round';
+  if(kind==='round'){
+    const r=w*2.2;
+    ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2);
+    ctx.strokeStyle=halo(col); ctx.lineWidth=hw; ctx.stroke();
+    ctx.fillStyle=col; ctx.fill();
+  } else {
+    const L=w*5.2, H=w*3.0;
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-L,-H); ctx.lineTo(-L*0.70,0); ctx.lineTo(-L,H); ctx.closePath();
+    ctx.strokeStyle=halo(col); ctx.lineWidth=hw; ctx.stroke();
+    ctx.fillStyle=col; ctx.fill();
+  }
+  ctx.restore();
+}
+// Angle pointing away from the line, measured to the first point far enough off the
+// tip that a jittery first sample cannot swing the ornament around.
+function outAngle(pts,w){
+  const a=pts[0]; let b=pts[pts.length-1];
+  for(const q of pts){ if(Math.hypot(q.x-a.x,q.y-a.y)>Math.max(4,w*1.8)){ b=q; break; } }
+  if(a.x===b.x&&a.y===b.y) return 0;
+  return Math.atan2(a.y-b.y, a.x-b.x);
+}
+
 function strokePath(ctx,pts,w,col){
   ctx.strokeStyle=halo(col); ctx.lineWidth=w+Math.max(2.5,w*0.7);
   tracePath(ctx,pts); ctx.stroke();
@@ -3863,6 +3920,7 @@ function drawNote(ctx,o,tf){
   const g=noteGeom(o), w=mapLen(tf,o.w);
   const tip=mapPt(tf,o.x1,o.y1), elbow=mapPt(tf,g.elbow.x,g.elbow.y), anchor=mapPt(tf,g.anchor.x,g.anchor.y);
   strokePath(ctx,[tip,elbow,anchor],w,o.color);
+  if(o.tip&&o.tip!=='off') drawTip(ctx,tip,outAngle([tip,elbow,anchor],w),w,o.color,o.tip);
   if(o.text){ const cs=mapPt(tf,g.c.x,g.c.y); chipAt(ctx,o.text,cs.x,cs.y,o.color,mapLen(tf,o.size||S.baseW*FONTS.M),o.fill); }
 }
 function labelPos(o){ return noteGeom(o).c; }
@@ -3893,7 +3951,9 @@ function drawPolyDraft(ctx,tf){
 }
 function drawPen(ctx,o,tf){
   if(o.pts.length<2) return;
-  const pts=o.pts.map(pt=>mapPt(tf,pt.x,pt.y)); strokePath(ctx,pts,mapLen(tf,o.w),o.color);
+  const pts=o.pts.map(pt=>mapPt(tf,pt.x,pt.y)), w=mapLen(tf,o.w);
+  strokePath(ctx,pts,w,o.color);
+  if(o.tip&&o.tip!=='off') drawTip(ctx,pts[0],outAngle(pts,w),w,o.color,o.tip);
 }
 function drawText(ctx,o,tf){ const p=mapPt(tf,o.x,o.y); chipAt(ctx,o.text,p.x,p.y,o.color,mapLen(tf,o.size),o.fill); }
 function roundRect(ctx,x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
@@ -4343,9 +4403,9 @@ function onDown(p){
   } else {
     beginEdit();
     let o;
-    if(S.tool==='note') o={id:newId(),type:'note',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),text:'',size:fontPx(),fill:S.textFill};
+    if(S.tool==='note') o={id:newId(),type:'note',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),text:'',size:fontPx(),fill:S.textFill,tip:S.style.tip};
     else if(S.tool==='dim') o={id:newId(),type:'dim',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),value:'',unit:'mm',size:fontPx(),fill:S.textFill};
-    else o={id:newId(),type:'pen',pts:[{x:ip.x,y:ip.y}],color:S.style.color,w:widthPx()};
+    else o={id:newId(),type:'pen',pts:[{x:ip.x,y:ip.y}],color:S.style.color,w:widthPx(),tip:S.style.tip};
     act={mode:'draw',o,startImg:ip}; S.objects.push(o); render();
   }
 }
@@ -4521,7 +4581,7 @@ function syncCtx(){
     }
     else btn.style.display='none';
   } else { ctxEl.classList.add('hidden'); div.classList.add('hidden'); }
-  updatePolyCtl(); updateTextCtl(); updateMeasCtl(); updateQrCtl();
+  updatePolyCtl(); updateTextCtl(); updateTipCtl(); updateMeasCtl(); updateQrCtl();
 }
 function updateQrCtl(){
   const o=S.sel!=null?getObj(S.sel):null;
@@ -4539,6 +4599,15 @@ function updateTextCtl(){
   if(!show) return;
   const fillOn=isTextObj ? o.fill!==false : S.textFill;
   $('textfill').textContent=fillOn?t('fill_on'):t('fill_off');
+}
+function updateTipCtl(){
+  const o=S.sel!=null?getObj(S.sel):null;
+  const isObj=o&&(o.type==='pen'||o.type==='note');
+  const show=(S.tool==='pen'||S.tool==='note')||isObj;
+  $('tipctl').classList.toggle('hidden',!show);
+  if(!show) return;
+  const cur=isObj?(o.tip||'off'):S.style.tip;
+  document.querySelectorAll('#tipseg button').forEach(b=>b.classList.toggle('on',b.dataset.tip===cur));
 }
 function updatePolyCtl(){
   const o=S.sel!=null?getObj(S.sel):null;
@@ -5105,6 +5174,14 @@ $('polyfill').onclick=()=>{
   updatePolyCtl(); render();
 };
 $('polyclose').onclick=closePoly;
+document.querySelectorAll('#tipseg button').forEach(b=>b.addEventListener('click',()=>{
+  const v=b.dataset.tip;
+  const o=S.sel!=null?getObj(S.sel):null;
+  const isObj=o&&(o.type==='pen'||o.type==='note');
+  if(isObj){ beginEdit(); o.tip=v; commit(); }
+  else { S.style.tip=v; }
+  updateTipCtl(); render();
+}));
 $('textfill').onclick=()=>{
   const o=S.sel!=null?getObj(S.sel):null;
   const isTextObj=o&&(o.type==='text'||o.type==='note'||o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea');
@@ -5700,7 +5777,7 @@ function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'<
 function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
   t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+
   t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
-const MARKUP_VER='1.2.6';
+const MARKUP_VER='1.2.7';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
