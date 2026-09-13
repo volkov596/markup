@@ -651,7 +651,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.2.5 · BETA · multilingual</span>
+        <span class="ver">v1.2.6 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -782,6 +782,7 @@ body.hasfine .emotip{display:block}
     <div style="flex:1 1 auto"></div>
     <button class="btn ghost" id="paste1" style="flex:0 0 auto;height:32px;font-size:12px" data-i18n="paste_btn">Paste</button>
     <button class="btn ghost" id="divider" style="flex:0 0 auto;height:32px;font-size:12px" data-i18n="divider_btn">Divider</button>
+    <button class="btn ghost" id="sketch" style="flex:0 0 auto;height:32px;font-size:12px" data-i18n="sketch_btn">Sketch</button>
     <button class="btn ghost" id="clearall" style="flex:0 0 auto;height:32px;font-size:12px" data-i18n="clear_all">Clear all</button>
     <button class="btn ghost" id="startover" style="flex:0 0 auto;height:32px;font-size:12px" data-i18n="start_over">Start over</button>
   </div>
@@ -854,7 +855,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.2.5</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.2.6</span></div>
   </nav>
 </div>
 
@@ -935,6 +936,19 @@ body.hasfine .emotip{display:block}
     <div class="actions">
       <button class="btn ghost" id="phCancel" data-i18n="cancel">Cancel</button>
       <button class="btn primary" id="phMake" data-i18n="add_to_album">Add to album</button>
+    </div>
+  </div>
+</div>
+
+<!-- sketch sheet generator -->
+<div class="overlay" id="skOverlay">
+  <div class="modal">
+    <h3 data-i18n="new_sketch_title">New sketch sheet</h3>
+    <p data-i18n="new_sketch_body">A blank sheet added to your album to draw on with the normal tools. Included in the report.</p>
+    <input id="skTitle" type="text" placeholder="Heading (optional)" autocomplete="off" style="margin-top:12px" data-i18n-placeholder="sketch_title_placeholder">
+    <div class="actions">
+      <button class="btn ghost" id="skCancel" data-i18n="cancel">Cancel</button>
+      <button class="btn primary" id="skMake" data-i18n="add_to_album">Add to album</button>
     </div>
   </div>
 </div>
@@ -1118,6 +1132,7 @@ body.hasfine .emotip{display:block}
         <h4 data-i18n="help_options_h">Options</h4>
         <div class="grow"><b data-i18n="help_fill_b">Fill</b><span data-i18n="help_fill_d">On the text-bearing tools, toggles the solid backing behind text. Off swaps it for a crisp outline so the photo shows through while staying readable.</span></div>
         <div class="grow"><b data-i18n="help_colour_b">Colour · Current</b><span data-i18n="help_colour_d">In Defect, "Current" keeps the swatch you already picked instead of forcing the severity colour.</span></div>
+        <div class="grow"><b data-i18n="help_sketch_b">Sketch</b><span data-i18n="help_sketch_d">Adds a blank landscape sheet to the album — punched like a page from a sketch pad — to draw on with the normal tools. Included in the report.</span></div>
         <div class="grow"><b data-i18n="help_divider_b">Divider</b><span data-i18n="help_divider_d">Drops a straight rule across the photo — handy for splitting a composite shot.</span></div>
         <div class="grow"><b data-i18n="help_clearall_b">Clear all</b><span data-i18n="help_clearall_d">Removes every annotation on the current photo only. Undoable.</span></div>
         <div class="grow"><b data-i18n="help_startover_b">Start over</b><span data-i18n="help_startover_d">Wipes all photos and annotations and returns to a blank session.</span></div>
@@ -1263,6 +1278,13 @@ const I18N={
     "close_area":"Close area",
     "cameras_ellipsis":"Cameras…",
     "divider_btn":"Divider",
+    "sketch_btn":"Sketch",
+    "new_sketch_title":"New sketch sheet",
+    "new_sketch_body":"A blank sheet added to your album to draw on with the normal tools. Included in the report.",
+    "sketch_title_placeholder":"Heading (optional)",
+    "toast_sketch_added":"Sketch sheet added to album",
+    "help_sketch_b":"Sketch",
+    "help_sketch_d":"Adds a blank landscape sheet to the album — punched like a page from a sketch pad — to draw on with the normal tools. Included in the report.",
     "clear_all":"Clear all",
     "start_over":"Start over",
     "tool_select":"Select",
@@ -1578,6 +1600,13 @@ const I18N={
     "close_area":"闭合区域",
     "cameras_ellipsis":"相机…",
     "divider_btn":"分隔卡",
+    "sketch_btn":"速写页",
+    "new_sketch_title":"新建速写页",
+    "new_sketch_body":"在相册中添加一张空白页，可用常规工具在上面绘制。会计入报告。",
+    "sketch_title_placeholder":"标题（可选）",
+    "toast_sketch_added":"速写页已添加到相册",
+    "help_sketch_b":"速写页",
+    "help_sketch_d":"在相册中添加一张横向空白页，左侧带有速写本的打孔，可用常规工具绘制。会计入报告。",
     "clear_all":"清除全部",
     "start_over":"重新开始",
     "tool_select":"选择",
@@ -1897,6 +1926,13 @@ const I18N={
     "close_area":"Cerrar área",
     "cameras_ellipsis":"Cámaras…",
     "divider_btn":"Separador",
+    "sketch_btn":"Croquis",
+    "new_sketch_title":"Nueva hoja de croquis",
+    "new_sketch_body":"Se añade a su álbum una hoja en blanco para dibujar con las herramientas habituales. Se incluye en el informe.",
+    "sketch_title_placeholder":"Título (opcional)",
+    "toast_sketch_added":"Hoja de croquis añadida al álbum",
+    "help_sketch_b":"Croquis",
+    "help_sketch_d":"Añade al álbum una hoja apaisada en blanco, perforada como una página de bloc, para dibujar con las herramientas habituales. Se incluye en el informe.",
     "clear_all":"Borrar todo",
     "start_over":"Empezar de nuevo",
     "tool_select":"Seleccionar",
@@ -2216,6 +2252,13 @@ const I18N={
     "close_area":"क्षेत्र बंद करें",
     "cameras_ellipsis":"कैमरे…",
     "divider_btn":"डिवाइडर",
+    "sketch_btn":"स्केच",
+    "new_sketch_title":"नई स्केच शीट",
+    "new_sketch_body":"सामान्य उपकरणों से बनाने के लिए एल्बम में एक खाली शीट जोड़ी जाती है। रिपोर्ट में शामिल।",
+    "sketch_title_placeholder":"शीर्षक (वैकल्पिक)",
+    "toast_sketch_added":"स्केच शीट एल्बम में जोड़ी गई",
+    "help_sketch_b":"स्केच",
+    "help_sketch_d":"एल्बम में एक खाली क्षैतिज शीट जोड़ता है — स्केच पैड के पन्ने की तरह छिद्रित — जिस पर सामान्य उपकरणों से बनाया जा सकता है। रिपोर्ट में शामिल।",
     "clear_all":"सभी साफ़ करें",
     "start_over":"फिर से शुरू करें",
     "tool_select":"चयन",
@@ -2535,6 +2578,13 @@ const I18N={
     "close_area":"إغلاق المساحة",
     "cameras_ellipsis":"الكاميرات…",
     "divider_btn":"فاصل",
+    "sketch_btn":"ورقة رسم",
+    "new_sketch_title":"ورقة رسم جديدة",
+    "new_sketch_body":"تُضاف ورقة فارغة إلى ألبومك للرسم عليها بالأدوات المعتادة. تُدرَج في التقرير.",
+    "sketch_title_placeholder":"عنوان (اختياري)",
+    "toast_sketch_added":"تمت إضافة ورقة الرسم إلى الألبوم",
+    "help_sketch_b":"ورقة رسم",
+    "help_sketch_d":"يضيف ورقة فارغة أفقية إلى الألبوم — مثقوبة مثل صفحة من دفتر رسم — للرسم عليها بالأدوات المعتادة. تُدرَج في التقرير.",
     "clear_all":"مسح الكل",
     "start_over":"البدء من جديد",
     "tool_select":"تحديد",
@@ -2854,6 +2904,13 @@ const I18N={
     "close_area":"Замкнуть область",
     "cameras_ellipsis":"Камеры…",
     "divider_btn":"Разделитель",
+    "sketch_btn":"Эскиз",
+    "new_sketch_title":"Новый лист для эскиза",
+    "new_sketch_body":"В альбом добавляется чистый лист для рисования обычными инструментами. Входит в отчёт.",
+    "sketch_title_placeholder":"Заголовок (необязательно)",
+    "toast_sketch_added":"Лист для эскиза добавлен в альбом",
+    "help_sketch_b":"Эскиз",
+    "help_sketch_d":"Добавляет в альбом чистый горизонтальный лист с перфорацией, как страница из блокнота для эскизов, — рисуйте обычными инструментами. Входит в отчёт.",
     "clear_all":"Очистить всё",
     "start_over":"Начать заново",
     "tool_select":"Выбор",
@@ -4888,14 +4945,6 @@ function wrapFit(x,txt,maxw,maxh,start,min,lh){
     fs-=4;
   }
 }
-function nextDividerName(){
-  let max=0;
-  for(const p of S.photos){
-    const m=/^divider(?:_(\d+))?$/.exec(p.fileName||'');
-    if(m) max=Math.max(max, m[1]?+m[1]:1);
-  }
-  return max?('divider_'+(max+1)):'divider';
-}
 function makePlaceholder(){
   const title=$('phTitle').value.trim()||'Untitled', sub=$('phSub').value.trim();
   const W=1600,H=1200,c=document.createElement('canvas'); c.width=W;c.height=H;
@@ -4932,12 +4981,59 @@ function makePlaceholder(){
     x.fillText(sub,px+pad,ty+ss*0.55); }
 
   const ext=png?'png':'jpg', mime=png?'image/png':'image/jpeg';
-  const fname=nextDividerName()+'.'+ext;
+  const fname=nextSheetName('divider')+'.'+ext;
   c.toBlob(b=>{ if(!b){ toast(t('toast_failed')); return; }
     const f=new File([b],fname,{type:mime});
     addPhotoFile(f,()=>toast(t('toast_divider_added')),'divider');
   }, mime, 0.95);
   hideOverlay('phOverlay');
+}
+
+// ── Sketch sheet ────────────────────────────────────────
+function nextSheetName(kind){
+  const rx=new RegExp('^'+kind+'(?:_(\\d+))?$');
+  let max=0;
+  for(const p of S.photos){ const m=rx.exec(p.fileName||''); if(m) max=Math.max(max, m[1]?+m[1]:1); }
+  return max?(kind+'_'+(max+1)):kind;
+}
+function makeSketch(){
+  const head=$('skTitle').value.trim();
+  const W=1600,H=1200,c=document.createElement('canvas'); c.width=W;c.height=H;
+  const x=c.getContext('2d');
+  // paper is always white: it is a drawing surface, so PNG gets no transparency here
+  x.fillStyle='#ffffff'; x.fillRect(0,0,W,H);
+
+  const n=13, hr=H*0.024, hx=W*0.042;
+  for(let i=0;i<n;i++){
+    const hy=H*((i+1)/(n+1));
+    x.beginPath(); x.arc(hx,hy,hr,0,Math.PI*2);
+    x.fillStyle='#e6eaef'; x.fill();
+    x.strokeStyle='#aeb6bf'; x.lineWidth=Math.max(2,H*0.0022); x.stroke();
+    x.beginPath(); x.arc(hx,hy,hr,Math.PI*0.85,Math.PI*1.95);
+    x.strokeStyle='rgba(0,0,0,.20)'; x.lineWidth=Math.max(2,H*0.0045); x.stroke();
+  }
+
+  if(head){
+    const mx=W*0.085+W*0.025;
+    x.textAlign='left'; x.textBaseline='alphabetic'; x.direction='ltr'; x.fillStyle='#2a2f35';
+    let fs=H*0.075; x.font='600 '+fs+'px '+UIFONT;
+    while(x.measureText(head).width>W*0.955-mx && fs>H*0.03){ fs-=4; x.font='600 '+fs+'px '+UIFONT; }
+    x.fillText(head, mx, H*0.115);
+    x.strokeStyle='#dfe4ea'; x.lineWidth=Math.max(2,H*0.002);
+    x.beginPath(); x.moveTo(mx,H*0.145); x.lineTo(W*0.955,H*0.145); x.stroke();
+  }
+
+  const png=S.fmt==='png', ext=png?'png':'jpg', mime=png?'image/png':'image/jpeg';
+  const fname=nextSheetName('sketch')+'.'+ext;
+  c.toBlob(b=>{ if(!b){ toast(t('toast_failed')); return; }
+    const f=new File([b],fname,{type:mime});
+    addPhotoFile(f,()=>{
+      // white ink on white paper is a poor default; only nudged, and only from white
+      if(S.style.color==='#ffffff') setInk('#111418');
+      toast(t('toast_sketch_added'));
+    },'sketch');
+  }, mime, 0.95);
+  hideOverlay('skOverlay');
 }
 
 // ── Wiring ──────────────────────────────────────────────
@@ -4961,8 +5057,12 @@ document.querySelectorAll('.tool').forEach(b=>b.addEventListener('click',()=>set
 
 // swatches
 const sw=$('swatches');
+function setInk(col){
+  S.style.color=col;
+  document.querySelectorAll('#swatches .swatch').forEach(s=>s.classList.toggle('on', s.title===col));
+}
 INKS.forEach(col=>{ const b=document.createElement('button'); b.className='swatch'+(col===S.style.color?' on':''); b.style.background=col; b.title=col;
-  b.addEventListener('click',()=>{ S.style.color=col; document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('on')); b.classList.add('on');
+  b.addEventListener('click',()=>{ setInk(col);
     if(S.sel!=null){ const o=getObj(S.sel); if(o){ beginEdit(); o.color=col; commit(); render(); } } });
   sw.appendChild(b); });
 // widths
@@ -5067,6 +5167,9 @@ $('txtDefect').onclick=()=>openPicker('feed',(term,color)=>{ $('txtInput').value
 
 // divider card
 $('divider').onclick=()=>{ renderPhColors(); $('phTitle').value=''; showOverlay('phOverlay'); setTimeout(()=>$('phTitle').focus(),50); };
+$('sketch').onclick=()=>{ $('skTitle').value=''; showOverlay('skOverlay'); setTimeout(()=>$('skTitle').focus(),50); };
+$('skCancel').onclick=()=>hideOverlay('skOverlay');
+$('skMake').onclick=makeSketch;
 $('phCancel').onclick=()=>hideOverlay('phOverlay');
 $('phMake').onclick=makePlaceholder;
 function renderPhColors(){ const cols=[FOLDER_COL,...INKS];
@@ -5597,7 +5700,7 @@ function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'<
 function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
   t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+
   t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
-const MARKUP_VER='1.2.5';
+const MARKUP_VER='1.2.6';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
