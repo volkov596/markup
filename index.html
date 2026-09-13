@@ -651,7 +651,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.2.4 · BETA · multilingual</span>
+        <span class="ver">v1.2.5 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -854,7 +854,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.2.4</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.2.5</span></div>
   </nav>
 </div>
 
@@ -931,7 +931,7 @@ body.hasfine .emotip{display:block}
     <p data-i18n="new_divider_body">A blank titled photo added to your album to separate structures. Export it with the rest.</p>
     <input id="phTitle" type="text" placeholder="Structure / site name" autocomplete="off" style="margin-top:12px" data-i18n-placeholder="structure_site_placeholder">
     <input id="phSub" type="text" placeholder="Date · ID · inspector (optional)" autocomplete="off" style="margin-top:10px" data-i18n-placeholder="date_id_inspector_placeholder">
-    <div class="grp" style="margin-top:14px"><span class="lbl" data-i18n="background_label">Background</span><div id="phColors" style="display:flex;gap:8px"></div></div>
+    <div class="grp" style="margin-top:14px"><span class="lbl" data-i18n="folder_label">Folder</span><div id="phColors" style="display:flex;gap:8px"></div></div>
     <div class="actions">
       <button class="btn ghost" id="phCancel" data-i18n="cancel">Cancel</button>
       <button class="btn primary" id="phMake" data-i18n="add_to_album">Add to album</button>
@@ -1323,10 +1323,11 @@ const I18N={
     "recent":"Recent",
     "new_elem_placeholder":"e.g. Beam B3, Pier 2 West…",
     "new_divider_title":"New divider card",
-    "new_divider_body":"A blank titled photo added to your album to separate structures. Export it with the rest.",
+    "new_divider_body":"A titled folder card added to your album to separate structures. Exports with the rest; left out of the report by default.",
     "structure_site_placeholder":"Structure / site name",
     "date_id_inspector_placeholder":"Date · ID · inspector (optional)",
     "background_label":"Background",
+    "folder_label":"Folder",
     "add_to_album":"Add to album",
     "dimension_title":"Dimension",
     "angle_title":"Angle (degrees)",
@@ -1434,7 +1435,7 @@ const I18N={
     "help_colour_b":"Colour · Current",
     "help_colour_d":"In Defect, \"Current\" keeps the swatch you already picked instead of forcing the severity colour.",
     "help_divider_b":"Divider",
-    "help_divider_d":"Drops a straight rule across the photo — handy for splitting a composite shot.",
+    "help_divider_d":"Adds a folder card to the album to separate structures or visits. Titled, coloured, and left out of the report by default.",
     "help_clearall_b":"Clear all",
     "help_clearall_d":"Removes every annotation on the current photo only. Undoable.",
     "help_startover_b":"Start over",
@@ -1641,10 +1642,11 @@ const I18N={
     "recent":"最近使用",
     "new_elem_placeholder":"例如：梁 B3、2号墩西侧…",
     "new_divider_title":"新建分隔卡",
-    "new_divider_body":"在相册中添加一张带标题的空白照片，用于区分不同结构。它会与其他照片一起导出。",
+    "new_divider_body":"在相册中添加一张带标题的文件夹卡片，用于区分不同结构。随其他照片一起导出，默认不计入报告。",
     "structure_site_placeholder":"结构/场地名称",
     "date_id_inspector_placeholder":"日期·编号·检查员（可选）",
     "background_label":"背景",
+    "folder_label":"文件夹",
     "add_to_album":"添加到相册",
     "dimension_title":"尺寸",
     "angle_title":"角度（度）",
@@ -1752,7 +1754,7 @@ const I18N={
     "help_colour_b":"颜色·当前",
     "help_colour_d":"在\"缺陷\"中，\"当前\"会保留您已选择的颜色，而不强制使用严重程度对应的颜色。",
     "help_divider_b":"分隔卡",
-    "help_divider_d":"在照片上添加一条直线——便于分割合成照片。",
+    "help_divider_d":"向相册中添加一张文件夹卡片，用于区分结构或巡检批次。可加标题、选颜色，默认不计入报告。",
     "help_clearall_b":"清除全部",
     "help_clearall_d":"仅删除当前照片上的所有标注。可撤销。",
     "help_startover_b":"重新开始",
@@ -1959,10 +1961,11 @@ const I18N={
     "recent":"Recientes",
     "new_elem_placeholder":"p. ej. Viga B3, Pila 2 Oeste…",
     "new_divider_title":"Nueva tarjeta separadora",
-    "new_divider_body":"Se añade a su álbum una foto en blanco con título para separar estructuras. Se exporta junto con el resto.",
+    "new_divider_body":"Se añade a su álbum una tarjeta de carpeta con título para separar estructuras. Se exporta con el resto y se excluye del informe por defecto.",
     "structure_site_placeholder":"Nombre de la estructura / sitio",
     "date_id_inspector_placeholder":"Fecha · ID · inspector (opcional)",
     "background_label":"Fondo",
+    "folder_label":"Carpeta",
     "add_to_album":"Añadir al álbum",
     "dimension_title":"Dimensión",
     "angle_title":"Ángulo (grados)",
@@ -2070,7 +2073,7 @@ const I18N={
     "help_colour_b":"Color · Actual",
     "help_colour_d":"En Defecto, \"Actual\" conserva el color que ya eligió en lugar de forzar el color de severidad.",
     "help_divider_b":"Separador",
-    "help_divider_d":"Coloca una regla recta a través de la foto; útil para dividir una toma compuesta.",
+    "help_divider_d":"Añade una tarjeta de carpeta al álbum para separar estructuras o visitas. Con título, color y excluida del informe por defecto.",
     "help_clearall_b":"Borrar todo",
     "help_clearall_d":"Elimina todas las anotaciones solo de la foto actual. Se puede deshacer.",
     "help_startover_b":"Empezar de nuevo",
@@ -2277,10 +2280,11 @@ const I18N={
     "recent":"हाल ही में",
     "new_elem_placeholder":"उदा. बीम B3, पियर 2 पश्चिम…",
     "new_divider_title":"नया डिवाइडर कार्ड",
-    "new_divider_body":"संरचनाओं को अलग करने के लिए आपके एल्बम में एक शीर्षक वाली खाली फ़ोटो जोड़ी जाती है। इसे बाकी के साथ निर्यात किया जाता है।",
+    "new_divider_body":"संरचनाओं को अलग करने के लिए एल्बम में एक शीर्षक वाला फ़ोल्डर कार्ड जोड़ा जाता है। बाकी के साथ निर्यात होता है; डिफ़ॉल्ट रूप से रिपोर्ट से बाहर।",
     "structure_site_placeholder":"संरचना / साइट का नाम",
     "date_id_inspector_placeholder":"तारीख़ · आईडी · निरीक्षक (वैकल्पिक)",
     "background_label":"पृष्ठभूमि",
+    "folder_label":"फ़ोल्डर",
     "add_to_album":"एल्बम में जोड़ें",
     "dimension_title":"आयाम",
     "angle_title":"कोण (डिग्री)",
@@ -2388,7 +2392,7 @@ const I18N={
     "help_colour_b":"रंग · वर्तमान",
     "help_colour_d":"दोष में, \"वर्तमान\" आपके द्वारा पहले से चुने गए रंग को बनाए रखता है, न कि गंभीरता रंग को थोपता है।",
     "help_divider_b":"डिवाइडर",
-    "help_divider_d":"फ़ोटो पर एक सीधी रेखा डालता है — संयुक्त शॉट को विभाजित करने के लिए उपयोगी।",
+    "help_divider_d":"संरचनाओं या दौरों को अलग करने के लिए एल्बम में एक फ़ोल्डर कार्ड जोड़ता है। शीर्षक और रंग सहित, डिफ़ॉल्ट रूप से रिपोर्ट से बाहर।",
     "help_clearall_b":"सभी साफ़ करें",
     "help_clearall_d":"केवल वर्तमान फ़ोटो पर सभी एनोटेशन हटाता है। पूर्ववत किया जा सकता है।",
     "help_startover_b":"फिर से शुरू करें",
@@ -2595,10 +2599,11 @@ const I18N={
     "recent":"الأخيرة",
     "new_elem_placeholder":"مثال: عارضة B3، الركيزة 2 غرب…",
     "new_divider_title":"بطاقة فاصلة جديدة",
-    "new_divider_body":"تُضاف صورة فارغة تحمل عنوانًا إلى ألبومك للفصل بين المنشآت. تُصدَّر مع بقية الصور.",
+    "new_divider_body":"تُضاف بطاقة مجلد تحمل عنوانًا إلى ألبومك للفصل بين المنشآت. تُصدَّر مع بقية الصور، وتُستبعد من التقرير افتراضيًا.",
     "structure_site_placeholder":"اسم المنشأة / الموقع",
     "date_id_inspector_placeholder":"التاريخ · المعرّف · المفتش (اختياري)",
     "background_label":"الخلفية",
+    "folder_label":"مجلد",
     "add_to_album":"إضافة إلى الألبوم",
     "dimension_title":"البُعد",
     "angle_title":"الزاوية (بالدرجات)",
@@ -2706,7 +2711,7 @@ const I18N={
     "help_colour_b":"اللون · الحالي",
     "help_colour_d":"في العيب، يحافظ \"الحالي\" على اللون الذي اخترته بدلاً من فرض لون الشدة.",
     "help_divider_b":"الفاصل",
-    "help_divider_d":"يضع خطًا مستقيمًا عبر الصورة — مفيد لتقسيم لقطة مركّبة.",
+    "help_divider_d":"يضيف بطاقة مجلد إلى الألبوم للفصل بين المنشآت أو الزيارات. بعنوان ولون، ومستبعدة من التقرير افتراضيًا.",
     "help_clearall_b":"مسح الكل",
     "help_clearall_d":"يزيل جميع العلامات من الصورة الحالية فقط. يمكن التراجع عنه.",
     "help_startover_b":"البدء من جديد",
@@ -2913,10 +2918,11 @@ const I18N={
     "recent":"Недавние",
     "new_elem_placeholder":"напр. Балка B3, Опора 2 запад…",
     "new_divider_title":"Новая карточка-разделитель",
-    "new_divider_body":"В альбом добавляется пустое фото с заголовком для разделения объектов. Экспортируется вместе с остальными.",
+    "new_divider_body":"В альбом добавляется карточка-папка с заголовком для разделения объектов. Экспортируется вместе с остальными; по умолчанию не входит в отчёт.",
     "structure_site_placeholder":"Название объекта / участка",
     "date_id_inspector_placeholder":"Дата · ID · инспектор (необязательно)",
     "background_label":"Фон",
+    "folder_label":"Папка",
     "add_to_album":"Добавить в альбом",
     "dimension_title":"Размер",
     "angle_title":"Угол (градусы)",
@@ -3024,7 +3030,7 @@ const I18N={
     "help_colour_b":"Цвет · Текущий",
     "help_colour_d":"В разделе «Дефект» опция «Текущий» сохраняет уже выбранный цвет вместо принудительного цвета серьёзности.",
     "help_divider_b":"Разделитель",
-    "help_divider_d":"Добавляет прямую линию через фото — удобно для разделения составного снимка.",
+    "help_divider_d":"Добавляет в альбом карточку-папку для разделения объектов или выездов. С заголовком и цветом, по умолчанию не входит в отчёт.",
     "help_clearall_b":"Очистить всё",
     "help_clearall_d":"Удаляет все аннотации только с текущего фото. Можно отменить.",
     "help_startover_b":"Начать заново",
@@ -3693,6 +3699,21 @@ function isLight(hex){
   return (0.299*r+0.587*g+0.114*b)>150;
 }
 const halo = col => isLight(col) ? 'rgba(0,0,0,.55)' : 'rgba(255,255,255,.72)';
+function relLum(hex){ const c=hex.replace('#','');
+  const f=v=>{ v/=255; return v<=0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4); };
+  return 0.2126*f(parseInt(c.substr(0,2),16))+0.7152*f(parseInt(c.substr(2,2),16))+0.0722*f(parseInt(c.substr(4,2),16));
+}
+function contrastOf(a,b){ const x=relLum(a),y=relLum(b); return (Math.max(x,y)+0.05)/(Math.min(x,y)+0.05); }
+// Pick whichever of ink-black / white actually measures better on this colour. A plain
+// light/dark test puts white on mid green and mid blue at ~2.4:1 — fine on a lit screen,
+// unreadable printed.
+const inkOn = bg => contrastOf('#141414',bg) >= contrastOf('#ffffff',bg) ? '#141414' : '#ffffff';
+function shade(hex,amt){ const c=hex.replace('#','');
+  const m=(i)=>Math.round(parseInt(c.substr(i,2),16)*(1-amt));
+  return '#'+[m(0),m(2),m(4)].map(v=>v.toString(16).padStart(2,'0')).join('');
+}
+// Windows-folder amber. The palette's yellow is a highlighter lemon and does not read as a folder.
+const FOLDER_COL='#f7c948';
 function widthPx(){ return S.baseW * WIDTHS[S.style.w]; }
 function fontPx(){ return S.baseW * FONTS[S.style.w]; }
 
@@ -4489,9 +4510,10 @@ function stashCur(){
 function makeThumb(img){
   const t=document.createElement('canvas'); const sc=136/Math.max(img.naturalWidth,img.naturalHeight);
   t.width=Math.max(1,Math.round(img.naturalWidth*sc)); t.height=Math.max(1,Math.round(img.naturalHeight*sc));
-  t.getContext('2d').drawImage(img,0,0,t.width,t.height); return t.toDataURL('image/jpeg',0.7);
+  const tx=t.getContext('2d'); tx.fillStyle='#ffffff'; tx.fillRect(0,0,t.width,t.height);
+  tx.drawImage(img,0,0,t.width,t.height); return t.toDataURL('image/jpeg',0.7);
 }
-function addPhotoFile(file,cb){
+function addPhotoFile(file,cb,kind){
   if(!file||!file.type.startsWith('image/')){ if(cb)cb(); return; }
   const url=URL.createObjectURL(file); const im=new Image();
   im.onload=()=>{
@@ -4501,8 +4523,8 @@ function addPhotoFile(file,cb){
     const rec={ id:rid, blob:file, img:im, iw:im.naturalWidth, ih:im.naturalHeight,
       baseW:Math.max(2,Math.round(Math.max(im.naturalWidth,im.naturalHeight)/450)),
       fileName:fn,
-      objects:[], undo:[], redo:[], counter:1, scale:null,
-      caption:'', loc:'', repEx:false, thumb:makeThumb(im) };
+      objects:[], undo:[], redo:[], counter:1, scale:null, kind:kind||'photo',
+      caption:'', loc:'', repEx:(kind==='divider'), thumb:makeThumb(im) };
     S.photos.push(rec); URL.revokeObjectURL(url);
     persistBlob(rec);
     switchTo(rec.id); dirty(); if(cb)cb();
@@ -4618,6 +4640,7 @@ function anchorSave(items){
 function renderRec(rec){ // flatten one photo record → Promise<blob>
   return new Promise(res=>{
     const c=document.createElement('canvas'); c.width=rec.iw; c.height=rec.ih; const cx=c.getContext('2d');
+    if(S.fmt!=='png'){ cx.fillStyle='#ffffff'; cx.fillRect(0,0,c.width,c.height); }
     cx.drawImage(rec.img,0,0);
     const savedSel=S.sel, savedBase=S.baseW; S.sel=null; S.baseW=rec.baseW;
     for(const o of rec.objects) drawObj(cx,o,{s:1,ox:0,oy:0});
@@ -4663,7 +4686,7 @@ function persistBlob(rec){ idbPut('blob:'+rec.id, rec.blob); }
 function dirty(){ clearTimeout(dirtyT); dirtyT=setTimeout(saveSession,1000); }
 function saveSession(){
   if(!db)return; stashCur();
-  idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counter:p.counter,scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',repEx:!!p.repEx})),
+  idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counter:p.counter,scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',repEx:!!p.repEx,kind:p.kind||'photo'})),
     curId:S.curId, favs:S.favs, recent:S.recent, recentTags:S.recentTags, elements:S.elements, personal:S.personal, fmt:S.fmt, numPrefix:S.numPrefix, rep:S.rep, uid, pid });
 }
 function clearSession(){ if(!db)return; try{ db.transaction('session','readwrite').objectStore('session').clear(); }catch(e){} }
@@ -4682,7 +4705,7 @@ async function restoreSession(){
       im.onload=()=>{ res({ id:pd.id, blob, img:im, iw:im.naturalWidth, ih:im.naturalHeight,
         baseW:Math.max(2,Math.round(Math.max(im.naturalWidth,im.naturalHeight)/450)),
         fileName:pd.fileName, objects:pd.objects||[], undo:[], redo:[], counter:pd.counter||1, scale:pd.scale||null,
-        caption:pd.caption||'', loc:pd.loc||'', repEx:!!pd.repEx, thumb:makeThumb(im) });
+        caption:pd.caption||'', loc:pd.loc||'', repEx:!!pd.repEx, kind:pd.kind||'photo', thumb:makeThumb(im) });
         URL.revokeObjectURL(url); };
       im.onerror=()=>{ URL.revokeObjectURL(url); res(null); };
       im.src=url;
@@ -4736,7 +4759,7 @@ const SEV=[
   {k:'poor',code:'CS3',word:'Poor',color:'#f57c00'},
   {k:'severe',code:'CS4',word:'Severe',color:'#d32f2f'}
 ];
-let curSev='none', pickMode='arm', pickFeed=null, pickTab='material', phBg='#111418';
+let curSev='none', pickMode='arm', pickFeed=null, pickTab='material', phBg=FOLDER_COL;
 
 // tag / defect chip — filled pill in the severity colour
 function drawTag(ctx,o,tf){
@@ -4828,23 +4851,91 @@ function updateDef(){
 }
 
 // ── Divider card ────────────────────────────────────────
+function folderBackPath(fx,fy,fw,fh){
+  const r=fh*0.045, tabW=fw*0.46, rise=fh*0.11, p=new Path2D();
+  p.moveTo(fx+r,fy);
+  p.lineTo(fx+tabW-rise*0.6,fy);
+  p.quadraticCurveTo(fx+tabW,fy,fx+tabW+rise*0.55,fy+rise*0.62);
+  p.lineTo(fx+tabW+rise*0.95,fy+rise);
+  p.lineTo(fx+fw-r,fy+rise);
+  p.quadraticCurveTo(fx+fw,fy+rise,fx+fw,fy+rise+r);
+  p.lineTo(fx+fw,fy+fh-r);
+  p.quadraticCurveTo(fx+fw,fy+fh,fx+fw-r,fy+fh);
+  p.lineTo(fx+r,fy+fh);
+  p.quadraticCurveTo(fx,fy+fh,fx,fy+fh-r);
+  p.lineTo(fx,fy+r);
+  p.quadraticCurveTo(fx,fy,fx+r,fy);
+  return p;
+}
+function folderFrontPath(fx,fy,fw,fh){
+  const r=fh*0.045, ox=fw*0.055, oy=fh*0.235, x=fx+ox, y=fy+oy, w=fw-ox, h=fh-oy, p=new Path2D();
+  p.moveTo(x+r,y); p.lineTo(x+w-r,y); p.quadraticCurveTo(x+w,y,x+w,y+r);
+  p.lineTo(x+w,y+h-r); p.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  p.lineTo(x+r,y+h); p.quadraticCurveTo(x,y+h,x,y+h-r);
+  p.lineTo(x,y+r); p.quadraticCurveTo(x,y,x+r,y);
+  return p;
+}
+function wrapFit(x,txt,maxw,maxh,start,min,lh){
+  let fs=start;
+  for(;;){
+    x.font='600 '+fs+'px '+UIFONT;
+    const words=txt.split(/\s+/), lines=[]; let cur='';
+    for(const w of words){ const tr=cur?cur+' '+w:w;
+      if(x.measureText(tr).width<=maxw||!cur) cur=tr; else { lines.push(cur); cur=w; } }
+    if(cur) lines.push(cur);
+    const wid=Math.max.apply(null,lines.map(l=>x.measureText(l).width));
+    if((lines.length<=2 && wid<=maxw && lines.length*fs*lh<=maxh) || fs<=min) return {fs:fs,lines:lines};
+    fs-=4;
+  }
+}
+function nextDividerName(){
+  let max=0;
+  for(const p of S.photos){
+    const m=/^divider(?:_(\d+))?$/.exec(p.fileName||'');
+    if(m) max=Math.max(max, m[1]?+m[1]:1);
+  }
+  return max?('divider_'+(max+1)):'divider';
+}
 function makePlaceholder(){
-  const title=$('phTitle').value.trim()||'Untitled'; const sub=$('phSub').value.trim();
-  const W=1600,H=1200,c=document.createElement('canvas'); c.width=W;c.height=H; const x=c.getContext('2d');
-  const rad=145*Math.PI/180, dx=Math.sin(rad), dy=-Math.cos(rad), hl=(Math.abs(W*dx)+Math.abs(H*dy))/2;
-  const g=x.createLinearGradient(W/2-dx*hl,H/2-dy*hl,W/2+dx*hl,H/2+dy*hl);
-  g.addColorStop(0,phBg); g.addColorStop(1,'#000000'); x.fillStyle=g; x.fillRect(0,0,W,H);
-  const light=isLight(phBg), tc=light?'#141414':'#ffffff';
-  x.textAlign='center'; x.textBaseline='middle';
-  let fs=118; x.font='600 '+fs+'px '+UIFONT; while(x.measureText(title).width>W-260 && fs>44){ fs-=6; x.font='600 '+fs+'px '+UIFONT; }
-  x.fillStyle=tc; x.fillText(title, W/2, sub?H/2-fs*0.5:H/2);
-  if(sub){ x.font='400 '+Math.round(fs*0.5)+'px '+UIFONT; x.fillStyle=light?'rgba(0,0,0,.68)':'rgba(255,255,255,.8)'; x.fillText(sub, W/2, H/2+fs*0.55); }
-  const ext=S.fmt==='png'?'png':'jpg', mime=S.fmt==='png'?'image/png':'image/jpeg';
-  const base = (S.curId!=null && S.fileName ? S.fileName : (title.replace(/[^\w -]/g,'').trim()||'divider')).slice(0,50);
-  const fname = base+'_divider.'+ext;
-  c.toBlob(b=>{ if(!b){toast(t('toast_failed'));return;}
+  const title=$('phTitle').value.trim()||'Untitled', sub=$('phSub').value.trim();
+  const W=1600,H=1200,c=document.createElement('canvas'); c.width=W;c.height=H;
+  const x=c.getContext('2d');
+  const png=S.fmt==='png';
+  if(!png){ x.fillStyle='#ffffff'; x.fillRect(0,0,W,H); }
+
+  const fw=W*0.70, fh=H*0.70, fx=(W-fw)/2, fy=(H-fh)/2;
+  const front=phBg, light=isLight(front);
+  const back=shade(front, light?0.13:0.24);
+  const back2=folderBackPath(fx,fy,fw,fh), front2=folderFrontPath(fx,fy,fw,fh);
+
+  x.save(); x.shadowColor='rgba(0,0,0,.22)'; x.shadowBlur=fh*0.055; x.shadowOffsetY=fh*0.022;
+  x.fillStyle=back; x.fill(back2); x.restore();
+  x.fillStyle=back; x.fill(back2);
+  x.fillStyle=front; x.fill(front2);
+  // a pale folder would vanish on the white JPG ground without an edge
+  if(light){ x.strokeStyle=shade(front,0.28); x.lineWidth=Math.max(2,fh*0.005);
+    x.stroke(back2); x.stroke(front2); }
+
+  const ox=fw*0.055, oy=fh*0.235, px=fx+ox, py=fy+oy, pw=fw-ox, ph=fh-oy, pad=pw*0.07;
+  const tc=inkOn(front), dark=(tc==='#141414');
+  x.textAlign='left'; x.textBaseline='alphabetic'; x.direction='ltr';
+
+  const bw=pw-pad*2;
+  const r=wrapFit(x,title,bw,ph*(sub?0.62:0.90),190,34,1.12);
+  const ss=Math.max(20,Math.round(r.fs*0.40));
+  const th=r.lines.length*r.fs*1.12 + (sub?ss*1.9:0);
+  let ty=py+(ph-th)/2+r.fs*0.86;
+  x.fillStyle=tc; x.font='600 '+r.fs+'px '+UIFONT;
+  for(const l of r.lines){ x.fillText(l,px+pad,ty); ty+=r.fs*1.12; }
+  if(sub){ x.font='400 '+ss+'px '+UIFONT;
+    x.fillStyle=dark?'rgba(0,0,0,.62)':'rgba(255,255,255,.80)';
+    x.fillText(sub,px+pad,ty+ss*0.55); }
+
+  const ext=png?'png':'jpg', mime=png?'image/png':'image/jpeg';
+  const fname=nextDividerName()+'.'+ext;
+  c.toBlob(b=>{ if(!b){ toast(t('toast_failed')); return; }
     const f=new File([b],fname,{type:mime});
-    addPhotoFile(f,()=>toast(t('toast_divider_added')));
+    addPhotoFile(f,()=>toast(t('toast_divider_added')),'divider');
   }, mime, 0.95);
   hideOverlay('phOverlay');
 }
@@ -4978,7 +5069,7 @@ $('txtDefect').onclick=()=>openPicker('feed',(term,color)=>{ $('txtInput').value
 $('divider').onclick=()=>{ renderPhColors(); $('phTitle').value=''; showOverlay('phOverlay'); setTimeout(()=>$('phTitle').focus(),50); };
 $('phCancel').onclick=()=>hideOverlay('phOverlay');
 $('phMake').onclick=makePlaceholder;
-function renderPhColors(){ const cols=[...INKS];
+function renderPhColors(){ const cols=[FOLDER_COL,...INKS];
   $('phColors').innerHTML=cols.map(c=>'<button class="swatch'+(c===phBg?' on':'')+'" data-c="'+c+'" style="background:'+c+'"></button>').join('');
 }
 $('phColors').addEventListener('click',e=>{ const b=e.target.closest('[data-c]'); if(!b)return; phBg=b.dataset.c; document.querySelectorAll('#phColors .swatch').forEach(s=>s.classList.remove('on')); b.classList.add('on'); });
@@ -5487,6 +5578,7 @@ function repImg(rec,rows,maxPx){
   const c=document.createElement('canvas');
   c.width=Math.max(1,Math.round(rec.iw*k)); c.height=Math.max(1,Math.round(rec.ih*k));
   const cx=c.getContext('2d'); cx.imageSmoothingQuality='high';
+  cx.fillStyle='#ffffff'; cx.fillRect(0,0,c.width,c.height);
   cx.drawImage(rec.img,0,0,c.width,c.height);
   const savedSel=S.sel, savedBase=S.baseW; S.sel=null; S.baseW=rec.baseW;
   const tf={s:k,ox:0,oy:0};
@@ -5505,7 +5597,7 @@ function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'<
 function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
   t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+
   t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
-const MARKUP_VER='1.2.4';
+const MARKUP_VER='1.2.5';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
