@@ -281,6 +281,10 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .btn.icon{width:34px}
 }
 @media (max-width:520px){
+  .overlay.sheetwrap{padding:6px}
+  .sheet{height:calc(var(--apph,100dvh) * .94);max-height:calc(var(--apph,100dvh) - 12px);padding:12px}
+  .tilegrid{grid-template-columns:repeat(3,1fr);gap:5px}
+  .tile{height:44px;font-size:11.5px;padding:0 5px}
   #langFlag{display:none}
   #langCode{margin-left:0!important}
   .props{gap:8px}
@@ -401,6 +405,55 @@ body.hasfine .emotip{display:block}
 .star{width:30px;height:30px;border-radius:50%;font-size:15px;line-height:1;color:var(--muted-2);flex:0 0 auto}
 .star.on{color:var(--accent)}
 .pempty{padding:22px;text-align:center;color:var(--muted);font-size:13px}
+
+/* tile grid */
+.tilegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(102px,1fr));gap:6px;margin:2px 0 8px}
+.tile{
+  position:relative;height:46px;padding:0 7px;border-radius:var(--r-sm);overflow:hidden;
+  background:var(--panel);border:1px solid var(--hairline);color:var(--text);
+  font-size:12px;font-weight:600;line-height:1.15;display:grid;place-items:center;text-align:center;
+  user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:manipulation;
+}
+.tile:hover{border-color:var(--muted-2)}
+.tile:active{background:var(--panel-2)}
+.tile.fav{border-color:var(--accent)}
+.tile .tlab{display:block;width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.tile .tstar{position:absolute;top:1px;right:4px;font-size:9px;line-height:1;color:var(--accent)}
+.csbtn{
+  display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;margin-left:auto;margin-right:8px;
+  border-radius:100px;background:var(--panel);border:1px solid var(--hairline);
+  color:var(--text);font-size:12px;font-weight:600;white-space:nowrap;
+}
+.csbtn .dot{width:11px;height:11px;border-radius:50%}
+.cswheel{
+  position:fixed;z-index:70;display:none;min-width:150px;padding:6px;border-radius:12px;
+  background:linear-gradient(160deg,#232a31,#141a1f);border:1px solid var(--panel-border);
+  box-shadow:0 10px 40px rgba(0,0,0,.55);
+}
+.cswheel.show{display:block}
+.cswheel button{
+  display:flex;width:100%;align-items:center;gap:8px;height:36px;padding:0 10px;border-radius:8px;
+  color:var(--text);font-size:13px;font-weight:600;text-align:left;
+}
+.cswheel button:hover{background:var(--panel)}
+.cswheel .dot{width:11px;height:11px;border-radius:50%;flex:0 0 auto}
+.cswheel .wsep{height:1px;background:var(--hairline);margin:5px 4px}
+.cswheel .whead{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);padding:4px 6px 5px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:180px}
+.defmenu{
+  position:fixed;z-index:70;display:none;min-width:180px;max-width:240px;padding:6px;border-radius:12px;
+  background:linear-gradient(160deg,#232a31,#141a1f);border:1px solid var(--panel-border);
+  box-shadow:0 10px 40px rgba(0,0,0,.55);
+}
+.defmenu.show{display:block}
+.defmenu button{
+  display:flex;width:100%;align-items:center;gap:8px;height:38px;padding:0 10px;border-radius:8px;
+  color:var(--text);font-size:13.5px;text-align:left;overflow:hidden;
+}
+.defmenu button:hover{background:var(--panel)}
+.defmenu button span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.defmenu .dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+.defmenu .mm{color:var(--muted);font-size:12.5px}
+.defmenu .dsep{height:1px;background:var(--hairline);margin:5px 4px}
 #phColors .swatch{width:30px;height:30px}
 
 /* photo tray */
@@ -651,7 +704,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.2.7 · BETA · multilingual</span>
+        <span class="ver">v1.3.0 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -764,8 +817,9 @@ body.hasfine .emotip{display:block}
       <button class="mini" id="textfill" data-i18n="fill_on">Fill: On</button>
     </div>
     <div class="ctx hidden" id="tipctl">
-      <span class="lbl" data-i18n="tip_label">Tip</span>
-      <div class="seg" id="tipseg"><button data-tip="off" class="on" data-i18n="tip_off">Off</button><button data-tip="arrow" data-i18n="tip_arrow">Arrow</button><button data-tip="round" data-i18n="tip_round">Round</button></div>
+      <span class="lbl" id="tiplbl" data-i18n="tip_label">Tip</span>
+      <span class="lbl" id="endlbl" style="display:none" data-i18n="ends_label">Ends</span>
+      <div class="seg" id="tipseg"><button data-tip="off" class="on" data-i18n="tip_off">Off</button><button data-tip="arrow" data-i18n="tip_arrow">Arrow</button><button data-tip="round" data-i18n="tip_round">Round</button><button data-tip="bars" style="display:none" data-i18n="ends_bars">Bars</button><button data-tip="arrows" style="display:none" data-i18n="ends_arrows">Arrows</button></div>
     </div>
     <div class="ctx hidden" id="defctl">
       <span class="lbl" data-i18n="defect_label">Defect</span>
@@ -859,7 +913,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.2.7</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.3.0</span></div>
   </nav>
 </div>
 
@@ -898,19 +952,23 @@ body.hasfine .emotip{display:block}
   <div class="sheet">
     <div class="sheet-head">
       <h3 id="pickTitle" data-i18n="defect_tags_title">Defect &amp; tags</h3>
+      <button class="csbtn" id="csBtn"></button>
       <button class="x" id="pickClose">&times;</button>
     </div>
-    <input id="pickSearch" type="text" placeholder="Search terms…" autocomplete="off" data-i18n-placeholder="search_placeholder">
-    <div class="sevrow" id="sevRow"></div>
     <div class="tabs" id="pickTabs">
-      <button data-tab="material" class="on" data-i18n="tab_material">Material</button>
-      <button data-tab="component" data-i18n="tab_component">Component</button>
+      <button data-tab="material" class="on" data-i18n="tab_defects">Defects</button>
       <button data-tab="tags" data-i18n="tab_tags">Tags</button>
       <button data-tab="elements" data-i18n="tab_elements">Elements</button>
     </div>
+    <div class="sevrow" id="matRow"></div>
+    <input id="pickSearch" type="text" placeholder="Search terms…" autocomplete="off" data-i18n-placeholder="search_placeholder">
     <div class="picklist" id="pickList"></div>
+    <div class="cswheel" id="csWheel"></div>
   </div>
 </div>
+
+<!-- recent defects, held from the rail -->
+<div class="defmenu" id="defMenu"></div>
 
 <!-- report -->
 <div class="overlay sheetwrap" id="repOverlay">
@@ -1129,7 +1187,7 @@ body.hasfine .emotip{display:block}
         <div class="grow"><b data-i18n="help_polygon_b">Polygon</b><span data-i18n="help_polygon_d">Tap to drop corners; use Close shape to finish. Shade an area or ring a region.</span></div>
         <div class="grow"><b data-i18n="help_angle_b">Angle</b><span data-i18n="help_angle_d">Draw one side from the corner, then the second. The measured angle is written in the arc.</span></div>
         <div class="grow"><b data-i18n="help_number_b">Number</b><span data-i18n="help_number_d">Drops auto-incrementing markers for a legend or defect schedule. Set a prefix (e.g. B) and the counter continues B1, B2, B3. Clear all resets the count.</span></div>
-        <div class="grow"><b data-i18n="help_defect_b">Defect</b><span data-i18n="help_defect_d">Tags with a severity colour. Build your own list of defect types and materials; they're remembered between sessions.</span></div>
+        <div class="grow"><b data-i18n="help_defect_b">Defect</b><span data-i18n="help_defect_d">Tags in a condition-state colour. Tap the tool to re-use the last defect, double-tap for the full list, hold it for your recent five. In the list, tap a tile to place at the shown CS, or hold a tile to pick CS1&ndash;CS4 and favourite it.</span></div>
         <div class="grow"><b data-i18n="help_qr_b">QR</b><span data-i18n="help_qr_d">Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are drawn in black so the code still scans.</span></div>
       </div>
       <div class="gsec">
@@ -1143,7 +1201,7 @@ body.hasfine .emotip{display:block}
       </div>
       <div class="gsec">
         <h4 data-i18n="help_report_h">Report</h4>
-        <div class="grow"><b data-i18n="help_rep_rows_b">What fills the table</b><span data-i18n="help_rep_rows_d">Every defect placed from the Material or Component tab becomes one row. Tags, elements, measurements, notes and number badges near it fill that row's columns. Freehand marks and dividers stay decoration. Rows can also be typed by hand for things observed but not photographed.</span></div>
+        <div class="grow"><b data-i18n="help_rep_rows_b">What fills the table</b><span data-i18n="help_rep_rows_d">Every defect placed from the Defects tab becomes one row. Tags, elements, measurements, notes and number badges near it fill that row's columns. Freehand marks and dividers stay decoration. Rows can also be typed by hand for things observed but not photographed.</span></div>
         <div class="grow"><b data-i18n="help_rep_edit_b">Review before printing</b><span data-i18n="help_rep_edit_d">Fill in the header, caption each photo, then correct any cell by typing in it. Untick a row or a photo to leave it out. Edits are remembered; Reset edits rebuilds the table from the photos.</span></div>
         <div class="grow"><b data-i18n="help_rep_print_b">Print / PDF</b><span data-i18n="help_rep_print_d">Builds a cover page, photo sheets and a defect schedule, then opens the print dialog — choose "Save as PDF". Photos are reduced for printing; the normal export is untouched.</span></div>
       </div>
@@ -1214,7 +1272,7 @@ const I18N={
     "rep_caption_ph":"Caption",
     "rep_findings":"Findings",
     "rep_none":"No findings yet.",
-    "rep_none_body":"A row appears here for every defect placed from the Material or Component tab. Tags and elements are picked up as columns, not rows.",
+    "rep_none_body":"A row appears here for every defect placed from the Defects tab. Tags and elements are picked up as columns, not rows.",
     "rep_no_photos":"Load a photo first.",
     "col_item":"Item",
     "col_photo":"Photo",
@@ -1231,7 +1289,7 @@ const I18N={
     "rep_photo_n":"Photo {n}",
     "help_report_h":"Report",
     "help_rep_rows_b":"What fills the table",
-    "help_rep_rows_d":"Every defect placed from the Material or Component tab becomes one row. Tags, elements, measurements, notes and number badges near it fill that row's columns. Freehand marks and dividers stay decoration. Rows can also be typed by hand for things observed but not photographed.",
+    "help_rep_rows_d":"Every defect placed from the Defects tab becomes one row. Tags, elements, measurements, notes and number badges near it fill that row's columns. Freehand marks and dividers stay decoration. Rows can also be typed by hand for things observed but not photographed.",
     "help_rep_edit_b":"Review before printing",
     "help_rep_edit_d":"Fill in the header, caption each photo, then correct any cell by typing in it. Untick a row or a photo to leave it out. Edits are remembered; Reset edits rebuilds the table from the photos.",
     "help_rep_print_b":"Print / PDF",
@@ -1273,6 +1331,9 @@ const I18N={
     "close_shape":"Close shape",
     "fill_on":"Fill: On",
     "tip_label":"Tip",
+    "ends_label":"Ends",
+    "ends_bars":"Bars",
+    "ends_arrows":"Arrows",
     "tip_off":"Off",
     "tip_arrow":"Arrow",
     "tip_round":"Round",
@@ -1341,6 +1402,11 @@ const I18N={
     "defect_tags_title":"Defect & tags",
     "search_placeholder":"Search terms…",
     "tab_material":"Material",
+    "tab_defects":"Defects",
+    "mat_all":"All",
+    "pick_more":"All defects…",
+    "no_recent_defects":"No recent defects",
+    "favourite":"Favourite",
     "tab_component":"Component",
     "tab_tags":"Tags",
     "tab_elements":"Elements",
@@ -1458,7 +1524,7 @@ const I18N={
     "help_number_b":"Number",
     "help_number_d":"Drops auto-incrementing markers for a legend or defect schedule. Set a prefix (e.g. B) and the counter continues B1, B2, B3. Clear all resets the count.",
     "help_defect_b":"Defect",
-    "help_defect_d":"Tags with a severity colour. Build your own list of defect types and materials; they're remembered between sessions.",
+    "help_defect_d":"Tags in a condition-state colour. Tap the tool to re-use the last defect, double-tap for the full list, hold it for your recent five. In the list, tap a tile to place at the shown CS, or hold a tile to pick CS1&ndash;CS4 and favourite it.",
     "help_options_h":"Options",
     "help_fill_b":"Fill",
     "help_fill_d":"On the text-bearing tools, toggles the solid backing behind text. Off swaps it for a crisp outline so the photo shows through while staying readable.",
@@ -1545,7 +1611,7 @@ const I18N={
     "rep_caption_ph":"图注",
     "rep_findings":"检查结果",
     "rep_none":"暂无结果。",
-    "rep_none_body":"从“材料”或“构件”选项卡放置的每个缺陷都会在此生成一行。标签和部位只填入列，不生成行。",
+    "rep_none_body":"从“缺陷”选项卡放置的每个缺陷都会在此生成一行。标签和部位只填入列，不生成行。",
     "rep_no_photos":"请先加载照片。",
     "col_item":"序号",
     "col_photo":"照片",
@@ -1571,7 +1637,7 @@ const I18N={
     "rep_print_hint":"在打印对话框中选择“另存为 PDF”。关闭页眉页脚可获得更整洁的版面。",
     "help_report_h":"报告",
     "help_rep_rows_b":"表格如何填充",
-    "help_rep_rows_d":"从“材料”或“构件”选项卡放置的每个缺陷生成一行。其附近的标签、部位、测量、注释和编号徽章会填入该行各列。徒手标记和分隔线仅作标注，不入表。未拍照的观察项也可手动添加为行。",
+    "help_rep_rows_d":"从“缺陷”选项卡放置的每个缺陷生成一行。其附近的标签、部位、测量、注释和编号徽章会填入该行各列。徒手标记和分隔线仅作标注，不入表。未拍照的观察项也可手动添加为行。",
     "help_rep_edit_b":"打印前复核",
     "help_rep_edit_d":"填写抬头，为每张照片添加图注，然后直接在单元格中输入以修改。取消勾选可排除某行或某张照片。修改会被保存；“重置修改”将根据照片重新生成表格。",
     "help_rep_print_b":"打印 / PDF",
@@ -1599,6 +1665,9 @@ const I18N={
     "close_shape":"闭合图形",
     "fill_on":"填充：开",
     "tip_label":"端点",
+    "ends_label":"端头",
+    "ends_bars":"短线",
+    "ends_arrows":"箭头",
     "tip_off":"无",
     "tip_arrow":"箭头",
     "tip_round":"圆点",
@@ -1671,6 +1740,11 @@ const I18N={
     "defect_tags_title":"缺陷与标签",
     "search_placeholder":"搜索术语…",
     "tab_material":"材料",
+    "tab_defects":"缺陷",
+    "mat_all":"全部",
+    "pick_more":"全部缺陷…",
+    "no_recent_defects":"暂无最近缺陷",
+    "favourite":"收藏",
     "tab_component":"构件",
     "tab_tags":"标签",
     "tab_elements":"部位",
@@ -1788,7 +1862,7 @@ const I18N={
     "help_number_b":"编号",
     "help_number_d":"放置自动递增的标记，用于图例或缺陷清单。设置前缀（例如B），计数器会依次为B1、B2、B3。\"清除全部\"会重置计数。",
     "help_defect_b":"缺陷",
-    "help_defect_d":"带有严重程度颜色的标签。您可以建立自己的缺陷类型和材料列表；这些会在不同会话之间保留。",
+    "help_defect_d":"带状态等级颜色的标签。轻点工具可重用上一个缺陷，双击打开完整列表，长按显示最近五个。在列表中轻点方块按当前 CS 放置，长按方块可选择 CS1–CS4 并加入收藏。",
     "help_options_h":"选项",
     "help_fill_b":"填充",
     "help_fill_d":"在带文字的工具中，切换文字后的实心背景。关闭后改为清晰的轮廓，使照片透出的同时仍保持可读。",
@@ -1875,7 +1949,7 @@ const I18N={
     "rep_caption_ph":"Pie de foto",
     "rep_findings":"Hallazgos",
     "rep_none":"Aún no hay hallazgos.",
-    "rep_none_body":"Aparece una fila por cada defecto colocado desde la pestaña Material o Componente. Las etiquetas y los elementos llenan columnas, no crean filas.",
+    "rep_none_body":"Aparece una fila por cada defecto colocado desde la pestaña Defectos. Las etiquetas y los elementos llenan columnas, no crean filas.",
     "rep_no_photos":"Cargue una foto primero.",
     "col_item":"N.º",
     "col_photo":"Foto",
@@ -1901,7 +1975,7 @@ const I18N={
     "rep_print_hint":"En el diálogo de impresión elija «Guardar como PDF». Desactive encabezados y pies de página para una hoja más limpia.",
     "help_report_h":"Informe",
     "help_rep_rows_b":"Qué llena la tabla",
-    "help_rep_rows_d":"Cada defecto colocado desde la pestaña Material o Componente genera una fila. Las etiquetas, elementos, mediciones, notas y números cercanos llenan las columnas de esa fila. Los trazos a mano alzada y los divisores quedan como decoración. También se pueden escribir filas a mano para lo observado sin foto.",
+    "help_rep_rows_d":"Cada defecto colocado desde la pestaña Defectos genera una fila. Las etiquetas, elementos, mediciones, notas y números cercanos llenan las columnas de esa fila. Los trazos a mano alzada y los divisores quedan como decoración. También se pueden escribir filas a mano para lo observado sin foto.",
     "help_rep_edit_b":"Revisar antes de imprimir",
     "help_rep_edit_d":"Complete el encabezado, ponga un pie a cada foto y corrija cualquier celda escribiendo en ella. Desmarque una fila o una foto para excluirla. Las ediciones se recuerdan; «Restablecer ediciones» reconstruye la tabla a partir de las fotos.",
     "help_rep_print_b":"Imprimir / PDF",
@@ -1929,6 +2003,9 @@ const I18N={
     "close_shape":"Cerrar forma",
     "fill_on":"Relleno: Activado",
     "tip_label":"Punta",
+    "ends_label":"Extremos",
+    "ends_bars":"Barras",
+    "ends_arrows":"Flechas",
     "tip_off":"Sin",
     "tip_arrow":"Flecha",
     "tip_round":"Punto",
@@ -2001,6 +2078,11 @@ const I18N={
     "defect_tags_title":"Defectos y etiquetas",
     "search_placeholder":"Buscar términos…",
     "tab_material":"Material",
+    "tab_defects":"Defectos",
+    "mat_all":"Todos",
+    "pick_more":"Todos los defectos…",
+    "no_recent_defects":"Sin defectos recientes",
+    "favourite":"Favorito",
     "tab_component":"Componente",
     "tab_tags":"Etiquetas",
     "tab_elements":"Elementos",
@@ -2118,7 +2200,7 @@ const I18N={
     "help_number_b":"Número",
     "help_number_d":"Coloca marcadores autoincrementales para una leyenda o listado de defectos. Defina un prefijo (p. ej. B) y el contador continúa B1, B2, B3. Borrar todo reinicia el conteo.",
     "help_defect_b":"Defecto",
-    "help_defect_d":"Etiquetas con un color de severidad. Cree su propia lista de tipos de defectos y materiales; se recuerdan entre sesiones.",
+    "help_defect_d":"Etiquetas con el color del estado de condición. Toque la herramienta para reutilizar el último defecto, toque dos veces para la lista completa y manténgala pulsada para ver los cinco recientes. En la lista, toque un mosaico para colocarlo con el CS mostrado, o manténgalo pulsado para elegir CS1–CS4 y marcarlo como favorito.",
     "help_options_h":"Opciones",
     "help_fill_b":"Relleno",
     "help_fill_d":"En las herramientas con texto, alterna el fondo sólido detrás del texto. Desactivado lo cambia por un contorno nítido para que la foto se vea a través mientras sigue siendo legible.",
@@ -2205,7 +2287,7 @@ const I18N={
     "rep_caption_ph":"कैप्शन",
     "rep_findings":"निष्कर्ष",
     "rep_none":"अभी कोई निष्कर्ष नहीं।",
-    "rep_none_body":"सामग्री या घटक टैब से रखे गए हर दोष के लिए यहाँ एक पंक्ति बनती है। टैग और तत्व पंक्ति नहीं, केवल कॉलम भरते हैं।",
+    "rep_none_body":"दोष टैब से रखे गए हर दोष के लिए यहाँ एक पंक्ति बनती है। टैग और तत्व पंक्ति नहीं, केवल कॉलम भरते हैं।",
     "rep_no_photos":"पहले एक फ़ोटो लोड करें।",
     "col_item":"क्रम",
     "col_photo":"फ़ोटो",
@@ -2231,7 +2313,7 @@ const I18N={
     "rep_print_hint":"प्रिंट डायलॉग में “Save as PDF” चुनें। साफ़ पृष्ठ के लिए हेडर और फ़ुटर बंद करें।",
     "help_report_h":"रिपोर्ट",
     "help_rep_rows_b":"तालिका कैसे भरती है",
-    "help_rep_rows_d":"सामग्री या घटक टैब से रखा गया हर दोष एक पंक्ति बनाता है। उसके पास मौजूद टैग, तत्व, माप, नोट और नंबर बैज उस पंक्ति के कॉलम भरते हैं। फ़्रीहैंड निशान और डिवाइडर केवल चिह्न रहते हैं। बिना फ़ोटो के देखी गई बातों के लिए पंक्तियाँ हाथ से भी जोड़ी जा सकती हैं।",
+    "help_rep_rows_d":"दोष टैब से रखा गया हर दोष एक पंक्ति बनाता है। उसके पास मौजूद टैग, तत्व, माप, नोट और नंबर बैज उस पंक्ति के कॉलम भरते हैं। फ़्रीहैंड निशान और डिवाइडर केवल चिह्न रहते हैं। बिना फ़ोटो के देखी गई बातों के लिए पंक्तियाँ हाथ से भी जोड़ी जा सकती हैं।",
     "help_rep_edit_b":"प्रिंट से पहले समीक्षा",
     "help_rep_edit_d":"शीर्षक भरें, हर फ़ोटो को कैप्शन दें, फिर किसी भी सेल में टाइप करके सुधार करें। किसी पंक्ति या फ़ोटो को छोड़ने के लिए टिक हटाएँ। बदलाव याद रहते हैं; “बदलाव रीसेट करें” तालिका को फ़ोटो से दोबारा बनाता है।",
     "help_rep_print_b":"प्रिंट / PDF",
@@ -2259,6 +2341,9 @@ const I18N={
     "close_shape":"आकृति बंद करें",
     "fill_on":"फ़िल: चालू",
     "tip_label":"सिरा",
+    "ends_label":"सिरे",
+    "ends_bars":"पट्टियाँ",
+    "ends_arrows":"तीर",
     "tip_off":"बंद",
     "tip_arrow":"तीर",
     "tip_round":"गोल",
@@ -2331,6 +2416,11 @@ const I18N={
     "defect_tags_title":"दोष और टैग",
     "search_placeholder":"शब्द खोजें…",
     "tab_material":"सामग्री",
+    "tab_defects":"दोष",
+    "mat_all":"सभी",
+    "pick_more":"सभी दोष…",
+    "no_recent_defects":"कोई हाल का दोष नहीं",
+    "favourite":"पसंदीदा",
     "tab_component":"घटक",
     "tab_tags":"टैग",
     "tab_elements":"तत्व",
@@ -2448,7 +2538,7 @@ const I18N={
     "help_number_b":"संख्या",
     "help_number_d":"लीजेंड या दोष सूची के लिए अपने आप बढ़ने वाले मार्कर रखता है। उपसर्ग सेट करें (जैसे B) और काउंटर B1, B2, B3 जारी रखता है। सभी साफ़ करें से गिनती रीसेट हो जाती है।",
     "help_defect_b":"दोष",
-    "help_defect_d":"गंभीरता रंग के साथ टैग। दोष प्रकार और सामग्रियों की अपनी सूची बनाएं; ये सत्रों के बीच याद रखी जाती हैं।",
+    "help_defect_d":"स्थिति-स्तर रंग वाले टैग। पिछला दोष दोहराने के लिए टूल पर टैप करें, पूरी सूची के लिए डबल-टैप करें, और हाल के पाँच देखने के लिए दबाकर रखें। सूची में टाइल पर टैप करने से दिखाया गया CS लागू होता है; टाइल दबाकर रखने पर CS1–CS4 चुनें और पसंदीदा बनाएं।",
     "help_options_h":"विकल्प",
     "help_fill_b":"फ़िल",
     "help_fill_d":"टेक्स्ट वाले टूल्स में, टेक्स्ट के पीछे ठोस बैकिंग को टॉगल करता है। बंद करने पर यह स्पष्ट आउटलाइन में बदल जाता है ताकि फ़ोटो दिखे और पठनीय भी बनी रहे।",
@@ -2535,7 +2625,7 @@ const I18N={
     "rep_caption_ph":"تعليق",
     "rep_findings":"النتائج",
     "rep_none":"لا توجد نتائج بعد.",
-    "rep_none_body":"يظهر صف لكل عيب يُوضع من تبويب «المادة» أو «العنصر». أما الوسوم والعناصر فتملأ الأعمدة ولا تنشئ صفوفًا.",
+    "rep_none_body":"يظهر صف لكل عيب يُوضع من تبويب «العيوب». أما الوسوم والعناصر فتملأ الأعمدة ولا تنشئ صفوفًا.",
     "rep_no_photos":"حمّل صورة أولًا.",
     "col_item":"رقم",
     "col_photo":"الصورة",
@@ -2561,7 +2651,7 @@ const I18N={
     "rep_print_hint":"في مربّع الطباعة اختر «حفظ بصيغة PDF». أوقف الرأس والتذييل للحصول على صفحة أنظف.",
     "help_report_h":"التقرير",
     "help_rep_rows_b":"ما الذي يملأ الجدول",
-    "help_rep_rows_d":"كل عيب يُوضع من تبويب «المادة» أو «العنصر» ينشئ صفًا واحدًا. والوسوم والعناصر والقياسات والملاحظات وشارات الأرقام القريبة منه تملأ أعمدة ذلك الصف. أما الرسم الحر والفواصل فتبقى للتوضيح فقط. ويمكن أيضًا كتابة صفوف يدويًا لما لوحظ دون تصوير.",
+    "help_rep_rows_d":"كل عيب يُوضع من تبويب «العيوب» ينشئ صفًا واحدًا. والوسوم والعناصر والقياسات والملاحظات وشارات الأرقام القريبة منه تملأ أعمدة ذلك الصف. أما الرسم الحر والفواصل فتبقى للتوضيح فقط. ويمكن أيضًا كتابة صفوف يدويًا لما لوحظ دون تصوير.",
     "help_rep_edit_b":"المراجعة قبل الطباعة",
     "help_rep_edit_d":"املأ الترويسة، وأضف تعليقًا لكل صورة، ثم صحّح أي خانة بالكتابة فيها. أزل علامة الاختيار لاستبعاد صف أو صورة. تُحفظ التعديلات؛ و«إعادة تعيين التعديلات» تعيد بناء الجدول من الصور.",
     "help_rep_print_b":"طباعة / PDF",
@@ -2589,6 +2679,9 @@ const I18N={
     "close_shape":"إغلاق الشكل",
     "fill_on":"التعبئة: مفعّلة",
     "tip_label":"الطرف",
+    "ends_label":"النهايات",
+    "ends_bars":"شرطات",
+    "ends_arrows":"أسهم",
     "tip_off":"بدون",
     "tip_arrow":"سهم",
     "tip_round":"دائرة",
@@ -2661,6 +2754,11 @@ const I18N={
     "defect_tags_title":"العيوب والوسوم",
     "search_placeholder":"ابحث عن مصطلح…",
     "tab_material":"المادة",
+    "tab_defects":"العيوب",
+    "mat_all":"الكل",
+    "pick_more":"كل العيوب…",
+    "no_recent_defects":"لا عيوب حديثة",
+    "favourite":"مفضّل",
     "tab_component":"العنصر",
     "tab_tags":"الوسوم",
     "tab_elements":"العناصر",
@@ -2778,7 +2876,7 @@ const I18N={
     "help_number_b":"رقم",
     "help_number_d":"يضع علامات تزداد تلقائيًا لوسيلة إيضاح أو جدول عيوب. اضبط بادئة (مثل B) ويستمر العداد B1، B2، B3. مسح الكل يعيد ضبط العد.",
     "help_defect_b":"عيب",
-    "help_defect_d":"وسوم بلون يدل على شدة العيب. أنشئ قائمتك الخاصة بأنواع العيوب والمواد؛ يتم تذكرها بين الجلسات.",
+    "help_defect_d":"وسوم بلون حالة العنصر. انقر الأداة لإعادة استخدام آخر عيب، وانقر نقرًا مزدوجًا لعرض القائمة الكاملة، واستمر بالضغط لعرض آخر خمسة. في القائمة، انقر مربعًا لوضعه بحالة CS المعروضة، أو استمر بالضغط على المربع لاختيار CS1–CS4 وإضافته إلى المفضلة.",
     "help_options_h":"الخيارات",
     "help_fill_b":"التعبئة",
     "help_fill_d":"في الأدوات التي تحمل نصًا، يبدّل الخلفية الصلبة خلف النص. عند الإيقاف يستبدلها بمخطط واضح بحيث تظهر الصورة من خلاله مع بقائه مقروءًا.",
@@ -2865,7 +2963,7 @@ const I18N={
     "rep_caption_ph":"Подпись",
     "rep_findings":"Дефекты",
     "rep_none":"Дефектов пока нет.",
-    "rep_none_body":"Строка появляется для каждого дефекта, поставленного на вкладке «Материал» или «Элемент». Метки и конструктивные элементы заполняют столбцы, но строк не создают.",
+    "rep_none_body":"Строка появляется для каждого дефекта, поставленного на вкладке «Дефекты». Метки и конструктивные элементы заполняют столбцы, но строк не создают.",
     "rep_no_photos":"Сначала загрузите фото.",
     "col_item":"№",
     "col_photo":"Фото",
@@ -2891,7 +2989,7 @@ const I18N={
     "rep_print_hint":"В окне печати выберите «Сохранить как PDF». Отключите колонтитулы для более чистой страницы.",
     "help_report_h":"Отчёт",
     "help_rep_rows_b":"Чем заполняется таблица",
-    "help_rep_rows_d":"Каждый дефект, поставленный на вкладке «Материал» или «Элемент», даёт одну строку. Ближайшие метки, конструктивные элементы, измерения, заметки и номерные значки заполняют столбцы этой строки. Рисунок от руки и разделители остаются оформлением. Строки можно также добавить вручную для замеченного, но не сфотографированного.",
+    "help_rep_rows_d":"Каждый дефект, поставленный на вкладке «Дефекты», даёт одну строку. Ближайшие метки, конструктивные элементы, измерения, заметки и номерные значки заполняют столбцы этой строки. Рисунок от руки и разделители остаются оформлением. Строки можно также добавить вручную для замеченного, но не сфотографированного.",
     "help_rep_edit_b":"Проверка перед печатью",
     "help_rep_edit_d":"Заполните шапку, подпишите каждое фото, затем исправьте любую ячейку, вводя текст прямо в ней. Снимите галочку, чтобы исключить строку или фото. Правки сохраняются; «Сбросить правки» пересобирает таблицу из фотографий.",
     "help_rep_print_b":"Печать / PDF",
@@ -2919,6 +3017,9 @@ const I18N={
     "close_shape":"Замкнуть фигуру",
     "fill_on":"Заливка: вкл",
     "tip_label":"Конец",
+    "ends_label":"Концы",
+    "ends_bars":"Засечки",
+    "ends_arrows":"Стрелки",
     "tip_off":"Нет",
     "tip_arrow":"Стрелка",
     "tip_round":"Точка",
@@ -2991,6 +3092,11 @@ const I18N={
     "defect_tags_title":"Дефекты и метки",
     "search_placeholder":"Поиск терминов…",
     "tab_material":"Материал",
+    "tab_defects":"Дефекты",
+    "mat_all":"Все",
+    "pick_more":"Все дефекты…",
+    "no_recent_defects":"Нет недавних дефектов",
+    "favourite":"В избранное",
     "tab_component":"Элемент",
     "tab_tags":"Метки",
     "tab_elements":"Конструктивные элементы",
@@ -3108,7 +3214,7 @@ const I18N={
     "help_number_b":"Номер",
     "help_number_d":"Размещает автоматически нумеруемые метки для легенды или перечня дефектов. Задайте префикс (напр. B), и счётчик продолжит B1, B2, B3. «Очистить всё» сбрасывает счётчик.",
     "help_defect_b":"Дефект",
-    "help_defect_d":"Метки с цветом по степени серьёзности. Составьте свой список типов дефектов и материалов; они сохраняются между сессиями.",
+    "help_defect_d":"Метки в цвете состояния. Нажмите инструмент, чтобы повторить последний дефект, двойное нажатие открывает полный список, удержание — пять недавних. В списке нажатие на плитку ставит дефект с показанным CS, удержание плитки позволяет выбрать CS1–CS4 и добавить в избранное.",
     "help_options_h":"Настройки",
     "help_fill_b":"Заливка",
     "help_fill_d":"В инструментах с текстом переключает сплошную подложку под текстом. При отключении заменяется чёткой обводкой, чтобы фото просвечивало, сохраняя читаемость.",
@@ -3723,7 +3829,7 @@ function applyI18n(){
   if(typeof updateQr==='function') updateQr();
   if(typeof updateNext==='function') updateNext();
   if(typeof syncCtx==='function') syncCtx();
-  if(typeof renderSev==='function') renderSev();
+  if(typeof renderCS==='function') renderCS();
   if($('pickOverlay')&&$('pickOverlay').classList.contains('show')&&typeof renderPicker==='function') renderPicker();
 }
 function renderLangMenu(){
@@ -3764,7 +3870,7 @@ const S = {
   img:null, iw:0, ih:0, baseW:6, fileName:'photo',
   view:{s:1, ox:0, oy:0}, fitS:1,
   objects:[], sel:null, tool:'select', armedQR:null,
-  style:{color:INKS[0], w:'M', tip:'off'},
+  style:{color:INKS[0], w:'M', tip:'off', dimEnds:'bars'},
   fmt:'jpg',
   counter:1, angleDraft:null, polyDraft:null, polyFill:true, textFill:true, numPrefix:'',
   armedDefect:null, recent:[], recentTags:[], favs:[],
@@ -3880,13 +3986,28 @@ function drawTip(ctx,p,ang,w,col,kind){
     ctx.strokeStyle=halo(col); ctx.lineWidth=hw; ctx.stroke();
     ctx.fillStyle=col; ctx.fill();
   } else {
-    const L=w*5.2, H=w*3.0;
+    const L=ARROW_L(w), H=w*3.0;
     ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-L,-H); ctx.lineTo(-L*0.70,0); ctx.lineTo(-L,H); ctx.closePath();
     ctx.strokeStyle=halo(col); ctx.lineWidth=hw; ctx.stroke();
     ctx.fillStyle=col; ctx.fill();
   }
   ctx.restore();
 }
+// Pull the path back from its first point by d, so the stroke ends inside the arrowhead
+// instead of poking through its apex. Returns the original if trimming would collapse it.
+function trimPath(pts,d){
+  if(!(d>0)||pts.length<2) return pts;
+  let rem=d, out=pts.slice();
+  while(out.length>1 && rem>0){
+    const a=out[0], b=out[1], len=Math.hypot(b.x-a.x,b.y-a.y);
+    if(len<=rem){ rem-=len; out.shift(); }
+    else { const f=rem/len; out[0]={x:a.x+(b.x-a.x)*f, y:a.y+(b.y-a.y)*f}; rem=0; }
+  }
+  return out.length>1?out:pts;
+}
+const ARROW_L = w => w*5.2;          // apex to back of the barbs
+const ARROW_INSET = w => w*5.2*0.70; // apex to the notch — where the line should stop
+
 // Angle pointing away from the line, measured to the first point far enough off the
 // tip that a jittery first sample cannot swing the ornament around.
 function outAngle(pts,w){
@@ -3919,8 +4040,9 @@ function noteGeom(o){
 function drawNote(ctx,o,tf){
   const g=noteGeom(o), w=mapLen(tf,o.w);
   const tip=mapPt(tf,o.x1,o.y1), elbow=mapPt(tf,g.elbow.x,g.elbow.y), anchor=mapPt(tf,g.anchor.x,g.anchor.y);
-  strokePath(ctx,[tip,elbow,anchor],w,o.color);
-  if(o.tip&&o.tip!=='off') drawTip(ctx,tip,outAngle([tip,elbow,anchor],w),w,o.color,o.tip);
+  const lead=[tip,elbow,anchor];
+  strokePath(ctx, o.tip==='arrow'?trimPath(lead,ARROW_INSET(w)):lead, w, o.color);
+  if(o.tip&&o.tip!=='off') drawTip(ctx,tip,outAngle(lead,w),w,o.color,o.tip);
   if(o.text){ const cs=mapPt(tf,g.c.x,g.c.y); chipAt(ctx,o.text,cs.x,cs.y,o.color,mapLen(tf,o.size||S.baseW*FONTS.M),o.fill); }
 }
 function labelPos(o){ return noteGeom(o).c; }
@@ -3952,7 +4074,7 @@ function drawPolyDraft(ctx,tf){
 function drawPen(ctx,o,tf){
   if(o.pts.length<2) return;
   const pts=o.pts.map(pt=>mapPt(tf,pt.x,pt.y)), w=mapLen(tf,o.w);
-  strokePath(ctx,pts,w,o.color);
+  strokePath(ctx, o.tip==='arrow'?trimPath(pts,ARROW_INSET(w)):pts, w, o.color);
   if(o.tip&&o.tip!=='off') drawTip(ctx,pts[0],outAngle(pts,w),w,o.color,o.tip);
 }
 function drawText(ctx,o,tf){ const p=mapPt(tf,o.x,o.y); chipAt(ctx,o.text,p.x,p.y,o.color,mapLen(tf,o.size),o.fill); }
@@ -3978,12 +4100,20 @@ function chipAt(ctx,text,cx,cy,col,fs,filled){
 function drawDim(ctx,o,tf){
   const a=mapPt(tf,o.x1,o.y1), b=mapPt(tf,o.x2,o.y2), w=mapLen(tf,o.w);
   const ang=Math.atan2(b.y-a.y,b.x-a.x); const tl=Math.max(w*3.2,8);
-  strokePath(ctx,[a,b],w,o.color);
-  // short perpendicular tick bars at both ends
-  const px=Math.cos(ang+Math.PI/2), py=Math.sin(ang+Math.PI/2);
-  const tick=(pt)=>[{x:pt.x-px*tl,y:pt.y-py*tl},{x:pt.x+px*tl,y:pt.y+py*tl}];
-  const ta=tick(a), tb=tick(b);
-  strokePath(ctx,ta,w,o.color); strokePath(ctx,tb,w,o.color);
+  if(o.ends==='arrows'){
+    const ins=ARROW_INSET(w);
+    // trim from both ends: trim the head, flip, trim the other head, flip back
+    let line=trimPath([a,b],ins); line=trimPath(line.slice().reverse(),ins).reverse();
+    strokePath(ctx,line,w,o.color);
+    drawTip(ctx,a,ang+Math.PI,w,o.color,'arrow');
+    drawTip(ctx,b,ang,w,o.color,'arrow');
+  } else {
+    strokePath(ctx,[a,b],w,o.color);
+    // short perpendicular tick bars at both ends
+    const px=Math.cos(ang+Math.PI/2), py=Math.sin(ang+Math.PI/2);
+    const tick=(pt)=>[{x:pt.x-px*tl,y:pt.y-py*tl},{x:pt.x+px*tl,y:pt.y+py*tl}];
+    strokePath(ctx,tick(a),w,o.color); strokePath(ctx,tick(b),w,o.color);
+  }
   const mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2}, perp=ang+Math.PI/2, off=Math.max(w*2.4,mapLen(tf,S.baseW*FONTS.M)*0.9);
   chipAt(ctx,(o.value||'—')+' '+o.unit, mid.x+Math.cos(perp)*off, mid.y+Math.sin(perp)*off, o.color, mapLen(tf,o.size), o.fill);
 }
@@ -4404,7 +4534,7 @@ function onDown(p){
     beginEdit();
     let o;
     if(S.tool==='note') o={id:newId(),type:'note',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),text:'',size:fontPx(),fill:S.textFill,tip:S.style.tip};
-    else if(S.tool==='dim') o={id:newId(),type:'dim',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),value:'',unit:'mm',size:fontPx(),fill:S.textFill};
+    else if(S.tool==='dim') o={id:newId(),type:'dim',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),value:'',unit:'mm',size:fontPx(),fill:S.textFill,ends:S.style.dimEnds};
     else o={id:newId(),type:'pen',pts:[{x:ip.x,y:ip.y}],color:S.style.color,w:widthPx(),tip:S.style.tip};
     act={mode:'draw',o,startImg:ip}; S.objects.push(o); render();
   }
@@ -4600,14 +4730,34 @@ function updateTextCtl(){
   const fillOn=isTextObj ? o.fill!==false : S.textFill;
   $('textfill').textContent=fillOn?t('fill_on'):t('fill_off');
 }
-function updateTipCtl(){
+const TIP_OPTS=['off','arrow','round'], END_OPTS=['bars','arrows'];
+function tipMode(){
   const o=S.sel!=null?getObj(S.sel):null;
-  const isObj=o&&(o.type==='pen'||o.type==='note');
-  const show=(S.tool==='pen'||S.tool==='note')||isObj;
-  $('tipctl').classList.toggle('hidden',!show);
-  if(!show) return;
-  const cur=isObj?(o.tip||'off'):S.style.tip;
-  document.querySelectorAll('#tipseg button').forEach(b=>b.classList.toggle('on',b.dataset.tip===cur));
+  if(o){
+    if(o.type==='dim') return 'ends';
+    if(o.type==='pen'||o.type==='note') return 'tip';
+  }
+  if(S.tool==='dim') return 'ends';
+  if(S.tool==='pen'||S.tool==='note') return 'tip';
+  return null;
+}
+function updateTipCtl(){
+  const mode=tipMode();
+  $('tipctl').classList.toggle('hidden',!mode);
+  if(!mode) return;
+  const o=S.sel!=null?getObj(S.sel):null;
+  const ends=(mode==='ends');
+  $('tiplbl').style.display=ends?'none':'';
+  $('endlbl').style.display=ends?'':'none';
+  const opts=ends?END_OPTS:TIP_OPTS;
+  const cur = ends
+    ? ((o&&o.type==='dim') ? (o.ends||'bars') : S.style.dimEnds)
+    : ((o&&(o.type==='pen'||o.type==='note')) ? (o.tip||'off') : S.style.tip);
+  document.querySelectorAll('#tipseg button').forEach(b=>{
+    const mine=opts.indexOf(b.dataset.tip)>=0;
+    b.style.display=mine?'':'none';
+    b.classList.toggle('on', mine&&b.dataset.tip===cur);
+  });
 }
 function updatePolyCtl(){
   const o=S.sel!=null?getObj(S.sel):null;
@@ -4819,7 +4969,7 @@ function clearSession(){ if(!db)return; try{ db.transaction('session','readwrite
 async function restoreSession(){
   const d=await idbGet('current'); if(!d||!d.photos||!d.photos.length)return;
   uid=d.uid||uid; pid=d.pid||pid;
-  S.favs=d.favs||[]; S.recent=d.recent||[]; S.recentTags=d.recentTags||[]; S.elements=d.elements||[]; S.personal=d.personal||[];
+  S.favs=migList(d.favs); S.recent=migList(d.recent); S.recentTags=d.recentTags||[]; S.elements=d.elements||[]; S.personal=migList(d.personal);
   S.numPrefix=d.numPrefix||''; $('numpre').value=S.numPrefix;
   if(d.rep) S.rep=Object.assign(S.rep,d.rep); if(!S.rep.ov) S.rep.ov={}; if(!S.rep.manual) S.rep.manual=[];
   if(d.fmt){ S.fmt=d.fmt; } $('fmtCur').textContent=(S.fmt==='png'?'PNG':'JPG');
@@ -4856,28 +5006,29 @@ let toastT=null;
 function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),1700); }
 
 // ── Defect vocabulary (working list; align to NZTA / AS when grounding) ──
+const MATS=[['C','Concrete'],['S','Steel'],['T','Timber'],['M','Masonry'],['B','Bearing'],['J','Joint'],['G','General']];
+const DEF_TERMS=[
+  ['Cracking','CMTG'],['Fatigue crack','S'],['Cracked weld','S'],
+  ['Spalling','CM'],['Delamination','C'],['Scaling','C'],['Honeycombing','C'],['Popout','C'],
+  ['Section loss','CSTB'],['Pothole','C'],['Surfacing defect','CG'],
+  ['Exposed rebar','C'],['Corrosion','SBJ'],['Corrosion staining','CM'],['Pitting','S'],['Pack rust','S'],['Coating breakdown','S'],
+  ['Efflorescence','CM'],['Leaching','CM'],['ASR','C'],['Active leakage','CJ'],['Water staining','CMG'],
+  ['Decay / rot','T'],['Splitting','T'],['Checking','T'],['Insect attack','T'],['Crushing','T'],
+  ['Mortar loss','M'],['Weathering','MTG'],
+  ['Displacement','MBJG'],['Distortion','SB'],['Deflection','CST'],['Seized','B'],['Over-travel','B'],['Bulging','B'],['Tearing','B'],
+  ['Loose fixing','STG'],['Missing component','SJG'],['Damaged seal','J'],['Anchorage loss','JG'],
+  ['Scour','G'],['Erosion','G'],['Settlement','CMG'],['Debris','BJG'],['Drain blocked','CGJ'],['Vegetation','MG'],
+  ['Impact damage','CSTMG'],['Fire damage','CST'],['Graffiti','G']
+];
 const DEFECTS={
-  material:{
-    Concrete:['Longitudinal crack','Transverse crack','Diagonal crack','Shrinkage cracking','Spalling','Delamination','Scaling','Honeycombing','Efflorescence','Exposed reinforcement','Corrosion staining','Section loss','Popout','Alkali-silica reaction','Leaching','Active leakage'],
-    Steel:['Surface corrosion','Pitting','Section loss','Coating breakdown','Fatigue crack','Cracked weld','Loose bolt','Missing bolt','Distortion','Impact damage','Pack rust'],
-    Timber:['Decay / rot','Splitting','Checking','Insect attack','Crushing','Loose fastening','Fire damage'],
-    Masonry:['Cracking','Spalling','Mortar loss','Displacement','Vegetation growth','Weathering'],
-    Bearings:['Corrosion','Restricted movement','Seized bearing','Excessive movement','Bulging','Tearing','Debris packing','Loss of material'],
-    Joints:['Leakage','Debris blockage','Damaged seal','Missing component','Loss of anchorage'],
-    General:['Scour','Settlement','Drainage blockage','Debris accumulation','Vegetation','Impact damage','Fire damage','Graffiti','Water staining']
-  },
-  component:{
-    Deck:['Spalling','Delamination','Scaling','Pothole','Exposed reinforcement','Water staining','Wearing-surface defect'],
-    'Girder / Beam':['Cracking','Spalling','Corrosion staining','Exposed reinforcement','Section loss','Fatigue crack','Impact damage','Excessive deflection'],
-    'Pier / Column':['Cracking','Spalling','Delamination','Corrosion staining','Scour','Impact damage','Honeycombing'],
-    Abutment:['Cracking','Spalling','Settlement','Displacement','Drainage blockage','Erosion','Vegetation'],
-    Bearing:['Corrosion','Restricted movement','Excessive movement','Bulging','Debris packing','Loss of material'],
-    Joint:['Leakage','Debris blockage','Damaged seal','Missing component'],
-    'Barrier / Rail':['Corrosion','Impact damage','Loose connection','Missing component','Coating breakdown'],
-    'Foundation / Scour':['Scour','Undermining','Settlement','Erosion','Exposed foundation','Debris buildup']
-  },
   tags:{ Tags:['Monitor','Repair','Urgent','Priority','Review','Typical','Measured','Access issue','No access','Previously noted','New this inspection','Safety concern'] }
 };
+// shortened names borrow the translation of the term they replace
+const TERM_ALIAS={'ASR':'Alkali-silica reaction','Exposed rebar':'Exposed reinforcement','Surfacing defect':'Wearing-surface defect','Seized':'Seized bearing','Over-travel':'Excessive movement','Loose fixing':'Loose fastening','Anchorage loss':'Loss of anchorage','Deflection':'Excessive deflection','Drain blocked':'Drainage blockage','Debris':'Debris accumulation'};
+for(const lg in TERM_TR){ const d=TERM_TR[lg]; for(const k in TERM_ALIAS){ const v=d[TERM_ALIAS[k]]; if(v&&!d[k]) d[k]=v; } }
+// saved lists from earlier versions
+const TERM_MIGRATE={'Longitudinal crack':'Cracking','Transverse crack':'Cracking','Diagonal crack':'Cracking','Shrinkage cracking':'Cracking','Alkali-silica reaction':'ASR','Exposed reinforcement':'Exposed rebar','Wearing-surface defect':'Surfacing defect','Seized bearing':'Seized','Restricted movement':'Seized','Excessive movement':'Over-travel','Loose fastening':'Loose fixing','Loose bolt':'Loose fixing','Loose connection':'Loose fixing','Missing bolt':'Missing component','Loss of anchorage':'Anchorage loss','Excessive deflection':'Deflection','Drainage blockage':'Drain blocked','Debris accumulation':'Debris','Debris blockage':'Debris','Debris packing':'Debris','Debris buildup':'Debris','Surface corrosion':'Corrosion','Vegetation growth':'Vegetation','Loss of material':'Section loss','Undermining':'Scour','Exposed foundation':'Scour'};
+function migList(a){ const o=[]; (a||[]).forEach(x=>{ const n=TERM_MIGRATE[x]||x; if(!o.includes(n)) o.push(n); }); return o; }
 const SEV=[
   {k:'none',code:null,word:'Current',color:null},
   {k:'good',code:'CS1',word:'Good',color:'#66bb6a'},
@@ -4885,7 +5036,7 @@ const SEV=[
   {k:'poor',code:'CS3',word:'Poor',color:'#f57c00'},
   {k:'severe',code:'CS4',word:'Severe',color:'#d32f2f'}
 ];
-let curSev='none', pickMode='arm', pickFeed=null, pickTab='material', phBg=FOLDER_COL;
+let curSev='none', pickMode='arm', pickFeed=null, pickTab='material', curMat='', phBg=FOLDER_COL;
 
 // tag / defect chip — filled pill in the severity colour
 function drawTag(ctx,o,tf){
@@ -4900,19 +5051,42 @@ function drawTag(ctx,o,tf){
 }
 
 // ── Picker ──────────────────────────────────────────────
-function openPicker(mode,feed){ pickMode=mode; pickFeed=feed||null; renderSev(); renderPicker(); showOverlay('pickOverlay'); setTimeout(()=>$('pickSearch').focus(),60); }
-function renderSev(){
-  $('sevRow').innerHTML=SEV.map(s=>'<button data-sev="'+s.k+'"'+(s.k===curSev?' class="on"':'')+'><span class="dot" style="background:'+(s.color||'#7c8894')+'"></span>'+sevLabel(s)+'</button>').join('');
+function openPicker(mode,feed){
+  pickMode=mode; pickFeed=feed||null; curMat='';
+  $('pickSearch').value=''; renderPicker(); showOverlay('pickOverlay');
+  if(!matchMedia('(pointer:coarse)').matches) setTimeout(()=>$('pickSearch').focus(),60);
 }
 function sevLabel(s){ const w=trSev(s.word); return s.code? (s.code+' '+w) : w; }
-function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
 function tnLabel(fn){ const s=String(fn||''); if(/^photo-\d+$/.test(s)) return s; return s.length>6?('...'+s.slice(-6)):s; }
+function sevOf(k){ return SEV.find(x=>x.k===k)||SEV[0]; }
+function renderCS(){
+  const b=$('csBtn'), off=(pickTab==='tags'||pickTab==='elements');
+  b.style.display=off?'none':'';
+  if(off) return;
+  const s=sevOf(curSev);
+  b.innerHTML='<span class="dot" style="background:'+(s.color||'#7c8894')+'"></span>'+esc(sevLabel(s));
+}
+function renderMat(){
+  const r=$('matRow');
+  if(pickTab!=='material'){ r.style.display='none'; return; }
+  r.style.display='';
+  r.innerHTML='<button data-mat=""'+(curMat?'':' class="on"')+'>'+esc(t('mat_all'))+'</button>'+
+    MATS.map(m=>'<button data-mat="'+m[0]+'"'+(curMat===m[0]?' class="on"':'')+'>'+esc(trCat(m[1]))+'</button>').join('');
+}
+function matsOf(term){ const d=DEF_TERMS.find(x=>x[0]===term); return d?d[1]:''; }
+function matName(c){ const m=MATS.find(x=>x[0]===c); return m?m[1]:''; }
 function row(term,cat){ const fav=S.favs.includes(term); const disp=(pickTab==='elements')?esc(term):esc(trTerm(term));
   return '<div class="prow" data-term="'+esc(term)+'"><button class="star'+(fav?' on':'')+'" data-star="'+esc(term)+'">'+(fav?'★':'☆')+'</button><span class="pterm">'+disp+'</span>'+(cat?'<span class="pcat">'+esc(trCat(cat))+'</span>':'')+'</div>'; }
+function tile(term){
+  const fav=S.favs.includes(term), disp=esc(trTerm(term));
+  return '<button class="tile'+(fav?' fav':'')+'" data-term="'+esc(term)+'" title="'+disp+'"><span class="tlab">'+disp+'</span>'+(fav?'<span class="tstar">★</span>':'')+'</button>';
+}
+function grid(list){ return '<div class="tilegrid">'+list.map(tile).join('')+'</div>'; }
+function hit(term,q){ return !q || trTerm(term).toLowerCase().includes(q) || term.toLowerCase().includes(q); }
 function renderPicker(){
   const q=$('pickSearch').value.trim().toLowerCase();
-  if(pickTab==='tags'||pickTab==='elements') $('sevRow').innerHTML='<button disabled style="opacity:.75"><span class="dot" style="background:#7c8894"></span>'+t('uses_current_ink')+'</button>';
-  else renderSev();
+  renderCS(); renderMat();
   let html='';
   if(pickTab==='elements'){
     html+='<div class="eladd"><input id="newElem" placeholder="'+esc(t('new_elem_placeholder'))+'" autocomplete="off"><button id="addElem">'+t('add')+'</button></div>';
@@ -4921,22 +5095,22 @@ function renderPicker(){
     else html+='<div class="pempty">'+(q?t('no_matching_elements'):t('name_repeated_elements'))+'</div>';
     $('pickList').innerHTML=html; return;
   }
-  const data=DEFECTS[pickTab];
-  const addRow='<div class="eladd"><input id="newPersonal" placeholder="'+esc(t('add_own_placeholder'))+'" autocomplete="off"><button id="addPersonal">'+t('add')+'</button></div>';
-  const plist=q? S.personal.filter(x=>x.toLowerCase().includes(q)) : S.personal;
-  const persHtml=plist.length? '<div class="pgroup">'+t('personal_group')+'</div>'+plist.map(tm=>row(tm,'')).join('') : '';
-  if(q){
-    const hits=[]; for(const cat in data) for(const tm of data[cat]) if(trTerm(tm).toLowerCase().includes(q)||tm.toLowerCase().includes(q)) hits.push([tm,cat]);
-    const builtin = hits.length? hits.map(h=>row(h[0],h[1])).join('') : '';
-    html = addRow+persHtml+builtin;
-    if(!persHtml&&!builtin) html = addRow+'<div class="pempty">'+t('no_matches_custom')+'</div>';
-  } else {
-    html = addRow+persHtml;
-    const rec = pickTab==='tags' ? S.recentTags : S.recent;
-    if(S.favs.length){ html+='<div class="pgroup">'+t('favourites')+'</div>'+ (S.favs.map(tm=>row(tm,'')).join('')); }
-    if(rec.length){ html+='<div class="pgroup">'+t('recent')+'</div>'+ rec.map(tm=>row(tm,'')).join(''); }
-    for(const cat in data){ html+='<div class="pgroup">'+esc(trCat(cat))+'</div>'+ data[cat].map(tm=>row(tm,'')).join(''); }
+  if(pickTab==='tags'){
+    const all=DEFECTS.tags.Tags, list=all.filter(tm=>hit(tm,q));
+    const favs=S.favs.filter(f=>all.includes(f)&&hit(f,q));
+    if(favs.length) html+='<div class="pgroup">'+t('favourites')+'</div>'+grid(favs);
+    html += list.length? grid(list) : '<div class="pempty">'+t('no_matches_custom')+'</div>';
+    $('pickList').innerHTML=html; return;
   }
+  let terms=DEF_TERMS.map(x=>x[0]).filter(tm=>hit(tm,q));
+  if(!q && curMat){ const on=terms.filter(tm=>matsOf(tm).includes(curMat)); terms=on.concat(terms.filter(tm=>!matsOf(tm).includes(curMat))); }
+  const pers=S.personal.filter(tm=>hit(tm,q));
+  const favs=S.favs.filter(f=>hit(f,q)&&(matsOf(f)||S.personal.includes(f)));
+  if(favs.length) html+='<div class="pgroup">'+t('favourites')+'</div>'+grid(favs);
+  html += terms.length? grid(terms) : '<div class="pempty">'+t('no_matches_custom')+'</div>';
+  html += '<div class="pgroup">'+t('personal_group')+'</div>';
+  if(pers.length) html+=grid(pers);
+  html += '<div class="eladd"><input id="newPersonal" placeholder="'+esc(t('add_own_placeholder'))+'" autocomplete="off"><button id="addPersonal">'+t('add')+'</button></div>';
   $('pickList').innerHTML=html;
 }
 function addElement(){
@@ -4957,14 +5131,48 @@ function addRecent(t){
   dirty();
 }
 function toggleFav(t){ if(S.favs.includes(t)) S.favs=S.favs.filter(x=>x!==t); else S.favs=[t,...S.favs].slice(0,20); dirty(); renderPicker(); }
-function grpOf(tab,term){ const d=DEFECTS[tab]; if(!d) return ''; for(const c in d){ if(d[c].indexOf(term)>=0) return c; } return ''; }
-function chooseTerm(term){
+function grpOf(tab,term){
+  if(tab==='tags') return 'Tags';
+  if(tab!=='material') return '';
+  const m=matsOf(term); return m? matName(m[0]) : '';
+}
+
+// ── CS wheel: held on a tile, sets the condition state and arms in one gesture ──
+function closeWheel(){ $('csWheel').classList.remove('show'); }
+function openWheel(term,x,y){
+  const w=$('csWheel'), fav=S.favs.includes(term);
+  w.innerHTML='<div class="whead">'+esc(trTerm(term))+'</div>'+
+    SEV.map(sv=>'<button data-wsev="'+sv.k+'"><span class="dot" style="background:'+(sv.color||'#7c8894')+'"></span>'+esc(sevLabel(sv))+'</button>').join('')+
+    '<div class="wsep"></div><button data-wfav="1"><span>'+(fav?'★':'☆')+'</span>'+esc(t('favourite'))+'</button>';
+  w.dataset.term=term; w.classList.add('show');
+  const r=w.getBoundingClientRect();
+  let L=Math.min(Math.max(8,x-r.width/2), innerWidth-r.width-8);
+  let T=Math.min(Math.max(8,y-r.height/2), innerHeight-r.height-8);
+  w.style.left=L+'px'; w.style.top=T+'px';
+}
+
+// ── arming ──
+function armTerm(term,tab,sevK){
+  const prev=pickTab; pickTab=tab||'material';
+  const eff=(pickTab==='tags'||pickTab==='elements')?'none':(sevK||curSev);
+  const sev=sevOf(eff); addRecent(term);
+  const label=(pickTab==='elements')?term:trTerm(term);
+  S.armedDefect={text:label, sev:eff, color:sev.color, cat:pickTab, term:term, grp:grpOf(pickTab,term)};
+  pickTab=prev; updateDef();
+}
+function armLast(){
+  if(S.armedDefect) return true;
+  const tm=S.recent[0]; if(!tm) return false;
+  armTerm(tm,'material'); toast(t('toast_tap_to_place')); return true;
+}
+function chooseTerm(term,sevK){
+  if(sevK) curSev=sevK;
   const effSevK=(pickTab==='tags'||pickTab==='elements')?'none':curSev;
-  const sev=SEV.find(s=>s.k===effSevK); addRecent(term);
+  const sev=sevOf(effSevK); addRecent(term);
   const label=(pickTab==='elements')?term:trTerm(term);
   if(pickMode==='feed'){ if(pickFeed) pickFeed(label, sev.color); }
   else { S.armedDefect={text:label, sev:effSevK, color:sev.color, cat:pickTab, term:term, grp:grpOf(pickTab,term)}; updateDef(); toast(t('toast_tap_to_place')); }
-  hideOverlay('pickOverlay');
+  closeWheel(); hideOverlay('pickOverlay');
 }
 function updateDef(){
   const el=$('defcur');
@@ -4975,6 +5183,22 @@ function updateDef(){
   }
   else { el.textContent=t('choose_ellipsis'); el.style.background=''; el.style.color=''; el.style.borderColor=''; }
 }
+
+// ── recent-defect menu, held on the rail button ──
+function closeDefMenu(){ $('defMenu').classList.remove('show'); }
+function openDefMenu(btn){
+  const m=$('defMenu'), rec=S.recent.slice(0,5);
+  let h='';
+  if(rec.length) h+=rec.map(tm=>{ const c=S.armedDefect&&S.armedDefect.term===tm? S.armedDefect.color : null;
+      return '<button data-rterm="'+esc(tm)+'"><span class="dot" style="background:'+(c||'#7c8894')+'"></span><span>'+esc(trTerm(tm))+'</span></button>'; }).join('')+'<div class="dsep"></div>';
+  else h+='<button class="mm" disabled><span>'+esc(t('no_recent_defects'))+'</span></button><div class="dsep"></div>';
+  h+='<button class="mm" data-rmore="1"><span>'+esc(t('pick_more'))+'</span></button>';
+  m.innerHTML=h; m.classList.add('show');
+  const r=btn.getBoundingClientRect(), mr=m.getBoundingClientRect();
+  let L=Math.min(Math.max(8,r.left+r.width/2-mr.width/2), innerWidth-mr.width-8);
+  m.style.left=L+'px'; m.style.top=Math.max(8,r.top-mr.height-8)+'px';
+}
+
 
 // ── Divider card ────────────────────────────────────────
 function folderBackPath(fx,fy,fw,fh){
@@ -5112,7 +5336,7 @@ function setTool(tl){
   if(S.tool==='measure'&&tl!=='measure'&&S.polyDraft){ S.polyDraft=null; }
   S.tool=tl; document.querySelectorAll('.tool').forEach(b=>b.classList.toggle('on',b.dataset.tool===tl));
   $('numctl').classList.toggle('hidden',tl!=='number'); if(tl==='number')updateNext();
-  $('defctl').classList.toggle('hidden',tl!=='defect'); if(tl==='defect'){ updateDef(); openPicker('arm'); }
+  $('defctl').classList.toggle('hidden',tl!=='defect'); if(tl==='defect'){ updateDef(); }
   if(tl==='qr'){ updateQr(); openQr(null); }
   $('measctl').classList.toggle('hidden',tl!=='measure');
   if(tl==='angle')toast(t('toast_draw_first_then_second'));
@@ -5122,7 +5346,28 @@ function setTool(tl){
   render();
 }
 function updateNext(){ $('nextn').textContent=(S.numPrefix||'')+S.counter; }
-document.querySelectorAll('.tool').forEach(b=>b.addEventListener('click',()=>setTool(b.dataset.tool)));
+document.querySelectorAll('.tool').forEach(b=>{ if(b.dataset.tool==='defect') return; b.addEventListener('click',()=>setTool(b.dataset.tool)); });
+// Defect: tap re-arms the last term, double tap opens the list, hold shows recents
+(function(){
+  const b=document.querySelector('.tool[data-tool="defect"]'); if(!b) return;
+  let held=false, timer=null, lastTap=0;
+  b.addEventListener('pointerdown',()=>{ held=false; clearTimeout(timer); timer=setTimeout(()=>{ held=true; setTool('defect'); openDefMenu(b); },450); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,()=>clearTimeout(timer)));
+  b.addEventListener('contextmenu',e=>e.preventDefault());
+  b.addEventListener('click',()=>{
+    if(held){ held=false; return; }
+    closeDefMenu(); setTool('defect');
+    const now=Date.now(), dbl=(now-lastTap)<300; lastTap=now;
+    if(dbl){ openPicker('arm'); return; }
+    if(!armLast()) openPicker('arm');
+  });
+})();
+$('defMenu').addEventListener('click',e=>{
+  if(e.target.closest('[data-rmore]')){ closeDefMenu(); openPicker('arm'); return; }
+  const b=e.target.closest('[data-rterm]'); if(!b) return;
+  closeDefMenu(); armTerm(b.dataset.rterm,'material'); toast(t('toast_tap_to_place'));
+});
+document.addEventListener('pointerdown',e=>{ if($('defMenu').classList.contains('show')&&!e.target.closest('#defMenu')&&!e.target.closest('.tool[data-tool="defect"]')) closeDefMenu(); },true);
 
 // swatches
 const sw=$('swatches');
@@ -5177,9 +5422,15 @@ $('polyclose').onclick=closePoly;
 document.querySelectorAll('#tipseg button').forEach(b=>b.addEventListener('click',()=>{
   const v=b.dataset.tip;
   const o=S.sel!=null?getObj(S.sel):null;
-  const isObj=o&&(o.type==='pen'||o.type==='note');
-  if(isObj){ beginEdit(); o.tip=v; commit(); }
-  else { S.style.tip=v; }
+  // Always move the default too. A freshly drawn object is left selected, so editing only
+  // the selection silently threw the choice away the moment it was deselected.
+  if(v==='bars'||v==='arrows'){
+    S.style.dimEnds=v;
+    if(o&&o.type==='dim'){ beginEdit(); o.ends=v; commit(); }
+  } else {
+    S.style.tip=v;
+    if(o&&(o.type==='pen'||o.type==='note')){ beginEdit(); o.tip=v; commit(); }
+  }
   updateTipCtl(); render();
 }));
 $('textfill').onclick=()=>{
@@ -5233,12 +5484,35 @@ $('valInput').addEventListener('keydown',e=>{ if(e.key==='Enter')commitValue(); 
 $('valUnits').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b&&b.dataset.u)setUnit(b.dataset.u); });
 
 // defect picker
-$('pickClose').onclick=()=>hideOverlay('pickOverlay');
+$('pickClose').onclick=()=>{ closeWheel(); hideOverlay('pickOverlay'); };
 $('pickSearch').addEventListener('input',renderPicker);
-$('sevRow').addEventListener('click',e=>{ const b=e.target.closest('[data-sev]'); if(!b)return; curSev=b.dataset.sev; renderSev(); });
-$('pickTabs').addEventListener('click',e=>{ const b=e.target.closest('[data-tab]'); if(!b)return; pickTab=b.dataset.tab; document.querySelectorAll('#pickTabs button').forEach(x=>x.classList.toggle('on',x===b)); $('pickSearch').value=''; renderPicker(); });
-$('pickList').addEventListener('click',e=>{ if(e.target.closest('#addElem')){ addElement(); return; } if(e.target.closest('#addPersonal')){ addPersonal(); return; } const s=e.target.closest('[data-star]'); if(s){ e.stopPropagation(); toggleFav(s.dataset.star); return; } const r=e.target.closest('[data-term]'); if(r) chooseTerm(r.dataset.term); });
+$('csBtn').onclick=()=>{ const i=SEV.findIndex(x=>x.k===curSev); curSev=SEV[(i+1)%SEV.length].k; renderCS(); };
+$('matRow').addEventListener('click',e=>{ const b=e.target.closest('[data-mat]'); if(!b)return; curMat=b.dataset.mat; renderPicker(); });
+$('pickTabs').addEventListener('click',e=>{ const b=e.target.closest('[data-tab]'); if(!b)return; closeWheel(); pickTab=b.dataset.tab; document.querySelectorAll('#pickTabs button').forEach(x=>x.classList.toggle('on',x===b)); $('pickSearch').value=''; curMat=''; renderPicker(); });
+$('pickList').addEventListener('click',e=>{ if(e.target.closest('#addElem')){ addElement(); return; } if(e.target.closest('#addPersonal')){ addPersonal(); return; }
+  const s=e.target.closest('[data-star]'); if(s){ e.stopPropagation(); toggleFav(s.dataset.star); return; }
+  if(tileHeld){ tileHeld=false; return; }
+  const r=e.target.closest('[data-term]'); if(r) chooseTerm(r.dataset.term); });
 $('pickList').addEventListener('keydown',e=>{ if(e.key==='Enter'&&e.target.id==='newElem') addElement(); if(e.key==='Enter'&&e.target.id==='newPersonal') addPersonal(); });
+
+// hold a tile for the CS wheel
+let tileHeld=false, tileTimer=null;
+$('pickList').addEventListener('pointerdown',e=>{
+  const tl=e.target.closest('.tile'); if(!tl||pickTab==='elements') return;
+  const x=e.clientX,y=e.clientY,tm=tl.dataset.term;
+  tileHeld=false; clearTimeout(tileTimer);
+  tileTimer=setTimeout(()=>{ tileHeld=true; openWheel(tm,x,y); },450);
+});
+['pointerup','pointercancel','pointerleave'].forEach(ev=>$('pickList').addEventListener(ev,()=>clearTimeout(tileTimer),true));
+$('pickList').addEventListener('scroll',()=>{ clearTimeout(tileTimer); closeWheel(); },true);
+$('pickList').addEventListener('contextmenu',e=>{ if(e.target.closest('.tile')) e.preventDefault(); });
+$('csWheel').addEventListener('click',e=>{
+  const tm=$('csWheel').dataset.term;
+  const f=e.target.closest('[data-wfav]'); if(f){ closeWheel(); toggleFav(tm); return; }
+  const b=e.target.closest('[data-wsev]'); if(!b) return;
+  chooseTerm(tm,b.dataset.wsev);
+});
+$('pickOverlay').addEventListener('pointerdown',e=>{ if(!e.target.closest('#csWheel')&&!e.target.closest('.tile')) closeWheel(); });
 $('defchange').onclick=()=>openPicker('arm');
 $('txtDefect').onclick=()=>openPicker('feed',(term,color)=>{ $('txtInput').value=term; if(color&&editTarget){ editTarget.color=color; } });
 
@@ -5271,7 +5545,7 @@ window.addEventListener('keydown',e=>{
   }
   const overlays=['txtOverlay','valOverlay','pickOverlay','phOverlay','cfmOverlay','qrOverlay'];
   if(overlays.some(id=>$(id).classList.contains('show'))){
-    if(e.key==='Escape'){ if($('qrOverlay').classList.contains('show'))cancelQr(); if($('txtOverlay').classList.contains('show'))cancelLabel(); if($('valOverlay').classList.contains('show')){hideOverlay('valOverlay');valTarget=null;} hideOverlay('pickOverlay'); hideOverlay('phOverlay'); hideOverlay('cfmOverlay'); cfmCb=null; }
+    if(e.key==='Escape'){ if($('qrOverlay').classList.contains('show'))cancelQr(); if($('txtOverlay').classList.contains('show'))cancelLabel(); if($('valOverlay').classList.contains('show')){hideOverlay('valOverlay');valTarget=null;} closeWheel(); closeDefMenu(); hideOverlay('pickOverlay'); hideOverlay('phOverlay'); hideOverlay('cfmOverlay'); cfmCb=null; }
     return;
   }
   if((e.key==='Delete'||e.key==='Backspace')&&S.sel!=null){ e.preventDefault(); $('del').onclick(); }
@@ -5550,7 +5824,7 @@ const SEV_CS={good:'CS1',fair:'CS2',poor:'CS3',severe:'CS4'};
 const CS_COL={CS1:'#dff0df',CS2:'#fbf6cf',CS3:'#fbe2c8',CS4:'#f6d3d3'};
 const CS_KEYS=['','CS1','CS2','CS3','CS4'];
 
-// A row is created by a defect chip from Material or Component only.
+// A row is created by a defect chip only. 'component' covers chips saved before v1.3.0.
 // Legacy chips carry no category — severity is then the only signal.
 function isFinding(o){
   if(!o||o.type!=='tag') return false;
@@ -5777,7 +6051,7 @@ function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'<
 function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
   t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+
   t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
-const MARKUP_VER='1.2.7';
+const MARKUP_VER='1.3.0';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
