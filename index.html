@@ -436,6 +436,7 @@ body.hasfine .emotip{display:block}
 #defcur{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:manipulation;cursor:pointer}
 .cswheel{
   position:fixed;z-index:70;display:none;min-width:150px;padding:6px;border-radius:12px;
+  max-height:calc(100dvh - 16px);overflow-y:auto;
   background:linear-gradient(160deg,#232a31,#141a1f);border:1px solid var(--panel-border);
   box-shadow:0 10px 40px rgba(0,0,0,.55);
 }
@@ -701,7 +702,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.3.7 · BETA · multilingual</span>
+        <span class="ver">v1.3.8 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -910,7 +911,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.3.7</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.3.8</span></div>
   </nav>
 </div>
 
@@ -1187,7 +1188,7 @@ body.hasfine .emotip{display:block}
         <div class="grow"><b data-i18n="help_polygon_b">Polygon</b><span data-i18n="help_polygon_d">Tap to drop corners; use Close shape to finish. Shade an area or ring a region.</span></div>
         <div class="grow"><b data-i18n="help_angle_b">Angle</b><span data-i18n="help_angle_d">Draw one side from the corner, then the second. The measured angle is written in the arc.</span></div>
         <div class="grow"><b data-i18n="help_number_b">Number</b><span data-i18n="help_number_d">Drops auto-incrementing markers for a legend or defect schedule. Set a prefix (e.g. B) and the counter continues B1, B2, B3. Clear all resets the count.</span></div>
-        <div class="grow"><b data-i18n="help_defect_b">Defect</b><span data-i18n="help_defect_d">Tags in a condition-state colour. Tap the tool to re-use the last defect, double-tap for the full list, hold it for your recent five. In the list, tap a tile to place at the shown CS, or hold a tile to pick CS1–CS4 and favourite it.</span></div>
+        <div class="grow"><b data-i18n="help_defect_b">Defect</b><span data-i18n="help_defect_d">Tags in a condition-state colour. Tap the tool to re-use the last defect, double-tap for the full list, hold it for your recent five. In the list, tap a tile to place at the shown CS, or hold a tile to pick a condition and favourite it.</span></div>
         <div class="grow"><b data-i18n="help_qr_b">QR</b><span data-i18n="help_qr_d">Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are drawn in black so the code still scans.</span></div>
       </div>
       <div class="gsec">
@@ -1195,8 +1196,9 @@ body.hasfine .emotip{display:block}
         <div class="grow"><b data-i18n="help_picktool_b">The tool button</b><span data-i18n="help_picktool_d">Tap it to re-arm the last defect and place straight away. Double-tap to open the list. Hold it for the five most recent, each at the condition you used it at.</span></div>
         <div class="grow"><b data-i18n="help_picklist_b">The list</b><span data-i18n="help_picklist_d">Three tabs — Defects, Tags, Elements. On Defects, the chips filter by material; ★ Favs gathers your favourites. Tap a tile to arm it; hold a tile to pick a condition and place in one gesture, or to make it a favourite.</span></div>
         <div class="grow"><b data-i18n="help_picksearch_b">Search and add</b><span data-i18n="help_picksearch_d">The one field does both. Typing filters the tiles across every material; Add lights up when what you typed matches nothing, and keeps it for the rest of the job. Tags and elements work the same way.</span></div>
-        <div class="grow"><b data-i18n="help_pickcs_b">Condition</b><span data-i18n="help_pickcs_d">The pill in the list sets the condition for the next defect. Tap it to step through Current, CS1, CS2, CS3, CS4; hold it to pick one directly. The coloured chip in the toolbar does the same for the defect already armed.</span></div>
-        <div class="grow"><b data-i18n="help_pickink_b">Ink and condition</b><span data-i18n="help_pickink_d">For a defect, the ink swatches are the condition: green CS1, yellow CS2, orange CS3, red CS4. It applies to the selected defect, or to the armed one when nothing is selected. White, black and blue set CS1. Other marks — notes, arrows, text — take the colour and nothing more.</span></div>
+        <div class="grow"><b data-i18n="help_pickcs_b">Condition</b><span data-i18n="help_pickcs_d">The pill in the list sets the condition for the next defect. Tap it to step through Current, CS1, CS2, CS3, CS4, Unrated; hold it to pick one directly. The coloured chip in the toolbar does the same for the defect already armed.</span></div>
+        <div class="grow"><b data-i18n="help_pickink_b">Ink and condition</b><span data-i18n="help_pickink_d">For a defect, the ink swatches are the condition: green CS1, yellow CS2, orange CS3, red CS4, blue Unrated. It applies to the selected defect, or to the armed one when nothing is selected. White and black set CS1. Other marks — notes, arrows, text — take the colour and nothing more.</span></div>
+        <div class="grow"><b data-i18n="help_pickur_b">Unrated</b><span data-i18n="help_pickur_d">The sixth condition, in blue. For a defect you can see but cannot judge — no access, obscured, or wanting a second opinion. It prints as UR in the schedule and is counted in its own column rather than folded into CS1.</span></div>
       </div>
       <div class="gsec">
         <h4 data-i18n="help_options_h">Options</h4>
@@ -1398,9 +1400,11 @@ const I18N={
     "help_picksearch_b":"Search and add",
     "help_picksearch_d":"The one field does both. Typing filters the tiles across every material; Add lights up when what you typed matches nothing, and keeps it for the rest of the job. Tags and elements work the same way.",
     "help_pickcs_b":"Condition",
-    "help_pickcs_d":"The pill in the list sets the condition for the next defect. Tap it to step through Current, CS1, CS2, CS3, CS4; hold it to pick one directly. The coloured chip in the toolbar does the same for the defect already armed.",
+    "help_pickcs_d":"The pill in the list sets the condition for the next defect. Tap it to step through Current, CS1, CS2, CS3, CS4, Unrated; hold it to pick one directly. The coloured chip in the toolbar does the same for the defect already armed.",
     "help_pickink_b":"Ink and condition",
-    "help_pickink_d":"For a defect, the ink swatches are the condition: green CS1, yellow CS2, orange CS3, red CS4. It applies to the selected defect, or to the armed one when nothing is selected. White, black and blue set CS1. Other marks — notes, arrows, text — take the colour and nothing more.",
+    "help_pickink_d":"For a defect, the ink swatches are the condition: green CS1, yellow CS2, orange CS3, red CS4, blue Unrated. It applies to the selected defect, or to the armed one when nothing is selected. White and black set CS1. Other marks — notes, arrows, text — take the colour and nothing more.",
+    "help_pickur_b":"Unrated",
+    "help_pickur_d":"The sixth condition, in blue. For a defect you can see but cannot judge — no access, obscured, or wanting a second opinion. It prints as UR in the schedule and is counted in its own column rather than folded into CS1.",
     "help_paste_b":"Paste",
     "help_paste_d":"Adds an image copied to the clipboard as a new photo. Press Ctrl/Cmd+V, or use the Paste button. Phones will ask for clipboard permission the first time.",
     "add_label":"Add label",
@@ -1540,7 +1544,7 @@ const I18N={
     "help_number_b":"Number",
     "help_number_d":"Drops auto-incrementing markers for a legend or defect schedule. Set a prefix (e.g. B) and the counter continues B1, B2, B3. Clear all resets the count.",
     "help_defect_b":"Defect",
-    "help_defect_d":"Tags in a condition-state colour. Tap the tool to re-use the last defect, double-tap for the full list, hold it for your recent five. In the list, tap a tile to place at the shown CS, or hold a tile to pick CS1–CS4 and favourite it.",
+    "help_defect_d":"Tags in a condition-state colour. Tap the tool to re-use the last defect, double-tap for the full list, hold it for your recent five. In the list, tap a tile to place at the shown CS, or hold a tile to pick a condition and favourite it.",
     "help_options_h":"Options",
     "help_fill_b":"Fill",
     "help_fill_d":"On the text-bearing tools, toggles the solid backing behind text. Off swaps it for a crisp outline so the photo shows through while staying readable.",
@@ -1740,9 +1744,11 @@ const I18N={
     "help_picksearch_b":"搜索与添加",
     "help_picksearch_d":"同一个输入框兼顾两者。输入即可跨所有材料筛选方块；当输入内容没有匹配项时“添加”按钮会亮起，并在本次作业中保留该条目。标签和部位的用法相同。",
     "help_pickcs_b":"状态等级",
-    "help_pickcs_d":"列表中的按钮设定下一个缺陷的状态等级。轻点可依次切换当前、CS1、CS2、CS3、CS4；长按可直接选择。工具栏中的彩色标记对已装载的缺陷起同样作用。",
+    "help_pickcs_d":"列表中的按钮设定下一个缺陷的状态等级。轻点可依次切换当前、CS1、CS2、CS3、CS4、未评定；长按可直接选择。工具栏中的彩色标记对已装载的缺陷起同样作用。",
     "help_pickink_b":"颜色与状态等级",
-    "help_pickink_d":"对于缺陷，颜色即状态等级：绿色 CS1、黄色 CS2、橙色 CS3、红色 CS4。它作用于选中的缺陷，若未选中任何对象则作用于已装载的缺陷。白色、黑色和蓝色设为 CS1。其他标记——批注、箭头、文字——仅改变颜色。",
+    "help_pickink_d":"对于缺陷，颜色即状态等级：绿色 CS1、黄色 CS2、橙色 CS3、红色 CS4、蓝色未评定。它作用于选中的缺陷，若未选中任何对象则作用于已装载的缺陷。白色和黑色设为 CS1。其他标记——批注、箭头、文字——仅改变颜色。",
+    "help_pickur_b":"未评定",
+    "help_pickur_d":"第六种状态，蓝色。用于能看到但无法判断的缺陷：无法接近、被遮挡，或需要他人复核。在明细表中打印为 UR，并单独统计，不计入 CS1。",
     "help_paste_b":"粘贴",
     "help_paste_d":"将复制到剪贴板的图片添加为新照片。按 Ctrl/Cmd+V，或使用粘贴按钮。手机首次使用时会请求剪贴板权限。",
     "add_label":"添加标签",
@@ -1886,7 +1892,7 @@ const I18N={
     "help_number_b":"编号",
     "help_number_d":"放置自动递增的标记，用于图例或缺陷清单。设置前缀（例如B），计数器会依次为B1、B2、B3。\"清除全部\"会重置计数。",
     "help_defect_b":"缺陷",
-    "help_defect_d":"带状态等级颜色的标签。轻点工具可重用上一个缺陷，双击打开完整列表，长按显示最近五个。在列表中轻点方块按当前 CS 放置，长按方块可选择 CS1–CS4 并加入收藏。",
+    "help_defect_d":"带状态等级颜色的标签。轻点工具可重用上一个缺陷，双击打开完整列表，长按显示最近五个。在列表中轻点方块按当前 CS 放置，长按方块可选择状态等级并加入收藏。",
     "help_options_h":"选项",
     "help_fill_b":"填充",
     "help_fill_d":"在带文字的工具中，切换文字后的实心背景。关闭后改为清晰的轮廓，使照片透出的同时仍保持可读。",
@@ -2086,9 +2092,11 @@ const I18N={
     "help_picksearch_b":"Buscar y añadir",
     "help_picksearch_d":"Un solo campo hace ambas cosas. Al escribir se filtran los mosaicos de todos los materiales; Añadir se activa cuando lo escrito no coincide con nada y lo conserva durante el resto del trabajo. Las etiquetas y los elementos funcionan igual.",
     "help_pickcs_b":"Estado",
-    "help_pickcs_d":"El botón de la lista fija el estado del próximo defecto. Tóquelo para recorrer Actual, CS1, CS2, CS3 y CS4; manténgalo pulsado para elegir uno directamente. La ficha de color de la barra hace lo mismo con el defecto ya cargado.",
+    "help_pickcs_d":"El botón de la lista fija el estado del próximo defecto. Tóquelo para recorrer Actual, CS1, CS2, CS3, CS4 y Sin evaluar; manténgalo pulsado para elegir uno directamente. La ficha de color de la barra hace lo mismo con el defecto ya cargado.",
     "help_pickink_b":"Color y estado",
-    "help_pickink_d":"En un defecto, los colores son el estado: verde CS1, amarillo CS2, naranja CS3, rojo CS4. Se aplica al defecto seleccionado o, si no hay ninguno, al defecto cargado. El blanco, el negro y el azul fijan CS1. Las demás marcas — notas, flechas, texto — solo cambian de color.",
+    "help_pickink_d":"En un defecto, los colores son el estado: verde CS1, amarillo CS2, naranja CS3, rojo CS4, azul Sin evaluar. Se aplica al defecto seleccionado o, si no hay ninguno, al defecto cargado. El blanco y el negro fijan CS1. Las demás marcas — notas, flechas, texto — solo cambian de color.",
+    "help_pickur_b":"Sin evaluar",
+    "help_pickur_d":"El sexto estado, en azul. Para un defecto que se ve pero no se puede calificar: sin acceso, tapado o a la espera de una segunda opinión. Se imprime como UR en el listado y se cuenta en su propia columna, no dentro de CS1.",
     "help_paste_b":"Pegar",
     "help_paste_d":"Añade como foto nueva una imagen copiada al portapapeles. Pulsa Ctrl/Cmd+V o usa el botón Pegar. Los móviles pedirán permiso del portapapeles la primera vez.",
     "add_label":"Añadir etiqueta",
@@ -2232,7 +2240,7 @@ const I18N={
     "help_number_b":"Número",
     "help_number_d":"Coloca marcadores autoincrementales para una leyenda o listado de defectos. Defina un prefijo (p. ej. B) y el contador continúa B1, B2, B3. Borrar todo reinicia el conteo.",
     "help_defect_b":"Defecto",
-    "help_defect_d":"Etiquetas con el color del estado de condición. Toque la herramienta para reutilizar el último defecto, toque dos veces para la lista completa y manténgala pulsada para ver los cinco recientes. En la lista, toque un mosaico para colocarlo con el CS mostrado, o manténgalo pulsado para elegir CS1–CS4 y marcarlo como favorito.",
+    "help_defect_d":"Etiquetas con el color del estado de condición. Toque la herramienta para reutilizar el último defecto, toque dos veces para la lista completa y manténgala pulsada para ver los cinco recientes. En la lista, toque un mosaico para colocarlo con el CS mostrado, o manténgalo pulsado para elegir el estado y marcarlo como favorito.",
     "help_options_h":"Opciones",
     "help_fill_b":"Relleno",
     "help_fill_d":"En las herramientas con texto, alterna el fondo sólido detrás del texto. Desactivado lo cambia por un contorno nítido para que la foto se vea a través mientras sigue siendo legible.",
@@ -2432,9 +2440,11 @@ const I18N={
     "help_picksearch_b":"खोजें और जोड़ें",
     "help_picksearch_d":"एक ही फ़ील्ड दोनों काम करता है। टाइप करने पर सभी सामग्रियों की टाइलें छँटती हैं; जो लिखा है वह कहीं न मिले तो जोड़ें बटन सक्रिय हो जाता है और उसे बाकी काम के लिए सहेज लेता है। टैग और घटक भी इसी तरह काम करते हैं।",
     "help_pickcs_b":"स्थिति",
-    "help_pickcs_d":"सूची का बटन अगले दोष का स्थिति स्तर तय करता है। टैप करने पर वर्तमान, CS1, CS2, CS3, CS4 क्रम से बदलते हैं; दबाकर रखने पर सीधे चुनें। टूलबार का रंगीन चिप पहले से तैयार दोष के लिए यही करता है।",
+    "help_pickcs_d":"सूची का बटन अगले दोष का स्थिति स्तर तय करता है। टैप करने पर वर्तमान, CS1, CS2, CS3, CS4, अनिर्धारित क्रम से बदलते हैं; दबाकर रखने पर सीधे चुनें। टूलबार का रंगीन चिप पहले से तैयार दोष के लिए यही करता है।",
     "help_pickink_b":"रंग और स्थिति",
-    "help_pickink_d":"दोष के लिए रंग ही स्थिति स्तर है: हरा CS1, पीला CS2, नारंगी CS3, लाल CS4। यह चुने हुए दोष पर लागू होता है, और कुछ भी चुना न हो तो तैयार दोष पर। सफ़ेद, काला और नीला CS1 तय करते हैं। बाकी चिह्न — नोट, तीर, पाठ — केवल रंग बदलते हैं।",
+    "help_pickink_d":"दोष के लिए रंग ही स्थिति स्तर है: हरा CS1, पीला CS2, नारंगी CS3, लाल CS4, नीला अनिर्धारित। यह चुने हुए दोष पर लागू होता है, और कुछ भी चुना न हो तो तैयार दोष पर। सफ़ेद और काला CS1 तय करते हैं। बाकी चिह्न — नोट, तीर, पाठ — केवल रंग बदलते हैं।",
+    "help_pickur_b":"अनिर्धारित",
+    "help_pickur_d":"छठा स्थिति स्तर — नीला। उस दोष के लिए जो दिखता है पर आँका नहीं जा सकता: पहुँच नहीं, ढका हुआ, या दूसरी राय चाहिए। सूची में UR छपता है और अलग स्तंभ में गिना जाता है, CS1 में नहीं।",
     "help_paste_b":"पेस्ट करें",
     "help_paste_d":"क्लिपबोर्ड में कॉपी की गई छवि को नई फ़ोटो के रूप में जोड़ता है। Ctrl/Cmd+V दबाएँ, या पेस्ट बटन का उपयोग करें। फ़ोन पहली बार क्लिपबोर्ड अनुमति माँगेंगे।",
     "add_label":"लेबल जोड़ें",
@@ -2578,7 +2588,7 @@ const I18N={
     "help_number_b":"संख्या",
     "help_number_d":"लीजेंड या दोष सूची के लिए अपने आप बढ़ने वाले मार्कर रखता है। उपसर्ग सेट करें (जैसे B) और काउंटर B1, B2, B3 जारी रखता है। सभी साफ़ करें से गिनती रीसेट हो जाती है।",
     "help_defect_b":"दोष",
-    "help_defect_d":"स्थिति-स्तर रंग वाले टैग। पिछला दोष दोहराने के लिए टूल पर टैप करें, पूरी सूची के लिए डबल-टैप करें, और हाल के पाँच देखने के लिए दबाकर रखें। सूची में टाइल पर टैप करने से दिखाया गया CS लागू होता है; टाइल दबाकर रखने पर CS1–CS4 चुनें और पसंदीदा बनाएं।",
+    "help_defect_d":"स्थिति-स्तर रंग वाले टैग। पिछला दोष दोहराने के लिए टूल पर टैप करें, पूरी सूची के लिए डबल-टैप करें, और हाल के पाँच देखने के लिए दबाकर रखें। सूची में टाइल पर टैप करने से दिखाया गया CS लागू होता है; टाइल दबाकर रखने पर स्थिति चुनें और पसंदीदा बनाएं।",
     "help_options_h":"विकल्प",
     "help_fill_b":"फ़िल",
     "help_fill_d":"टेक्स्ट वाले टूल्स में, टेक्स्ट के पीछे ठोस बैकिंग को टॉगल करता है। बंद करने पर यह स्पष्ट आउटलाइन में बदल जाता है ताकि फ़ोटो दिखे और पठनीय भी बनी रहे।",
@@ -2778,9 +2788,11 @@ const I18N={
     "help_picksearch_b":"البحث والإضافة",
     "help_picksearch_d":"حقل واحد يؤدي الأمرين. الكتابة تُصفّي المربعات في كل المواد، ويضيء زر الإضافة عندما لا يطابق ما كتبته شيئًا، فيحتفظ به لبقية العمل. الوسوم والعناصر تعمل بالطريقة نفسها.",
     "help_pickcs_b":"الحالة",
-    "help_pickcs_d":"الزر في القائمة يحدد حالة العيب التالي. انقره للتنقل بين الحالية وCS1 وCS2 وCS3 وCS4؛ واستمر بالضغط لاختيار واحدة مباشرة. المربع الملون في الشريط يفعل الشيء نفسه للعيب المجهّز.",
+    "help_pickcs_d":"الزر في القائمة يحدد حالة العيب التالي. انقره للتنقل بين الحالية وCS1 وCS2 وCS3 وCS4 وغير مُقيَّم؛ واستمر بالضغط لاختيار واحدة مباشرة. المربع الملون في الشريط يفعل الشيء نفسه للعيب المجهّز.",
     "help_pickink_b":"اللون والحالة",
-    "help_pickink_d":"في العيب يمثل اللون الحالة: الأخضر CS1، الأصفر CS2، البرتقالي CS3، الأحمر CS4. ينطبق على العيب المحدد، أو على العيب المجهّز إن لم يكن هناك تحديد. الأبيض والأسود والأزرق تعطي CS1. أما العلامات الأخرى — الملاحظات والأسهم والنصوص — فتأخذ اللون فقط.",
+    "help_pickink_d":"في العيب يمثل اللون الحالة: الأخضر CS1، الأصفر CS2، البرتقالي CS3، الأحمر CS4، الأزرق غير مُقيَّم. ينطبق على العيب المحدد، أو على العيب المجهّز إن لم يكن هناك تحديد. الأبيض والأسود تعطي CS1. أما العلامات الأخرى — الملاحظات والأسهم والنصوص — فتأخذ اللون فقط.",
+    "help_pickur_b":"غير مُقيَّم",
+    "help_pickur_d":"الحالة السادسة، باللون الأزرق. لعيب يُرى ولا يمكن تقديره: لا يوجد وصول، أو محجوب، أو يحتاج رأيًا ثانيًا. يُطبع UR في الجدول ويُحسب في خانة مستقلة لا ضمن CS1.",
     "help_paste_b":"لصق",
     "help_paste_d":"يضيف صورة منسوخة إلى الحافظة كصورة جديدة. اضغط Ctrl/Cmd+V أو استخدم زر اللصق. ستطلب الهواتف إذن الحافظة في المرة الأولى.",
     "add_label":"إضافة تسمية",
@@ -2924,7 +2936,7 @@ const I18N={
     "help_number_b":"رقم",
     "help_number_d":"يضع علامات تزداد تلقائيًا لوسيلة إيضاح أو جدول عيوب. اضبط بادئة (مثل B) ويستمر العداد B1، B2، B3. مسح الكل يعيد ضبط العد.",
     "help_defect_b":"عيب",
-    "help_defect_d":"وسوم بلون حالة العنصر. انقر الأداة لإعادة استخدام آخر عيب، وانقر نقرًا مزدوجًا لعرض القائمة الكاملة، واستمر بالضغط لعرض آخر خمسة. في القائمة، انقر مربعًا لوضعه بحالة CS المعروضة، أو استمر بالضغط على المربع لاختيار CS1–CS4 وإضافته إلى المفضلة.",
+    "help_defect_d":"وسوم بلون حالة العنصر. انقر الأداة لإعادة استخدام آخر عيب، وانقر نقرًا مزدوجًا لعرض القائمة الكاملة، واستمر بالضغط لعرض آخر خمسة. في القائمة، انقر مربعًا لوضعه بحالة CS المعروضة، أو استمر بالضغط على المربع لاختيار الحالة وإضافته إلى المفضلة.",
     "help_options_h":"الخيارات",
     "help_fill_b":"التعبئة",
     "help_fill_d":"في الأدوات التي تحمل نصًا، يبدّل الخلفية الصلبة خلف النص. عند الإيقاف يستبدلها بمخطط واضح بحيث تظهر الصورة من خلاله مع بقائه مقروءًا.",
@@ -3124,9 +3136,11 @@ const I18N={
     "help_picksearch_b":"Поиск и добавление",
     "help_picksearch_d":"Одно поле делает и то и другое. Ввод фильтрует плитки по всем материалам; кнопка добавления загорается, когда введённое ничему не соответствует, и сохраняет запись до конца работы. Метки и элементы работают так же.",
     "help_pickcs_b":"Состояние",
-    "help_pickcs_d":"Кнопка в списке задаёт состояние для следующего дефекта. Нажатие переключает Текущее, CS1, CS2, CS3, CS4; удержание позволяет выбрать сразу. Цветная метка на панели делает то же самое для уже подготовленного дефекта.",
+    "help_pickcs_d":"Кнопка в списке задаёт состояние для следующего дефекта. Нажатие переключает Текущее, CS1, CS2, CS3, CS4, Не оценено; удержание позволяет выбрать сразу. Цветная метка на панели делает то же самое для уже подготовленного дефекта.",
     "help_pickink_b":"Цвет и состояние",
-    "help_pickink_d":"Для дефекта цвет и есть состояние: зелёный CS1, жёлтый CS2, оранжевый CS3, красный CS4. Действует на выделенный дефект, а если ничего не выделено — на подготовленный. Белый, чёрный и синий задают CS1. Остальные пометки — выноски, стрелки, текст — только меняют цвет.",
+    "help_pickink_d":"Для дефекта цвет и есть состояние: зелёный CS1, жёлтый CS2, оранжевый CS3, красный CS4, синий Не оценено. Действует на выделенный дефект, а если ничего не выделено — на подготовленный. Белый и чёрный задают CS1. Остальные пометки — выноски, стрелки, текст — только меняют цвет.",
+    "help_pickur_b":"Не оценено",
+    "help_pickur_d":"Шестое состояние — синее. Для дефекта, который виден, но не поддаётся оценке: нет доступа, закрыт обзор или нужно второе мнение. В ведомости печатается как UR и считается отдельно, не внутри CS1.",
     "help_paste_b":"Вставить",
     "help_paste_d":"Добавляет изображение из буфера обмена как новое фото. Нажмите Ctrl/Cmd+V или кнопку «Вставить». Телефоны при первом использовании запросят разрешение на доступ к буферу.",
     "add_label":"Добавить подпись",
@@ -3270,7 +3284,7 @@ const I18N={
     "help_number_b":"Номер",
     "help_number_d":"Размещает автоматически нумеруемые метки для легенды или перечня дефектов. Задайте префикс (напр. B), и счётчик продолжит B1, B2, B3. «Очистить всё» сбрасывает счётчик.",
     "help_defect_b":"Дефект",
-    "help_defect_d":"Метки в цвете состояния. Нажмите инструмент, чтобы повторить последний дефект, двойное нажатие открывает полный список, удержание — пять недавних. В списке нажатие на плитку ставит дефект с показанным CS, удержание плитки позволяет выбрать CS1–CS4 и добавить в избранное.",
+    "help_defect_d":"Метки в цвете состояния. Нажмите инструмент, чтобы повторить последний дефект, двойное нажатие открывает полный список, удержание — пять недавних. В списке нажатие на плитку ставит дефект с показанным CS, удержание плитки позволяет выбрать состояние и добавить в избранное.",
     "help_options_h":"Настройки",
     "help_fill_b":"Заливка",
     "help_fill_d":"В инструментах с текстом переключает сплошную подложку под текстом. При отключении заменяется чёткой обводкой, чтобы фото просвечивало, сохраняя читаемость.",
@@ -3972,35 +3986,40 @@ const SEV_TR={
     "Good":"良好",
     "Fair":"一般",
     "Poor":"较差",
-    "Severe":"严重"
+    "Severe":"严重",
+    "Unrated":"未评定"
   },
   es:{
     "Current":"Actual",
     "Good":"Bueno",
     "Fair":"Aceptable",
     "Poor":"Deficiente",
-    "Severe":"Severo"
+    "Severe":"Severo",
+    "Unrated":"Sin evaluar"
   },
   hi:{
     "Current":"वर्तमान",
     "Good":"अच्छा",
     "Fair":"सामान्य",
     "Poor":"खराब",
-    "Severe":"गंभीर"
+    "Severe":"गंभीर",
+    "Unrated":"अनिर्धारित"
   },
   ar:{
     "Current":"الحالي",
     "Good":"جيد",
     "Fair":"مقبول",
     "Poor":"ضعيف",
-    "Severe":"شديد"
+    "Severe":"شديد",
+    "Unrated":"غير مُقيَّم"
   },
   ru:{
     "Current":"Текущий",
     "Good":"Хорошо",
     "Fair":"Удовлетворительно",
     "Poor":"Плохо",
-    "Severe":"Критично"
+    "Severe":"Критично",
+    "Unrated":"Не оценено"
   }
 };
 let curLang='en';
@@ -4051,7 +4070,7 @@ renderLangMenu();
 // ── Palette ─────────────────────────────────────────────
 const INKS = ['#ffffff','#111418','#66bb6a','#ffee58','#f57c00','#d32f2f','#42a5f5'];
 // picking an ink for a defect sets its condition; colours outside the scale fall back to CS1
-const INK_SEV = {'#66bb6a':'good','#ffee58':'fair','#f57c00':'poor','#d32f2f':'severe','#ffffff':'good','#111418':'good','#42a5f5':'good'};
+const INK_SEV = {'#66bb6a':'good','#ffee58':'fair','#f57c00':'poor','#d32f2f':'severe','#42a5f5':'unrated','#ffffff':'good','#111418':'good'};
 const WIDTHS = {S:0.4,  M:0.75, L:1.3};     // multipliers of baseW
 const FONTS  = {S:4,    M:6,    L:8};        // multipliers of baseW (text size)
 const NUMR   = {S:3,    M:4.5, L:6.5};      // multipliers of baseW (number badge radius)
@@ -5246,7 +5265,8 @@ const SEV=[
   {k:'good',code:'CS1',word:'Good',color:'#66bb6a'},
   {k:'fair',code:'CS2',word:'Fair',color:'#ffee58'},
   {k:'poor',code:'CS3',word:'Poor',color:'#f57c00'},
-  {k:'severe',code:'CS4',word:'Severe',color:'#d32f2f'}
+  {k:'severe',code:'CS4',word:'Severe',color:'#d32f2f'},
+  {k:'unrated',code:null,word:'Unrated',color:'#42a5f5'}
 ];
 let curSev='none', pickMode='arm', pickFeed=null, pickTab='material', curMat='', phBg=FOLDER_COL;
 
@@ -6102,9 +6122,9 @@ calCanvas.addEventListener('wheel',e=>{ if(!calS.img)return; e.preventDefault();
 loadCams();
 
 // ── Report ──────────────────────────────────────────────
-const SEV_CS={good:'CS1',fair:'CS2',poor:'CS3',severe:'CS4'};
-const CS_COL={CS1:'#dff0df',CS2:'#fbf6cf',CS3:'#fbe2c8',CS4:'#f6d3d3'};
-const CS_KEYS=['','CS1','CS2','CS3','CS4'];
+const SEV_CS={good:'CS1',fair:'CS2',poor:'CS3',severe:'CS4',unrated:'UR'};
+const CS_COL={CS1:'#dff0df',CS2:'#fbf6cf',CS3:'#fbe2c8',CS4:'#f6d3d3',UR:'#dde7f6'};
+const CS_KEYS=['','CS1','CS2','CS3','CS4','UR'];
 
 // A row is created by a defect chip only. 'component' covers chips saved before v1.3.0.
 // Legacy chips carry no category — severity is then the only signal.
@@ -6333,7 +6353,7 @@ function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'<
 function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
   t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+
   t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
-const MARKUP_VER='1.3.7';
+const MARKUP_VER='1.3.8';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
@@ -6452,7 +6472,7 @@ async function printReport(){
   try{
     const all=[]; blocks.forEach(b=>b.rows.forEach(x=>{ if(!x.ex) all.push({b:b,r:x,n:b.n}); }));
     repManual.forEach(x=>{ if(!x.ex) all.push({b:null,r:x,n:'—'}); });
-    const counts={CS1:0,CS2:0,CS3:0,CS4:0};
+    const counts={CS1:0,CS2:0,CS3:0,CS4:0,UR:0};
     all.forEach(x=>{ if(counts[x.r.cs]!=null) counts[x.r.cs]++; });
 
     // ── cover ──
