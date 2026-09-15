@@ -421,6 +421,9 @@ body.hasfine .emotip{display:block}
 .tile.fav{border-color:var(--accent)}
 .tile .tlab{display:block;width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .tile .tstar{position:absolute;top:1px;right:4px;font-size:9px;line-height:1;color:var(--accent)}
+.tile.two{line-height:1.05}
+.tile .tsub{display:block;width:100%;margin-top:2px;font-size:9px;font-weight:600;letter-spacing:.03em;
+  color:var(--muted-2);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .csbtn{
   flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;margin:0 8px;
   border-radius:100px;background:var(--panel);border:1px solid var(--hairline);
@@ -698,7 +701,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.3.5 · BETA · multilingual</span>
+        <span class="ver">v1.3.7 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -907,7 +910,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.3.5</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.3.7</span></div>
   </nav>
 </div>
 
@@ -3336,6 +3339,32 @@ const TERM_TR={
     "Diagonal crack":"斜向裂缝",
     "Shrinkage cracking":"收缩裂缝",
     "Spalling":"剥落",
+    "Chloride contamination":"氯离子污染",
+    "Damp / mould":"受潮/霉变",
+    "Ponding":"积水",
+    "Damaged cladding":"外墙板损坏",
+    "Damaged glazing":"玻璃损坏",
+    "Damaged lining":"内衬损坏",
+    "Damaged fitting":"配件损坏",
+    "Bird / animal fouling":"鸟类/动物污染",
+    "Vandalism":"人为破坏",
+    "Crocodile cracking":"龟裂",
+    "Block cracking":"块状裂缝",
+    "Rutting":"车辙",
+    "Shoving":"拥包",
+    "Corrugation":"搓板波纹",
+    "Ravelling":"松散剥落",
+    "Flushing":"泛油",
+    "Stripping":"沥青剥离",
+    "Edge break":"路缘破损",
+    "Patching":"补丁修补",
+    "Segregation":"离析",
+    "Polished aggregate":"集料磨光",
+    "Deteriorated since last":"较上次恶化",
+    "Temporary repair":"临时修复",
+    "Specialist inspection":"需专项检查",
+    "Traffic management required":"需交通管制",
+    "Confined space":"受限空间",
     "Delamination":"分层剥离",
     "Scaling":"表面脱落（起皮）",
     "Honeycombing":"蜂窝状缺陷",
@@ -3416,6 +3445,32 @@ const TERM_TR={
     "Diagonal crack":"Grieta diagonal",
     "Shrinkage cracking":"Fisuración por retracción",
     "Spalling":"Descascaramiento",
+    "Chloride contamination":"Contaminación por cloruros",
+    "Damp / mould":"Humedad / moho",
+    "Ponding":"Encharcamiento",
+    "Damaged cladding":"Revestimiento dañado",
+    "Damaged glazing":"Acristalamiento dañado",
+    "Damaged lining":"Revestimiento interior dañado",
+    "Damaged fitting":"Accesorio dañado",
+    "Bird / animal fouling":"Suciedad de aves o animales",
+    "Vandalism":"Vandalismo",
+    "Crocodile cracking":"Piel de cocodrilo",
+    "Block cracking":"Fisuración en bloque",
+    "Rutting":"Roderas",
+    "Shoving":"Desplazamiento",
+    "Corrugation":"Corrugación",
+    "Ravelling":"Desprendimiento de áridos",
+    "Flushing":"Exudación",
+    "Stripping":"Desprendimiento del ligante",
+    "Edge break":"Rotura de borde",
+    "Patching":"Parcheo",
+    "Segregation":"Segregación",
+    "Polished aggregate":"Árido pulido",
+    "Deteriorated since last":"Empeorado desde la última",
+    "Temporary repair":"Reparación temporal",
+    "Specialist inspection":"Inspección especializada",
+    "Traffic management required":"Requiere gestión de tráfico",
+    "Confined space":"Espacio confinado",
     "Delamination":"Delaminación",
     "Scaling":"Descamación superficial",
     "Honeycombing":"Nidos de abeja (hormigueros)",
@@ -3496,6 +3551,32 @@ const TERM_TR={
     "Diagonal crack":"विकर्ण दरार",
     "Shrinkage cracking":"संकुचन दरार",
     "Spalling":"पपड़ी उखड़ना (स्पॉलिंग)",
+    "Chloride contamination":"क्लोराइड संदूषण",
+    "Damp / mould":"नमी / फफूंदी",
+    "Ponding":"पानी का जमाव",
+    "Damaged cladding":"क्षतिग्रस्त क्लैडिंग",
+    "Damaged glazing":"क्षतिग्रस्त शीशा",
+    "Damaged lining":"क्षतिग्रस्त आंतरिक परत",
+    "Damaged fitting":"क्षतिग्रस्त फिटिंग",
+    "Bird / animal fouling":"पक्षी / पशु गंदगी",
+    "Vandalism":"तोड़फोड़",
+    "Crocodile cracking":"मगरमच्छ दरार",
+    "Block cracking":"खंड दरार",
+    "Rutting":"रट (पहिया खांचा)",
+    "Shoving":"सतह सरकना",
+    "Corrugation":"लहरदार सतह",
+    "Ravelling":"सतह उखड़ना",
+    "Flushing":"बिटुमेन उभार",
+    "Stripping":"बिटुमेन पृथक्करण",
+    "Edge break":"किनारा टूटना",
+    "Patching":"पैचिंग",
+    "Segregation":"पृथक्करण",
+    "Polished aggregate":"घिसा हुआ एग्रीगेट",
+    "Deteriorated since last":"पिछली बार से बिगड़ा",
+    "Temporary repair":"अस्थायी मरम्मत",
+    "Specialist inspection":"विशेषज्ञ निरीक्षण",
+    "Traffic management required":"यातायात प्रबंधन आवश्यक",
+    "Confined space":"सीमित स्थान",
     "Delamination":"परत पृथक्करण",
     "Scaling":"सतह छिलना",
     "Honeycombing":"छत्ते जैसी संरचना",
@@ -3576,6 +3657,32 @@ const TERM_TR={
     "Diagonal crack":"تشقق قطري (مائل)",
     "Shrinkage cracking":"تشقق الانكماش",
     "Spalling":"تفتت وتساقط أجزاء الخرسانة",
+    "Chloride contamination":"تلوث بالكلوريدات",
+    "Damp / mould":"رطوبة / عفن",
+    "Ponding":"تجمع المياه",
+    "Damaged cladding":"تلف الكسوة الخارجية",
+    "Damaged glazing":"تلف الزجاج",
+    "Damaged lining":"تلف التبطين الداخلي",
+    "Damaged fitting":"تلف التجهيزات",
+    "Bird / animal fouling":"تلوث من الطيور أو الحيوانات",
+    "Vandalism":"تخريب متعمد",
+    "Crocodile cracking":"تشقق تمساحي",
+    "Block cracking":"تشقق كتلي",
+    "Rutting":"تخدد",
+    "Shoving":"انزياح السطح",
+    "Corrugation":"تموج السطح",
+    "Ravelling":"تفكك السطح",
+    "Flushing":"نضح البيتومين",
+    "Stripping":"انفصال البيتومين",
+    "Edge break":"تكسر الحافة",
+    "Patching":"ترقيع",
+    "Segregation":"انفصال حبيبي",
+    "Polished aggregate":"ركام مصقول",
+    "Deteriorated since last":"تدهور منذ آخر فحص",
+    "Temporary repair":"إصلاح مؤقت",
+    "Specialist inspection":"فحص متخصص",
+    "Traffic management required":"يلزم تنظيم المرور",
+    "Confined space":"حيز ضيق",
     "Delamination":"انفصال طبقي",
     "Scaling":"تقشر سطحي",
     "Honeycombing":"تعشيش (فجوات خرسانية)",
@@ -3656,6 +3763,32 @@ const TERM_TR={
     "Diagonal crack":"Диагональная трещина",
     "Shrinkage cracking":"Усадочные трещины",
     "Spalling":"Скалывание",
+    "Chloride contamination":"Хлоридное загрязнение",
+    "Damp / mould":"Сырость / плесень",
+    "Ponding":"Застой воды",
+    "Damaged cladding":"Повреждение облицовки",
+    "Damaged glazing":"Повреждение остекления",
+    "Damaged lining":"Повреждение внутренней отделки",
+    "Damaged fitting":"Повреждение элементов оснащения",
+    "Bird / animal fouling":"Загрязнение птицами или животными",
+    "Vandalism":"Вандализм",
+    "Crocodile cracking":"Сетка трещин",
+    "Block cracking":"Блочные трещины",
+    "Rutting":"Колейность",
+    "Shoving":"Сдвиг покрытия",
+    "Corrugation":"Волнистость",
+    "Ravelling":"Выкрашивание",
+    "Flushing":"Выпотевание битума",
+    "Stripping":"Отслоение вяжущего",
+    "Edge break":"Разрушение кромки",
+    "Patching":"Заплаты",
+    "Segregation":"Сегрегация",
+    "Polished aggregate":"Отполированный щебень",
+    "Deteriorated since last":"Ухудшилось с прошлого раза",
+    "Temporary repair":"Временный ремонт",
+    "Specialist inspection":"Требуется спецобследование",
+    "Traffic management required":"Нужна организация движения",
+    "Confined space":"Замкнутое пространство",
     "Delamination":"Расслоение",
     "Scaling":"Шелушение поверхности",
     "Honeycombing":"Раковины (сотовая структура)",
@@ -3740,6 +3873,8 @@ const CAT_TR={
     "Bearings":"支座",
     "Joints":"伸缩缝",
     "General":"通用",
+    "Pavement":"路面",
+    "Building":"建筑",
     "Deck":"桥面板",
     "Girder / Beam":"梁/大梁",
     "Pier / Column":"桥墩/立柱",
@@ -3758,6 +3893,8 @@ const CAT_TR={
     "Bearings":"Apoyos",
     "Joints":"Juntas",
     "General":"General",
+    "Pavement":"Pavimento",
+    "Building":"Edificación",
     "Deck":"Tablero",
     "Girder / Beam":"Viga",
     "Pier / Column":"Pila / Columna",
@@ -3776,6 +3913,8 @@ const CAT_TR={
     "Bearings":"बेयरिंग",
     "Joints":"जोड़",
     "General":"सामान्य",
+    "Pavement":"फुटपाथ/सड़क सतह",
+    "Building":"भवन",
     "Deck":"डेक",
     "Girder / Beam":"गर्डर / बीम",
     "Pier / Column":"पियर / कॉलम",
@@ -3794,6 +3933,8 @@ const CAT_TR={
     "Bearings":"المساند",
     "Joints":"الوصلات",
     "General":"عام",
+    "Pavement":"الرصف",
+    "Building":"المباني",
     "Deck":"سطح الجسر",
     "Girder / Beam":"عارضة / كمرة",
     "Pier / Column":"ركيزة / عمود",
@@ -3812,6 +3953,8 @@ const CAT_TR={
     "Bearings":"Опорные части",
     "Joints":"Швы",
     "General":"Общее",
+    "Pavement":"Покрытие",
+    "Building":"Здания",
     "Deck":"Проезжая часть",
     "Girder / Beam":"Балка",
     "Pier / Column":"Опора / колонна",
@@ -5024,7 +5167,8 @@ function clearSession(){ if(!db)return; try{ db.transaction('session','readwrite
 async function restoreSession(){
   const d=await idbGet('current'); if(!d||!d.photos||!d.photos.length)return;
   uid=d.uid||uid; pid=d.pid||pid;
-  S.favs=migList(d.favs); S.recent=migRecent(d.recent); S.recentTags=d.recentTags||[]; S.elements=d.elements||[]; S.personal=migList(d.personal); S.tagsOwn=d.tagsOwn||[];
+  S.favs=migFavs(d.favs); S.recent=migRecent(d.recent); S.recentTags=d.recentTags||[]; S.elements=d.elements||[]; S.personal=migList(d.personal); S.tagsOwn=d.tagsOwn||[];
+  S.favs=S.favs.filter(f=>f.t!=='Review'); S.recentTags=S.recentTags.filter(x=>x!=='Review');
   S.numPrefix=d.numPrefix||''; $('numpre').value=S.numPrefix;
   if(d.rep) S.rep=Object.assign(S.rep,d.rep); if(!S.rep.ov) S.rep.ov={}; if(!S.rep.manual) S.rep.manual=[];
   if(d.fmt){ S.fmt=d.fmt; } $('fmtCur').textContent=(S.fmt==='png'?'PNG':'JPG');
@@ -5061,22 +5205,27 @@ let toastT=null;
 function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),1700); }
 
 // ── Defect vocabulary (working list; align to NZTA / AS when grounding) ──
-const MATS=[['C','Concrete'],['S','Steel'],['T','Timber'],['M','Masonry'],['B','Bearing'],['J','Joint'],['G','General']];
+const MATS=[['con','Concrete'],['stl','Steel'],['tmb','Timber'],['mas','Masonry'],['brg','Bearing'],['jnt','Joint'],['pav','Pavement'],['bld','Building'],['gen','General']];
 const DEF_TERMS=[
-  ['Cracking','CMTG'],['Fatigue crack','S'],['Cracked weld','S'],
-  ['Spalling','CM'],['Delamination','C'],['Scaling','C'],['Honeycombing','C'],['Popout','C'],
-  ['Section loss','CSTB'],['Pothole','C'],['Surfacing defect','CG'],
-  ['Exposed rebar','C'],['Corrosion','SBJ'],['Corrosion staining','CM'],['Pitting','S'],['Pack rust','S'],['Coating breakdown','S'],
-  ['Efflorescence','CM'],['Leaching','CM'],['ASR','C'],['Active leakage','CJ'],['Water staining','CMG'],
-  ['Decay / rot','T'],['Splitting','T'],['Checking','T'],['Insect attack','T'],['Crushing','T'],
-  ['Mortar loss','M'],['Weathering','MTG'],
-  ['Displacement','MBJG'],['Distortion','SB'],['Deflection','CST'],['Seized','B'],['Over-travel','B'],['Bulging','B'],['Tearing','B'],
-  ['Loose fixing','STG'],['Missing component','SJG'],['Damaged seal','J'],['Anchorage loss','JG'],
-  ['Scour','G'],['Erosion','G'],['Settlement','CMG'],['Debris','BJG'],['Drain blocked','CGJ'],['Vegetation','MG'],
-  ['Impact damage','CSTMG'],['Fire damage','CST'],['Graffiti','G']
+  ['Cracking','con mas tmb bld pav gen'],['Fatigue crack','stl'],['Cracked weld','stl'],
+  ['Spalling','con mas bld'],['Delamination','con'],['Scaling','con'],['Honeycombing','con'],['Popout','con'],
+  ['Section loss','con stl tmb brg'],['Pothole','con pav'],['Surfacing defect','con gen'],
+  ['Exposed rebar','con'],['Corrosion','stl brg jnt bld'],['Corrosion staining','con mas bld'],['Pitting','stl'],['Pack rust','stl'],['Coating breakdown','stl bld'],
+  ['Efflorescence','con mas bld'],['Leaching','con mas bld'],['ASR','con'],['Chloride contamination','con'],['Active leakage','con jnt bld'],['Water staining','con mas bld gen'],
+  ['Damp / mould','bld'],['Ponding','gen con pav bld'],
+  ['Decay / rot','tmb bld'],['Splitting','tmb'],['Checking','tmb'],['Insect attack','tmb'],['Crushing','tmb'],
+  ['Mortar loss','mas bld'],['Weathering','mas tmb bld gen'],
+  ['Displacement','mas brg jnt bld gen'],['Distortion','stl brg'],['Deflection','con stl tmb bld'],['Seized','brg'],['Over-travel','brg'],['Bulging','brg mas bld'],['Tearing','brg'],
+  ['Loose fixing','stl tmb bld gen'],['Missing component','stl jnt bld gen'],['Damaged seal','jnt bld'],['Anchorage loss','jnt gen'],
+  ['Damaged cladding','bld'],['Damaged glazing','bld'],['Damaged lining','bld'],['Damaged fitting','bld gen'],
+  ['Crocodile cracking','pav'],['Block cracking','pav'],['Rutting','pav'],['Shoving','pav'],['Corrugation','pav'],['Ravelling','pav'],
+  ['Flushing','pav'],['Stripping','pav'],['Edge break','pav'],['Patching','pav'],['Segregation','pav'],['Polished aggregate','pav'],
+  ['Scour','gen'],['Erosion','gen'],['Settlement','gen con mas pav bld'],['Debris','gen brg jnt pav'],['Drain blocked','gen con pav bld'],['Vegetation','gen mas pav bld'],
+  ['Bird / animal fouling','gen bld'],
+  ['Impact damage','con stl tmb mas bld gen'],['Fire damage','con stl tmb bld'],['Graffiti','gen bld'],['Vandalism','gen bld']
 ];
 const DEFECTS={
-  tags:{ Tags:['Monitor','Repair','Urgent','Priority','Review','Typical','Measured','Access issue','No access','Previously noted','New this inspection','Safety concern'] }
+  tags:{ Tags:['Monitor','Repair','Urgent','Priority','Typical','Measured','Previously noted','Deteriorated since last','New this inspection','Temporary repair','Specialist inspection','Safety concern','Traffic management required','Confined space','Access issue','No access'] }
 };
 // shortened names borrow the translation of the term they replace
 const TERM_ALIAS={'ASR':'Alkali-silica reaction','Exposed rebar':'Exposed reinforcement','Surfacing defect':'Wearing-surface defect','Seized':'Seized bearing','Over-travel':'Excessive movement','Loose fixing':'Loose fastening','Anchorage loss':'Loss of anchorage','Deflection':'Excessive deflection','Drain blocked':'Drainage blockage','Debris':'Debris accumulation'};
@@ -5084,9 +5233,14 @@ for(const lg in TERM_TR){ const d=TERM_TR[lg]; for(const k in TERM_ALIAS){ const
 // saved lists from earlier versions
 const TERM_MIGRATE={'Longitudinal crack':'Cracking','Transverse crack':'Cracking','Diagonal crack':'Cracking','Shrinkage cracking':'Cracking','Alkali-silica reaction':'ASR','Exposed reinforcement':'Exposed rebar','Wearing-surface defect':'Surfacing defect','Seized bearing':'Seized','Restricted movement':'Seized','Excessive movement':'Over-travel','Loose fastening':'Loose fixing','Loose bolt':'Loose fixing','Loose connection':'Loose fixing','Missing bolt':'Missing component','Loss of anchorage':'Anchorage loss','Excessive deflection':'Deflection','Drainage blockage':'Drain blocked','Debris accumulation':'Debris','Debris blockage':'Debris','Debris packing':'Debris','Debris buildup':'Debris','Surface corrosion':'Corrosion','Vegetation growth':'Vegetation','Loss of material':'Section loss','Undermining':'Scour','Exposed foundation':'Scour'};
 function migList(a){ const o=[]; (a||[]).forEach(x=>{ const n=TERM_MIGRATE[x]||x; if(!o.includes(n)) o.push(n); }); return o; }
+// favourites hold {t:term, g:group}; strings are the pre-v1.3.7 shape
+function migFavs(a){ const o=[]; (a||[]).forEach(x=>{ const tm=typeof x==='string'?x:(x&&x.t); if(!tm) return;
+  const n=TERM_MIGRATE[tm]||tm, g=(typeof x==='string')?'':(x.g||'');
+  if(o.some(f=>f.t===n&&f.g===g)) return; o.push({t:n,g:g}); }); return o; }
 // recents hold {t:term, s:state}; strings are the pre-v1.3.2 shape
 function migRecent(a){ const o=[]; (a||[]).forEach(x=>{ const tm=typeof x==='string'?x:(x&&x.t); if(!tm) return;
-  const n=TERM_MIGRATE[tm]||tm; if(o.some(r=>r.t===n)) return; o.push({t:n, s:(typeof x==='string'?'none':(x.s||'none'))}); }); return o; }
+  const n=TERM_MIGRATE[tm]||tm; if(o.some(r=>r.t===n)) return;
+  o.push({t:n, s:(typeof x==='string'?'none':(x.s||'none')), g:(typeof x==='string'?'':(x.g||''))}); }); return o; }
 const SEV=[
   {k:'none',code:null,word:'Current',color:null},
   {k:'good',code:'CS1',word:'Good',color:'#66bb6a'},
@@ -5135,11 +5289,16 @@ function renderMat(){
     '<button data-mat=""'+(curMat?'':' class="on"')+'>'+esc(t('mat_all'))+'</button>'+
     MATS.map(m=>'<button data-mat="'+m[0]+'"'+(curMat===m[0]?' class="on"':'')+'>'+esc(trCat(m[1]))+'</button>').join('');
 }
-function matsOf(term){ const d=DEF_TERMS.find(x=>x[0]===term); return d?d[1]:''; }
+function matsOf(term){ const d=DEF_TERMS.find(x=>x[0]===term); return d?d[1].split(' '):[]; }
 function matName(c){ const m=MATS.find(x=>x[0]===c); return m?m[1]:''; }
-function tile(term){
-  const fav=S.favs.includes(term), disp=esc(pickTab==='elements'?term:trTerm(term));
-  return '<button class="tile'+(fav?' fav':'')+'" data-term="'+esc(term)+'" title="'+disp+'"><span class="tlab">'+disp+'</span>'+(fav?'<span class="tstar">★</span>':'')+'</button>';
+function tile(item){
+  const term=(typeof item==='string')?item:item.t;
+  const g=(typeof item==='string')?groupFor(term):groupFor(term,item.g);
+  const fav=isFav(term,g), disp=esc(pickTab==='elements'?term:trTerm(term));
+  const showG=(pickTab==='material'&&g&&curMat==='*');
+  return '<button class="tile'+(fav?' fav':'')+(showG?' two':'')+'" data-term="'+esc(term)+'" data-grp="'+esc(g)+'" title="'+disp+(g?' — '+esc(trCat(g)):'')+'">'+
+    '<span class="tlab">'+disp+'</span>'+(showG?'<span class="tsub">'+esc(trCat(g))+'</span>':'')+
+    (fav?'<span class="tstar">★</span>':'')+'</button>';
 }
 function grid(list){ return '<div class="tilegrid">'+list.map(tile).join('')+'</div>'; }
 function allTags(){ return DEFECTS.tags.Tags.concat(S.tagsOwn); }
@@ -5164,11 +5323,17 @@ function renderPicker(){
   const mat=q?'':curMat;
   let terms=DEF_TERMS.map(x=>x[0]).filter(tm=>hit(tm,q));
   let pers=S.personal.filter(tm=>hit(tm,q));
-  if(mat==='*'){ terms=terms.filter(tm=>S.favs.includes(tm)); pers=pers.filter(tm=>S.favs.includes(tm)); }
-  else if(mat){ terms=terms.filter(tm=>matsOf(tm).includes(mat)); pers=[]; }
+  if(mat==='*'){
+    const known=tm=>DEF_TERMS.some(x=>x[0]===tm)||S.personal.includes(tm);
+    const favs=S.favs.filter(f=>known(f.t)&&hit(f.t,q));
+    html += favs.length? grid(favs) : '';
+    $('pickList').innerHTML = html || '<div class="pempty">'+t('no_favs_yet')+'</div>';
+    syncAdd(); return;
+  }
+  if(mat){ terms=terms.filter(tm=>matsOf(tm).indexOf(mat)>=0); pers=[]; }
   html += terms.length? grid(terms) : '';
   if(pers.length) html+='<div class="pgroup">'+t('personal_group')+'</div>'+grid(pers);
-  if(!html) html='<div class="pempty">'+t(mat==='*'?'no_favs_yet':'no_matches_custom')+'</div>';
+  if(!html) html='<div class="pempty">'+t('no_matches_custom')+'</div>';
   $('pickList').innerHTML=html; syncAdd();
 }
 // the search field doubles as the add field: Add lights up for text that matches nothing
@@ -5189,22 +5354,32 @@ function addTyped(){
   if(!list.includes(v)){ list.unshift(v); list.splice(100); }
   inp.value=''; dirty(); renderPicker();
 }
-function addRecent(t,sevK){
+function addRecent(t,sevK,g){
   if(pickTab==='tags') S.recentTags=[t,...S.recentTags.filter(x=>x!==t)].slice(0,8);
-  else if(pickTab!=='elements') S.recent=[{t:t,s:sevK||'none'},...S.recent.filter(x=>x.t!==t)].slice(0,8);
+  else if(pickTab!=='elements') S.recent=[{t:t,s:sevK||'none',g:g||''},...S.recent.filter(x=>x.t!==t)].slice(0,8);
   dirty();
 }
-function toggleFav(t){ if(S.favs.includes(t)) S.favs=S.favs.filter(x=>x!==t); else S.favs=[t,...S.favs].slice(0,20); dirty(); renderPicker(); }
-function grpOf(tab,term){
-  if(tab==='tags') return 'Tags';
-  if(tab!=='material') return '';
-  const m=matsOf(term); return m? matName(m[0]) : '';
+function groupFor(term,override){
+  if(override!==undefined) return override;
+  if(pickTab==='tags') return 'Tags';
+  if(pickTab!=='material') return '';
+  const cs=matsOf(term);
+  if(curMat&&curMat!=='*'&&cs.indexOf(curMat)>=0) return matName(curMat);
+  if(cs.length===1) return matName(cs[0]);
+  return '';
+}
+function isFav(term,g){ return S.favs.some(f=>f.t===term&&f.g===(g||'')); }
+function toggleFav(term,g){
+  g=g||'';
+  if(isFav(term,g)) S.favs=S.favs.filter(f=>!(f.t===term&&f.g===g));
+  else S.favs=[{t:term,g:g},...S.favs].slice(0,20);
+  dirty(); if($('pickOverlay').classList.contains('show')) renderPicker();
 }
 
 // ── CS wheel: held on a tile, sets the condition state and arms in one gesture ──
 let wheelMode='tile';
 function closeWheel(){ $('csWheel').classList.remove('show'); }
-function openWheel(term,x,y,mode){
+function openWheel(term,x,y,mode,grp){
   wheelMode=mode||'tile';
   const a=S.armedDefect;
   const noSev=(wheelMode==='tile')?(pickTab==='tags'||pickTab==='elements')
@@ -5213,7 +5388,7 @@ function openWheel(term,x,y,mode){
   w.innerHTML=(term?'<div class="whead">'+esc(plain&&pickTab==='elements'?term:trTerm(term))+'</div>':'')+
     (plain?'':SEV.map(sv=>'<button data-wsev="'+sv.k+'"><span class="dot" style="background:'+(sv.color||'#7c8894')+'"></span>'+esc(sevLabel(sv))+'</button>').join(''))+
     (term?'<div class="wsep"></div><button data-wfav="1"><span>'+(fav?'★':'☆')+'</span>'+esc(t('favourite'))+'</button>':'');
-  w.dataset.term=term; w.classList.add('show');
+  w.dataset.term=term; w.dataset.grp=(grp===undefined?'':grp); w.classList.add('show');
   const r=w.getBoundingClientRect();
   let L=Math.min(Math.max(8,x-r.width/2), innerWidth-r.width-8);
   let T=Math.min(Math.max(8,y-r.height/2), innerHeight-r.height-8);
@@ -5221,18 +5396,19 @@ function openWheel(term,x,y,mode){
 }
 
 // ── arming ──
-function armTerm(term,tab,sevK){
+function armTerm(term,tab,sevK,grp){
   const prev=pickTab; pickTab=tab||'material';
   const eff=(pickTab==='tags'||pickTab==='elements')?'none':(sevK||curSev);
-  const sev=sevOf(eff); addRecent(term,eff);
+  const g=groupFor(term,grp);
+  const sev=sevOf(eff); addRecent(term,eff,g);
   const label=(pickTab==='elements')?term:trTerm(term);
-  S.armedDefect={text:label, sev:eff, color:sev.color, cat:pickTab, term:term, grp:grpOf(pickTab,term)};
+  S.armedDefect={text:label, sev:eff, color:sev.color, cat:pickTab, term:term, grp:g};
   pickTab=prev; updateDef();
 }
 function armLast(){
   if(S.armedDefect) return true;
   const r=S.recent[0]; if(!r) return false;
-  armTerm(r.t,'material',r.s); toast(t('toast_tap_to_place')); return true;
+  armTerm(r.t,'material',r.s,r.g||''); toast(t('toast_tap_to_place')); return true;
 }
 // change the state of what is already armed, without reopening anything
 function setArmedSev(k){
@@ -5242,13 +5418,14 @@ function setArmedSev(k){
   const i=S.recent.findIndex(r=>r.t===a.term); if(i>=0){ S.recent[i].s=k; dirty(); }
   updateDef();
 }
-function chooseTerm(term,sevK){
+function chooseTerm(term,sevK,grp){
   if(sevK) curSev=sevK;
   const effSevK=(pickTab==='tags'||pickTab==='elements')?'none':curSev;
-  const sev=sevOf(effSevK); addRecent(term,effSevK);
+  const g=groupFor(term,grp);
+  const sev=sevOf(effSevK); addRecent(term,effSevK,g);
   const label=(pickTab==='elements')?term:trTerm(term);
   if(pickMode==='feed'){ if(pickFeed) pickFeed(label, sev.color); }
-  else { S.armedDefect={text:label, sev:effSevK, color:sev.color, cat:pickTab, term:term, grp:grpOf(pickTab,term)}; updateDef(); toast(t('toast_tap_to_place')); }
+  else { S.armedDefect={text:label, sev:effSevK, color:sev.color, cat:pickTab, term:term, grp:g}; updateDef(); toast(t('toast_tap_to_place')); }
   closeWheel(); hideOverlay('pickOverlay');
 }
 function isDefectObj(o){ return !!o && o.type==='tag' && (o.cat==='material'||o.cat==='component'); }
@@ -5267,7 +5444,7 @@ function closeDefMenu(){ $('defMenu').classList.remove('show'); }
 function openDefMenu(btn){
   const m=$('defMenu'), rec=S.recent.slice(0,5);
   let h='';
-  if(rec.length) h+=rec.map(r=>'<button data-rterm="'+esc(r.t)+'" data-rsev="'+esc(r.s||'none')+'"><span class="dot" style="background:'+(sevOf(r.s).color||'#7c8894')+'"></span><span>'+esc(trTerm(r.t))+'</span></button>').join('')+'<div class="dsep"></div>';
+  if(rec.length) h+=rec.map(r=>'<button data-rterm="'+esc(r.t)+'" data-rsev="'+esc(r.s||'none')+'" data-rgrp="'+esc(r.g||'')+'"><span class="dot" style="background:'+(sevOf(r.s).color||'#7c8894')+'"></span><span>'+esc(trTerm(r.t))+'</span></button>').join('')+'<div class="dsep"></div>';
   else h+='<button class="mm" disabled><span>'+esc(t('no_recent_defects'))+'</span></button><div class="dsep"></div>';
   h+='<button class="mm" data-rmore="1"><span>'+esc(t('pick_more'))+'</span></button>';
   m.innerHTML=h; m.classList.add('show');
@@ -5442,7 +5619,7 @@ document.querySelectorAll('.tool').forEach(b=>{ if(b.dataset.tool==='defect') re
 $('defMenu').addEventListener('click',e=>{
   if(e.target.closest('[data-rmore]')){ closeDefMenu(); openPicker('arm'); return; }
   const b=e.target.closest('[data-rterm]'); if(!b) return;
-  closeDefMenu(); armTerm(b.dataset.rterm,'material',b.dataset.rsev||'none'); toast(t('toast_tap_to_place'));
+  closeDefMenu(); armTerm(b.dataset.rterm,'material',b.dataset.rsev||'none',b.dataset.rgrp||''); toast(t('toast_tap_to_place'));
 });
 document.addEventListener('pointerdown',e=>{ if($('defMenu').classList.contains('show')&&!e.target.closest('#defMenu')&&!e.target.closest('.tool[data-tool="defect"]')) closeDefMenu(); },true);
 
@@ -5577,7 +5754,7 @@ $('matRow').addEventListener('click',e=>{ const b=e.target.closest('[data-mat]')
 $('pickTabs').addEventListener('click',e=>{ const b=e.target.closest('[data-tab]'); if(!b)return; closeWheel(); pickTab=b.dataset.tab; document.querySelectorAll('#pickTabs button').forEach(x=>x.classList.toggle('on',x===b)); $('pickSearch').value=''; curMat=''; renderPicker(); });
 $('pickList').addEventListener('click',e=>{
   if(tileHeld){ tileHeld=false; return; }
-  const r=e.target.closest('[data-term]'); if(r) chooseTerm(r.dataset.term); });
+  const r=e.target.closest('[data-term]'); if(r) chooseTerm(r.dataset.term,null,r.dataset.grp); });
 
 // tap cycles, hold opens the wheel — used by the sheet pill and the props chip
 function bindCycleHold(el,onTap,onHold){
@@ -5593,21 +5770,22 @@ function bindCycleHold(el,onTap,onHold){
 let tileHeld=false, tileTimer=null;
 $('pickList').addEventListener('pointerdown',e=>{
   const tl=e.target.closest('.tile'); if(!tl) return;
-  const x=e.clientX,y=e.clientY,tm=tl.dataset.term;
+  const x=e.clientX,y=e.clientY,tm=tl.dataset.term,tg=tl.dataset.grp;
   tileHeld=false; clearTimeout(tileTimer);
-  tileTimer=setTimeout(()=>{ tileHeld=true; openWheel(tm,x,y); },450);
+  tileTimer=setTimeout(()=>{ tileHeld=true; openWheel(tm,x,y,'tile',tg); },450);
 });
 ['pointerup','pointercancel','pointerleave'].forEach(ev=>$('pickList').addEventListener(ev,()=>clearTimeout(tileTimer),true));
 $('pickList').addEventListener('scroll',()=>{ clearTimeout(tileTimer); closeWheel(); },true);
 $('pickList').addEventListener('contextmenu',e=>{ if(e.target.closest('.tile')) e.preventDefault(); });
 $('csWheel').addEventListener('click',e=>{
   const tm=$('csWheel').dataset.term;
+  const tg=$('csWheel').dataset.grp;
   const f=e.target.closest('[data-wfav]');
-  if(f){ closeWheel(); if(tm){ toggleFav(tm); if(!$('pickOverlay').classList.contains('show')) dirty(); } return; }
+  if(f){ closeWheel(); if(tm) toggleFav(tm, wheelMode==='armed'?(S.armedDefect&&S.armedDefect.grp):tg); return; }
   const b=e.target.closest('[data-wsev]'); if(!b) return;
   if(wheelMode==='pill'){ closeWheel(); curSev=b.dataset.wsev; renderCS(); return; }
   if(wheelMode==='armed'){ closeWheel(); setArmedSev(b.dataset.wsev); return; }
-  chooseTerm(tm,b.dataset.wsev);
+  chooseTerm(tm,b.dataset.wsev,tg);
 });
 document.addEventListener('pointerdown',e=>{
   if(!$('csWheel').classList.contains('show')) return;
@@ -5617,7 +5795,7 @@ document.addEventListener('pointerdown',e=>{
 $('defchange').onclick=()=>openPicker('arm');
 bindCycleHold($('defcur'),
   ()=>{ if(!S.armedDefect){ openPicker('arm'); return; } setArmedSev(cycleSev(S.armedDefect.sev||'none')); },
-  (x,y)=>{ if(!S.armedDefect){ openPicker('arm'); return; } openWheel(S.armedDefect.term, x, y, 'armed'); });
+  (x,y)=>{ if(!S.armedDefect){ openPicker('arm'); return; } openWheel(S.armedDefect.term, x, y, 'armed', S.armedDefect.grp); });
 $('txtDefect').onclick=()=>openPicker('feed',(term,color)=>{ $('txtInput').value=term; if(color&&editTarget){ editTarget.color=color; } });
 
 // divider card
@@ -6155,7 +6333,7 @@ function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'<
 function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
   t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+
   t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
-const MARKUP_VER='1.3.5';
+const MARKUP_VER='1.3.7';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
