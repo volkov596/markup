@@ -382,10 +382,19 @@ body.hasfine .emotip{display:block}
 .sheet-head .x{width:34px;height:34px;border-radius:var(--r-sm);color:var(--muted);font-size:20px;display:grid;place-items:center}
 .sheet-head .x:hover{background:var(--panel);color:var(--text)}
 .srow{flex:0 0 auto;display:flex;gap:8px;margin-bottom:14px}
+.sfield{position:relative;flex:1 1 auto;min-width:0;display:flex}
+.sclr{
+  position:absolute;right:5px;top:50%;transform:translateY(-50%);
+  width:30px;height:30px;border-radius:50%;display:none;place-items:center;
+  color:var(--muted);font-size:19px;line-height:1;background:var(--panel);
+}
+.sclr.on{display:grid}
+.sclr:hover{background:var(--panel-2);color:var(--text)}
+.cswheel button.wdel{color:var(--danger)}
 #pickAdd{flex:0 0 auto;height:44px;padding:0 15px}
 #pickAdd[disabled]{opacity:.35;pointer-events:none}
 #pickSearch{
-  flex:1 1 auto;min-width:0;height:44px;padding:0 13px;border-radius:var(--r-sm);
+  flex:1 1 auto;min-width:0;height:44px;padding:0 40px 0 13px;border-radius:var(--r-sm);
   background:rgba(0,0,0,.3);border:1px solid var(--panel-border);color:var(--text);font-size:15px;font-family:var(--font-ui);
 }
 #pickSearch:focus{outline:2px solid var(--accent)}
@@ -404,9 +413,8 @@ body.hasfine .emotip{display:block}
 }
 .tabs button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
 .picklist{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;padding:0 4px;min-height:0}
-.pgroup{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin:12px 4px 5px}
-.pgroup:first-child{margin-top:2px}
 .pempty{padding:22px;text-align:center;color:var(--muted);font-size:13px}
+.pempty .mini{display:inline-block;margin-top:12px}
 
 /* tile grid */
 .tilegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(102px,1fr));gap:6px;margin:2px 0 8px}
@@ -419,6 +427,14 @@ body.hasfine .emotip{display:block}
 .tile:hover{border-color:var(--muted-2)}
 .tile:active{background:var(--panel-2)}
 .tile.fav{border-color:var(--accent)}
+.tile.own{background:rgba(77,182,172,.10);border-color:rgba(77,182,172,.34)}
+.tile.own.fav{border-color:var(--accent)}
+.tile .tcat{
+  position:absolute;right:0;bottom:0;width:26px;height:22px;display:grid;place-items:center;
+  font-size:10px;line-height:1;color:var(--muted-2);
+}
+.tile .tcat.set{color:rgba(77,182,172,.95)}
+.tile .tcat:hover{color:var(--text)}
 .tile .tlab{display:block;width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .tile .tstar{position:absolute;top:1px;right:4px;font-size:9px;line-height:1;color:var(--accent)}
 .tile.two{line-height:1.05}
@@ -447,6 +463,7 @@ body.hasfine .emotip{display:block}
 }
 .cswheel button:hover{background:var(--panel)}
 .cswheel .dot{width:11px;height:11px;border-radius:50%;flex:0 0 auto}
+.cswheel .wchk{width:13px;flex:0 0 auto;text-align:center;color:rgba(77,182,172,.95);font-size:12px}
 .cswheel .wsep{height:1px;background:var(--hairline);margin:5px 4px}
 .cswheel .whead{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);padding:4px 6px 5px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:180px}
 .defmenu{
@@ -702,7 +719,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.3.8 · BETA · multilingual</span>
+        <span class="ver">v1.3.10 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -911,7 +928,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.3.8</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.3.10</span></div>
   </nav>
 </div>
 
@@ -960,7 +977,10 @@ body.hasfine .emotip{display:block}
     </div>
     <div class="sevrow" id="matRow"></div>
     <div class="srow">
-      <input id="pickSearch" type="text" placeholder="Search terms…" autocomplete="off" data-i18n-placeholder="search_placeholder">
+      <span class="sfield">
+        <input id="pickSearch" type="text" placeholder="Search terms…" autocomplete="off" data-i18n-placeholder="search_placeholder">
+        <button class="sclr" id="pickClr" data-i18n-title="clear" aria-label="Clear">&times;</button>
+      </span>
       <button class="mini" id="pickAdd" disabled data-i18n="add">Add</button>
     </div>
     <div class="picklist" id="pickList"></div>
@@ -1194,16 +1214,16 @@ body.hasfine .emotip{display:block}
       <div class="gsec">
         <h4 data-i18n="help_pick_h">Choosing defects</h4>
         <div class="grow"><b data-i18n="help_picktool_b">The tool button</b><span data-i18n="help_picktool_d">Tap it to re-arm the last defect and place straight away. Double-tap to open the list. Hold it for the five most recent, each at the condition you used it at.</span></div>
-        <div class="grow"><b data-i18n="help_picklist_b">The list</b><span data-i18n="help_picklist_d">Three tabs — Defects, Tags, Elements. On Defects, the chips filter by material; ★ Favs gathers your favourites. Tap a tile to arm it; hold a tile to pick a condition and place in one gesture, or to make it a favourite.</span></div>
-        <div class="grow"><b data-i18n="help_picksearch_b">Search and add</b><span data-i18n="help_picksearch_d">The one field does both. Typing filters the tiles across every material; Add lights up when what you typed matches nothing, and keeps it for the rest of the job. Tags and elements work the same way.</span></div>
-        <div class="grow"><b data-i18n="help_pickcs_b">Condition</b><span data-i18n="help_pickcs_d">The pill in the list sets the condition for the next defect. Tap it to step through Current, CS1, CS2, CS3, CS4, Unrated; hold it to pick one directly. The coloured chip in the toolbar does the same for the defect already armed.</span></div>
+        <div class="grow"><b data-i18n="help_picklist_b">The list</b><span data-i18n="help_picklist_d">Three tabs — Defects, Tags, Elements. On Defects the chips filter by material; ★ Favs gathers your favourites, on Tags as well. Tap a tile to arm it; hold a tile to pick a condition and place in one gesture, or to make it a favourite.</span></div>
+        <div class="grow"><b data-i18n="help_picksearch_b">Search and add</b><span data-i18n="help_picksearch_d">The one field does both. Typing narrows the tiles within the chip you are on, and × clears it. Add lights up when what you typed matches nothing: it keeps the term for the rest of the job and arms it straight away. Your own terms sit in the same grid, tinted — hold one to remove it, or tap its ▾ to file it under materials so it filters like a built-in. Tags and elements share the same field and Add button.</span></div>
+        <div class="grow"><b data-i18n="help_pickcs_b">Condition</b><span data-i18n="help_pickcs_d">The pill in the list sets the condition for the next defect. Tap it to step through Same as ink, CS1, CS2, CS3, CS4, Unrated; hold it to pick one directly. The coloured chip in the toolbar does the same for the defect already armed.</span></div>
         <div class="grow"><b data-i18n="help_pickink_b">Ink and condition</b><span data-i18n="help_pickink_d">For a defect, the ink swatches are the condition: green CS1, yellow CS2, orange CS3, red CS4, blue Unrated. It applies to the selected defect, or to the armed one when nothing is selected. White and black set CS1. Other marks — notes, arrows, text — take the colour and nothing more.</span></div>
         <div class="grow"><b data-i18n="help_pickur_b">Unrated</b><span data-i18n="help_pickur_d">The sixth condition, in blue. For a defect you can see but cannot judge — no access, obscured, or wanting a second opinion. It prints as UR in the schedule and is counted in its own column rather than folded into CS1.</span></div>
       </div>
       <div class="gsec">
         <h4 data-i18n="help_options_h">Options</h4>
         <div class="grow"><b data-i18n="help_fill_b">Fill</b><span data-i18n="help_fill_d">On the text-bearing tools, toggles the solid backing behind text. Off swaps it for a crisp outline so the photo shows through while staying readable.</span></div>
-        <div class="grow"><b data-i18n="help_colour_b">Colour · Current</b><span data-i18n="help_colour_d">In Defect, "Current" keeps the swatch you already picked instead of forcing the severity colour.</span></div>
+        <div class="grow"><b data-i18n="help_colour_b">Same as ink</b><span data-i18n="help_colour_d">Setting the condition to Same as ink keeps the swatch you picked instead of forcing a condition colour, and leaves the CS cell blank in the report. Unrated, by contrast, is a condition: it prints as UR.</span></div>
         <div class="grow"><b data-i18n="help_sketch_b">Sketch</b><span data-i18n="help_sketch_d">Adds a blank landscape sheet to the album — punched like a page from a sketch pad — to draw on with the normal tools. Included in the report.</span></div>
         <div class="grow"><b data-i18n="help_divider_b">Divider</b><span data-i18n="help_divider_d">Drops a straight rule across the photo — handy for splitting a composite shot.</span></div>
         <div class="grow"><b data-i18n="help_clearall_b">Clear all</b><span data-i18n="help_clearall_d">Removes every annotation on the current photo only. Undoable.</span></div>
@@ -1396,11 +1416,11 @@ const I18N={
     "help_picktool_b":"The tool button",
     "help_picktool_d":"Tap it to re-arm the last defect and place straight away. Double-tap to open the list. Hold it for the five most recent, each at the condition you used it at.",
     "help_picklist_b":"The list",
-    "help_picklist_d":"Three tabs — Defects, Tags, Elements. On Defects, the chips filter by material; ★ Favs gathers your favourites. Tap a tile to arm it; hold a tile to pick a condition and place in one gesture, or to make it a favourite.",
+    "help_picklist_d":"Three tabs — Defects, Tags, Elements. On Defects the chips filter by material; ★ Favs gathers your favourites, on Tags as well. Tap a tile to arm it; hold a tile to pick a condition and place in one gesture, or to make it a favourite.",
     "help_picksearch_b":"Search and add",
-    "help_picksearch_d":"The one field does both. Typing filters the tiles across every material; Add lights up when what you typed matches nothing, and keeps it for the rest of the job. Tags and elements work the same way.",
+    "help_picksearch_d":"The one field does both. Typing narrows the tiles within the chip you are on, and × clears it. Add lights up when what you typed matches nothing: it keeps the term for the rest of the job and arms it straight away. Your own terms sit in the same grid, tinted — hold one to remove it, or tap its ▾ to file it under materials so it filters like a built-in. Tags and elements share the same field and Add button.",
     "help_pickcs_b":"Condition",
-    "help_pickcs_d":"The pill in the list sets the condition for the next defect. Tap it to step through Current, CS1, CS2, CS3, CS4, Unrated; hold it to pick one directly. The coloured chip in the toolbar does the same for the defect already armed.",
+    "help_pickcs_d":"The pill in the list sets the condition for the next defect. Tap it to step through Same as ink, CS1, CS2, CS3, CS4, Unrated; hold it to pick one directly. The coloured chip in the toolbar does the same for the defect already armed.",
     "help_pickink_b":"Ink and condition",
     "help_pickink_d":"For a defect, the ink swatches are the condition: green CS1, yellow CS2, orange CS3, red CS4, blue Unrated. It applies to the selected defect, or to the armed one when nothing is selected. White and black set CS1. Other marks — notes, arrows, text — take the colour and nothing more.",
     "help_pickur_b":"Unrated",
@@ -1415,7 +1435,12 @@ const I18N={
     "cancel":"Cancel",
     "add":"Add",
     "export_format":"Export format",
-    "personal_group":"Personal",
+    "clear":"Clear",
+    "categories":"Categories",
+    "search_all_mats":"Search all materials",
+    "no_matches_here":"No matches in this category.",
+    "remove":"Remove",
+    "toast_removed":"Removed {term}",
     "about_report_h":"Report a bug",
     "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — bridge-inspection photo annotation. Works locally on your device, nothing is uploaded.",
     "about_licence":"Released under <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a>. Free to use, share, and adapt, as long as credit is given to the author.",
@@ -1436,7 +1461,7 @@ const I18N={
     "uses_current_ink":"Uses current ink colour",
     "no_matching_elements":"No matching elements.",
     "name_repeated_elements":"Name repeated elements once — e.g. \"Beam B3\" — then tap to label them identically in every photo.",
-    "no_matches_custom":"No matches. You can type a custom label in the previous screen.",
+    "no_matches_custom":"No matches. Tap Add to keep what you typed.",
     "new_elem_placeholder":"e.g. Beam B3, Pier 2 West…",
     "new_divider_title":"New divider card",
     "new_divider_body":"A titled folder card added to your album to separate structures. Exports with the rest; left out of the report by default.",
@@ -1548,8 +1573,8 @@ const I18N={
     "help_options_h":"Options",
     "help_fill_b":"Fill",
     "help_fill_d":"On the text-bearing tools, toggles the solid backing behind text. Off swaps it for a crisp outline so the photo shows through while staying readable.",
-    "help_colour_b":"Colour · Current",
-    "help_colour_d":"In Defect, \"Current\" keeps the swatch you already picked instead of forcing the severity colour.",
+    "help_colour_b":"Same as ink",
+    "help_colour_d":"Setting the condition to Same as ink keeps the swatch you picked instead of forcing a condition colour, and leaves the CS cell blank in the report. Unrated, by contrast, is a condition: it prints as UR.",
     "help_divider_b":"Divider",
     "help_divider_d":"Adds a folder card to the album to separate structures or visits. Titled, coloured, and left out of the report by default.",
     "help_clearall_b":"Clear all",
@@ -1742,9 +1767,9 @@ const I18N={
     "help_picklist_b":"列表",
     "help_picklist_d":"三个选项卡——缺陷、标签、部位。在缺陷中，标签按材料筛选；★ 收藏汇总您的收藏项。轻点方块即可装载；长按方块可选择状态等级并一次完成标注，或将其加入收藏。",
     "help_picksearch_b":"搜索与添加",
-    "help_picksearch_d":"同一个输入框兼顾两者。输入即可跨所有材料筛选方块；当输入内容没有匹配项时“添加”按钮会亮起，并在本次作业中保留该条目。标签和部位的用法相同。",
+    "help_picksearch_d":"同一个输入框兼顾两者。输入会在当前分类内筛选方块，点按 × 可一次清空。当输入内容没有匹配项时“添加”按钮会亮起：它会在本次作业中保留该条目，并立即装载。您自己添加的条目以不同底色显示在同一网格中——长按可删除，点按 ▾ 可归入材料分类，之后即像内置条目一样参与筛选。标签和部位同样使用该输入框与“添加”按钮。",
     "help_pickcs_b":"状态等级",
-    "help_pickcs_d":"列表中的按钮设定下一个缺陷的状态等级。轻点可依次切换当前、CS1、CS2、CS3、CS4、未评定；长按可直接选择。工具栏中的彩色标记对已装载的缺陷起同样作用。",
+    "help_pickcs_d":"列表中的按钮设定下一个缺陷的状态等级。轻点可依次切换同墨色、CS1、CS2、CS3、CS4、未评定；长按可直接选择。工具栏中的彩色标记对已装载的缺陷起同样作用。",
     "help_pickink_b":"颜色与状态等级",
     "help_pickink_d":"对于缺陷，颜色即状态等级：绿色 CS1、黄色 CS2、橙色 CS3、红色 CS4、蓝色未评定。它作用于选中的缺陷，若未选中任何对象则作用于已装载的缺陷。白色和黑色设为 CS1。其他标记——批注、箭头、文字——仅改变颜色。",
     "help_pickur_b":"未评定",
@@ -1759,7 +1784,12 @@ const I18N={
     "cancel":"取消",
     "add":"添加",
     "export_format":"导出格式",
-    "personal_group":"自定义",
+    "clear":"清除",
+    "categories":"分类",
+    "search_all_mats":"搜索全部材料",
+    "no_matches_here":"该分类中没有匹配项。",
+    "remove":"删除",
+    "toast_removed":"已删除 {term}",
     "about_title":"关于与支持",
     "about_author_h":"作者",
     "about_licence_h":"许可",
@@ -1784,7 +1814,7 @@ const I18N={
     "uses_current_ink":"使用当前颜色",
     "no_matching_elements":"没有匹配的部位。",
     "name_repeated_elements":"为重复出现的部位命名一次——例如\"梁 B3\"——之后点击即可在每张照片中使用相同标签。",
-    "no_matches_custom":"没有匹配项。您可以在上一屏幕中输入自定义标签。",
+    "no_matches_custom":"没有匹配项。点按“添加”即可保留您输入的内容。",
     "new_elem_placeholder":"例如：梁 B3、2号墩西侧…",
     "new_divider_title":"新建分隔卡",
     "new_divider_body":"在相册中添加一张带标题的文件夹卡片，用于区分不同结构。随其他照片一起导出，默认不计入报告。",
@@ -1896,8 +1926,8 @@ const I18N={
     "help_options_h":"选项",
     "help_fill_b":"填充",
     "help_fill_d":"在带文字的工具中，切换文字后的实心背景。关闭后改为清晰的轮廓，使照片透出的同时仍保持可读。",
-    "help_colour_b":"颜色·当前",
-    "help_colour_d":"在\"缺陷\"中，\"当前\"会保留您已选择的颜色，而不强制使用严重程度对应的颜色。",
+    "help_colour_b":"同墨色",
+    "help_colour_d":"将状态设为“同墨色”时会保留您已选择的颜色，而不强制使用状态等级颜色，报告中的 CS 单元格留空。“未评定”则不同——它是一种状态，会打印为 UR。",
     "help_divider_b":"分隔卡",
     "help_divider_d":"向相册中添加一张文件夹卡片，用于区分结构或巡检批次。可加标题、选颜色，默认不计入报告。",
     "help_clearall_b":"清除全部",
@@ -2090,9 +2120,9 @@ const I18N={
     "help_picklist_b":"La lista",
     "help_picklist_d":"Tres pestañas: Defectos, Etiquetas, Elementos. En Defectos, las fichas filtran por material y ★ Favs reúne sus favoritos. Toque un mosaico para cargarlo; manténgalo pulsado para elegir un estado y colocarlo en un solo gesto, o para marcarlo como favorito.",
     "help_picksearch_b":"Buscar y añadir",
-    "help_picksearch_d":"Un solo campo hace ambas cosas. Al escribir se filtran los mosaicos de todos los materiales; Añadir se activa cuando lo escrito no coincide con nada y lo conserva durante el resto del trabajo. Las etiquetas y los elementos funcionan igual.",
+    "help_picksearch_d":"Un solo campo hace ambas cosas. Al escribir se filtran los mosaicos dentro del chip activo, y × lo borra de una vez. Añadir se activa cuando lo escrito no coincide con nada: conserva el término durante el resto del trabajo y lo carga de inmediato. Sus propios términos van en la misma cuadrícula, con otro tono: mantenga pulsado uno para quitarlo, o toque su ▾ para asignarle materiales y que filtre como los integrados. Las etiquetas y los elementos comparten el mismo campo y botón Añadir.",
     "help_pickcs_b":"Estado",
-    "help_pickcs_d":"El botón de la lista fija el estado del próximo defecto. Tóquelo para recorrer Actual, CS1, CS2, CS3, CS4 y Sin evaluar; manténgalo pulsado para elegir uno directamente. La ficha de color de la barra hace lo mismo con el defecto ya cargado.",
+    "help_pickcs_d":"El botón de la lista fija el estado del próximo defecto. Tóquelo para recorrer Como la tinta, CS1, CS2, CS3, CS4 y Sin evaluar; manténgalo pulsado para elegir uno directamente. La ficha de color de la barra hace lo mismo con el defecto ya cargado.",
     "help_pickink_b":"Color y estado",
     "help_pickink_d":"En un defecto, los colores son el estado: verde CS1, amarillo CS2, naranja CS3, rojo CS4, azul Sin evaluar. Se aplica al defecto seleccionado o, si no hay ninguno, al defecto cargado. El blanco y el negro fijan CS1. Las demás marcas — notas, flechas, texto — solo cambian de color.",
     "help_pickur_b":"Sin evaluar",
@@ -2107,7 +2137,12 @@ const I18N={
     "cancel":"Cancelar",
     "add":"Añadir",
     "export_format":"Formato de exportación",
-    "personal_group":"Personales",
+    "clear":"Borrar",
+    "categories":"Categorías",
+    "search_all_mats":"Buscar en todos los materiales",
+    "no_matches_here":"Sin coincidencias en esta categoría.",
+    "remove":"Quitar",
+    "toast_removed":"{term} eliminado",
     "about_title":"Acerca de y apoyo",
     "about_author_h":"Autor",
     "about_licence_h":"Licencia",
@@ -2132,7 +2167,7 @@ const I18N={
     "uses_current_ink":"Usa el color de tinta actual",
     "no_matching_elements":"No hay elementos coincidentes.",
     "name_repeated_elements":"Nombre los elementos repetidos una vez — p. ej. \"Viga B3\" — luego toque para etiquetarlos igual en cada foto.",
-    "no_matches_custom":"Sin coincidencias. Puede escribir una etiqueta personalizada en la pantalla anterior.",
+    "no_matches_custom":"Sin coincidencias. Pulse Añadir para conservar lo que escribió.",
     "new_elem_placeholder":"p. ej. Viga B3, Pila 2 Oeste…",
     "new_divider_title":"Nueva tarjeta separadora",
     "new_divider_body":"Se añade a su álbum una tarjeta de carpeta con título para separar estructuras. Se exporta con el resto y se excluye del informe por defecto.",
@@ -2244,8 +2279,8 @@ const I18N={
     "help_options_h":"Opciones",
     "help_fill_b":"Relleno",
     "help_fill_d":"En las herramientas con texto, alterna el fondo sólido detrás del texto. Desactivado lo cambia por un contorno nítido para que la foto se vea a través mientras sigue siendo legible.",
-    "help_colour_b":"Color · Actual",
-    "help_colour_d":"En Defecto, \"Actual\" conserva el color que ya eligió en lugar de forzar el color de severidad.",
+    "help_colour_b":"Como la tinta",
+    "help_colour_d":"Fijar el estado en Como la tinta conserva el color que eligió en lugar de forzar el color del estado, y deja la celda CS vacía en el informe. Sin evaluar, en cambio, sí es un estado: se imprime como UR.",
     "help_divider_b":"Separador",
     "help_divider_d":"Añade una tarjeta de carpeta al álbum para separar estructuras o visitas. Con título, color y excluida del informe por defecto.",
     "help_clearall_b":"Borrar todo",
@@ -2438,9 +2473,9 @@ const I18N={
     "help_picklist_b":"सूची",
     "help_picklist_d":"तीन टैब — दोष, टैग, घटक। दोष में चिप सामग्री के अनुसार छाँटती हैं और ★ पसंदीदा आपके सभी पसंदीदा एक जगह दिखाता है। टाइल पर टैप करने से वह तैयार हो जाती है; टाइल दबाकर रखने पर स्थिति स्तर चुनकर एक ही बार में लगाएँ, या उसे पसंदीदा बनाएँ।",
     "help_picksearch_b":"खोजें और जोड़ें",
-    "help_picksearch_d":"एक ही फ़ील्ड दोनों काम करता है। टाइप करने पर सभी सामग्रियों की टाइलें छँटती हैं; जो लिखा है वह कहीं न मिले तो जोड़ें बटन सक्रिय हो जाता है और उसे बाकी काम के लिए सहेज लेता है। टैग और घटक भी इसी तरह काम करते हैं।",
+    "help_picksearch_d":"एक ही फ़ील्ड दोनों काम करता है। टाइप करने पर चुनी हुई श्रेणी के भीतर टाइलें छँटती हैं, और × एक बार में लिखा हुआ मिटा देता है। जो लिखा है वह कहीं न मिले तो जोड़ें बटन सक्रिय होता है: वह शब्द बाकी काम के लिए सहेजता है और तुरंत तैयार कर देता है। आपके जोड़े शब्द उसी ग्रिड में अलग रंग में रहते हैं — हटाने के लिए दबाकर रखें, या ▾ दबाकर सामग्री श्रेणी दें ताकि वे भी अंतर्निहित शब्दों की तरह छँटें। टैग और घटक भी यही फ़ील्ड और जोड़ें बटन उपयोग करते हैं।",
     "help_pickcs_b":"स्थिति",
-    "help_pickcs_d":"सूची का बटन अगले दोष का स्थिति स्तर तय करता है। टैप करने पर वर्तमान, CS1, CS2, CS3, CS4, अनिर्धारित क्रम से बदलते हैं; दबाकर रखने पर सीधे चुनें। टूलबार का रंगीन चिप पहले से तैयार दोष के लिए यही करता है।",
+    "help_pickcs_d":"सूची का बटन अगले दोष का स्थिति स्तर तय करता है। टैप करने पर स्याही जैसा, CS1, CS2, CS3, CS4, अनिर्धारित क्रम से बदलते हैं; दबाकर रखने पर सीधे चुनें। टूलबार का रंगीन चिप पहले से तैयार दोष के लिए यही करता है।",
     "help_pickink_b":"रंग और स्थिति",
     "help_pickink_d":"दोष के लिए रंग ही स्थिति स्तर है: हरा CS1, पीला CS2, नारंगी CS3, लाल CS4, नीला अनिर्धारित। यह चुने हुए दोष पर लागू होता है, और कुछ भी चुना न हो तो तैयार दोष पर। सफ़ेद और काला CS1 तय करते हैं। बाकी चिह्न — नोट, तीर, पाठ — केवल रंग बदलते हैं।",
     "help_pickur_b":"अनिर्धारित",
@@ -2455,7 +2490,12 @@ const I18N={
     "cancel":"रद्द करें",
     "add":"जोड़ें",
     "export_format":"निर्यात प्रारूप",
-    "personal_group":"व्यक्तिगत",
+    "clear":"साफ़ करें",
+    "categories":"श्रेणियाँ",
+    "search_all_mats":"सभी सामग्रियों में खोजें",
+    "no_matches_here":"इस श्रेणी में कोई मिलान नहीं।",
+    "remove":"हटाएं",
+    "toast_removed":"{term} हटाया गया",
     "about_title":"परिचय और सहयोग",
     "about_author_h":"लेखक",
     "about_licence_h":"लाइसेंस",
@@ -2480,7 +2520,7 @@ const I18N={
     "uses_current_ink":"वर्तमान स्याही रंग का उपयोग करता है",
     "no_matching_elements":"कोई मिलान तत्व नहीं।",
     "name_repeated_elements":"बार-बार आने वाले तत्वों को एक बार नाम दें — जैसे \"बीम B3\" — फिर हर फ़ोटो में समान लेबल के लिए टैप करें।",
-    "no_matches_custom":"कोई मिलान नहीं। आप पिछली स्क्रीन में कस्टम लेबल टाइप कर सकते हैं।",
+    "no_matches_custom":"कोई मिलान नहीं। टाइप किया गया शब्द रखने के लिए जोड़ें दबाएं।",
     "new_elem_placeholder":"उदा. बीम B3, पियर 2 पश्चिम…",
     "new_divider_title":"नया डिवाइडर कार्ड",
     "new_divider_body":"संरचनाओं को अलग करने के लिए एल्बम में एक शीर्षक वाला फ़ोल्डर कार्ड जोड़ा जाता है। बाकी के साथ निर्यात होता है; डिफ़ॉल्ट रूप से रिपोर्ट से बाहर।",
@@ -2592,8 +2632,8 @@ const I18N={
     "help_options_h":"विकल्प",
     "help_fill_b":"फ़िल",
     "help_fill_d":"टेक्स्ट वाले टूल्स में, टेक्स्ट के पीछे ठोस बैकिंग को टॉगल करता है। बंद करने पर यह स्पष्ट आउटलाइन में बदल जाता है ताकि फ़ोटो दिखे और पठनीय भी बनी रहे।",
-    "help_colour_b":"रंग · वर्तमान",
-    "help_colour_d":"दोष में, \"वर्तमान\" आपके द्वारा पहले से चुने गए रंग को बनाए रखता है, न कि गंभीरता रंग को थोपता है।",
+    "help_colour_b":"स्याही जैसा",
+    "help_colour_d":"स्थिति को “स्याही जैसा” रखने पर आपका चुना हुआ रंग बना रहता है, स्थिति रंग नहीं थोपा जाता, और रिपोर्ट में CS कॉलम खाली रहता है। इसके विपरीत “अनिर्धारित” एक स्थिति है और UR के रूप में छपती है।",
     "help_divider_b":"डिवाइडर",
     "help_divider_d":"संरचनाओं या दौरों को अलग करने के लिए एल्बम में एक फ़ोल्डर कार्ड जोड़ता है। शीर्षक और रंग सहित, डिफ़ॉल्ट रूप से रिपोर्ट से बाहर।",
     "help_clearall_b":"सभी साफ़ करें",
@@ -2786,9 +2826,9 @@ const I18N={
     "help_picklist_b":"القائمة",
     "help_picklist_d":"ثلاثة تبويبات: العيوب، الوسوم، العناصر. في العيوب تُصفّي الأزرار حسب المادة، و★ المفضلة تجمع مفضلاتك. انقر مربعًا لتجهيزه؛ استمر بالضغط عليه لاختيار حالة ووضعه بحركة واحدة، أو لإضافته إلى المفضلة.",
     "help_picksearch_b":"البحث والإضافة",
-    "help_picksearch_d":"حقل واحد يؤدي الأمرين. الكتابة تُصفّي المربعات في كل المواد، ويضيء زر الإضافة عندما لا يطابق ما كتبته شيئًا، فيحتفظ به لبقية العمل. الوسوم والعناصر تعمل بالطريقة نفسها.",
+    "help_picksearch_d":"حقل واحد يؤدي الأمرين. الكتابة تُصفّي المربعات ضمن الفئة المحددة، و× يمحو ما كتبته بنقرة واحدة. يضيء زر الإضافة عندما لا يطابق ما كتبته شيئًا: فيحتفظ به لبقية العمل ويجهّزه فورًا. المصطلحات التي تضيفها تظهر في الشبكة نفسها بلون مختلف — استمر بالضغط على أحدها لإزالته، أو انقر ▾ لإسناده إلى مواد فيُصفّى مثل المصطلحات المدمجة. الوسوم والعناصر تستخدم الحقل نفسه وزر الإضافة نفسه.",
     "help_pickcs_b":"الحالة",
-    "help_pickcs_d":"الزر في القائمة يحدد حالة العيب التالي. انقره للتنقل بين الحالية وCS1 وCS2 وCS3 وCS4 وغير مُقيَّم؛ واستمر بالضغط لاختيار واحدة مباشرة. المربع الملون في الشريط يفعل الشيء نفسه للعيب المجهّز.",
+    "help_pickcs_d":"الزر في القائمة يحدد حالة العيب التالي. انقره للتنقل بين بلون القلم وCS1 وCS2 وCS3 وCS4 وغير مُقيَّم؛ واستمر بالضغط لاختيار واحدة مباشرة. المربع الملون في الشريط يفعل الشيء نفسه للعيب المجهّز.",
     "help_pickink_b":"اللون والحالة",
     "help_pickink_d":"في العيب يمثل اللون الحالة: الأخضر CS1، الأصفر CS2، البرتقالي CS3، الأحمر CS4، الأزرق غير مُقيَّم. ينطبق على العيب المحدد، أو على العيب المجهّز إن لم يكن هناك تحديد. الأبيض والأسود تعطي CS1. أما العلامات الأخرى — الملاحظات والأسهم والنصوص — فتأخذ اللون فقط.",
     "help_pickur_b":"غير مُقيَّم",
@@ -2803,7 +2843,12 @@ const I18N={
     "cancel":"إلغاء",
     "add":"إضافة",
     "export_format":"صيغة التصدير",
-    "personal_group":"مخصص",
+    "clear":"مسح",
+    "categories":"الفئات",
+    "search_all_mats":"ابحث في كل المواد",
+    "no_matches_here":"لا توجد نتائج في هذه الفئة.",
+    "remove":"إزالة",
+    "toast_removed":"تم حذف {term}",
     "about_title":"حول والدعم",
     "about_author_h":"المؤلف",
     "about_licence_h":"الترخيص",
@@ -2828,7 +2873,7 @@ const I18N={
     "uses_current_ink":"يستخدم لون الحبر الحالي",
     "no_matching_elements":"لا توجد عناصر مطابقة.",
     "name_repeated_elements":"سمِّ العناصر المتكررة مرة واحدة — مثل \"عارضة B3\" — ثم اضغط لتسميتها بنفس الاسم في كل صورة.",
-    "no_matches_custom":"لا توجد نتائج. يمكنك كتابة تسمية مخصصة في الشاشة السابقة.",
+    "no_matches_custom":"لا توجد نتائج. انقر «إضافة» للإبقاء على ما كتبته.",
     "new_elem_placeholder":"مثال: عارضة B3، الركيزة 2 غرب…",
     "new_divider_title":"بطاقة فاصلة جديدة",
     "new_divider_body":"تُضاف بطاقة مجلد تحمل عنوانًا إلى ألبومك للفصل بين المنشآت. تُصدَّر مع بقية الصور، وتُستبعد من التقرير افتراضيًا.",
@@ -2940,8 +2985,8 @@ const I18N={
     "help_options_h":"الخيارات",
     "help_fill_b":"التعبئة",
     "help_fill_d":"في الأدوات التي تحمل نصًا، يبدّل الخلفية الصلبة خلف النص. عند الإيقاف يستبدلها بمخطط واضح بحيث تظهر الصورة من خلاله مع بقائه مقروءًا.",
-    "help_colour_b":"اللون · الحالي",
-    "help_colour_d":"في العيب، يحافظ \"الحالي\" على اللون الذي اخترته بدلاً من فرض لون الشدة.",
+    "help_colour_b":"بلون القلم",
+    "help_colour_d":"عند ضبط الحالة على «بلون القلم» يبقى اللون الذي اخترته بدلًا من فرض لون الحالة، وتبقى خانة CS فارغة في التقرير. أما «غير مُقيَّم» فهي حالة فعلية تُطبع UR.",
     "help_divider_b":"الفاصل",
     "help_divider_d":"يضيف بطاقة مجلد إلى الألبوم للفصل بين المنشآت أو الزيارات. بعنوان ولون، ومستبعدة من التقرير افتراضيًا.",
     "help_clearall_b":"مسح الكل",
@@ -3134,9 +3179,9 @@ const I18N={
     "help_picklist_b":"Список",
     "help_picklist_d":"Три вкладки — Дефекты, Метки, Элементы. На вкладке дефектов кнопки фильтруют по материалу, а ★ Избранное собирает отмеченные. Нажатие на плитку готовит её к установке; удержание позволяет выбрать состояние и поставить дефект одним движением или добавить плитку в избранное.",
     "help_picksearch_b":"Поиск и добавление",
-    "help_picksearch_d":"Одно поле делает и то и другое. Ввод фильтрует плитки по всем материалам; кнопка добавления загорается, когда введённое ничему не соответствует, и сохраняет запись до конца работы. Метки и элементы работают так же.",
+    "help_picksearch_d":"Одно поле делает и то и другое. Ввод сужает плитки внутри выбранной категории, а × очищает поле одним нажатием. Кнопка добавления загорается, когда введённое ничему не соответствует: запись сохраняется до конца работы и сразу подготавливается. Свои записи стоят в той же сетке другим оттенком — удержание удаляет их, а нажатие ▾ относит запись к материалам, после чего она фильтруется как встроенная. Метки и элементы используют то же поле и ту же кнопку.",
     "help_pickcs_b":"Состояние",
-    "help_pickcs_d":"Кнопка в списке задаёт состояние для следующего дефекта. Нажатие переключает Текущее, CS1, CS2, CS3, CS4, Не оценено; удержание позволяет выбрать сразу. Цветная метка на панели делает то же самое для уже подготовленного дефекта.",
+    "help_pickcs_d":"Кнопка в списке задаёт состояние для следующего дефекта. Нажатие переключает Как цвет, CS1, CS2, CS3, CS4, Не оценено; удержание позволяет выбрать сразу. Цветная метка на панели делает то же самое для уже подготовленного дефекта.",
     "help_pickink_b":"Цвет и состояние",
     "help_pickink_d":"Для дефекта цвет и есть состояние: зелёный CS1, жёлтый CS2, оранжевый CS3, красный CS4, синий Не оценено. Действует на выделенный дефект, а если ничего не выделено — на подготовленный. Белый и чёрный задают CS1. Остальные пометки — выноски, стрелки, текст — только меняют цвет.",
     "help_pickur_b":"Не оценено",
@@ -3151,7 +3196,12 @@ const I18N={
     "cancel":"Отмена",
     "add":"Добавить",
     "export_format":"Формат экспорта",
-    "personal_group":"Свои",
+    "clear":"Очистить",
+    "categories":"Категории",
+    "search_all_mats":"Искать по всем материалам",
+    "no_matches_here":"В этой категории совпадений нет.",
+    "remove":"Удалить",
+    "toast_removed":"{term} удалено",
     "about_title":"О программе и поддержка",
     "about_author_h":"Автор",
     "about_licence_h":"Лицензия",
@@ -3176,7 +3226,7 @@ const I18N={
     "uses_current_ink":"Использует текущий цвет",
     "no_matching_elements":"Совпадений не найдено.",
     "name_repeated_elements":"Назовите повторяющийся элемент один раз — например «Балка B3» — затем нажимайте, чтобы подписывать его одинаково на каждом фото.",
-    "no_matches_custom":"Совпадений нет. На предыдущем экране можно ввести свою подпись.",
+    "no_matches_custom":"Совпадений нет. Нажмите «Добавить», чтобы сохранить введённое.",
     "new_elem_placeholder":"напр. Балка B3, Опора 2 запад…",
     "new_divider_title":"Новая карточка-разделитель",
     "new_divider_body":"В альбом добавляется карточка-папка с заголовком для разделения объектов. Экспортируется вместе с остальными; по умолчанию не входит в отчёт.",
@@ -3288,8 +3338,8 @@ const I18N={
     "help_options_h":"Настройки",
     "help_fill_b":"Заливка",
     "help_fill_d":"В инструментах с текстом переключает сплошную подложку под текстом. При отключении заменяется чёткой обводкой, чтобы фото просвечивало, сохраняя читаемость.",
-    "help_colour_b":"Цвет · Текущий",
-    "help_colour_d":"В разделе «Дефект» опция «Текущий» сохраняет уже выбранный цвет вместо принудительного цвета серьёзности.",
+    "help_colour_b":"Как цвет",
+    "help_colour_d":"Состояние «Как цвет» сохраняет выбранный цвет вместо цвета состояния, а ячейка CS в отчёте остаётся пустой. «Не оценено», напротив, — это состояние, и печатается как UR.",
     "help_divider_b":"Разделитель",
     "help_divider_d":"Добавляет в альбом карточку-папку для разделения объектов или выездов. С заголовком и цветом, по умолчанию не входит в отчёт.",
     "help_clearall_b":"Очистить всё",
@@ -3982,7 +4032,7 @@ const CAT_TR={
 };
 const SEV_TR={
   zh:{
-    "Current":"当前颜色",
+    "Same as ink":"同墨色",
     "Good":"良好",
     "Fair":"一般",
     "Poor":"较差",
@@ -3990,7 +4040,7 @@ const SEV_TR={
     "Unrated":"未评定"
   },
   es:{
-    "Current":"Actual",
+    "Same as ink":"Como la tinta",
     "Good":"Bueno",
     "Fair":"Aceptable",
     "Poor":"Deficiente",
@@ -3998,7 +4048,7 @@ const SEV_TR={
     "Unrated":"Sin evaluar"
   },
   hi:{
-    "Current":"वर्तमान",
+    "Same as ink":"स्याही जैसा",
     "Good":"अच्छा",
     "Fair":"सामान्य",
     "Poor":"खराब",
@@ -4006,7 +4056,7 @@ const SEV_TR={
     "Unrated":"अनिर्धारित"
   },
   ar:{
-    "Current":"الحالي",
+    "Same as ink":"بلون القلم",
     "Good":"جيد",
     "Fair":"مقبول",
     "Poor":"ضعيف",
@@ -4014,7 +4064,7 @@ const SEV_TR={
     "Unrated":"غير مُقيَّم"
   },
   ru:{
-    "Current":"Текущий",
+    "Same as ink":"Как цвет",
     "Good":"Хорошо",
     "Fair":"Удовлетворительно",
     "Poor":"Плохо",
@@ -4091,7 +4141,7 @@ const S = {
   fmt:'jpg',
   counter:1, angleDraft:null, polyDraft:null, polyFill:true, textFill:true, numPrefix:'',
   armedDefect:null, recent:[], recentTags:[], favs:[], tagsOwn:[],
-  photos:[], curId:null, elements:[], personal:[],
+  photos:[], curId:null, elements:[], personal:[], perCat:{},
   undo:[], redo:[], pending:null,
   scale:null, measMode:'line', measUnitLine:'mm', measUnitArea:'m2', cams:[],
   rep:{ structure:'', ref:'', date:'', inspector:'', weather:'', loclink:'', overall:'',
@@ -5180,13 +5230,13 @@ function dirty(){ clearTimeout(dirtyT); dirtyT=setTimeout(saveSession,1000); }
 function saveSession(){
   if(!db)return; stashCur();
   idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counter:p.counter,scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',repEx:!!p.repEx,kind:p.kind||'photo'})),
-    curId:S.curId, favs:S.favs, recent:S.recent, recentTags:S.recentTags, elements:S.elements, personal:S.personal, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, rep:S.rep, uid, pid });
+    curId:S.curId, favs:S.favs, recent:S.recent, recentTags:S.recentTags, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, rep:S.rep, uid, pid });
 }
 function clearSession(){ if(!db)return; try{ db.transaction('session','readwrite').objectStore('session').clear(); }catch(e){} }
 async function restoreSession(){
   const d=await idbGet('current'); if(!d||!d.photos||!d.photos.length)return;
   uid=d.uid||uid; pid=d.pid||pid;
-  S.favs=migFavs(d.favs); S.recent=migRecent(d.recent); S.recentTags=d.recentTags||[]; S.elements=d.elements||[]; S.personal=migList(d.personal); S.tagsOwn=d.tagsOwn||[];
+  S.favs=migFavs(d.favs); S.recent=migRecent(d.recent); S.recentTags=d.recentTags||[]; S.elements=d.elements||[]; S.personal=migList(d.personal); S.perCat=d.perCat||{}; S.tagsOwn=d.tagsOwn||[];
   S.favs=S.favs.filter(f=>f.t!=='Review'); S.recentTags=S.recentTags.filter(x=>x!=='Review');
   S.numPrefix=d.numPrefix||''; $('numpre').value=S.numPrefix;
   if(d.rep) S.rep=Object.assign(S.rep,d.rep); if(!S.rep.ov) S.rep.ov={}; if(!S.rep.manual) S.rep.manual=[];
@@ -5261,7 +5311,7 @@ function migRecent(a){ const o=[]; (a||[]).forEach(x=>{ const tm=typeof x==='str
   const n=TERM_MIGRATE[tm]||tm; if(o.some(r=>r.t===n)) return;
   o.push({t:n, s:(typeof x==='string'?'none':(x.s||'none')), g:(typeof x==='string'?'':(x.g||''))}); }); return o; }
 const SEV=[
-  {k:'none',code:null,word:'Current',color:null},
+  {k:'none',code:null,word:'Same as ink',color:null},
   {k:'good',code:'CS1',word:'Good',color:'#66bb6a'},
   {k:'fair',code:'CS2',word:'Fair',color:'#ffee58'},
   {k:'poor',code:'CS3',word:'Poor',color:'#f57c00'},
@@ -5303,24 +5353,39 @@ function renderCS(){
 function cycleSev(k){ const i=SEV.findIndex(x=>x.k===k); return SEV[(i+1)%SEV.length].k; }
 function renderMat(){
   const r=$('matRow');
-  if(pickTab!=='material'){ r.style.display='none'; return; }
+  if(pickTab==='elements'){ r.style.display='none'; return; }
   r.style.display='';
-  r.innerHTML='<button data-mat="*"'+(curMat==='*'?' class="on"':'')+'>★ '+esc(t('mat_favs'))+'</button>'+
-    '<button data-mat=""'+(curMat?'':' class="on"')+'>'+esc(t('mat_all'))+'</button>'+
-    MATS.map(m=>'<button data-mat="'+m[0]+'"'+(curMat===m[0]?' class="on"':'')+'>'+esc(trCat(m[1]))+'</button>').join('');
+  let h='<button data-mat="*"'+(curMat==='*'?' class="on"':'')+'>★ '+esc(t('mat_favs'))+'</button>'+
+    '<button data-mat=""'+(curMat?'':' class="on"')+'>'+esc(t('mat_all'))+'</button>';
+  if(pickTab==='material') h+=MATS.map(m=>'<button data-mat="'+m[0]+'"'+(curMat===m[0]?' class="on"':'')+'>'+esc(trCat(m[1]))+'</button>').join('');
+  r.innerHTML=h;
 }
 function matsOf(term){ const d=DEF_TERMS.find(x=>x[0]===term); return d?d[1].split(' '):[]; }
 function matName(c){ const m=MATS.find(x=>x[0]===c); return m?m[1]:''; }
 function tile(item){
   const term=(typeof item==='string')?item:item.t;
   const g=(typeof item==='string')?groupFor(term):groupFor(term,item.g);
-  const fav=isFav(term,g), disp=esc(pickTab==='elements'?term:trTerm(term));
+  const own=isOwnTerm(term);
+  const fav=(pickTab==='elements')?false:isFav(term,g), disp=esc(pickTab==='elements'?term:trTerm(term));
   const showG=(pickTab==='material'&&g&&curMat==='*');
-  return '<button class="tile'+(fav?' fav':'')+(showG?' two':'')+'" data-term="'+esc(term)+'" data-grp="'+esc(g)+'" title="'+disp+(g?' — '+esc(trCat(g)):'')+'">'+
+  const cat=(own&&pickTab==='material');
+  return '<button class="tile'+(fav?' fav':'')+(own?' own':'')+(showG?' two':'')+'" data-term="'+esc(term)+'" data-grp="'+esc(g)+'" title="'+disp+(g?' — '+esc(trCat(g)):'')+'">'+
     '<span class="tlab">'+disp+'</span>'+(showG?'<span class="tsub">'+esc(trCat(g))+'</span>':'')+
-    (fav?'<span class="tstar">★</span>':'')+'</button>';
+    (fav?'<span class="tstar">★</span>':'')+
+    (cat?'<span class="tcat'+(catsOf(term).length?' set':'')+'" data-cat-btn="1" title="'+esc(t('categories'))+'">&#9662;</span>':'')+
+    '</button>';
 }
 function grid(list){ return '<div class="tilegrid">'+list.map(tile).join('')+'</div>'; }
+// terms the inspector added sit in the same grid, tinted — the Elements tab is all own, so it is left plain
+function isOwnTerm(term){ return pickTab==='tags'? S.tagsOwn.includes(term) : pickTab==='material'? S.personal.includes(term) : false; }
+// own terms start with no category and show everywhere; assigning one makes them filter like a built-in
+function catsOf(term){ return S.perCat[term]||[]; }
+function toggleCat(term,code){
+  const c=catsOf(term).slice(), i=c.indexOf(code);
+  if(i>=0) c.splice(i,1); else c.push(code);
+  if(c.length) S.perCat[term]=c; else delete S.perCat[term];
+  dirty(); renderPicker();
+}
 function allTags(){ return DEFECTS.tags.Tags.concat(S.tagsOwn); }
 function hit(term,q){ return !q || trTerm(term).toLowerCase().includes(q) || term.toLowerCase().includes(q); }
 function renderPicker(){
@@ -5333,28 +5398,36 @@ function renderPicker(){
     html = list.length? grid(list) : '<div class="pempty">'+(q?t('no_matching_elements'):t('name_repeated_elements'))+'</div>';
     $('pickList').innerHTML=html; syncAdd(); return;
   }
+  const mat=curMat;
   if(pickTab==='tags'){
-    const built=DEFECTS.tags.Tags.filter(tm=>hit(tm,q)), own=S.tagsOwn.filter(tm=>hit(tm,q));
-    html = built.length? grid(built) : '';
-    if(own.length) html+='<div class="pgroup">'+t('personal_group')+'</div>'+grid(own);
-    if(!html) html='<div class="pempty">'+t('no_matches_custom')+'</div>';
-    $('pickList').innerHTML=html; syncAdd(); return;
-  }
-  const mat=q?'':curMat;
-  let terms=DEF_TERMS.map(x=>x[0]).filter(tm=>hit(tm,q));
-  let pers=S.personal.filter(tm=>hit(tm,q));
-  if(mat==='*'){
-    const known=tm=>DEF_TERMS.some(x=>x[0]===tm)||S.personal.includes(tm);
-    const favs=S.favs.filter(f=>known(f.t)&&hit(f.t,q));
-    html += favs.length? grid(favs) : '';
-    $('pickList').innerHTML = html || '<div class="pempty">'+t('no_favs_yet')+'</div>';
+    if(mat==='*'){
+      const favs=S.favs.filter(f=>f.g==='Tags'&&allTags().indexOf(f.t)>=0&&hit(f.t,q));
+      $('pickList').innerHTML = favs.length? grid(favs) : '<div class="pempty">'+t('no_favs_yet')+'</div>';
+      syncAdd(); return;
+    }
+    const list=DEFECTS.tags.Tags.filter(tm=>hit(tm,q)).concat(S.tagsOwn.filter(tm=>hit(tm,q)));
+    $('pickList').innerHTML = list.length? grid(list) : '<div class="pempty">'+t('no_matches_custom')+'</div>';
     syncAdd(); return;
   }
-  if(mat){ terms=terms.filter(tm=>matsOf(tm).indexOf(mat)>=0); pers=[]; }
-  html += terms.length? grid(terms) : '';
-  if(pers.length) html+='<div class="pgroup">'+t('personal_group')+'</div>'+grid(pers);
-  if(!html) html='<div class="pempty">'+t('no_matches_custom')+'</div>';
-  $('pickList').innerHTML=html; syncAdd();
+  const hits=DEF_TERMS.map(x=>x[0]).filter(tm=>hit(tm,q));
+  const pers=S.personal.filter(tm=>hit(tm,q));
+  if(mat==='*'){
+    const known=tm=>DEF_TERMS.some(x=>x[0]===tm)||S.personal.includes(tm);
+    const favs=S.favs.filter(f=>f.g!=='Tags'&&known(f.t)&&hit(f.t,q));
+    $('pickList').innerHTML = favs.length? grid(favs) : '<div class="pempty">'+t('no_favs_yet')+'</div>';
+    syncAdd(); return;
+  }
+  const terms=mat? hits.filter(tm=>matsOf(tm).indexOf(mat)>=0) : hits;
+  // an own term with no category rides along in every view; once it has one it filters like a built-in
+  const own=mat? pers.filter(tm=>{const c=catsOf(tm); return !c.length||c.indexOf(mat)>=0;}) : pers;
+  const list=terms.concat(own);
+  if(list.length) $('pickList').innerHTML=grid(list);
+  else {
+    const wider=mat&&(hits.length||pers.length);
+    $('pickList').innerHTML='<div class="pempty">'+t(wider?'no_matches_here':'no_matches_custom')+
+      (wider?'<button class="mini" id="pickAll">'+esc(t('search_all_mats'))+'</button>':'')+'</div>';
+  }
+  syncAdd();
 }
 // the search field doubles as the add field: Add lights up for text that matches nothing
 function ownList(){ return pickTab==='elements'? S.elements : pickTab==='tags'? S.tagsOwn : S.personal; }
@@ -5365,6 +5438,7 @@ function knownList(){
 }
 function syncAdd(){
   const v=$('pickSearch').value.trim(), lc=v.toLowerCase();
+  $('pickClr').classList.toggle('on', !!$('pickSearch').value);
   const taken=knownList().some(tm=>tm.toLowerCase()===lc||trTerm(tm).toLowerCase()===lc);
   $('pickAdd').disabled=!v||taken;
 }
@@ -5372,7 +5446,17 @@ function addTyped(){
   const inp=$('pickSearch'), v=inp.value.trim(); if(!v) return;
   const list=ownList();
   if(!list.includes(v)){ list.unshift(v); list.splice(100); }
-  inp.value=''; dirty(); renderPicker();
+  inp.value=''; dirty();
+  chooseTerm(v);           // arm it straight away — typing it is the same intent as tapping its tile
+}
+// drop a term the inspector added, and every reference to it
+function removeOwn(term){
+  const list=ownList(), i=list.indexOf(term); if(i<0) return;
+  list.splice(i,1); delete S.perCat[term];
+  S.favs=S.favs.filter(f=>f.t!==term);
+  S.recent=S.recent.filter(r=>r.t!==term);
+  S.recentTags=S.recentTags.filter(x=>x!==term);
+  dirty(); renderPicker(); toast(t('toast_removed',{term:term}));
 }
 function addRecent(t,sevK,g){
   if(pickTab==='tags') S.recentTags=[t,...S.recentTags.filter(x=>x!==t)].slice(0,8);
@@ -5404,15 +5488,31 @@ function openWheel(term,x,y,mode,grp){
   const a=S.armedDefect;
   const noSev=(wheelMode==='tile')?(pickTab==='tags'||pickTab==='elements')
             :(wheelMode==='armed')?!(a&&(a.cat==='material'||a.cat==='component')) : false;
-  const w=$('csWheel'), fav=S.favs.includes(term), plain=noSev;
-  w.innerHTML=(term?'<div class="whead">'+esc(plain&&pickTab==='elements'?term:trTerm(term))+'</div>':'')+
+  const w=$('csWheel'), plain=noSev;
+  const onEl=(wheelMode==='tile')&&pickTab==='elements';
+  const own=(wheelMode==='tile')&&!!term&&ownList().indexOf(term)>=0;
+  const foot=(term&&!onEl?'<button data-wfav="1"><span>'+(isFav(term,grp)?'★':'☆')+'</span>'+esc(t('favourite'))+'</button>':'')+
+             (own?'<button class="wdel" data-wdel="1"><span>&times;</span>'+esc(t('remove'))+'</button>':'');
+  w.innerHTML=(term?'<div class="whead">'+esc(onEl?term:trTerm(term))+'</div>':'')+
     (plain?'':SEV.map(sv=>'<button data-wsev="'+sv.k+'"><span class="dot" style="background:'+(sv.color||'#7c8894')+'"></span>'+esc(sevLabel(sv))+'</button>').join(''))+
-    (term?'<div class="wsep"></div><button data-wfav="1"><span>'+(fav?'★':'☆')+'</span>'+esc(t('favourite'))+'</button>':'');
-  w.dataset.term=term; w.dataset.grp=(grp===undefined?'':grp); w.classList.add('show');
+    (foot?(plain?'':'<div class="wsep"></div>')+foot:'');
+  w.dataset.term=term; w.dataset.grp=(grp===undefined?'':grp);
+  placeWheel(x,y);
+}
+// the chevron on an own tile: pick the materials it should file under
+function openCatWheel(term,x,y){
+  wheelMode='cats';
+  const w=$('csWheel'), on=catsOf(term);
+  w.innerHTML='<div class="whead">'+esc(trTerm(term))+'</div>'+
+    MATS.map(m=>'<button data-wcat="'+m[0]+'"><span class="wchk">'+(on.indexOf(m[0])>=0?'&#10003;':'')+'</span>'+esc(trCat(m[1]))+'</button>').join('');
+  w.dataset.term=term; w.dataset.grp='';
+  placeWheel(x,y);
+}
+function placeWheel(x,y){
+  const w=$('csWheel'); w.classList.add('show');
   const r=w.getBoundingClientRect();
-  let L=Math.min(Math.max(8,x-r.width/2), innerWidth-r.width-8);
-  let T=Math.min(Math.max(8,y-r.height/2), innerHeight-r.height-8);
-  w.style.left=L+'px'; w.style.top=T+'px';
+  w.style.left=Math.min(Math.max(8,x-r.width/2), innerWidth-r.width-8)+'px';
+  w.style.top=Math.min(Math.max(8,y-r.height/2), innerHeight-r.height-8)+'px';
 }
 
 // ── arming ──
@@ -5724,7 +5824,7 @@ $('clearall').onclick=()=>{
 };
 $('startover').onclick=()=>confirmBox(t('start_over_title'), t('start_over_body'),()=>{
   S.photos=[]; S.curId=null; S.img=null; S.objects=[]; S.sel=null; S.undo=[]; S.redo=[];
-  S.counter=1; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.armedQR=null; S.elements=[]; S.personal=[]; S.recent=[]; S.recentTags=[]; S.favs=[]; S.tagsOwn=[];
+  S.counter=1; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.armedQR=null; S.elements=[]; S.personal=[]; S.perCat={}; S.recent=[]; S.recentTags=[]; S.favs=[]; S.tagsOwn=[];
   S.scale=null; S.measMode='line';
   S.rep={ structure:'', ref:'', date:'', inspector:'', weather:'', loclink:'', overall:'', sheets:true, perPage:1, schedule:true, stampNums:true, ov:{}, manual:[] };
   S.numPrefix=''; $('numpre').value='';
@@ -5767,12 +5867,17 @@ $('pickSearch').addEventListener('keydown',e=>{ if(e.key==='Enter'&&!$('pickAdd'
 $('pickSearch').addEventListener('focus',()=>{ window.scrollTo(0,0); setTimeout(syncAppHeight,60); setTimeout(syncAppHeight,320); });
 $('pickSearch').addEventListener('blur',()=>{ window.scrollTo(0,0); setTimeout(syncAppHeight,60); });
 $('pickAdd').onclick=addTyped;
+$('pickClr').onclick=()=>{ const i=$('pickSearch'), had=(document.activeElement===i); i.value=''; renderPicker(); if(had) i.focus(); };
 bindCycleHold($('csBtn'),
   ()=>{ curSev=cycleSev(curSev); renderCS(); },
   (x,y)=>{ openWheel('', x, y, 'pill'); });
 $('matRow').addEventListener('click',e=>{ const b=e.target.closest('[data-mat]'); if(!b)return; curMat=b.dataset.mat; renderPicker(); });
 $('pickTabs').addEventListener('click',e=>{ const b=e.target.closest('[data-tab]'); if(!b)return; closeWheel(); pickTab=b.dataset.tab; document.querySelectorAll('#pickTabs button').forEach(x=>x.classList.toggle('on',x===b)); $('pickSearch').value=''; curMat=''; renderPicker(); });
 $('pickList').addEventListener('click',e=>{
+  if(e.target.closest('#pickAll')){ curMat=''; renderPicker(); return; }
+  const cb=e.target.closest('[data-cat-btn]');
+  if(cb){ const b=cb.getBoundingClientRect(), tl=cb.closest('.tile');
+    tileHeld=false; openCatWheel(tl.dataset.term, b.left+b.width/2, b.top); return; }
   if(tileHeld){ tileHeld=false; return; }
   const r=e.target.closest('[data-term]'); if(r) chooseTerm(r.dataset.term,null,r.dataset.grp); });
 
@@ -5789,6 +5894,7 @@ function bindCycleHold(el,onTap,onHold){
 // hold a tile for the CS wheel
 let tileHeld=false, tileTimer=null;
 $('pickList').addEventListener('pointerdown',e=>{
+  if(e.target.closest('[data-cat-btn]')) return;
   const tl=e.target.closest('.tile'); if(!tl) return;
   const x=e.clientX,y=e.clientY,tm=tl.dataset.term,tg=tl.dataset.grp;
   tileHeld=false; clearTimeout(tileTimer);
@@ -5802,6 +5908,10 @@ $('csWheel').addEventListener('click',e=>{
   const tg=$('csWheel').dataset.grp;
   const f=e.target.closest('[data-wfav]');
   if(f){ closeWheel(); if(tm) toggleFav(tm, wheelMode==='armed'?(S.armedDefect&&S.armedDefect.grp):tg); return; }
+  const d=e.target.closest('[data-wdel]');
+  if(d){ closeWheel(); if(tm) removeOwn(tm); return; }
+  const c=e.target.closest('[data-wcat]');
+  if(c){ if(tm){ toggleCat(tm,c.dataset.wcat); openCatWheel(tm, parseFloat($('csWheel').style.left)+$('csWheel').offsetWidth/2, parseFloat($('csWheel').style.top)+$('csWheel').offsetHeight/2); } return; }
   const b=e.target.closest('[data-wsev]'); if(!b) return;
   if(wheelMode==='pill'){ closeWheel(); curSev=b.dataset.wsev; renderCS(); return; }
   if(wheelMode==='armed'){ closeWheel(); setArmedSev(b.dataset.wsev); return; }
@@ -6353,7 +6463,7 @@ function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'<
 function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
   t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+
   t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
-const MARKUP_VER='1.3.8';
+const MARKUP_VER='1.3.10';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
