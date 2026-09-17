@@ -724,7 +724,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.4.1 · BETA · multilingual</span>
+        <span class="ver">v1.4.2 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -936,7 +936,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.4.1</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.4.2</span></div>
   </nav>
 </div>
 
@@ -1464,6 +1464,7 @@ const I18N={
     "no_favs_yet":"Hold a tile to make it a favourite.",
     "mat_all":"All",
     "pick_more":"All defects…",
+    "pick_more_tags":"All tags…",
     "no_recent_defects":"No recent defects",
     "favourite":"Favourite",
     "tab_tags":"Tags",
@@ -1820,6 +1821,7 @@ const I18N={
     "no_favs_yet":"长按方块即可加入收藏。",
     "mat_all":"全部",
     "pick_more":"全部缺陷…",
+    "pick_more_tags":"全部标签…",
     "no_recent_defects":"暂无最近缺陷",
     "favourite":"收藏",
     "tab_tags":"标签",
@@ -2176,6 +2178,7 @@ const I18N={
     "no_favs_yet":"Mantenga pulsado un mosaico para marcarlo como favorito.",
     "mat_all":"Todos",
     "pick_more":"Todos los defectos…",
+    "pick_more_tags":"Todas las etiquetas…",
     "no_recent_defects":"Sin defectos recientes",
     "favourite":"Favorito",
     "tab_tags":"Etiquetas",
@@ -2532,6 +2535,7 @@ const I18N={
     "no_favs_yet":"किसी टाइल को दबाकर रखें और पसंदीदा बनाएं।",
     "mat_all":"सभी",
     "pick_more":"सभी दोष…",
+    "pick_more_tags":"सभी टैग…",
     "no_recent_defects":"कोई हाल का दोष नहीं",
     "favourite":"पसंदीदा",
     "tab_tags":"टैग",
@@ -2888,6 +2892,7 @@ const I18N={
     "no_favs_yet":"استمر بالضغط على مربع لإضافته إلى المفضلة.",
     "mat_all":"الكل",
     "pick_more":"كل العيوب…",
+    "pick_more_tags":"كل الوسوم…",
     "no_recent_defects":"لا عيوب حديثة",
     "favourite":"مفضّل",
     "tab_tags":"الوسوم",
@@ -3244,6 +3249,7 @@ const I18N={
     "no_favs_yet":"Удерживайте плитку, чтобы добавить в избранное.",
     "mat_all":"Все",
     "pick_more":"Все дефекты…",
+    "pick_more_tags":"Все метки…",
     "no_recent_defects":"Нет недавних дефектов",
     "favourite":"В избранное",
     "tab_tags":"Метки",
@@ -4750,7 +4756,9 @@ function trySelect(ip){
   else { beginEdit(); act={mode:'move',id:h.id,start:ip,orig:clone(getObj(h.id))}; }
   render(); return true;
 }
+let pendingDlg=null;
 function onDown(p){
+  pendingDlg=null;
   const ip=toImg(p.x,p.y);
   const now=Date.now();
   if(now-lastTap<320 && lastTapPt && Math.hypot(p.x-lastTapPt.x,p.y-lastTapPt.y)<24){
@@ -4761,9 +4769,9 @@ function onDown(p){
       lastTap=0; return;
     }
     const h=hitTest(ip); if(h){ const o=getObj(h.id);
-      if(o&&(o.type==='text'||o.type==='note'||o.type==='tag')){ S.sel=o.id; syncCtx(); render(); editLabel(); lastTap=0; return; }
-      if(o&&o.type==='qr'){ S.sel=o.id; syncCtx(); render(); openQr(o); lastTap=0; return; }
-      if(o&&(o.type==='dim'||o.type==='angle'||o.type==='number'||o.type==='mline'||o.type==='marea')){ S.sel=o.id; syncCtx(); render(); editValue(o); lastTap=0; return; }
+      if(o&&(o.type==='text'||o.type==='note'||o.type==='tag')){ S.sel=o.id; syncCtx(); render(); pendingDlg=()=>editLabel(); lastTap=0; return; }
+      if(o&&o.type==='qr'){ S.sel=o.id; syncCtx(); render(); pendingDlg=()=>openQr(o); lastTap=0; return; }
+      if(o&&(o.type==='dim'||o.type==='angle'||o.type==='number'||o.type==='mline'||o.type==='marea')){ S.sel=o.id; syncCtx(); render(); pendingDlg=()=>editValue(o); lastTap=0; return; }
     }
   }
   lastTap=now; lastTapPt=p;
@@ -4788,7 +4796,7 @@ function onDown(p){
       clearLbl();          // one-shot: the next tap types again
       render(); return; }
     const o={id:newId(),type:'text',x:ip.x,y:ip.y,text:'',color:S.style.color,size:fontPx(),fill:S.textFill};
-    editLabel(o);
+    pendingDlg=()=>editLabel(o);
   } else if(S.tool==='number'){
     act=null; if(trySelect(ip)) return;
     beginEdit();
@@ -4824,7 +4832,7 @@ function onDown(p){
     }
   } else if(S.tool==='qr'){
     act=null; if(trySelect(ip)) return;
-    if(!S.armedQR){ openQr(null); return; }
+    if(!S.armedQR){ pendingDlg=()=>openQr(null); return; }
     beginEdit();
     const o={id:newId(),type:'qr',x:ip.x,y:ip.y,r:S.baseW*QRR[S.style.w],text:S.armedQR.text,color:S.style.color};
     S.objects.push(o); S.sel=o.id; commit(); syncCtx(); render();
@@ -4873,6 +4881,7 @@ function onMove(p){
   if(act.mode==='handle'){ const o=getObj(act.id); moveHandle(o,act.handle,ip); render(); return; }
 }
 function onUp(){
+  if(pendingDlg){ const f=pendingDlg; pendingDlg=null; act=null; f(); return; }
   if(!act){ return; }
   if(act.mode==='angleA'){
     const d=S.angleDraft;
@@ -4920,7 +4929,7 @@ let editTarget=null, editIsNew=false;
 function editLabel(existingNew){
   if(existingNew){ editTarget=existingNew; editIsNew=true; $('txtTitle').textContent=t('add_label'); $('txtInput').value=''; $('txtOk').textContent=t('add'); }
   else { const o=getObj(S.sel); if(!o||(o.type!=='text'&&o.type!=='note'&&o.type!=='tag'))return; editTarget=o; editIsNew=false; $('txtTitle').textContent= o.type==='note'?t('note_text'):t('edit_label'); $('txtInput').value=o.text||''; $('txtOk').textContent=t('save'); }
-  showOverlay('txtOverlay'); setTimeout(()=>{$('txtInput').focus();$('txtInput').select();},40);
+  showOverlay('txtOverlay'); focusField('txtInput');
 }
 function commitLabel(){
   const v=$('txtInput').value.trim();
@@ -4945,7 +4954,7 @@ function openQr(o){
   $('qrTitle').textContent = o ? t('qr_edit_title') : t('qr_title');
   $('qrInput').value = o ? (o.text||'') : (S.armedQR ? S.armedQR.text : '');
   $('qrOk').textContent = o ? t('save') : t('add');
-  showOverlay('qrOverlay'); setTimeout(()=>{$('qrInput').focus();$('qrInput').select();},40);
+  showOverlay('qrOverlay'); focusField('qrInput');
 }
 function commitQr(){
   const v=$('qrInput').value.trim();
@@ -4979,7 +4988,7 @@ function editValue(o){
   if(o.type==='dim'){ $('valTitle').textContent=t('dimension_title'); $('valInput').value=o.value||''; $('valInput').placeholder=t('value_ph_dim'); unitsEl.classList.remove('hidden'); setUnit(o.unit||'mm'); }
   else if(o.type==='angle'){ $('valTitle').textContent=t('angle_title'); $('valInput').value=o.value||''; $('valInput').placeholder=t('value_ph_angle'); unitsEl.classList.add('hidden'); }
   else { $('valTitle').textContent=t('number_title'); $('valInput').value=numLabel(o); $('valInput').placeholder=t('value_ph_number'); unitsEl.classList.add('hidden'); }
-  showOverlay('valOverlay'); setTimeout(()=>{$('valInput').focus();$('valInput').select();},40);
+  showOverlay('valOverlay'); focusField('valInput');
 }
 function setUnit(u){ valUnit=u; document.querySelectorAll('#valUnits button').forEach(b=>b.classList.toggle('on',b.dataset.u===u));
   if(valTarget&&(valTarget.type==='mline'||valTarget.type==='marea')){
@@ -5308,6 +5317,8 @@ document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==
 
 // ── Overlays / toast ────────────────────────────────────
 function showOverlay(id){ $(id).classList.add('show'); scheduleAppSync(); }
+// mobile keyboards only rise for a focus call made inside the user's own gesture
+function focusField(id){ const el=$(id); try{ el.focus({preventScroll:true}); el.select(); }catch(e){ try{ el.focus(); }catch(e2){} } }
 function hideOverlay(id){ $(id).classList.remove('show'); scheduleAppSync(); }
 let cfmCb=null;
 function confirmBox(title,body,cb){ $('cfmTitle').textContent=title; $('cfmBody').textContent=body; cfmCb=cb; showOverlay('cfmOverlay'); }
@@ -5502,9 +5513,18 @@ function removeOwn(term){
   dirty(); renderPicker(); toast(t('toast_removed',{term:term}));
 }
 function addRecent(t,sevK,g){
-  if(pickTab==='material') S.recent=[{t:t,s:sevK||'none',g:g||''},...S.recent.filter(x=>x.t!==t)].slice(0,8);
-  else pushLbl(t,pickTab,null,g);
+  // labels join their list at placement, so every entry carries the colour it was placed in
+  if(pickTab!=='material') return;
+  S.recent=[{t:t,s:sevK||'none',g:g||''},...S.recent.filter(x=>x.t!==t)].slice(0,8);
   dirty();
+}
+// recolouring a placed label updates its entry in place: no new row, no reordering
+function noteLblColor(o){
+  if(!o) return;
+  const key=(o.type==='tag'&&!isDefectObj(o))?(o.term||o.text):(o.type==='text'?o.text:null);
+  if(!key) return;
+  const e=S.recentLbl.find(x=>x.t===key);
+  if(e&&e.c!==o.color){ e.c=o.color; dirty(); }
 }
 function pushLbl(term,kind,col,grp){
   const prev=S.recentLbl.find(x=>x.t===term);
@@ -5620,14 +5640,14 @@ function openLblMenu(btn){
   const m=$('defMenu'), rec=S.recentLbl.slice(0,5);
   let h='';
   if(rec.length) h+=rec.map(r=>{
-    const c=r.c||'#7c8894';
+    const c=r.c||S.style.color;
     // hollow ring for a typed string, solid for a tag or element, both in the colour last used
     const st=(r.k==='text')?('background:transparent;box-shadow:inset 0 0 0 2px '+c):('background:'+c);
     return '<button data-lterm="'+esc(r.t)+'" data-lkind="'+esc(r.k||'text')+'" data-lcol="'+esc(c)+'" data-lgrp="'+esc(r.g||'')+'">'+
       '<span class="dot" style="'+st+'"></span><span>'+esc(r.k==='tags'?trTerm(r.t):r.t)+'</span></button>';
   }).join('')+'<div class="dsep"></div>';
   else h+='<button class="mm" disabled><span>'+esc(t('no_recent_labels'))+'</span></button><div class="dsep"></div>';
-  h+='<button class="mm" data-lmore="1"><span>'+esc(t('pick_more'))+'</span></button>';
+  h+='<button class="mm" data-lmore="1"><span>'+esc(t('pick_more_tags'))+'</span></button>';
   m.innerHTML=h; m.classList.add('show'); placeMenu(m,btn);
 }
 function placeMenu(m,btn){
@@ -5841,7 +5861,7 @@ function setInk(col){
 }
 INKS.forEach(col=>{ const b=document.createElement('button'); b.className='swatch'+(col===S.style.color?' on':''); b.style.background=col; b.title=col;
   b.addEventListener('click',()=>{ setInk(col);
-    if(S.sel!=null){ const o=getObj(S.sel); if(o){ beginEdit(); o.color=col; if(isDefectObj(o)&&INK_SEV[col]) o.sev=INK_SEV[col]; commit(); render(); syncCtx(); } }
+    if(S.sel!=null){ const o=getObj(S.sel); if(o){ beginEdit(); o.color=col; if(isDefectObj(o)&&INK_SEV[col]) o.sev=INK_SEV[col]; noteLblColor(o); commit(); render(); syncCtx(); } }
     else if(INK_SEV[col]&&S.armedDefect){ setArmedSev(INK_SEV[col]);
       // keep the swatch that was tapped: off-scale inks would otherwise snap to the CS colour
       if(S.armedDefect){ S.armedDefect.color=col; updateDef(); } } });
@@ -6558,7 +6578,7 @@ function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'<
 function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
   t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+
   t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
-const MARKUP_VER='1.4.1';
+const MARKUP_VER='1.4.2';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
