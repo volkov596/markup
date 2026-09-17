@@ -203,7 +203,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .tool{position:relative}
 .tool.on .hk{color:var(--accent);background:var(--accent-soft)}
 .thumb .hk{
-  position:absolute;top:3px;right:3px;min-width:15px;height:15px;padding:0 3px;
+  position:absolute;top:3px;left:3px;min-width:15px;height:15px;padding:0 3px;
   font-size:9px;font-weight:700;line-height:15px;text-align:center;border-radius:5px;
   background:rgba(0,0,0,.7);color:#fff;pointer-events:none;
 }
@@ -220,6 +220,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 }
 .overlay *{overscroll-behavior:contain}
 .overlay.show{display:flex}
+.qrcount{min-height:16px;margin-top:6px;font-size:11.5px;color:var(--muted);text-align:end;unicode-bidi:plaintext}
+.qrcount.over{color:var(--danger);text-align:start}
 .modal{
   width:100%;max-width:400px;background:linear-gradient(160deg,#232a31,#171b20);
   border:1px solid var(--panel-border);border-radius:16px;padding:20px;
@@ -267,13 +269,15 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .toast{
   position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(12px);
   background:rgba(14,17,20,.94);border:1px solid var(--panel-border);
-  color:var(--text);padding:10px 16px;border-radius:100px;font-size:12.5px;
-  opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60;white-space:nowrap;
+  color:var(--text);padding:9px 16px;border-radius:18px;font-size:12.5px;line-height:1.35;
+  width:max-content;max-width:calc(100vw - 32px);text-align:center;overflow-wrap:anywhere;
+  opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60;
 }
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 @media (pointer:coarse){
   .tool .hk,.thumb .hk{display:none}
+  .tool.pip::after{top:5px;right:5px}
   #langFlag{display:none}
   #langCode{margin-left:0!important}
 }
@@ -299,6 +303,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .brand h1{font-size:16px;letter-spacing:.16em}
   .brand .ver{display:none}
   .tool .hk,.thumb .hk{display:none}
+  .tool.pip::after{top:5px;right:5px}
   .topbar{gap:6px}
   .tb-actions{gap:5px;justify-content:flex-end;min-width:0}
   .seg button{padding:0 9px}
@@ -402,7 +407,7 @@ body.hasfine .emotip{display:block}
 .sevrow::-webkit-scrollbar{height:0}
 #matRow{flex-wrap:wrap;overflow-x:visible;row-gap:6px}
 .tool.pip::after{
-  content:'';position:absolute;top:5px;right:5px;width:4px;height:4px;
+  content:'';position:absolute;top:8px;right:21px;width:4px;height:4px;
   border-radius:50%;background:var(--accent);opacity:.85;pointer-events:none;
 }
 .sevrow button{
@@ -534,7 +539,15 @@ body.hasfine .emotip{display:block}
   .wbtn{height:24px;min-width:28px}
   .mini{height:26px;padding:0 8px;font-size:11.5px}
   .divider{height:20px}
-  .tray{display:none!important}
+  .app{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto auto}
+  .topbar{grid-column:1/-1;grid-row:1}
+  .stage{grid-column:2;grid-row:2}
+  .props{grid-column:1/-1;grid-row:3;min-width:0}
+  .rail{grid-column:1/-1;grid-row:4;min-width:0}
+  .tray{grid-column:1;grid-row:2;min-height:0;flex-direction:column;gap:10px;padding:8px 10px;overflow-x:hidden;overflow-y:auto;border-top:0;border-inline-end:1px solid var(--hairline)}
+  .tray::-webkit-scrollbar{width:0}
+  .thumb{width:58px;height:44px}
+  .thumb .tn{max-width:48px}
   .rail{flex-wrap:nowrap;overflow-x:auto;gap:4px;padding:3px 8px;padding-bottom:max(3px,env(safe-area-inset-bottom));flex:0 0 auto}
   .rail::-webkit-scrollbar{height:0}
   .tool{flex:0 0 auto;min-width:50px;max-width:none;height:32px;flex-direction:row;gap:5px;padding:0 8px}
@@ -724,7 +737,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.4.2 · BETA · multilingual</span>
+        <span class="ver">v1.4.5 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -936,7 +949,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.4.2</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.4.5</span></div>
   </nav>
 </div>
 
@@ -962,7 +975,8 @@ body.hasfine .emotip{display:block}
 <div class="overlay" id="qrOverlay">
   <div class="modal">
     <h3 id="qrTitle" data-i18n="qr_title">QR code</h3>
-    <input id="qrInput" type="text" dir="ltr" placeholder="https://…" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="300" data-i18n-placeholder="qr_placeholder">
+    <input id="qrInput" type="text" dir="ltr" placeholder="https://…" autocomplete="off" autocapitalize="off" spellcheck="false" data-i18n-placeholder="qr_placeholder">
+    <div class="qrcount" id="qrCount"></div>
     <div class="actions">
       <button class="btn ghost" id="qrCancel" data-i18n="cancel">Cancel</button>
       <button class="btn primary" id="qrOk" data-i18n="add">Add</button>
@@ -1322,7 +1336,11 @@ const I18N={
     "col_extent":"Extent",
     "col_comment":"Comment",
     "col_action":"Action",
-    "rep_counts":"{f} findings · {p} photos",
+    "rep_counts":"Findings: {f} · Photos: {p}",
+    "add_photos":"Add photos",
+    "untitled":"Untitled",
+    "no_scale":"(no scale)",
+    "unit_auto":"Auto",
     "rep_photo_n":"Photo {n}",
     "help_report_h":"Report",
     "help_rep_rows_b":"What fills the table",
@@ -1411,7 +1429,7 @@ const I18N={
     "qr_placeholder":"https://…",
     "qr_link":"Link",
     "toast_qr_empty":"Enter a link or text",
-    "toast_qr_long":"Too long for a QR code",
+    "toast_qr_long":"Too long for a QR code — shorten the link",
     "toast_no_clip_img":"No image in the clipboard",
     "toast_paste_denied":"Clipboard access denied",
     "toast_paste_unsup":"This browser can't paste images",
@@ -1679,7 +1697,11 @@ const I18N={
     "col_extent":"范围",
     "col_comment":"备注",
     "col_action":"措施",
-    "rep_counts":"{f} 项结果 · {p} 张照片",
+    "rep_counts":"结果：{f} · 照片：{p}",
+    "add_photos":"添加照片",
+    "untitled":"无标题",
+    "no_scale":"（无比例）",
+    "unit_auto":"自动",
     "rep_photo_n":"照片 {n}",
     "rep_doc_title":"检查报告",
     "rep_summary":"汇总",
@@ -1764,7 +1786,7 @@ const I18N={
     "qr_placeholder":"https://…",
     "qr_link":"链接",
     "toast_qr_empty":"请输入链接或文本",
-    "toast_qr_long":"内容过长，无法生成二维码",
+    "toast_qr_long":"内容过长，无法生成二维码——请缩短链接",
     "toast_no_clip_img":"剪贴板中没有图片",
     "toast_paste_denied":"剪贴板访问被拒绝",
     "toast_paste_unsup":"此浏览器无法粘贴图片",
@@ -2036,7 +2058,11 @@ const I18N={
     "col_extent":"Extensión",
     "col_comment":"Comentario",
     "col_action":"Acción",
-    "rep_counts":"{f} hallazgos · {p} fotos",
+    "rep_counts":"Hallazgos: {f} · Fotos: {p}",
+    "add_photos":"Añadir fotos",
+    "untitled":"Sin título",
+    "no_scale":"(sin escala)",
+    "unit_auto":"Auto",
     "rep_photo_n":"Foto {n}",
     "rep_doc_title":"Informe de inspección",
     "rep_summary":"Resumen",
@@ -2121,7 +2147,7 @@ const I18N={
     "qr_placeholder":"https://…",
     "qr_link":"Enlace",
     "toast_qr_empty":"Introduce un enlace o texto",
-    "toast_qr_long":"Demasiado largo para un código QR",
+    "toast_qr_long":"Demasiado largo para un código QR: acorta el enlace",
     "toast_no_clip_img":"No hay ninguna imagen en el portapapeles",
     "toast_paste_denied":"Acceso al portapapeles denegado",
     "toast_paste_unsup":"Este navegador no puede pegar imágenes",
@@ -2393,7 +2419,11 @@ const I18N={
     "col_extent":"विस्तार",
     "col_comment":"टिप्पणी",
     "col_action":"कार्रवाई",
-    "rep_counts":"{f} निष्कर्ष · {p} फ़ोटो",
+    "rep_counts":"निष्कर्ष: {f} · फ़ोटो: {p}",
+    "add_photos":"फ़ोटो जोड़ें",
+    "untitled":"शीर्षकहीन",
+    "no_scale":"(स्केल नहीं)",
+    "unit_auto":"ऑटो",
     "rep_photo_n":"फ़ोटो {n}",
     "rep_doc_title":"निरीक्षण रिपोर्ट",
     "rep_summary":"सारांश",
@@ -2478,7 +2508,7 @@ const I18N={
     "qr_placeholder":"https://…",
     "qr_link":"लिंक",
     "toast_qr_empty":"एक लिंक या टेक्स्ट दर्ज करें",
-    "toast_qr_long":"QR कोड के लिए बहुत लंबा",
+    "toast_qr_long":"QR कोड के लिए बहुत लंबा — लिंक छोटा करें",
     "toast_no_clip_img":"क्लिपबोर्ड में कोई छवि नहीं है",
     "toast_paste_denied":"क्लिपबोर्ड पहुँच अस्वीकृत",
     "toast_paste_unsup":"यह ब्राउज़र छवियाँ पेस्ट नहीं कर सकता",
@@ -2750,7 +2780,11 @@ const I18N={
     "col_extent":"المدى",
     "col_comment":"ملاحظة",
     "col_action":"الإجراء",
-    "rep_counts":"{f} نتائج · {p} صور",
+    "rep_counts":"النتائج: {f} · الصور: {p}",
+    "add_photos":"إضافة صور",
+    "untitled":"بدون عنوان",
+    "no_scale":"(بدون مقياس)",
+    "unit_auto":"تلقائي",
     "rep_photo_n":"صورة {n}",
     "rep_doc_title":"تقرير فحص",
     "rep_summary":"ملخّص",
@@ -2835,7 +2869,7 @@ const I18N={
     "qr_placeholder":"https://…",
     "qr_link":"الرابط",
     "toast_qr_empty":"أدخل رابطًا أو نصًا",
-    "toast_qr_long":"طويل جدًا لرمز QR",
+    "toast_qr_long":"طويل جدًا لرمز QR — اختصر الرابط",
     "toast_no_clip_img":"لا توجد صورة في الحافظة",
     "toast_paste_denied":"تم رفض الوصول إلى الحافظة",
     "toast_paste_unsup":"لا يمكن لهذا المتصفح لصق الصور",
@@ -3107,11 +3141,15 @@ const I18N={
     "col_extent":"Размер",
     "col_comment":"Комментарий",
     "col_action":"Меры",
-    "rep_counts":"{f} дефектов · {p} фото",
+    "rep_counts":"Дефекты: {f} · Фото: {p}",
+    "add_photos":"Добавить фото",
+    "untitled":"Без названия",
+    "no_scale":"(нет масштаба)",
+    "unit_auto":"Авто",
     "rep_photo_n":"Фото {n}",
     "rep_doc_title":"Отчёт об обследовании",
     "rep_summary":"Сводка",
-    "rep_total":"Дефектов",
+    "rep_total":"Дефекты",
     "rep_photos_word":"Фото",
     "rep_generated":"Сформировано {date}",
     "rep_cut":"При широких полях может обрезаться — сократите запись",
@@ -3192,7 +3230,7 @@ const I18N={
     "qr_placeholder":"https://…",
     "qr_link":"Ссылка",
     "toast_qr_empty":"Введите ссылку или текст",
-    "toast_qr_long":"Слишком длинно для QR-кода",
+    "toast_qr_long":"Слишком длинно для QR-кода — сократите ссылку",
     "toast_no_clip_img":"В буфере обмена нет изображения",
     "toast_paste_denied":"Доступ к буферу обмена запрещён",
     "toast_paste_unsup":"Этот браузер не может вставлять изображения",
@@ -4128,6 +4166,9 @@ function applyI18n(){
   if(typeof renderCS==='function') renderCS();
   if($('pickOverlay')&&$('pickOverlay').classList.contains('show')&&typeof renderPicker==='function'){ renderTabs(); renderPicker(); }
   if(typeof updateTextCtl==='function') updateTextCtl();
+  if(typeof renderTray==='function') renderTray();
+  if(typeof render==='function') render();
+  if($('calOverlay')&&$('calOverlay').classList.contains('show')&&typeof renderCalShots==='function') renderCalShots();
 }
 function renderLangMenu(){
   const m=$('langMenu');
@@ -4175,7 +4216,7 @@ const S = {
   armedDefect:null, armedLbl:null, recent:[], recentLbl:[], favs:[], tagsOwn:[],
   photos:[], curId:null, elements:[], personal:[], perCat:{},
   undo:[], redo:[], pending:null,
-  scale:null, measMode:'line', measUnitLine:'mm', measUnitArea:'m2', cams:[],
+  scale:null, measMode:'line', units:{dim:'mm',mline:'auto',marea:'auto'}, cams:[],
   rep:{ structure:'', ref:'', date:'', inspector:'', weather:'', loclink:'', overall:'',
         sheets:true, perPage:1, schedule:true, stampNums:true, ov:{}, manual:[] },
 };
@@ -4442,14 +4483,21 @@ function fmtArea(mm2,unit){
   return mm2.toFixed(0)+' mm\u00B2';
 }
 function pickLenUnit(mm){ return mm>=1000?'m':'mm'; }
+// a fixed default wins; 'auto' picks by size
+function autoUnit(o,pref){
+  if(pref&&pref!=='auto') return pref;
+  if(!(o.pxMm>0)) return o.type==='marea'?'m2':'mm';
+  return o.type==='marea' ? pickAreaUnit(polyAreaPx(o.pts)/(o.pxMm*o.pxMm)) : pickLenUnit(Math.hypot(o.x2-o.x1,o.y2-o.y1)/o.pxMm);
+}
+function saveUnits(){ idbPut('units',S.units); }
 function pickAreaUnit(mm2){ if(mm2>=1e5)return 'm2'; if(mm2>=1e3)return 'cm2'; return 'mm2'; }
 function mlineLabel(o,unit){
-  if(!(o.pxMm>0)) return '(no scale)';
+  if(!(o.pxMm>0)) return t('no_scale');
   const lenPx=Math.hypot(o.x2-o.x1,o.y2-o.y1);
   return fmtLen(lenPx/o.pxMm, unit||o.unit||'mm');
 }
 function mareaLabel(o,unit){
-  if(!(o.pxMm>0)) return '(no scale)';
+  if(!(o.pxMm>0)) return t('no_scale');
   const areaPx=polyAreaPx(o.pts);
   return fmtArea(areaPx/(o.pxMm*o.pxMm), unit||o.unit||'m2');
 }
@@ -4728,12 +4776,13 @@ function updateUndo(){ $('undo').disabled=!S.undo.length; $('redo').disabled=!S.
 const pts=new Map(); let pinch=null; let act=null; let lastTap=0, lastTapPt=null;
 function getPos(e){ const r=canvas.getBoundingClientRect(); return {x:e.clientX-r.left, y:e.clientY-r.top}; }
 
+let pendingDlg=null;
 canvas.addEventListener('pointerdown',e=>{
   if(!S.img)return; canvas.setPointerCapture(e.pointerId); pts.set(e.pointerId,getPos(e));
   if(pts.size===2){
     if(act&&act.mode==='draw'){ S.objects.pop(); S.pending=null; }
     else if(act&&(act.mode==='move'||act.mode==='handle'||act.mode==='label')) commit();
-    act=null; startPinch(); render(); return;
+    act=null; pendingDlg=null; startPinch(); render(); return;
   }
   if(pts.size===1) onDown(getPos(e));
 });
@@ -4756,7 +4805,6 @@ function trySelect(ip){
   else { beginEdit(); act={mode:'move',id:h.id,start:ip,orig:clone(getObj(h.id))}; }
   render(); return true;
 }
-let pendingDlg=null;
 function onDown(p){
   pendingDlg=null;
   const ip=toImg(p.x,p.y);
@@ -4846,7 +4894,7 @@ function onDown(p){
     beginEdit();
     let o;
     if(S.tool==='note') o={id:newId(),type:'note',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),text:'',size:fontPx(),fill:S.textFill,tip:S.style.tip};
-    else if(S.tool==='dim') o={id:newId(),type:'dim',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),value:'',unit:'mm',size:fontPx(),fill:S.textFill,ends:S.style.dimEnds};
+    else if(S.tool==='dim') o={id:newId(),type:'dim',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),value:'',unit:S.units.dim||'mm',size:fontPx(),fill:S.textFill,ends:S.style.dimEnds};
     else o={id:newId(),type:'pen',pts:[{x:ip.x,y:ip.y}],color:S.style.color,w:widthPx(),tip:S.style.tip};
     act={mode:'draw',o,startImg:ip}; S.objects.push(o); render();
   }
@@ -4862,7 +4910,7 @@ function closeMArea(){
   const d=S.polyDraft; if(!d||d.pts.length<3){ toast(t('toast_need_3_points')); return; }
   beginEdit();
   const o={id:newId(),type:'marea',pts:d.pts,color:S.style.color,w:widthPx(),size:fontPx(),shade:true,fill:S.textFill,pxMm:S.scale.pxMm,unit:'m2'};
-  if(o.pxMm>0){ o.unit=pickAreaUnit(polyAreaPx(o.pts)/(o.pxMm*o.pxMm)); }
+  if(o.pxMm>0){ o.unit=autoUnit(o,S.units.marea); }
   S.objects.push(o); S.sel=o.id; commit(); syncCtx();
   S.polyDraft=null; updateMeasCtl(); render();
 }
@@ -4902,7 +4950,7 @@ function onUp(){
     if(o.type==='note'||o.type==='dim'||o.type==='mline') degenerate=Math.hypot(o.x2-o.x1,o.y2-o.y1)<6/S.view.s;
     else if(o.type==='pen') degenerate=o.pts.length<2;
     if(degenerate){ S.objects.pop(); S.pending=null; render(); trySelect(act.startImg); act=null; return; }
-    if(o.type==='mline'&&o.pxMm>0){ o.unit=pickLenUnit(Math.hypot(o.x2-o.x1,o.y2-o.y1)/o.pxMm); }
+    if(o.type==='mline'&&o.pxMm>0){ o.unit=autoUnit(o,S.units.mline); }
     S.sel=o.id; commit(); syncCtx(); render();
     if(o.type==='dim'){ editValue(o); act=null; return; }
     if(o.type==='note'){ editLabel(); act=null; return; }
@@ -4954,17 +5002,20 @@ function openQr(o){
   $('qrTitle').textContent = o ? t('qr_edit_title') : t('qr_title');
   $('qrInput').value = o ? (o.text||'') : (S.armedQR ? S.armedQR.text : '');
   $('qrOk').textContent = o ? t('save') : t('add');
-  showOverlay('qrOverlay'); focusField('qrInput');
+  qrCountSync(); showOverlay('qrOverlay'); focusField('qrInput');
 }
 function commitQr(){
   const v=$('qrInput').value.trim();
   if(!v){ toast(t('toast_qr_empty')); return; }
-  if(v.length>QR_MAX || !qrMatrix(v)){ toast(t('toast_qr_long')); return; }
+  if(v.length>QR_MAX || !qrMatrix(v)){ qrCountSync(); toast(t('toast_qr_long')); try{ $('qrInput').focus({preventScroll:true}); }catch(e){} return; }
   if(qrTarget){ beginEdit(); qrTarget.text=v; commit(); render(); }
   else { S.armedQR={text:v}; updateQr(); toast(t('toast_tap_to_place')); }
   qrTarget=null; hideOverlay('qrOverlay');
 }
 function cancelQr(){ qrTarget=null; hideOverlay('qrOverlay'); }
+function qrCountSync(){ const n=$('qrInput').value.trim().length, el=$('qrCount'), over=n>QR_MAX;
+  el.classList.toggle('over',over);
+  el.textContent = !n ? '' : over ? (n+' / '+QR_MAX+' · '+t('toast_qr_long')) : (n+' / '+QR_MAX); }
 function updateQr(){ $('qrcur').textContent = S.armedQR ? S.armedQR.text : t('choose_ellipsis'); }
 
 // ── Value editing (dimension / angle / number) ──────────
@@ -4975,13 +5026,14 @@ function editValue(o){
   if(o.type==='mline'||o.type==='marea'){
     const isArea=o.type==='marea';
     $('valTitle').textContent=isArea?t('area_measured_title'):t('length_measured_title');
-    unitsEl.innerHTML = (isArea
+    unitsEl.innerHTML = [['auto',esc(t('unit_auto'))]].concat(isArea
       ? [['mm2','mm\u00B2'],['cm2','cm\u00B2'],['m2','m\u00B2'],['in2','in\u00B2'],['ft2','ft\u00B2']]
       : [['mm','mm'],['cm','cm'],['m','m'],['in','in'],['ft','ft']]
     ).map(u=>'<button data-u="'+u[0]+'">'+u[1]+'</button>').join('');
     unitsEl.classList.remove('hidden');
     inp.value=isArea?mareaLabel(o):mlineLabel(o); inp.readOnly=true;
-    setUnit(o.unit||(isArea?'m2':'mm'));
+    const pref=S.units[o.type]||'auto';
+    setUnit(pref==='auto'&&o.unit===autoUnit(o,'auto') ? 'auto' : (o.unit||(isArea?'m2':'mm')));
     showOverlay('valOverlay'); return;
   }
   unitsEl.innerHTML='<button data-u="mm" class="on">mm</button><button data-u="m">m</button><button data-u="in">in</button><button data-u="ft">ft</button>';
@@ -4992,19 +5044,20 @@ function editValue(o){
 }
 function setUnit(u){ valUnit=u; document.querySelectorAll('#valUnits button').forEach(b=>b.classList.toggle('on',b.dataset.u===u));
   if(valTarget&&(valTarget.type==='mline'||valTarget.type==='marea')){
-    $('valInput').value = valTarget.type==='marea' ? mareaLabel(valTarget,u) : mlineLabel(valTarget,u);
+    const uu=(u==='auto')?autoUnit(valTarget,'auto'):u;
+    $('valInput').value = valTarget.type==='marea' ? mareaLabel(valTarget,uu) : mlineLabel(valTarget,uu);
   }
 }
 function commitValue(){
   if(!valTarget){ hideOverlay('valOverlay'); return; }
   if(valTarget.type==='mline'||valTarget.type==='marea'){
-    beginEdit(); valTarget.unit=valUnit;
-    if(valTarget.type==='marea') S.measUnitArea=valUnit; else S.measUnitLine=valUnit;
+    beginEdit(); valTarget.unit=(valUnit==='auto')?autoUnit(valTarget,'auto'):valUnit;
+    S.units[valTarget.type]=valUnit; saveUnits();
     commit(); hideOverlay('valOverlay'); valTarget=null; render(); return;
   }
   const v=$('valInput').value.trim(); beginEdit();
   if(valTarget.type==='number'){ const m=v.match(/^([^\d]{0,4})(\d+)$/); if(m){ valTarget.pre=m[1]; valTarget.n=parseInt(m[2],10); } }
-  else { valTarget.value=v; if(valTarget.type==='dim') valTarget.unit=valUnit; }
+  else { valTarget.value=v; if(valTarget.type==='dim'){ valTarget.unit=valUnit; S.units.dim=valUnit; saveUnits(); } }
   commit(); hideOverlay('valOverlay'); valTarget=null; render();
 }
 
@@ -5164,8 +5217,10 @@ function addFiles(list){
 }
 function switchTo(id){
   if(S.curId===id){ renderTray(); return; }
-  // cancel any in-progress gesture against the old photo (crash guard)
-  act=null; pinch=null;
+  // finish any in-progress gesture on the old photo: an unfinished drawing is dropped, a move is kept as its own undo step
+  if(act){ if(act.mode==='draw'){ const i=S.objects.indexOf(act.o); if(i>=0) S.objects.splice(i,1); S.pending=null; }
+    else if(act.mode==='move'||act.mode==='handle'||act.mode==='label') commit(); }
+  act=null; pinch=null; pendingDlg=null;
   // close editing modals safely — a half-created label must not leak into another photo
   if(editTarget){
     if(!editIsNew && editTarget.type==='note' && !editTarget.text) S.objects=S.objects.filter(o=>o!==editTarget);
@@ -5203,9 +5258,9 @@ function renderTray(){
   tr.innerHTML = S.photos.map((p,i)=>
     '<div class="thumb'+(p.id===S.curId?' on':'')+'" data-pid="'+p.id+'" style="background-image:url('+p.thumb+')">'+
     (i<10?'<span class="hk">'+((i+1)%10)+'</span>':'')+
-    '<button class="tx" data-del="'+p.id+'" title="Remove">&times;</button>'+
+    '<button class="tx" data-del="'+p.id+'" title="'+esc(t('remove'))+'">&times;</button>'+
     '<span class="tn">'+esc(tnLabel(p.fileName))+'</span></div>'
-  ).join('') + '<button class="thumb add" id="trayAdd" title="Add photos">+</button>';
+  ).join('') + '<button class="thumb add" id="trayAdd" title="'+esc(t('add_photos'))+'">+</button>';
 }
 $('tray').addEventListener('click',e=>{
   const d=e.target.closest('[data-del]'); if(d){ e.stopPropagation(); deletePhoto(+d.dataset.del); return; }
@@ -5282,7 +5337,8 @@ function saveSession(){
   idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counter:p.counter,scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',repEx:!!p.repEx,kind:p.kind||'photo'})),
     curId:S.curId, favs:S.favs, recent:S.recent, recentLbl:S.recentLbl, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, rep:S.rep, uid, pid });
 }
-function clearSession(){ if(!db)return; try{ db.transaction('session','readwrite').objectStore('session').clear(); }catch(e){} }
+function clearSession(){ if(!db)return; try{ const st=db.transaction('session','readwrite').objectStore('session'), rq=st.getAllKeys();
+  rq.onsuccess=()=>{ (rq.result||[]).forEach(k=>{ if(k!=='lang'&&k!=='units') st.delete(k); }); }; }catch(e){} }
 async function restoreSession(){
   const d=await idbGet('current'); if(!d||!d.photos||!d.photos.length)return;
   uid=d.uid||uid; pid=d.pid||pid;
@@ -5312,7 +5368,9 @@ async function restoreSession(){
   switchTo(recs.some(p=>p.id===d.curId)?d.curId:recs[0].id);
   toast(t('toast_session_restored'));
 }
-openDB().then(d=>{ db=d; idbGet('lang').then(l=>{ if(l) setLang(l,true); }); restoreSession(); });
+openDB().then(d=>{ db=d; idbGet('lang').then(l=>{ if(l) setLang(l,true); });
+  idbGet('units').then(u=>{ if(u&&typeof u==='object') ['dim','mline','marea'].forEach(k=>{ if(typeof u[k]==='string') S.units[k]=u[k]; }); });
+  restoreSession(); });
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'&&S.photos.length){ clearTimeout(dirtyT); saveSession(); } });
 
 // ── Overlays / toast ────────────────────────────────────
@@ -5704,7 +5762,7 @@ function wrapFit(x,txt,maxw,maxh,start,min,lh){
   }
 }
 function makePlaceholder(){
-  const title=$('phTitle').value.trim()||'Untitled', sub=$('phSub').value.trim();
+  const title=$('phTitle').value.trim()||t('untitled'), sub=$('phSub').value.trim();
   const W=1600,H=1200,c=document.createElement('canvas'); c.width=W;c.height=H;
   const x=c.getContext('2d');
   const png=S.fmt==='png';
@@ -5953,6 +6011,7 @@ canvas.addEventListener('wheel',e=>{ if(!S.img)return; e.preventDefault(); const
 $('qrOk').onclick=commitQr;
 $('qrCancel').onclick=cancelQr;
 $('qrchange').onclick=()=>openQr(null);
+$('qrInput').addEventListener('input',qrCountSync);
 $('qrInput').addEventListener('keydown',e=>{ if(e.key==='Enter')commitQr(); if(e.key==='Escape')cancelQr(); });
 $('txtOk').onclick=commitLabel;
 $('txtCancel').onclick=cancelLabel;
@@ -6047,6 +6106,7 @@ $('lblclear').onclick=clearLbl;
 $('divider').onclick=()=>{ renderPhColors(); $('phTitle').value=''; showOverlay('phOverlay'); setTimeout(()=>$('phTitle').focus(),50); };
 $('sketch').onclick=()=>{ $('skTitle').value=''; showOverlay('skOverlay'); setTimeout(()=>$('skTitle').focus(),50); };
 $('skCancel').onclick=()=>hideOverlay('skOverlay');
+$('skTitle').addEventListener('keydown',e=>{ if(e.key==='Escape') hideOverlay('skOverlay'); });
 $('skMake').onclick=makeSketch;
 $('phCancel').onclick=()=>hideOverlay('phOverlay');
 $('phMake').onclick=makePlaceholder;
@@ -6056,6 +6116,7 @@ function renderPhColors(){ const cols=[FOLDER_COL,...INKS];
 $('phColors').addEventListener('click',e=>{ const b=e.target.closest('[data-c]'); if(!b)return; phBg=b.dataset.c; document.querySelectorAll('#phColors .swatch').forEach(s=>s.classList.remove('on')); b.classList.add('on'); });
 
 // keyboard
+const TOOL_KEYS={s:'select',t:'text',d:'pen',l:'dim',n:'note',p:'poly',g:'angle',f:'defect',m:'measure',q:'qr'};
 window.addEventListener('keydown',e=>{
   const tgt=e.target;
   if(tgt&&((tgt.tagName==='INPUT'&&tgt.type!=='checkbox')||tgt.tagName==='TEXTAREA'||tgt.tagName==='SELECT'))return; // typing — never hijack
@@ -6070,19 +6131,19 @@ window.addEventListener('keydown',e=>{
     if(ph){ e.preventDefault(); switchTo(ph.id); }
     return;
   }
-  const overlays=['txtOverlay','valOverlay','pickOverlay','phOverlay','cfmOverlay','qrOverlay'];
+  const overlays=['txtOverlay','valOverlay','pickOverlay','phOverlay','skOverlay','cfmOverlay','qrOverlay'];
   if(overlays.some(id=>$(id).classList.contains('show'))){
-    if(e.key==='Escape'){ if($('qrOverlay').classList.contains('show'))cancelQr(); if($('txtOverlay').classList.contains('show'))cancelLabel(); if($('valOverlay').classList.contains('show')){hideOverlay('valOverlay');valTarget=null;} closeWheel(); closeDefMenu(); hideOverlay('pickOverlay'); hideOverlay('phOverlay'); hideOverlay('cfmOverlay'); cfmCb=null; }
+    if(e.key==='Escape'){ if($('qrOverlay').classList.contains('show'))cancelQr(); if($('txtOverlay').classList.contains('show'))cancelLabel(); if($('valOverlay').classList.contains('show')){hideOverlay('valOverlay');valTarget=null;} closeWheel(); closeDefMenu(); hideOverlay('pickOverlay'); hideOverlay('phOverlay'); hideOverlay('skOverlay'); hideOverlay('cfmOverlay'); cfmCb=null; }
     return;
   }
   if((e.key==='Delete'||e.key==='Backspace')&&S.sel!=null){ e.preventDefault(); $('del').onclick(); }
   else if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){ e.preventDefault(); e.shiftKey?redo():undo(); }
   else if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){ e.preventDefault(); redo(); }
   else if(e.key==='Escape'){ if(S.angleDraft)S.angleDraft=null; if(S.polyDraft){S.polyDraft=null;updatePolyCtl();updateMeasCtl();} S.sel=null; syncCtx(); render(); }
-  else if(e.key==='s')setTool('select'); else if(e.key==='t')setTool('text'); else if(e.key==='d')setTool('pen');
-  else if(e.key==='l')setTool('dim'); else if(e.key==='n')setTool('note'); else if(e.key==='p')setTool('poly');
-  else if(e.key==='g')setTool('angle'); else if(e.key==='#')setTool('number'); else if(e.key==='f')setTool('defect');
-  else if(e.key==='m')setTool('measure'); else if(e.key==='q')setTool('qr');
+  else if(e.key==='#'){ if(!e.metaKey&&(!e.ctrlKey||e.altKey)) setTool('number'); }
+  else if(!e.ctrlKey&&!e.metaKey&&!e.altKey&&e.key.length===1){
+    const tl=TOOL_KEYS[e.key.toLowerCase()]; if(tl) setTool(tl);
+  }
 });
 
 // ══ Measure: cameras, scale, calibration ════════════════
@@ -6235,7 +6296,7 @@ function renderCalShots(){
   list.innerHTML=shots.map((s,i)=>{
     let resid='';
     if(fit){ const pred=fit.k*Math.pow(s.d,fit.p), rp=Math.abs(pred-s.r)/s.r*100; const cls=rp<1?'fit-good':rp<2?'fit-warn':'fit-bad'; resid='<span class="resid '+cls+'">±'+rp.toFixed(2)+'%</span>'; }
-    return '<div class="shotitem"><span>'+s.d.toFixed(3)+' m · '+s.w.toFixed(1)+' mm · '+s.span.toFixed(0)+' px → <strong>'+s.r.toFixed(3)+' px/mm</strong></span>'+resid+'<button class="rm" data-rm="'+i+'" title="Remove">×</button></div>';
+    return '<div class="shotitem"><span>'+s.d.toFixed(3)+' m · '+s.w.toFixed(1)+' mm · '+s.span.toFixed(0)+' px → <strong>'+s.r.toFixed(3)+' px/mm</strong></span>'+resid+'<button class="rm" data-rm="'+i+'" title="'+esc(t('remove'))+'">×</button></div>';
   }).join('');
   if(shots.length<2){ fitEl.textContent=''; return; }
   if(!fit){ fitEl.innerHTML='<span class="fit-bad">'+t('cal_fit_failed')+'</span>'; return; }
@@ -6399,7 +6460,8 @@ function harvest(){
     S.baseW=rec.baseW;
     const objs=rec.objects||[];
     const rad=0.30*Math.min(rec.iw,rec.ih);
-    const cand=objs.filter(isFinding).map(f=>({o:f,c:anchorOf(f),el:[],act:[],ext:[],com:[],num:null}));
+    const inPhoto=c=>c.x>=0&&c.y>=0&&c.x<=rec.iw&&c.y<=rec.ih;
+    const cand=objs.filter(o=>isFinding(o)&&inPhoto(anchorOf(o))).map(f=>({o:f,c:anchorOf(f),el:[],act:[],ext:[],com:[],num:null}));
     const loose=[], elems=[];
     for(const o of objs){
       if(isFinding(o)) continue;
@@ -6412,6 +6474,7 @@ function harvest(){
       const txt=(bucket==='num')?'':auxText(o);
       if(bucket!=='num'&&!txt) continue;
       const c=anchorOf(o);
+      if(!inPhoto(c)) continue;
       if(bucket==='el'){ elems.push({c:c,txt:txt}); continue; }
       let best=null,bd=Infinity;
       for(const cd of cand){ const d=Math.hypot(c.x-cd.c.x,c.y-cd.c.y); if(d<bd){bd=d;best=cd;} }
@@ -6578,7 +6641,7 @@ function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'<
 function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
   t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+
   t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
-const MARKUP_VER='1.4.2';
+const MARKUP_VER='1.4.5';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
