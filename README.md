@@ -2,7 +2,7 @@
 
 Browser tool for annotating and measuring field-inspection photos — on-site or off. Phone-first. No backend, no install, nothing uploaded.
 
-**Current version: v1.2.7**
+**Current version: v1.4.2**
 
 ## Features
 
