@@ -400,6 +400,11 @@ body.hasfine .emotip{display:block}
 #pickSearch:focus{outline:2px solid var(--accent)}
 .sevrow{flex:0 0 auto;display:flex;gap:7px;margin:12px 0 10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .sevrow::-webkit-scrollbar{height:0}
+#matRow{flex-wrap:wrap;overflow-x:visible;row-gap:6px}
+.tool.pip::after{
+  content:'';position:absolute;top:5px;right:5px;width:4px;height:4px;
+  border-radius:50%;background:var(--accent);opacity:.85;pointer-events:none;
+}
 .sevrow button{
   display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 11px;border-radius:100px;flex:0 0 auto;white-space:nowrap;
   background:var(--panel);border:1px solid var(--hairline);color:var(--muted);font-size:12px;font-weight:600;
@@ -719,7 +724,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.3.10 · BETA · multilingual</span>
+        <span class="ver">v1.4.1 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -829,6 +834,9 @@ body.hasfine .emotip{display:block}
       <button class="mini" id="polyclose" style="display:none" data-i18n="close_shape">Close shape</button>
     </div>
     <div class="ctx hidden" id="textctl">
+      <span class="lbl" id="lbllbl" style="display:none" data-i18n="label_label">Label</span>
+      <span class="nn" id="lblcur" style="display:none;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;justify-content:flex-start"></span>
+      <button class="mini" id="lblclear" style="display:none" data-i18n="clear">Clear</button>
       <button class="mini" id="textfill" data-i18n="fill_on">Fill: On</button>
     </div>
     <div class="ctx hidden" id="tipctl">
@@ -868,9 +876,9 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">S</span>
     </button>
-    <button class="tool" data-tool="text">
+    <button class="tool" data-tool="text" data-gest="1">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2M9 19h6M12 5v14"/></svg>
-      <span data-i18n="tool_text">Text</span>
+      <span data-i18n="tool_text">Text &amp; Tag</span>
     
       <span class="hk">T</span>
     </button>
@@ -916,7 +924,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">#</span>
     </button>
-    <button class="tool" data-tool="defect">
+    <button class="tool" data-tool="defect" data-gest="1">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
       <span data-i18n="tool_defect">Defect</span>
     
@@ -928,7 +936,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.3.10</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.4.1</span></div>
   </nav>
 </div>
 
@@ -940,7 +948,7 @@ body.hasfine .emotip{display:block}
 <div class="overlay" id="txtOverlay">
   <div class="modal">
     <h3 id="txtTitle" data-i18n="add_label">Add label</h3>
-    <input id="txtInput" type="text" placeholder="e.g. Spalling — exposed rebar" autocomplete="off" data-i18n-placeholder="txt_placeholder">
+    <input id="txtInput" type="text" placeholder="e.g. North face, 2.4 m above deck" autocomplete="off" data-i18n-placeholder="txt_placeholder">
     <p class="emotip" data-i18n="emoji_tip">Emoji: press Win + . on Windows, or Control + Command + Space on Mac.</p>
     <div class="actions">
       <button class="btn ghost" id="txtDefect" style="margin-right:auto" data-i18n="from_list">From list…</button>
@@ -966,13 +974,12 @@ body.hasfine .emotip{display:block}
 <div class="overlay sheetwrap" id="pickOverlay">
   <div class="sheet">
     <div class="sheet-head">
-      <h3 id="pickTitle" data-i18n="defect_tags_title">Defect &amp; tags</h3>
+      <h3 id="pickTitle" data-i18n="defects_title">Defects</h3>
       <button class="csbtn" id="csBtn"></button>
       <button class="x" id="pickClose">&times;</button>
     </div>
     <div class="tabs" id="pickTabs">
-      <button data-tab="material" class="on" data-i18n="tab_defects">Defects</button>
-      <button data-tab="tags" data-i18n="tab_tags">Tags</button>
+      <button data-tab="tags" class="on" data-i18n="tab_tags">Tags</button>
       <button data-tab="elements" data-i18n="tab_elements">Elements</button>
     </div>
     <div class="sevrow" id="matRow"></div>
@@ -1199,7 +1206,7 @@ body.hasfine .emotip{display:block}
       <div class="gsec">
         <h4 data-i18n="help_tools_h">Tools</h4>
         <div class="grow"><b data-i18n="help_select_b">Select</b><span data-i18n="help_select_d">Tap an annotation to move, recolour, resize, or delete it. Drag its handles to reshape.</span></div>
-        <div class="grow"><b data-i18n="help_text_b">Text</b><span data-i18n="help_text_d">Places a text label. Tap to type; empty labels are discarded.</span></div>
+        <div class="grow"><b data-i18n="help_text_b">Text &amp; Tag</b><span data-i18n="help_text_d">Tap the photo to type a label in place. Double-tap the tool for the tags and elements list, hold it for the last five things you placed. Anything picked is placed once and then released, so the next tap types again; the props strip shows what is waiting, and Clear drops it. Tags and elements take the text style, so Fill and the ink swatch apply to them, and the recents remember the colour each was last placed in.</span></div>
         <div class="grow"><b data-i18n="help_draw_b">Draw</b><span data-i18n="help_draw_d">Freehand ink for circling or sketching.</span></div>
         <div class="grow"><b data-i18n="help_length_b">Length</b><span data-i18n="help_length_d">Drag a measured line. Short bars mark each end. Enter a value and pick a unit (mm, m, in, ft) — the number rides alongside the line.</span></div>
         <div class="grow"><b data-i18n="help_measure_b">Measure</b><span data-i18n="help_measure_d">Auto-measures real size from a calibrated camera. Set a scale once (pick a camera + enter distance), then draw a line for length or an area for a polygon — the value is computed for you. Double-tap a measurement to change its unit.</span></div>
@@ -1214,7 +1221,7 @@ body.hasfine .emotip{display:block}
       <div class="gsec">
         <h4 data-i18n="help_pick_h">Choosing defects</h4>
         <div class="grow"><b data-i18n="help_picktool_b">The tool button</b><span data-i18n="help_picktool_d">Tap it to re-arm the last defect and place straight away. Double-tap to open the list. Hold it for the five most recent, each at the condition you used it at.</span></div>
-        <div class="grow"><b data-i18n="help_picklist_b">The list</b><span data-i18n="help_picklist_d">Three tabs — Defects, Tags, Elements. On Defects the chips filter by material; ★ Favs gathers your favourites, on Tags as well. Tap a tile to arm it; hold a tile to pick a condition and place in one gesture, or to make it a favourite.</span></div>
+        <div class="grow"><b data-i18n="help_picklist_b">The list</b><span data-i18n="help_picklist_d">The Defect list is one grid, with the material chips on two rows above it and ★ Favs gathering your favourites. Tap a tile to arm it; hold a tile to pick a condition and place in one gesture, or to make it a favourite. Tags and elements have their own list, on Text &amp; Tag.</span></div>
         <div class="grow"><b data-i18n="help_picksearch_b">Search and add</b><span data-i18n="help_picksearch_d">The one field does both. Typing narrows the tiles within the chip you are on, and × clears it. Add lights up when what you typed matches nothing: it keeps the term for the rest of the job and arms it straight away. Your own terms sit in the same grid, tinted — hold one to remove it, or tap its ▾ to file it under materials so it filters like a built-in. Tags and elements share the same field and Add button.</span></div>
         <div class="grow"><b data-i18n="help_pickcs_b">Condition</b><span data-i18n="help_pickcs_d">The pill in the list sets the condition for the next defect. Tap it to step through Same as ink, CS1, CS2, CS3, CS4, Unrated; hold it to pick one directly. The coloured chip in the toolbar does the same for the defect already armed.</span></div>
         <div class="grow"><b data-i18n="help_pickink_b">Ink and condition</b><span data-i18n="help_pickink_d">For a defect, the ink swatches are the condition: green CS1, yellow CS2, orange CS3, red CS4, blue Unrated. It applies to the selected defect, or to the armed one when nothing is selected. White and black set CS1. Other marks — notes, arrows, text — take the colour and nothing more.</span></div>
@@ -1387,7 +1394,7 @@ const I18N={
     "clear_all":"Clear all",
     "start_over":"Start over",
     "tool_select":"Select",
-    "tool_text":"Text",
+    "tool_text":"Text & Tag",
     "tool_draw":"Draw",
     "tool_length":"Length",
     "tool_measure":"Measure",
@@ -1416,7 +1423,7 @@ const I18N={
     "help_picktool_b":"The tool button",
     "help_picktool_d":"Tap it to re-arm the last defect and place straight away. Double-tap to open the list. Hold it for the five most recent, each at the condition you used it at.",
     "help_picklist_b":"The list",
-    "help_picklist_d":"Three tabs — Defects, Tags, Elements. On Defects the chips filter by material; ★ Favs gathers your favourites, on Tags as well. Tap a tile to arm it; hold a tile to pick a condition and place in one gesture, or to make it a favourite.",
+    "help_picklist_d":"The Defect list is one grid, with the material chips on two rows above it and ★ Favs gathering your favourites. Tap a tile to arm it; hold a tile to pick a condition and place in one gesture, or to make it a favourite. Tags and elements have their own list, on Text & Tag.",
     "help_picksearch_b":"Search and add",
     "help_picksearch_d":"The one field does both. Typing narrows the tiles within the chip you are on, and × clears it. Add lights up when what you typed matches nothing: it keeps the term for the rest of the job and arms it straight away. Your own terms sit in the same grid, tinted — hold one to remove it, or tap its ▾ to file it under materials so it filters like a built-in. Tags and elements share the same field and Add button.",
     "help_pickcs_b":"Condition",
@@ -1430,7 +1437,7 @@ const I18N={
     "add_label":"Add label",
     "edit_label":"Edit label",
     "note_text":"Note text",
-    "txt_placeholder":"e.g. Spalling — exposed rebar",
+    "txt_placeholder":"e.g. North face, 2.4 m above deck",
     "from_list":"From list…",
     "cancel":"Cancel",
     "add":"Add",
@@ -1446,9 +1453,12 @@ const I18N={
     "about_licence":"Released under <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a>. Free to use, share, and adapt, as long as credit is given to the author.",
     "about_support":"The tool is free. If it saves you time, a contribution keeps it maintained.",
     "save":"Save",
-    "defect_tags_title":"Defect & tags",
+    "defects_title":"Defects",
+    "tags_elements_title":"Tags & elements",
+    "no_recent_labels":"Nothing recent yet",
+    "label_label":"Label",
     "search_placeholder":"Search terms…",
-    "tab_defects":"Defects",
+    
     "cs_title":"Condition",
     "mat_favs":"Favs",
     "no_favs_yet":"Hold a tile to make it a favourite.",
@@ -1550,8 +1560,8 @@ const I18N={
     "help_tools_h":"Tools",
     "help_select_b":"Select",
     "help_select_d":"Tap an annotation to move, recolour, resize, or delete it. Drag its handles to reshape.",
-    "help_text_b":"Text",
-    "help_text_d":"Places a text label. Tap to type; empty labels are discarded.",
+    "help_text_b":"Text & Tag",
+    "help_text_d":"Tap the photo to type a label in place. Double-tap the tool for the tags and elements list, hold it for the last five things you placed. Anything picked is placed once and then released, so the next tap types again; the props strip shows what is waiting, and Clear drops it. Tags and elements take the text style, so Fill and the ink swatch apply to them, and the recents remember the colour each was last placed in.",
     "help_draw_b":"Draw",
     "help_draw_d":"Freehand ink for circling or sketching.",
     "help_length_b":"Length",
@@ -1736,7 +1746,7 @@ const I18N={
     "clear_all":"清除全部",
     "start_over":"重新开始",
     "tool_select":"选择",
-    "tool_text":"文字",
+    "tool_text":"文字与标签",
     "tool_draw":"绘制",
     "tool_length":"长度",
     "tool_measure":"测量",
@@ -1765,7 +1775,7 @@ const I18N={
     "help_picktool_b":"工具按钮",
     "help_picktool_d":"轻点即可重新装载上一个缺陷并立即标注。双击打开列表。长按显示最近五个，各自保留上次使用的状态等级。",
     "help_picklist_b":"列表",
-    "help_picklist_d":"三个选项卡——缺陷、标签、部位。在缺陷中，标签按材料筛选；★ 收藏汇总您的收藏项。轻点方块即可装载；长按方块可选择状态等级并一次完成标注，或将其加入收藏。",
+    "help_picklist_d":"缺陷列表为单一网格，上方分两行显示材料分类，★ 收藏汇总您的收藏项。轻点方块即可装载；长按方块可选择状态等级并一次完成标注，或将其加入收藏。标签与部位有各自的列表，位于“文字与标签”工具中。",
     "help_picksearch_b":"搜索与添加",
     "help_picksearch_d":"同一个输入框兼顾两者。输入会在当前分类内筛选方块，点按 × 可一次清空。当输入内容没有匹配项时“添加”按钮会亮起：它会在本次作业中保留该条目，并立即装载。您自己添加的条目以不同底色显示在同一网格中——长按可删除，点按 ▾ 可归入材料分类，之后即像内置条目一样参与筛选。标签和部位同样使用该输入框与“添加”按钮。",
     "help_pickcs_b":"状态等级",
@@ -1779,7 +1789,7 @@ const I18N={
     "add_label":"添加标签",
     "edit_label":"编辑标签",
     "note_text":"备注文字",
-    "txt_placeholder":"例如：剥落——钢筋外露",
+    "txt_placeholder":"例如：北侧立面，桥面以上 2.4 m",
     "from_list":"从列表选择…",
     "cancel":"取消",
     "add":"添加",
@@ -1799,9 +1809,12 @@ const I18N={
     "about_licence":"依据 <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a> 发布。可自由使用、分享和修改，只需注明作者。",
     "about_support":"本工具免费。如果它为您节省了时间，您的捐助将帮助其持续维护。",
     "save":"保存",
-    "defect_tags_title":"缺陷与标签",
+    "defects_title":"缺陷",
+    "tags_elements_title":"标签与部位",
+    "no_recent_labels":"暂无最近项",
+    "label_label":"标注",
     "search_placeholder":"搜索术语…",
-    "tab_defects":"缺陷",
+    
     "cs_title":"状态",
     "mat_favs":"收藏",
     "no_favs_yet":"长按方块即可加入收藏。",
@@ -1903,8 +1916,8 @@ const I18N={
     "help_tools_h":"工具",
     "help_select_b":"选择",
     "help_select_d":"点击标注即可移动、改色、调整大小或删除。拖动控制点可改变形状。",
-    "help_text_b":"文字",
-    "help_text_d":"放置文字标签。点击后输入文字；空白标签将被丢弃。",
+    "help_text_b":"文字与标签",
+    "help_text_d":"点按照片即可就地输入文字标注。双击该工具可打开标签与部位列表，长按可显示最近放置的五项。所选内容放置一次后即自动释放，因此下一次点按会重新进入输入；属性栏会显示待放置的内容，点击“清除”可取消。标签与部位采用文字样式，因此填充与墨色同样适用，最近列表也会记住每项上次使用的颜色。",
     "help_draw_b":"绘制",
     "help_draw_d":"自由绘制，用于圈画或勾画。",
     "help_length_b":"长度",
@@ -2089,7 +2102,7 @@ const I18N={
     "clear_all":"Borrar todo",
     "start_over":"Empezar de nuevo",
     "tool_select":"Seleccionar",
-    "tool_text":"Texto",
+    "tool_text":"Texto y etiqueta",
     "tool_draw":"Dibujar",
     "tool_length":"Longitud",
     "tool_measure":"Medir",
@@ -2118,7 +2131,7 @@ const I18N={
     "help_picktool_b":"El botón de la herramienta",
     "help_picktool_d":"Tóquelo para recuperar el último defecto y colocarlo de inmediato. Toque dos veces para abrir la lista. Manténgalo pulsado para ver los cinco más recientes, cada uno con el estado con el que lo usó.",
     "help_picklist_b":"La lista",
-    "help_picklist_d":"Tres pestañas: Defectos, Etiquetas, Elementos. En Defectos, las fichas filtran por material y ★ Favs reúne sus favoritos. Toque un mosaico para cargarlo; manténgalo pulsado para elegir un estado y colocarlo en un solo gesto, o para marcarlo como favorito.",
+    "help_picklist_d":"La lista de Defectos es una sola cuadrícula, con las fichas de material en dos filas encima y ★ Favs reuniendo sus favoritos. Toque un mosaico para cargarlo; manténgalo pulsado para elegir un estado y colocarlo en un solo gesto, o para marcarlo como favorito. Las etiquetas y los elementos tienen su propia lista, en Texto y etiqueta.",
     "help_picksearch_b":"Buscar y añadir",
     "help_picksearch_d":"Un solo campo hace ambas cosas. Al escribir se filtran los mosaicos dentro del chip activo, y × lo borra de una vez. Añadir se activa cuando lo escrito no coincide con nada: conserva el término durante el resto del trabajo y lo carga de inmediato. Sus propios términos van en la misma cuadrícula, con otro tono: mantenga pulsado uno para quitarlo, o toque su ▾ para asignarle materiales y que filtre como los integrados. Las etiquetas y los elementos comparten el mismo campo y botón Añadir.",
     "help_pickcs_b":"Estado",
@@ -2132,7 +2145,7 @@ const I18N={
     "add_label":"Añadir etiqueta",
     "edit_label":"Editar etiqueta",
     "note_text":"Texto de la nota",
-    "txt_placeholder":"p. ej. Descascaramiento — armadura expuesta",
+    "txt_placeholder":"p. ej. Cara norte, 2,4 m sobre el tablero",
     "from_list":"Desde la lista…",
     "cancel":"Cancelar",
     "add":"Añadir",
@@ -2152,9 +2165,12 @@ const I18N={
     "about_licence":"Publicado bajo <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a>. Libre de usar, compartir y adaptar, siempre que se cite al autor.",
     "about_support":"La herramienta es gratuita. Si te ahorra tiempo, una contribución ayuda a mantenerla.",
     "save":"Guardar",
-    "defect_tags_title":"Defectos y etiquetas",
+    "defects_title":"Defectos",
+    "tags_elements_title":"Etiquetas y elementos",
+    "no_recent_labels":"Nada reciente aún",
+    "label_label":"Etiqueta",
     "search_placeholder":"Buscar términos…",
-    "tab_defects":"Defectos",
+    
     "cs_title":"Condición",
     "mat_favs":"Favs",
     "no_favs_yet":"Mantenga pulsado un mosaico para marcarlo como favorito.",
@@ -2256,8 +2272,8 @@ const I18N={
     "help_tools_h":"Herramientas",
     "help_select_b":"Seleccionar",
     "help_select_d":"Toque una anotación para moverla, cambiar su color, redimensionarla o eliminarla. Arrastre sus asas para remodelarla.",
-    "help_text_b":"Texto",
-    "help_text_d":"Coloca una etiqueta de texto. Toque para escribir; las etiquetas vacías se descartan.",
+    "help_text_b":"Texto y etiqueta",
+    "help_text_d":"Toque la foto para escribir una etiqueta en ese punto. Toque dos veces la herramienta para la lista de etiquetas y elementos, o manténgala pulsada para las últimas cinco cosas que colocó. Lo que elija se coloca una vez y se libera, así que el siguiente toque vuelve a escribir; la barra de propiedades muestra lo que está en espera y Borrar lo descarta. Las etiquetas y los elementos usan el estilo de texto, así que Relleno y el color de tinta se les aplican, y los recientes recuerdan el color con el que se colocó cada uno.",
     "help_draw_b":"Dibujar",
     "help_draw_d":"Trazo libre para encerrar en un círculo o esbozar.",
     "help_length_b":"Longitud",
@@ -2442,7 +2458,7 @@ const I18N={
     "clear_all":"सभी साफ़ करें",
     "start_over":"फिर से शुरू करें",
     "tool_select":"चयन",
-    "tool_text":"टेक्स्ट",
+    "tool_text":"टेक्स्ट और टैग",
     "tool_draw":"ड्रा",
     "tool_length":"लंबाई",
     "tool_measure":"मापें",
@@ -2471,7 +2487,7 @@ const I18N={
     "help_picktool_b":"टूल बटन",
     "help_picktool_d":"पिछला दोष दोबारा तैयार करने और तुरंत लगाने के लिए टैप करें। सूची खोलने के लिए डबल-टैप करें। हाल के पाँच देखने के लिए दबाकर रखें — हर एक उसी स्थिति स्तर के साथ जिस पर उसे लगाया गया था।",
     "help_picklist_b":"सूची",
-    "help_picklist_d":"तीन टैब — दोष, टैग, घटक। दोष में चिप सामग्री के अनुसार छाँटती हैं और ★ पसंदीदा आपके सभी पसंदीदा एक जगह दिखाता है। टाइल पर टैप करने से वह तैयार हो जाती है; टाइल दबाकर रखने पर स्थिति स्तर चुनकर एक ही बार में लगाएँ, या उसे पसंदीदा बनाएँ।",
+    "help_picklist_d":"दोष सूची एक ही ग्रिड है, ऊपर दो पंक्तियों में सामग्री श्रेणियाँ और ★ पसंदीदा आपके चुने हुए शब्द दिखाता है। टाइल टैप करने पर वह तैयार हो जाती है; दबाकर रखने पर स्थिति चुनकर एक ही बार में लगाया जा सकता है या पसंदीदा बनाया जा सकता है। टैग और घटक की अपनी अलग सूची है, जो “टेक्स्ट और टैग” में मिलती है।",
     "help_picksearch_b":"खोजें और जोड़ें",
     "help_picksearch_d":"एक ही फ़ील्ड दोनों काम करता है। टाइप करने पर चुनी हुई श्रेणी के भीतर टाइलें छँटती हैं, और × एक बार में लिखा हुआ मिटा देता है। जो लिखा है वह कहीं न मिले तो जोड़ें बटन सक्रिय होता है: वह शब्द बाकी काम के लिए सहेजता है और तुरंत तैयार कर देता है। आपके जोड़े शब्द उसी ग्रिड में अलग रंग में रहते हैं — हटाने के लिए दबाकर रखें, या ▾ दबाकर सामग्री श्रेणी दें ताकि वे भी अंतर्निहित शब्दों की तरह छँटें। टैग और घटक भी यही फ़ील्ड और जोड़ें बटन उपयोग करते हैं।",
     "help_pickcs_b":"स्थिति",
@@ -2485,7 +2501,7 @@ const I18N={
     "add_label":"लेबल जोड़ें",
     "edit_label":"लेबल संपादित करें",
     "note_text":"नोट टेक्स्ट",
-    "txt_placeholder":"उदा. स्पॉलिंग — सरिया उजागर",
+    "txt_placeholder":"उदा. उत्तरी सतह, डेक से 2.4 मी ऊपर",
     "from_list":"सूची से…",
     "cancel":"रद्द करें",
     "add":"जोड़ें",
@@ -2505,9 +2521,12 @@ const I18N={
     "about_licence":"<a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a> के अंतर्गत जारी। लेखक को श्रेय देने की शर्त पर उपयोग, साझा और अनुकूलन के लिए स्वतंत्र।",
     "about_support":"यह टूल निःशुल्क है। यदि यह आपका समय बचाता है, तो आपका योगदान इसे बनाए रखने में मदद करता है।",
     "save":"सेव करें",
-    "defect_tags_title":"दोष और टैग",
+    "defects_title":"दोष",
+    "tags_elements_title":"टैग और घटक",
+    "no_recent_labels":"अभी कुछ हाल का नहीं",
+    "label_label":"लेबल",
     "search_placeholder":"शब्द खोजें…",
-    "tab_defects":"दोष",
+    
     "cs_title":"स्थिति",
     "mat_favs":"पसंदीदा",
     "no_favs_yet":"किसी टाइल को दबाकर रखें और पसंदीदा बनाएं।",
@@ -2609,8 +2628,8 @@ const I18N={
     "help_tools_h":"टूल्स",
     "help_select_b":"चयन",
     "help_select_d":"किसी एनोटेशन को टैप करके उसे हिलाएं, रंग बदलें, आकार बदलें या हटाएं। आकार बदलने के लिए उसके हैंडल खींचें।",
-    "help_text_b":"टेक्स्ट",
-    "help_text_d":"टेक्स्ट लेबल रखता है। टाइप करने के लिए टैप करें; खाली लेबल हटा दिए जाते हैं।",
+    "help_text_b":"टेक्स्ट और टैग",
+    "help_text_d":"फ़ोटो पर टैप करके वहीं लेबल लिखें। टूल पर दो बार टैप करने से टैग और घटक की सूची खुलती है, दबाकर रखने पर पिछली पाँच रखी गई चीज़ें दिखती हैं। चुनी गई चीज़ एक बार रखने के बाद छूट जाती है, इसलिए अगला टैप फिर से टाइपिंग खोलता है; प्रॉपर्टी पट्टी दिखाती है कि क्या प्रतीक्षा में है और “साफ़ करें” उसे हटा देता है। टैग और घटक टेक्स्ट शैली लेते हैं, इसलिए भराव और स्याही का रंग उन पर लागू होते हैं, और हाल की सूची हर प्रविष्टि का पिछला रंग याद रखती है।",
     "help_draw_b":"ड्रा",
     "help_draw_d":"घेरने या स्केच करने के लिए फ्रीहैंड ड्रॉइंग।",
     "help_length_b":"लंबाई",
@@ -2795,7 +2814,7 @@ const I18N={
     "clear_all":"مسح الكل",
     "start_over":"البدء من جديد",
     "tool_select":"تحديد",
-    "tool_text":"نص",
+    "tool_text":"نص ووسم",
     "tool_draw":"رسم",
     "tool_length":"الطول",
     "tool_measure":"قياس",
@@ -2824,7 +2843,7 @@ const I18N={
     "help_picktool_b":"زر الأداة",
     "help_picktool_d":"انقره لإعادة تجهيز آخر عيب ووضعه مباشرة. انقر نقرًا مزدوجًا لفتح القائمة. استمر بالضغط لعرض آخر خمسة، كل منها بالحالة التي استُخدم بها.",
     "help_picklist_b":"القائمة",
-    "help_picklist_d":"ثلاثة تبويبات: العيوب، الوسوم، العناصر. في العيوب تُصفّي الأزرار حسب المادة، و★ المفضلة تجمع مفضلاتك. انقر مربعًا لتجهيزه؛ استمر بالضغط عليه لاختيار حالة ووضعه بحركة واحدة، أو لإضافته إلى المفضلة.",
+    "help_picklist_d":"قائمة العيوب شبكة واحدة، وفوقها فئات المواد في صفّين، و★ المفضلة تجمع اختياراتك. انقر مربعًا لتجهيزه؛ استمر بالضغط عليه لاختيار الحالة ووضعه بحركة واحدة، أو لإضافته إلى المفضلة. الوسوم والعناصر لها قائمتها الخاصة ضمن «نص ووسم».",
     "help_picksearch_b":"البحث والإضافة",
     "help_picksearch_d":"حقل واحد يؤدي الأمرين. الكتابة تُصفّي المربعات ضمن الفئة المحددة، و× يمحو ما كتبته بنقرة واحدة. يضيء زر الإضافة عندما لا يطابق ما كتبته شيئًا: فيحتفظ به لبقية العمل ويجهّزه فورًا. المصطلحات التي تضيفها تظهر في الشبكة نفسها بلون مختلف — استمر بالضغط على أحدها لإزالته، أو انقر ▾ لإسناده إلى مواد فيُصفّى مثل المصطلحات المدمجة. الوسوم والعناصر تستخدم الحقل نفسه وزر الإضافة نفسه.",
     "help_pickcs_b":"الحالة",
@@ -2838,7 +2857,7 @@ const I18N={
     "add_label":"إضافة تسمية",
     "edit_label":"تعديل التسمية",
     "note_text":"نص الملاحظة",
-    "txt_placeholder":"مثال: تقشر — حديد تسليح مكشوف",
+    "txt_placeholder":"مثال: الوجه الشمالي، 2.4 م فوق السطح",
     "from_list":"من القائمة…",
     "cancel":"إلغاء",
     "add":"إضافة",
@@ -2858,9 +2877,12 @@ const I18N={
     "about_licence":"منشور بموجب <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a>. حرّ في الاستخدام والمشاركة والتعديل، شريطة نسب العمل إلى المؤلف.",
     "about_support":"الأداة مجانية. إذا وفّرت وقتك، فإن مساهمتك تساعد على استمرار صيانتها.",
     "save":"حفظ",
-    "defect_tags_title":"العيوب والوسوم",
+    "defects_title":"العيوب",
+    "tags_elements_title":"الوسوم والعناصر",
+    "no_recent_labels":"لا يوجد شيء حديث",
+    "label_label":"تسمية",
     "search_placeholder":"ابحث عن مصطلح…",
-    "tab_defects":"العيوب",
+    
     "cs_title":"الحالة",
     "mat_favs":"المفضلة",
     "no_favs_yet":"استمر بالضغط على مربع لإضافته إلى المفضلة.",
@@ -2962,8 +2984,8 @@ const I18N={
     "help_tools_h":"الأدوات",
     "help_select_b":"تحديد",
     "help_select_d":"اضغط على أي علامة لتحريكها أو تغيير لونها أو تغيير حجمها أو حذفها. اسحب مقابضها لإعادة تشكيلها.",
-    "help_text_b":"نص",
-    "help_text_d":"يضع تسمية نصية. اضغط للكتابة؛ تُهمل التسميات الفارغة.",
+    "help_text_b":"نص ووسم",
+    "help_text_d":"انقر الصورة لكتابة تسمية في مكانها. انقر نقرتين على الأداة لفتح قائمة الوسوم والعناصر، أو استمر بالضغط لعرض آخر خمسة عناصر وضعتها. ما تختاره يوضع مرة واحدة ثم يُحرَّر، فتعود النقرة التالية إلى الكتابة؛ ويعرض شريط الخصائص ما هو بالانتظار، و«مسح» يلغيه. تأخذ الوسوم والعناصر نمط النص، فيسري عليها التعبئة ولون القلم، وتتذكر القائمة الحديثة لون كل عنصر عند وضعه آخر مرة.",
     "help_draw_b":"رسم",
     "help_draw_d":"رسم حر للتحويط أو التخطيط.",
     "help_length_b":"الطول",
@@ -3148,7 +3170,7 @@ const I18N={
     "clear_all":"Очистить всё",
     "start_over":"Начать заново",
     "tool_select":"Выбор",
-    "tool_text":"Текст",
+    "tool_text":"Текст и метка",
     "tool_draw":"Рисование",
     "tool_length":"Длина",
     "tool_measure":"Измерение",
@@ -3177,7 +3199,7 @@ const I18N={
     "help_picktool_b":"Кнопка инструмента",
     "help_picktool_d":"Нажмите, чтобы вернуть последний дефект и сразу поставить его. Двойное нажатие открывает список. Удержание показывает пять недавних, каждый с тем состоянием, с которым он использовался.",
     "help_picklist_b":"Список",
-    "help_picklist_d":"Три вкладки — Дефекты, Метки, Элементы. На вкладке дефектов кнопки фильтруют по материалу, а ★ Избранное собирает отмеченные. Нажатие на плитку готовит её к установке; удержание позволяет выбрать состояние и поставить дефект одним движением или добавить плитку в избранное.",
+    "help_picklist_d":"Список дефектов — одна сетка, над ней категории материалов в два ряда, а ★ Избранное собирает отмеченное. Нажатие на плитку подготавливает её; удержание позволяет выбрать состояние и поставить отметку одним движением или добавить в избранное. У меток и элементов свой список — в инструменте «Текст и метка».",
     "help_picksearch_b":"Поиск и добавление",
     "help_picksearch_d":"Одно поле делает и то и другое. Ввод сужает плитки внутри выбранной категории, а × очищает поле одним нажатием. Кнопка добавления загорается, когда введённое ничему не соответствует: запись сохраняется до конца работы и сразу подготавливается. Свои записи стоят в той же сетке другим оттенком — удержание удаляет их, а нажатие ▾ относит запись к материалам, после чего она фильтруется как встроенная. Метки и элементы используют то же поле и ту же кнопку.",
     "help_pickcs_b":"Состояние",
@@ -3191,7 +3213,7 @@ const I18N={
     "add_label":"Добавить подпись",
     "edit_label":"Изменить подпись",
     "note_text":"Текст заметки",
-    "txt_placeholder":"напр. Скалывание — оголённая арматура",
+    "txt_placeholder":"напр. Северная грань, 2,4 м над плитой",
     "from_list":"Из списка…",
     "cancel":"Отмена",
     "add":"Добавить",
@@ -3211,9 +3233,12 @@ const I18N={
     "about_licence":"Распространяется по лицензии <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a>. Свободно использовать, делиться и адаптировать при условии указания автора.",
     "about_support":"Инструмент бесплатный. Если он экономит ваше время, поддержка помогает его развивать.",
     "save":"Сохранить",
-    "defect_tags_title":"Дефекты и метки",
+    "defects_title":"Дефекты",
+    "tags_elements_title":"Метки и элементы",
+    "no_recent_labels":"Пока ничего нет",
+    "label_label":"Подпись",
     "search_placeholder":"Поиск терминов…",
-    "tab_defects":"Дефекты",
+    
     "cs_title":"Состояние",
     "mat_favs":"Избранное",
     "no_favs_yet":"Удерживайте плитку, чтобы добавить в избранное.",
@@ -3315,8 +3340,8 @@ const I18N={
     "help_tools_h":"Инструменты",
     "help_select_b":"Выбор",
     "help_select_d":"Нажмите на аннотацию, чтобы переместить, изменить цвет, размер или удалить её. Перетаскивайте маркеры, чтобы изменить форму.",
-    "help_text_b":"Текст",
-    "help_text_d":"Размещает текстовую подпись. Нажмите, чтобы напечатать; пустые подписи не сохраняются.",
+    "help_text_b":"Текст и метка",
+    "help_text_d":"Нажмите на фото, чтобы ввести подпись на месте. Двойное нажатие на инструмент открывает список меток и элементов, удержание показывает последние пять поставленных записей. Выбранное ставится один раз и освобождается, поэтому следующее нажатие снова открывает ввод; в строке свойств видно, что ожидает, а «Очистить» убирает его. Метки и элементы используют стиль текста, поэтому заливка и цвет чернил действуют и на них, а список последних запоминает цвет каждой записи.",
     "help_draw_b":"Рисование",
     "help_draw_d":"Произвольное рисование для обводки или наброска.",
     "help_length_b":"Длина",
@@ -4095,7 +4120,8 @@ function applyI18n(){
   if(typeof updateNext==='function') updateNext();
   if(typeof syncCtx==='function') syncCtx();
   if(typeof renderCS==='function') renderCS();
-  if($('pickOverlay')&&$('pickOverlay').classList.contains('show')&&typeof renderPicker==='function') renderPicker();
+  if($('pickOverlay')&&$('pickOverlay').classList.contains('show')&&typeof renderPicker==='function'){ renderTabs(); renderPicker(); }
+  if(typeof updateTextCtl==='function') updateTextCtl();
 }
 function renderLangMenu(){
   const m=$('langMenu');
@@ -4140,7 +4166,7 @@ const S = {
   style:{color:INKS[0], w:'M', tip:'off', dimEnds:'bars'},
   fmt:'jpg',
   counter:1, angleDraft:null, polyDraft:null, polyFill:true, textFill:true, numPrefix:'',
-  armedDefect:null, recent:[], recentTags:[], favs:[], tagsOwn:[],
+  armedDefect:null, armedLbl:null, recent:[], recentLbl:[], favs:[], tagsOwn:[],
   photos:[], curId:null, elements:[], personal:[], perCat:{},
   undo:[], redo:[], pending:null,
   scale:null, measMode:'line', measUnitLine:'mm', measUnitArea:'m2', cams:[],
@@ -4645,7 +4671,8 @@ function bboxImg(o){
 const _mc=document.createElement('canvas').getContext('2d');
 function textMetrics(o){
   const fs=o.size; _mc.font='600 '+fs+'px '+UIFONT;
-  const px=o.type==='tag'?0.6:0.5, py=o.type==='tag'?0.4:0.34;
+  const pill=isDefectObj(o);
+  const px=pill?0.6:0.5, py=pill?0.4:0.34;
   return {w:_mc.measureText(o.text).width+fs*px*2, h:fs+fs*py*2};
 }
 
@@ -4750,6 +4777,16 @@ function onDown(p){
     render();
   } else if(S.tool==='text'){
     act=null; if(trySelect(ip)) return;
+    const a=S.armedLbl;
+    if(a){ beginEdit();
+      const col=a.color||S.style.color;
+      const o=(a.k==='text')
+        ? {id:newId(),type:'text',x:ip.x,y:ip.y,text:a.text,color:col,size:fontPx(),fill:S.textFill}
+        : {id:newId(),type:'tag',x:ip.x,y:ip.y,text:a.text,color:col,size:fontPx(),fill:S.textFill,sev:'none',cat:a.k,term:a.term,grp:a.grp||''};
+      S.objects.push(o); S.sel=o.id; commit(); syncCtx();
+      pushLbl(a.term,a.k,col,a.grp);
+      clearLbl();          // one-shot: the next tap types again
+      render(); return; }
     const o={id:newId(),type:'text',x:ip.x,y:ip.y,text:'',color:S.style.color,size:fontPx(),fill:S.textFill};
     editLabel(o);
   } else if(S.tool==='number'){
@@ -4887,7 +4924,8 @@ function editLabel(existingNew){
 }
 function commitLabel(){
   const v=$('txtInput').value.trim();
-  if(editIsNew){ if(v){ beginEdit(); editTarget.text=v; S.objects.push(editTarget); S.sel=editTarget.id; commit(); syncCtx(); } }
+  if(editIsNew){ if(v){ beginEdit(); editTarget.text=v; S.objects.push(editTarget); S.sel=editTarget.id; commit(); syncCtx();
+    if(editTarget.type==='text') pushLbl(v,'text',editTarget.color,''); } }
   else { if(v){ beginEdit(); editTarget.text=v; commit(); }
     else { beginEdit(); setObjects(S.objects.filter(o=>o!==editTarget)); S.sel=null; commit(); syncCtx(); toast(t('toast_removed_text_required')); } }
   hideOverlay('txtOverlay'); editTarget=null; render();
@@ -4990,9 +5028,12 @@ function updateQrCtl(){
 function updateTextCtl(){
   const o=S.sel!=null?getObj(S.sel):null;
   const isTextTool=S.tool==='text'||S.tool==='note'||S.tool==='dim'||S.tool==='angle'||S.tool==='measure';
-  const isTextObj=o&&(o.type==='text'||o.type==='note'||o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea');
+  const isTextObj=o&&(o.type==='text'||o.type==='note'||o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea'||(o.type==='tag'&&!isDefectObj(o)));
   const show=isTextTool||isTextObj;
   $('textctl').classList.toggle('hidden',!show);
+  const a=(S.tool==='text')?S.armedLbl:null;
+  ['lbllbl','lblcur','lblclear'].forEach(id=>{ $(id).style.display=a?'':'none'; });
+  if(a){ $('lblcur').textContent=a.text; $('lblcur').style.color=a.color||''; }
   if(!show) return;
   const fillOn=isTextObj ? o.fill!==false : S.textFill;
   $('textfill').textContent=fillOn?t('fill_on'):t('fill_off');
@@ -5230,14 +5271,14 @@ function dirty(){ clearTimeout(dirtyT); dirtyT=setTimeout(saveSession,1000); }
 function saveSession(){
   if(!db)return; stashCur();
   idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counter:p.counter,scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',repEx:!!p.repEx,kind:p.kind||'photo'})),
-    curId:S.curId, favs:S.favs, recent:S.recent, recentTags:S.recentTags, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, rep:S.rep, uid, pid });
+    curId:S.curId, favs:S.favs, recent:S.recent, recentLbl:S.recentLbl, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, rep:S.rep, uid, pid });
 }
 function clearSession(){ if(!db)return; try{ db.transaction('session','readwrite').objectStore('session').clear(); }catch(e){} }
 async function restoreSession(){
   const d=await idbGet('current'); if(!d||!d.photos||!d.photos.length)return;
   uid=d.uid||uid; pid=d.pid||pid;
-  S.favs=migFavs(d.favs); S.recent=migRecent(d.recent); S.recentTags=d.recentTags||[]; S.elements=d.elements||[]; S.personal=migList(d.personal); S.perCat=d.perCat||{}; S.tagsOwn=d.tagsOwn||[];
-  S.favs=S.favs.filter(f=>f.t!=='Review'); S.recentTags=S.recentTags.filter(x=>x!=='Review');
+  S.favs=migFavs(d.favs); S.recent=migRecent(d.recent); S.recentLbl=(d.recentLbl||[]).filter(x=>x&&x.t); S.elements=d.elements||[]; S.personal=migList(d.personal); S.perCat=d.perCat||{}; S.tagsOwn=d.tagsOwn||[];
+  S.favs=S.favs.filter(f=>f.t!=='Review'); S.recentLbl=S.recentLbl.filter(x=>x.t!=='Review');
   S.numPrefix=d.numPrefix||''; $('numpre').value=S.numPrefix;
   if(d.rep) S.rep=Object.assign(S.rep,d.rep); if(!S.rep.ov) S.rep.ov={}; if(!S.rep.manual) S.rep.manual=[];
   if(d.fmt){ S.fmt=d.fmt; } $('fmtCur').textContent=(S.fmt==='png'?'PNG':'JPG');
@@ -5318,10 +5359,11 @@ const SEV=[
   {k:'severe',code:'CS4',word:'Severe',color:'#d32f2f'},
   {k:'unrated',code:null,word:'Unrated',color:'#42a5f5'}
 ];
-let curSev='none', pickMode='arm', pickFeed=null, pickTab='material', curMat='', phBg=FOLDER_COL;
+let curSev='none', pickMode='arm', pickFeed=null, pickTab='material', pickScope='defect', curMat='', phBg=FOLDER_COL;
 
 // tag / defect chip — filled pill in the severity colour
 function drawTag(ctx,o,tf){
+  if(!isDefectObj(o)){ const q=mapPt(tf,o.x,o.y); chipAt(ctx,o.text,q.x,q.y,o.color,mapLen(tf,o.size),o.fill); return; }
   const p=mapPt(tf,o.x,o.y), fs=mapLen(tf,o.size);
   ctx.font='600 '+fs+'px '+UIFONT;
   const padX=fs*0.6,padY=fs*0.4,tw=ctx.measureText(o.text).width,bw=tw+padX*2,bh=fs+padY*2;
@@ -5333,10 +5375,17 @@ function drawTag(ctx,o,tf){
 }
 
 // ── Picker ──────────────────────────────────────────────
-function openPicker(mode,feed){
-  pickMode=mode; pickFeed=feed||null; curMat='';
-  $('pickSearch').value=''; renderPicker(); showOverlay('pickOverlay');
+function openPicker(mode,feed,scope){
+  pickMode=mode; pickFeed=feed||null; pickScope=scope||'defect'; curMat='';
+  pickTab=(pickScope==='label')?(pickTab==='elements'?'elements':'tags'):'material';
+  renderTabs(); $('pickSearch').value=''; renderPicker(); showOverlay('pickOverlay');
   if(!matchMedia('(pointer:coarse)').matches) setTimeout(()=>$('pickSearch').focus(),60);
+}
+function renderTabs(){
+  const lab=(pickScope==='label');
+  $('pickTabs').style.display=lab?'':'none';
+  $('pickTabs').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.tab===pickTab));
+  $('pickTitle').textContent=t(lab?'tags_elements_title':'defects_title');
 }
 function sevLabel(s){ const w=trSev(s.word); return s.code? (s.code+' '+w) : w; }
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
@@ -5353,12 +5402,11 @@ function renderCS(){
 function cycleSev(k){ const i=SEV.findIndex(x=>x.k===k); return SEV[(i+1)%SEV.length].k; }
 function renderMat(){
   const r=$('matRow');
-  if(pickTab==='elements'){ r.style.display='none'; return; }
+  if(pickTab!=='material'){ r.style.display='none'; return; }
   r.style.display='';
-  let h='<button data-mat="*"'+(curMat==='*'?' class="on"':'')+'>★ '+esc(t('mat_favs'))+'</button>'+
-    '<button data-mat=""'+(curMat?'':' class="on"')+'>'+esc(t('mat_all'))+'</button>';
-  if(pickTab==='material') h+=MATS.map(m=>'<button data-mat="'+m[0]+'"'+(curMat===m[0]?' class="on"':'')+'>'+esc(trCat(m[1]))+'</button>').join('');
-  r.innerHTML=h;
+  r.innerHTML='<button data-mat="*"'+(curMat==='*'?' class="on"':'')+'>★ '+esc(t('mat_favs'))+'</button>'+
+    '<button data-mat=""'+(curMat?'':' class="on"')+'>'+esc(t('mat_all'))+'</button>'+
+    MATS.map(m=>'<button data-mat="'+m[0]+'"'+(curMat===m[0]?' class="on"':'')+'>'+esc(trCat(m[1]))+'</button>').join('');
 }
 function matsOf(term){ const d=DEF_TERMS.find(x=>x[0]===term); return d?d[1].split(' '):[]; }
 function matName(c){ const m=MATS.find(x=>x[0]===c); return m?m[1]:''; }
@@ -5366,7 +5414,7 @@ function tile(item){
   const term=(typeof item==='string')?item:item.t;
   const g=(typeof item==='string')?groupFor(term):groupFor(term,item.g);
   const own=isOwnTerm(term);
-  const fav=(pickTab==='elements')?false:isFav(term,g), disp=esc(pickTab==='elements'?term:trTerm(term));
+  const fav=(pickTab==='material')?isFav(term,g):false, disp=esc(pickTab==='elements'?term:trTerm(term));
   const showG=(pickTab==='material'&&g&&curMat==='*');
   const cat=(own&&pickTab==='material');
   return '<button class="tile'+(fav?' fav':'')+(own?' own':'')+(showG?' two':'')+'" data-term="'+esc(term)+'" data-grp="'+esc(g)+'" title="'+disp+(g?' — '+esc(trCat(g)):'')+'">'+
@@ -5400,11 +5448,6 @@ function renderPicker(){
   }
   const mat=curMat;
   if(pickTab==='tags'){
-    if(mat==='*'){
-      const favs=S.favs.filter(f=>f.g==='Tags'&&allTags().indexOf(f.t)>=0&&hit(f.t,q));
-      $('pickList').innerHTML = favs.length? grid(favs) : '<div class="pempty">'+t('no_favs_yet')+'</div>';
-      syncAdd(); return;
-    }
     const list=DEFECTS.tags.Tags.filter(tm=>hit(tm,q)).concat(S.tagsOwn.filter(tm=>hit(tm,q)));
     $('pickList').innerHTML = list.length? grid(list) : '<div class="pempty">'+t('no_matches_custom')+'</div>';
     syncAdd(); return;
@@ -5455,12 +5498,18 @@ function removeOwn(term){
   list.splice(i,1); delete S.perCat[term];
   S.favs=S.favs.filter(f=>f.t!==term);
   S.recent=S.recent.filter(r=>r.t!==term);
-  S.recentTags=S.recentTags.filter(x=>x!==term);
+  S.recentLbl=S.recentLbl.filter(x=>x.t!==term);
   dirty(); renderPicker(); toast(t('toast_removed',{term:term}));
 }
 function addRecent(t,sevK,g){
-  if(pickTab==='tags') S.recentTags=[t,...S.recentTags.filter(x=>x!==t)].slice(0,8);
-  else if(pickTab!=='elements') S.recent=[{t:t,s:sevK||'none',g:g||''},...S.recent.filter(x=>x.t!==t)].slice(0,8);
+  if(pickTab==='material') S.recent=[{t:t,s:sevK||'none',g:g||''},...S.recent.filter(x=>x.t!==t)].slice(0,8);
+  else pushLbl(t,pickTab,null,g);
+  dirty();
+}
+function pushLbl(term,kind,col,grp){
+  const prev=S.recentLbl.find(x=>x.t===term);
+  S.recentLbl=[{t:term,k:kind,c:col||(prev&&prev.c)||null,g:grp||(prev&&prev.g)||''},
+    ...S.recentLbl.filter(x=>x.t!==term)].slice(0,8);
   dirty();
 }
 function groupFor(term,override){
@@ -5489,7 +5538,7 @@ function openWheel(term,x,y,mode,grp){
   const noSev=(wheelMode==='tile')?(pickTab==='tags'||pickTab==='elements')
             :(wheelMode==='armed')?!(a&&(a.cat==='material'||a.cat==='component')) : false;
   const w=$('csWheel'), plain=noSev;
-  const onEl=(wheelMode==='tile')&&pickTab==='elements';
+  const onEl=(wheelMode==='tile')&&pickTab!=='material';
   const own=(wheelMode==='tile')&&!!term&&ownList().indexOf(term)>=0;
   const foot=(term&&!onEl?'<button data-wfav="1"><span>'+(isFav(term,grp)?'★':'☆')+'</span>'+esc(t('favourite'))+'</button>':'')+
              (own?'<button class="wdel" data-wdel="1"><span>&times;</span>'+esc(t('remove'))+'</button>':'');
@@ -5545,9 +5594,15 @@ function chooseTerm(term,sevK,grp){
   const sev=sevOf(effSevK); addRecent(term,effSevK,g);
   const label=(pickTab==='elements')?term:trTerm(term);
   if(pickMode==='feed'){ if(pickFeed) pickFeed(label, sev.color); }
+  else if(pickScope==='label'){ armLbl(pickTab, term, label, g); }
   else { S.armedDefect={text:label, sev:effSevK, color:sev.color, cat:pickTab, term:term, grp:g}; updateDef(); toast(t('toast_tap_to_place')); }
   closeWheel(); hideOverlay('pickOverlay');
 }
+function armLbl(kind,term,label,grp,col){
+  S.armedLbl={k:kind, term:term||label, text:label, grp:grp||'', color:col||null};
+  updateTextCtl(); toast(t('toast_tap_to_place'));
+}
+function clearLbl(){ S.armedLbl=null; updateTextCtl(); }
 function isDefectObj(o){ return !!o && o.type==='tag' && (o.cat==='material'||o.cat==='component'); }
 function updateDef(){
   const el=$('defcur');
@@ -5561,16 +5616,32 @@ function updateDef(){
 
 // ── recent-defect menu, held on the rail button ──
 function closeDefMenu(){ $('defMenu').classList.remove('show'); }
+function openLblMenu(btn){
+  const m=$('defMenu'), rec=S.recentLbl.slice(0,5);
+  let h='';
+  if(rec.length) h+=rec.map(r=>{
+    const c=r.c||'#7c8894';
+    // hollow ring for a typed string, solid for a tag or element, both in the colour last used
+    const st=(r.k==='text')?('background:transparent;box-shadow:inset 0 0 0 2px '+c):('background:'+c);
+    return '<button data-lterm="'+esc(r.t)+'" data-lkind="'+esc(r.k||'text')+'" data-lcol="'+esc(c)+'" data-lgrp="'+esc(r.g||'')+'">'+
+      '<span class="dot" style="'+st+'"></span><span>'+esc(r.k==='tags'?trTerm(r.t):r.t)+'</span></button>';
+  }).join('')+'<div class="dsep"></div>';
+  else h+='<button class="mm" disabled><span>'+esc(t('no_recent_labels'))+'</span></button><div class="dsep"></div>';
+  h+='<button class="mm" data-lmore="1"><span>'+esc(t('pick_more'))+'</span></button>';
+  m.innerHTML=h; m.classList.add('show'); placeMenu(m,btn);
+}
+function placeMenu(m,btn){
+  const r=btn.getBoundingClientRect(), mr=m.getBoundingClientRect();
+  m.style.left=Math.min(Math.max(8,r.left+r.width/2-mr.width/2), innerWidth-mr.width-8)+'px';
+  m.style.top=Math.max(8,r.top-mr.height-8)+'px';
+}
 function openDefMenu(btn){
   const m=$('defMenu'), rec=S.recent.slice(0,5);
   let h='';
   if(rec.length) h+=rec.map(r=>'<button data-rterm="'+esc(r.t)+'" data-rsev="'+esc(r.s||'none')+'" data-rgrp="'+esc(r.g||'')+'"><span class="dot" style="background:'+(sevOf(r.s).color||'#7c8894')+'"></span><span>'+esc(trTerm(r.t))+'</span></button>').join('')+'<div class="dsep"></div>';
   else h+='<button class="mm" disabled><span>'+esc(t('no_recent_defects'))+'</span></button><div class="dsep"></div>';
   h+='<button class="mm" data-rmore="1"><span>'+esc(t('pick_more'))+'</span></button>';
-  m.innerHTML=h; m.classList.add('show');
-  const r=btn.getBoundingClientRect(), mr=m.getBoundingClientRect();
-  let L=Math.min(Math.max(8,r.left+r.width/2-mr.width/2), innerWidth-mr.width-8);
-  m.style.left=L+'px'; m.style.top=Math.max(8,r.top-mr.height-8)+'px';
+  m.innerHTML=h; m.classList.add('show'); placeMenu(m,btn);
 }
 
 
@@ -5720,28 +5791,47 @@ function setTool(tl){
   render();
 }
 function updateNext(){ $('nextn').textContent=(S.numPrefix||'')+S.counter; }
-document.querySelectorAll('.tool').forEach(b=>{ if(b.dataset.tool==='defect') return; b.addEventListener('click',()=>setTool(b.dataset.tool)); });
-// Defect: tap re-arms the last term, double tap opens the list, hold shows recents
-(function(){
-  const b=document.querySelector('.tool[data-tool="defect"]'); if(!b) return;
+const GEST_KEY='dcg_gest_v1';
+let gestUse={};
+try{ gestUse=JSON.parse(localStorage.getItem(GEST_KEY)||'{}')||{}; }catch(e){ gestUse={}; }
+// the pip says "there is more under this button"; after three uses the message has landed
+function pipSync(){ document.querySelectorAll('.tool[data-gest]').forEach(b=>b.classList.toggle('pip',(gestUse[b.dataset.tool]||0)<3)); }
+function pipUsed(tool){
+  const n=(gestUse[tool]||0); if(n>=3) return;
+  gestUse[tool]=n+1;
+  try{ localStorage.setItem(GEST_KEY, JSON.stringify(gestUse)); }catch(e){}
+  pipSync();
+}
+document.querySelectorAll('.tool').forEach(b=>{ if(b.dataset.gest) return; b.addEventListener('click',()=>setTool(b.dataset.tool)); });
+// tools with a second and third gesture: tap selects, double tap opens the list, hold shows recents
+function bindToolGestures(tool,onDouble,onHold,onSingle){
+  const b=document.querySelector('.tool[data-tool="'+tool+'"]'); if(!b) return;
   let held=false, timer=null, lastTap=0;
-  b.addEventListener('pointerdown',()=>{ held=false; clearTimeout(timer); timer=setTimeout(()=>{ held=true; setTool('defect'); openDefMenu(b); },450); });
+  b.addEventListener('pointerdown',()=>{ held=false; clearTimeout(timer);
+    timer=setTimeout(()=>{ held=true; setTool(tool); pipUsed(tool); onHold(b); },450); });
   ['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,()=>clearTimeout(timer)));
   b.addEventListener('contextmenu',e=>e.preventDefault());
   b.addEventListener('click',()=>{
     if(held){ held=false; return; }
-    closeDefMenu(); setTool('defect');
+    closeDefMenu(); setTool(tool);
     const now=Date.now(), dbl=(now-lastTap)<300; lastTap=now;
-    if(dbl){ openPicker('arm'); return; }
-    if(!armLast()) openPicker('arm');
+    if(dbl){ pipUsed(tool); onDouble(); return; }
+    if(onSingle) onSingle();
   });
-})();
+}
+bindToolGestures('defect', ()=>openPicker('arm'), b=>openDefMenu(b), ()=>{ if(!armLast()) openPicker('arm'); });
+bindToolGestures('text', ()=>openPicker('arm',null,'label'), b=>openLblMenu(b));
+pipSync();
 $('defMenu').addEventListener('click',e=>{
   if(e.target.closest('[data-rmore]')){ closeDefMenu(); openPicker('arm'); return; }
+  if(e.target.closest('[data-lmore]')){ closeDefMenu(); openPicker('arm',null,'label'); return; }
+  const l=e.target.closest('[data-lterm]');
+  if(l){ const k=l.dataset.lkind, tm=l.dataset.lterm;
+    closeDefMenu(); armLbl(k,tm,(k==='tags')?trTerm(tm):tm,l.dataset.lgrp||'',l.dataset.lcol||null); return; }
   const b=e.target.closest('[data-rterm]'); if(!b) return;
   closeDefMenu(); armTerm(b.dataset.rterm,'material',b.dataset.rsev||'none',b.dataset.rgrp||''); toast(t('toast_tap_to_place'));
 });
-document.addEventListener('pointerdown',e=>{ if($('defMenu').classList.contains('show')&&!e.target.closest('#defMenu')&&!e.target.closest('.tool[data-tool="defect"]')) closeDefMenu(); },true);
+document.addEventListener('pointerdown',e=>{ if($('defMenu').classList.contains('show')&&!e.target.closest('#defMenu')&&!e.target.closest('.tool[data-gest]')) closeDefMenu(); },true);
 
 // swatches
 const sw=$('swatches');
@@ -5812,7 +5902,7 @@ document.querySelectorAll('#tipseg button').forEach(b=>b.addEventListener('click
 }));
 $('textfill').onclick=()=>{
   const o=S.sel!=null?getObj(S.sel):null;
-  const isTextObj=o&&(o.type==='text'||o.type==='note'||o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea');
+  const isTextObj=o&&(o.type==='text'||o.type==='note'||o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea'||(o.type==='tag'&&!isDefectObj(o)));
   if(isTextObj){ beginEdit(); o.fill=o.fill===false; commit(); }
   else { S.textFill=!S.textFill; }
   updateTextCtl(); render();
@@ -5824,7 +5914,7 @@ $('clearall').onclick=()=>{
 };
 $('startover').onclick=()=>confirmBox(t('start_over_title'), t('start_over_body'),()=>{
   S.photos=[]; S.curId=null; S.img=null; S.objects=[]; S.sel=null; S.undo=[]; S.redo=[];
-  S.counter=1; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.armedQR=null; S.elements=[]; S.personal=[]; S.perCat={}; S.recent=[]; S.recentTags=[]; S.favs=[]; S.tagsOwn=[];
+  S.counter=1; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.armedLbl=null; S.armedQR=null; S.elements=[]; S.personal=[]; S.perCat={}; S.recent=[]; S.recentLbl=[]; S.favs=[]; S.tagsOwn=[];
   S.scale=null; S.measMode='line';
   S.rep={ structure:'', ref:'', date:'', inspector:'', weather:'', loclink:'', overall:'', sheets:true, perPage:1, schedule:true, stampNums:true, ov:{}, manual:[] };
   S.numPrefix=''; $('numpre').value='';
@@ -5872,7 +5962,7 @@ bindCycleHold($('csBtn'),
   ()=>{ curSev=cycleSev(curSev); renderCS(); },
   (x,y)=>{ openWheel('', x, y, 'pill'); });
 $('matRow').addEventListener('click',e=>{ const b=e.target.closest('[data-mat]'); if(!b)return; curMat=b.dataset.mat; renderPicker(); });
-$('pickTabs').addEventListener('click',e=>{ const b=e.target.closest('[data-tab]'); if(!b)return; closeWheel(); pickTab=b.dataset.tab; document.querySelectorAll('#pickTabs button').forEach(x=>x.classList.toggle('on',x===b)); $('pickSearch').value=''; curMat=''; renderPicker(); });
+$('pickTabs').addEventListener('click',e=>{ const b=e.target.closest('[data-tab]'); if(!b)return; closeWheel(); pickTab=b.dataset.tab; renderTabs(); $('pickSearch').value=''; curMat=''; renderPicker(); });
 $('pickList').addEventListener('click',e=>{
   if(e.target.closest('#pickAll')){ curMat=''; renderPicker(); return; }
   const cb=e.target.closest('[data-cat-btn]');
@@ -5926,7 +6016,12 @@ $('defchange').onclick=()=>openPicker('arm');
 bindCycleHold($('defcur'),
   ()=>{ if(!S.armedDefect){ openPicker('arm'); return; } setArmedSev(cycleSev(S.armedDefect.sev||'none')); },
   (x,y)=>{ if(!S.armedDefect){ openPicker('arm'); return; } openWheel(S.armedDefect.term, x, y, 'armed', S.armedDefect.grp); });
-$('txtDefect').onclick=()=>openPicker('feed',(term,color)=>{ $('txtInput').value=term; if(color&&editTarget){ editTarget.color=color; } });
+$('txtDefect').onclick=()=>{
+  // editing a label that already exists fills the field; a new one arms instead
+  if(editTarget&&!editIsNew){ openPicker('feed',(term)=>{ $('txtInput').value=term; },'label'); return; }
+  cancelLabel(); setTool('text'); openPicker('arm',null,'label');
+};
+$('lblclear').onclick=clearLbl;
 
 // divider card
 $('divider').onclick=()=>{ renderPhColors(); $('phTitle').value=''; showOverlay('phOverlay'); setTimeout(()=>$('phTitle').focus(),50); };
@@ -6463,7 +6558,7 @@ function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'<
 function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
   t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+
   t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
-const MARKUP_VER='1.3.10';
+const MARKUP_VER='1.4.1';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
