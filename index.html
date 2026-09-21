@@ -755,7 +755,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.5.0 · BETA · multilingual</span>
+        <span class="ver">v1.5.1 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -925,7 +925,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">L</span>
     </button>
-    <button class="tool" data-tool="measure">
+    <button class="tool" data-tool="measure" data-gest="1">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h20v8H2z"/><path d="M6 8v4M10 8v6M14 8v4M18 8v6"/></svg>
       <span data-i18n="tool_measure">Measure</span>
     
@@ -962,13 +962,13 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">F</span>
     </button>
-    <button class="tool" data-tool="qr">
+    <button class="tool" data-tool="qr" data-gest="1">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM21 14v3M18 21h3M14 21h1"/></svg>
       <span data-i18n="tool_qr">QR</span>
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.0</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.1</span></div>
   </nav>
 </div>
 
@@ -1260,14 +1260,14 @@ body.hasfine .emotip{display:block}
         <div class="grow"><b data-i18n="help_text_b">Text &amp; Tag</b><span data-i18n="help_text_d">Tap the photo to type a label in place. Double-tap the tool for the tags and elements list, hold it for the last five things you placed. Anything picked is placed once and then released, so the next tap types again; the props strip shows what is waiting, and Clear drops it. Tags and elements take the text style, so Fill and the ink swatch apply to them, and the recents remember the colour each was last placed in.</span></div>
         <div class="grow"><b data-i18n="help_draw_b">Draw</b><span data-i18n="help_draw_d">Freehand ink for circling or sketching.</span></div>
         <div class="grow"><b data-i18n="help_length_b">Length</b><span data-i18n="help_length_d">Drag a measured line. Short bars mark each end. Enter a value and pick a unit (mm, m, in, ft) — the number rides alongside the line. Hold the tool for your last five values: pick one and the next line takes it without the dialog.</span></div>
-        <div class="grow"><b data-i18n="help_measure_b">Measure</b><span data-i18n="help_measure_d">Auto-measures real size from a calibrated camera. Set a scale once (pick a camera + enter distance), then draw a line for length or an area for a polygon — the value is computed for you. Double-tap a measurement to change its unit.</span></div>
+        <div class="grow"><b data-i18n="help_measure_b">Measure</b><span data-i18n="help_measure_d">Auto-measures real size from a calibrated camera. Set a scale once (pick a camera + enter distance), then draw a line for length or an area for a polygon — the value is computed for you. Double-tap a measurement to change its unit. Double-tap the tool to set the scale; a new photo starts from the camera and distance you used last.</span></div>
         <div class="grow"><b data-i18n="help_calib_b">Calibrate camera</b><span data-i18n="help_calib_d">In Measure, open Cameras… to teach the tool your camera. Photograph an object of known width at several known distances, mark it on each, and save. Reuse the saved camera on any photo — no ruler needed in the shot.</span></div>
         <div class="grow"><b data-i18n="help_note_b">Note</b><span data-i18n="help_note_d">A leader line from a point to a text label. The line meets the label on its near side, so it always points cleanly at the target. Hold the tool for your last five notes: pick one and the next note takes it without typing.</span></div>
         <div class="grow"><b data-i18n="help_polygon_b">Polygon</b><span data-i18n="help_polygon_d">Tap to drop corners; use Close shape to finish. Shade an area or ring a region.</span></div>
         <div class="grow"><b data-i18n="help_angle_b">Angle</b><span data-i18n="help_angle_d">Draw one side from the corner, then the second. The measured angle is written in the arc.</span></div>
         <div class="grow"><b data-i18n="help_number_b">Number</b><span data-i18n="help_number_d">Drops auto-incrementing markers for a legend or defect schedule. Each prefix keeps its own count on each photo (B1, B2… P1, P2…). Double-tap the tool to step the prefix through none, A, B, P, S, J, H; hold it to pick one or reset. Type in Next to start from any number. Clear all resets the count.</span></div>
         <div class="grow"><b data-i18n="help_defect_b">Defect</b><span data-i18n="help_defect_d">Tags in a condition-state colour. Tap the tool to re-use the last defect, double-tap for the full list, hold it for your recent five. In the list, tap a tile to place at the shown CS, or hold a tile to pick a condition and favourite it.</span></div>
-        <div class="grow"><b data-i18n="help_qr_b">QR</b><span data-i18n="help_qr_d">Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are drawn in black so the code still scans.</span></div>
+        <div class="grow"><b data-i18n="help_qr_b">QR</b><span data-i18n="help_qr_d">Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are drawn in black so the code still scans. Tap the tool to re-use the last link, double-tap it to enter a new one, hold it for your last five.</span></div>
       </div>
       <div class="gsec">
         <h4 data-i18n="help_pick_h">Choosing defects</h4>
@@ -1511,6 +1511,7 @@ const I18N={
     "emoji_tip":"Emoji: press Win + . on Windows, or Control + Command + Space on Mac.",
     "tool_qr":"QR",
     "qr_title":"QR code",
+    "qr_new":"New link…",
     "qr_edit_title":"Edit QR link",
     "qr_placeholder":"https://…",
     "qr_link":"Link",
@@ -1522,7 +1523,7 @@ const I18N={
     "toast_pasted":"Pasted",
     "ctx_label_qr":"Link",
     "help_qr_b":"QR",
-    "help_qr_d":"Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are drawn in black so the code still scans.",
+    "help_qr_d":"Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are drawn in black so the code still scans. Tap the tool to re-use the last link, double-tap it to enter a new one, hold it for your last five.",
     "help_pick_h":"Choosing defects",
     "help_picktool_b":"The tool button",
     "help_picktool_d":"Tap it to re-arm the last defect and place straight away. Double-tap to open the list. Hold it for the five most recent, each at the condition you used it at.",
@@ -1673,7 +1674,7 @@ const I18N={
     "help_length_b":"Length",
     "help_length_d":"Drag a measured line. Short bars mark each end. Enter a value and pick a unit (mm, m, in, ft) — the number rides alongside the line. Hold the tool for your last five values: pick one and the next line takes it without the dialog.",
     "help_measure_b":"Measure",
-    "help_measure_d":"Auto-measures real size from a calibrated camera. Set a scale once (pick a camera + enter distance), then draw a line for length or an area for a polygon — the value is computed for you. Double-tap a measurement to change its unit.",
+    "help_measure_d":"Auto-measures real size from a calibrated camera. Set a scale once (pick a camera + enter distance), then draw a line for length or an area for a polygon — the value is computed for you. Double-tap a measurement to change its unit. Double-tap the tool to set the scale; a new photo starts from the camera and distance you used last.",
     "help_calib_b":"Calibrate camera",
     "help_calib_d":"In Measure, open Cameras… to teach the tool your camera. Photograph an object of known width at several known distances, mark it on each, and save. Reuse the saved camera on any photo — no ruler needed in the shot.",
     "help_note_b":"Note",
@@ -1918,6 +1919,7 @@ const I18N={
     "emoji_tip":"表情符号：Windows 按 Win + .，Mac 按 Control + Command + 空格。",
     "tool_qr":"二维码",
     "qr_title":"二维码",
+    "qr_new":"新链接…",
     "qr_edit_title":"编辑二维码链接",
     "qr_placeholder":"https://…",
     "qr_link":"链接",
@@ -1929,7 +1931,7 @@ const I18N={
     "toast_pasted":"已粘贴",
     "ctx_label_qr":"链接",
     "help_qr_b":"二维码",
-    "help_qr_d":"在照片上放置可扫描的二维码——输入链接后点击放置。使用当前墨水颜色和 S/M/L 尺寸。双击可更改链接。浅色会以黑色绘制，以保证可扫描。",
+    "help_qr_d":"在照片上放置可扫描的二维码——输入链接后点击放置。使用当前墨水颜色和 S/M/L 尺寸。双击可更改链接。浅色会以黑色绘制，以保证可扫描。点击工具可重用上一个链接，双击可输入新链接，长按可选最近五个。",
     "help_pick_h":"选择缺陷",
     "help_picktool_b":"工具按钮",
     "help_picktool_d":"轻点即可重新装载上一个缺陷并立即标注。双击打开列表。长按显示最近五个，各自保留上次使用的状态等级。",
@@ -2084,7 +2086,7 @@ const I18N={
     "help_length_b":"长度",
     "help_length_d":"拖出一条测量线，两端有短横标记。输入数值并选择单位（毫米、米、英寸、英尺）——数字会显示在线条旁边。长按工具可选最近五个数值：选中后，下一条线直接使用该数值，不弹出对话框。",
     "help_measure_b":"测量",
-    "help_measure_d":"根据已校准的相机自动测量实际尺寸。设置一次比例（选择相机并输入距离），然后绘制线段测长度或多边形测面积——数值会自动计算。双击测量结果可更改单位。",
+    "help_measure_d":"根据已校准的相机自动测量实际尺寸。设置一次比例（选择相机并输入距离），然后绘制线段测长度或多边形测面积——数值会自动计算。双击测量结果可更改单位。双击工具可设置比例；新照片会沿用上次使用的相机和距离。",
     "help_calib_b":"校准相机",
     "help_calib_d":"在\"测量\"中打开\"相机…\"来让工具学习您的相机。在几个已知距离处拍摄一个已知宽度的物体，逐一标记后保存。之后在任意照片中复用已保存的相机——拍摄时无需放置直尺。",
     "help_note_b":"备注",
@@ -2329,6 +2331,7 @@ const I18N={
     "emoji_tip":"Emoji: pulse Win + . en Windows, o Control + Comando + Espacio en Mac.",
     "tool_qr":"QR",
     "qr_title":"Código QR",
+    "qr_new":"Enlace nuevo…",
     "qr_edit_title":"Editar enlace QR",
     "qr_placeholder":"https://…",
     "qr_link":"Enlace",
@@ -2340,7 +2343,7 @@ const I18N={
     "toast_pasted":"Pegado",
     "ctx_label_qr":"Enlace",
     "help_qr_b":"QR",
-    "help_qr_d":"Coloca un código escaneable sobre la foto: introduce un enlace y luego toca para situarlo. Usa el color de tinta actual y el tamaño S/M/L. Toca dos veces para cambiar el enlace. Los colores claros se dibujan en negro para que el código siga siendo legible.",
+    "help_qr_d":"Coloca un código escaneable sobre la foto: introduce un enlace y luego toca para situarlo. Usa el color de tinta actual y el tamaño S/M/L. Toca dos veces para cambiar el enlace. Los colores claros se dibujan en negro para que el código siga siendo legible. Toque la herramienta para reutilizar el último enlace, tóquela dos veces para introducir uno nuevo, manténgala pulsada para los cinco últimos.",
     "help_pick_h":"Elegir defectos",
     "help_picktool_b":"El botón de la herramienta",
     "help_picktool_d":"Tóquelo para recuperar el último defecto y colocarlo de inmediato. Toque dos veces para abrir la lista. Manténgalo pulsado para ver los cinco más recientes, cada uno con el estado con el que lo usó.",
@@ -2495,7 +2498,7 @@ const I18N={
     "help_length_b":"Longitud",
     "help_length_d":"Arrastre una línea medida. Barras cortas marcan cada extremo. Introduzca un valor y elija una unidad (mm, m, in, ft); el número aparece junto a la línea. Mantenga pulsada la herramienta para ver sus cinco últimos valores: elija uno y la siguiente línea lo toma sin el diálogo.",
     "help_measure_b":"Medir",
-    "help_measure_d":"Mide automáticamente el tamaño real a partir de una cámara calibrada. Defina una escala una vez (elija una cámara e introduzca la distancia), luego dibuje una línea para la longitud o un área con un polígono; el valor se calcula por usted. Toque dos veces una medida para cambiar su unidad.",
+    "help_measure_d":"Mide automáticamente el tamaño real a partir de una cámara calibrada. Defina una escala una vez (elija una cámara e introduzca la distancia), luego dibuje una línea para la longitud o un área con un polígono; el valor se calcula por usted. Toque dos veces una medida para cambiar su unidad. Toque dos veces la herramienta para definir la escala; una foto nueva parte de la cámara y la distancia usadas la última vez.",
     "help_calib_b":"Calibrar cámara",
     "help_calib_d":"En Medir, abra Cámaras… para enseñar a la herramienta su cámara. Fotografíe un objeto de ancho conocido a varias distancias conocidas, márquelo en cada una y guarde. Reutilice la cámara guardada en cualquier foto; no se necesita regla en la toma.",
     "help_note_b":"Nota",
@@ -2740,6 +2743,7 @@ const I18N={
     "emoji_tip":"इमोजी: Windows पर Win + . दबाएँ, या Mac पर Control + Command + Space।",
     "tool_qr":"QR",
     "qr_title":"QR कोड",
+    "qr_new":"नया लिंक…",
     "qr_edit_title":"QR लिंक संपादित करें",
     "qr_placeholder":"https://…",
     "qr_link":"लिंक",
@@ -2751,7 +2755,7 @@ const I18N={
     "toast_pasted":"पेस्ट किया गया",
     "ctx_label_qr":"लिंक",
     "help_qr_b":"QR",
-    "help_qr_d":"फ़ोटो पर स्कैन करने योग्य कोड रखता है — एक लिंक दर्ज करें, फिर रखने के लिए टैप करें। वर्तमान स्याही रंग और S/M/L आकार का उपयोग करता है। लिंक बदलने के लिए डबल-टैप करें। हल्के रंग काले रंग में बनाए जाते हैं ताकि कोड स्कैन होता रहे।",
+    "help_qr_d":"फ़ोटो पर स्कैन करने योग्य कोड रखता है — एक लिंक दर्ज करें, फिर रखने के लिए टैप करें। वर्तमान स्याही रंग और S/M/L आकार का उपयोग करता है। लिंक बदलने के लिए डबल-टैप करें। हल्के रंग काले रंग में बनाए जाते हैं ताकि कोड स्कैन होता रहे। पिछला लिंक दोबारा इस्तेमाल करने के लिए टूल पर टैप करें, नया लिंक डालने के लिए डबल-टैप करें, पिछले पाँच के लिए दबाए रखें।",
     "help_pick_h":"दोष चुनना",
     "help_picktool_b":"टूल बटन",
     "help_picktool_d":"पिछला दोष दोबारा तैयार करने और तुरंत लगाने के लिए टैप करें। सूची खोलने के लिए डबल-टैप करें। हाल के पाँच देखने के लिए दबाकर रखें — हर एक उसी स्थिति स्तर के साथ जिस पर उसे लगाया गया था।",
@@ -2906,7 +2910,7 @@ const I18N={
     "help_length_b":"लंबाई",
     "help_length_d":"मापी गई रेखा खींचें। हर सिरे पर छोटी पट्टियाँ होती हैं। मान दर्ज करें और इकाई चुनें (मिमी, मी, इंच, फीट) — संख्या रेखा के साथ दिखती है। पिछले पाँच मानों के लिए टूल को दबाए रखें: एक चुनें और अगली रेखा उसे बिना डायलॉग के ले लेगी।",
     "help_measure_b":"मापें",
-    "help_measure_d":"कैलिब्रेटेड कैमरे से वास्तविक आकार अपने आप मापता है। एक बार स्केल सेट करें (कैमरा चुनें + दूरी दर्ज करें), फिर लंबाई के लिए रेखा या क्षेत्र के लिए बहुभुज बनाएं — मान अपने आप गणना हो जाता है। इकाई बदलने के लिए माप पर डबल-टैप करें।",
+    "help_measure_d":"कैलिब्रेटेड कैमरे से वास्तविक आकार अपने आप मापता है। एक बार स्केल सेट करें (कैमरा चुनें + दूरी दर्ज करें), फिर लंबाई के लिए रेखा या क्षेत्र के लिए बहुभुज बनाएं — मान अपने आप गणना हो जाता है। इकाई बदलने के लिए माप पर डबल-टैप करें। स्केल सेट करने के लिए टूल पर डबल-टैप करें; नई फ़ोटो पिछली बार इस्तेमाल किए गए कैमरे और दूरी से शुरू होती है।",
     "help_calib_b":"कैमरा कैलिब्रेट करें",
     "help_calib_d":"मापें में, कैमरे… खोलकर टूल को अपना कैमरा सिखाएं। ज्ञात चौड़ाई की वस्तु को कई ज्ञात दूरियों पर फ़ोटो करें, हर एक पर चिह्नित करें, और सेव करें। सेव किए गए कैमरे को किसी भी फ़ोटो में दोबारा उपयोग करें — शॉट में रूलर की ज़रूरत नहीं।",
     "help_note_b":"नोट",
@@ -3151,6 +3155,7 @@ const I18N={
     "emoji_tip":"الرموز التعبيرية: اضغط Win + ‎.‎ على ويندوز، أو Control + Command + Space على ماك.",
     "tool_qr":"رمز QR",
     "qr_title":"رمز QR",
+    "qr_new":"رابط جديد…",
     "qr_edit_title":"تعديل رابط QR",
     "qr_placeholder":"https://…",
     "qr_link":"الرابط",
@@ -3162,7 +3167,7 @@ const I18N={
     "toast_pasted":"تم اللصق",
     "ctx_label_qr":"الرابط",
     "help_qr_b":"رمز QR",
-    "help_qr_d":"يضع رمزًا قابلاً للمسح على الصورة — أدخل رابطًا ثم اضغط لوضعه. يستخدم لون الحبر الحالي والحجم S/M/L. اضغط مرتين لتغيير الرابط. تُرسم الألوان الفاتحة بالأسود ليظل الرمز قابلاً للمسح.",
+    "help_qr_d":"يضع رمزًا قابلاً للمسح على الصورة — أدخل رابطًا ثم اضغط لوضعه. يستخدم لون الحبر الحالي والحجم S/M/L. اضغط مرتين لتغيير الرابط. تُرسم الألوان الفاتحة بالأسود ليظل الرمز قابلاً للمسح. اضغط على الأداة لإعادة استخدام آخر رابط، واضغط مرتين لإدخال رابط جديد، واضغط مطولًا لآخر خمسة روابط.",
     "help_pick_h":"اختيار العيوب",
     "help_picktool_b":"زر الأداة",
     "help_picktool_d":"انقره لإعادة تجهيز آخر عيب ووضعه مباشرة. انقر نقرًا مزدوجًا لفتح القائمة. استمر بالضغط لعرض آخر خمسة، كل منها بالحالة التي استُخدم بها.",
@@ -3317,7 +3322,7 @@ const I18N={
     "help_length_b":"الطول",
     "help_length_d":"اسحب خطًا مقاسًا. تُحدَّد كل نهاية بشريط قصير. أدخل قيمة واختر وحدة (مم، م، بوصة، قدم) — يظهر الرقم بجانب الخط. اضغط مطولًا على الأداة لآخر خمس قيم: اختر واحدة وسيأخذها الخط التالي دون نافذة الحوار.",
     "help_measure_b":"قياس",
-    "help_measure_d":"يقيس الحجم الفعلي تلقائيًا من كاميرا معايرة. اضبط المقياس مرة واحدة (اختر كاميرا وأدخل المسافة)، ثم ارسم خطًا للطول أو مساحة لمضلع — تُحسب القيمة تلقائيًا. اضغط مرتين على القياس لتغيير وحدته.",
+    "help_measure_d":"يقيس الحجم الفعلي تلقائيًا من كاميرا معايرة. اضبط المقياس مرة واحدة (اختر كاميرا وأدخل المسافة)، ثم ارسم خطًا للطول أو مساحة لمضلع — تُحسب القيمة تلقائيًا. اضغط مرتين على القياس لتغيير وحدته. اضغط مرتين على الأداة لضبط المقياس؛ تبدأ الصورة الجديدة بالكاميرا والمسافة المستخدمتين آخر مرة.",
     "help_calib_b":"معايرة الكاميرا",
     "help_calib_d":"في القياس، افتح الكاميرات… لتعليم الأداة كاميرتك. صوّر جسمًا معروف العرض عند عدة مسافات معروفة، وحدده في كل منها، ثم احفظ. أعد استخدام الكاميرا المحفوظة في أي صورة — لا حاجة لمسطرة في اللقطة.",
     "help_note_b":"ملاحظة",
@@ -3562,6 +3567,7 @@ const I18N={
     "emoji_tip":"Эмодзи: нажмите Win + . в Windows или Control + Command + Пробел в Mac.",
     "tool_qr":"QR",
     "qr_title":"QR-код",
+    "qr_new":"Новая ссылка…",
     "qr_edit_title":"Изменить ссылку QR",
     "qr_placeholder":"https://…",
     "qr_link":"Ссылка",
@@ -3573,7 +3579,7 @@ const I18N={
     "toast_pasted":"Вставлено",
     "ctx_label_qr":"Ссылка",
     "help_qr_b":"QR",
-    "help_qr_d":"Размещает сканируемый код на фото — введите ссылку, затем нажмите для размещения. Использует текущий цвет чернил и размер S/M/L. Двойное нажатие меняет ссылку. Светлые цвета рисуются чёрным, чтобы код читался.",
+    "help_qr_d":"Размещает сканируемый код на фото — введите ссылку, затем нажмите для размещения. Использует текущий цвет чернил и размер S/M/L. Двойное нажатие меняет ссылку. Светлые цвета рисуются чёрным, чтобы код читался. Нажмите инструмент, чтобы снова использовать последнюю ссылку, дважды — чтобы ввести новую, удерживайте — для пяти последних.",
     "help_pick_h":"Выбор дефектов",
     "help_picktool_b":"Кнопка инструмента",
     "help_picktool_d":"Нажмите, чтобы вернуть последний дефект и сразу поставить его. Двойное нажатие открывает список. Удержание показывает пять недавних, каждый с тем состоянием, с которым он использовался.",
@@ -3728,7 +3734,7 @@ const I18N={
     "help_length_b":"Длина",
     "help_length_d":"Проведите измерительную линию. Короткие штрихи отмечают её концы. Введите значение и выберите единицу (мм, м, дюйм, фут) — число отображается рядом с линией. Удерживайте инструмент, чтобы выбрать одно из пяти последних значений: следующая линия получит его без диалога.",
     "help_measure_b":"Измерение",
-    "help_measure_d":"Автоматически измеряет реальный размер по откалиброванной камере. Задайте масштаб один раз (выберите камеру и введите расстояние), затем нарисуйте линию для длины или область для полигона — значение рассчитается само. Дважды нажмите на измерение, чтобы сменить единицу.",
+    "help_measure_d":"Автоматически измеряет реальный размер по откалиброванной камере. Задайте масштаб один раз (выберите камеру и введите расстояние), затем нарисуйте линию для длины или область для полигона — значение рассчитается само. Дважды нажмите на измерение, чтобы сменить единицу. Двойное касание инструмента задаёт масштаб; новое фото начинается с последних использованных камеры и расстояния.",
     "help_calib_b":"Калибровка камеры",
     "help_calib_d":"В разделе «Измерение» откройте «Камеры…», чтобы обучить инструмент вашей камере. Сфотографируйте объект известной ширины на нескольких известных расстояниях, отметьте его на каждом снимке и сохраните. Используйте сохранённую камеру для любых фото — линейка в кадре не нужна.",
     "help_note_b":"Заметка",
@@ -4550,7 +4556,7 @@ const S = {
   objects:[], sel:null, tool:'select', armedQR:null,
   style:{color:INKS[0], w:'M', tip:'off', dimEnds:'bars'},
   fmt:'jpg',
-  counters:{}, angleDraft:null, polyDraft:null, polyFill:true, textFill:true, numPrefix:'',
+  counters:{}, angleDraft:null, polyDraft:null, polyFill:true, fillBy:{text:true,note:true,dim:true,angle:true,measure:true}, lastScale:null, recentQr:[], numPrefix:'',
   armedLen:null, armedNote:null, recentLen:[], recentNote:[],
   armedDefect:null, armedLbl:null, recent:[], recentLbl:[], favs:[], tagsOwn:[],
   photos:[], curId:null, elements:[], personal:[], perCat:{},
@@ -5176,13 +5182,13 @@ function onDown(p){
     if(a){ beginEdit();
       const col=a.color||S.style.color;
       const o=(a.k==='text')
-        ? {id:newId(),type:'text',x:ip.x,y:ip.y,text:a.text,color:col,size:fontPx(),fill:S.textFill}
-        : {id:newId(),type:'tag',x:ip.x,y:ip.y,text:a.text,color:col,size:fontPx(),fill:S.textFill,sev:'none',cat:a.k,term:a.term,grp:a.grp||''};
+        ? {id:newId(),type:'text',x:ip.x,y:ip.y,text:a.text,color:col,size:fontPx(),fill:S.fillBy.text}
+        : {id:newId(),type:'tag',x:ip.x,y:ip.y,text:a.text,color:col,size:fontPx(),fill:S.fillBy.text,sev:'none',cat:a.k,term:a.term,grp:a.grp||''};
       S.objects.push(o); S.sel=o.id; commit(); syncCtx();
       pushLbl(a.term,a.k,col,a.grp);
       clearLbl();          // one-shot: the next tap types again
       render(); return; }
-    const o={id:newId(),type:'text',x:ip.x,y:ip.y,text:'',color:S.style.color,size:fontPx(),fill:S.textFill};
+    const o={id:newId(),type:'text',x:ip.x,y:ip.y,text:'',color:S.style.color,size:fontPx(),fill:S.fillBy.text};
     pendingDlg=()=>editLabel(o);
   } else if(S.tool==='number'){
     act=null; if(trySelect(ip)) return;
@@ -5214,7 +5220,7 @@ function onDown(p){
       }
     } else {
       beginEdit();
-      const o={id:newId(),type:'mline',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),size:fontPx(),fill:S.textFill,pxMm:S.scale.pxMm,unit:'mm'};
+      const o={id:newId(),type:'mline',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),size:fontPx(),fill:S.fillBy.measure,pxMm:S.scale.pxMm,unit:'mm'};
       act={mode:'draw',o,startImg:ip}; S.objects.push(o); render();
     }
   } else if(S.tool==='qr'){
@@ -5232,8 +5238,8 @@ function onDown(p){
   } else {
     beginEdit();
     let o;
-    if(S.tool==='note') o={id:newId(),type:'note',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),text:'',size:fontPx(),fill:S.textFill,tip:S.style.tip};
-    else if(S.tool==='dim') o={id:newId(),type:'dim',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),value:'',unit:S.units.dim||'mm',size:fontPx(),fill:S.textFill,ends:S.style.dimEnds};
+    if(S.tool==='note') o={id:newId(),type:'note',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),text:'',size:fontPx(),fill:S.fillBy.note,tip:S.style.tip};
+    else if(S.tool==='dim') o={id:newId(),type:'dim',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),value:'',unit:S.units.dim||'mm',size:fontPx(),fill:S.fillBy.dim,ends:S.style.dimEnds};
     else o={id:newId(),type:'pen',pts:[{x:ip.x,y:ip.y}],color:S.style.color,w:widthPx(),tip:S.style.tip};
     if(o.type==='dim'&&S.armedLen){ o.value=S.armedLen.v; o.unit=S.armedLen.u; o._arm=1; }
     if(o.type==='note'&&S.armedNote){ o.text=S.armedNote; o._arm=1; }
@@ -5250,7 +5256,7 @@ function closePoly(){
 function closeMArea(){
   const d=S.polyDraft; if(!d||d.pts.length<3){ toast(t('toast_need_3_points')); return; }
   beginEdit();
-  const o={id:newId(),type:'marea',pts:d.pts,color:S.style.color,w:widthPx(),size:fontPx(),shade:true,fill:S.textFill,pxMm:S.scale.pxMm,unit:'m2'};
+  const o={id:newId(),type:'marea',pts:d.pts,color:S.style.color,w:widthPx(),size:fontPx(),shade:true,fill:S.fillBy.measure,pxMm:S.scale.pxMm,unit:'m2'};
   if(o.pxMm>0){ o.unit=autoUnit(o,S.units.marea); }
   S.objects.push(o); S.sel=o.id; commit(); syncCtx();
   S.polyDraft=null; updateMeasCtl(); render();
@@ -5282,7 +5288,7 @@ function onUp(){
     const d=S.angleDraft;
     if(d && Math.hypot(d.bx-d.vx,d.by-d.vy)>8/S.view.s){
       beginEdit();
-      const o={id:newId(),type:'angle',vx:d.vx,vy:d.vy,ax:d.ax,ay:d.ay,bx:d.bx,by:d.by,color:S.style.color,w:widthPx(),value:'',unit:'°',size:fontPx(),fill:S.textFill};
+      const o={id:newId(),type:'angle',vx:d.vx,vy:d.vy,ax:d.ax,ay:d.ay,bx:d.bx,by:d.by,color:S.style.color,w:widthPx(),value:'',unit:'°',size:fontPx(),fill:S.fillBy.angle};
       S.objects.push(o); S.sel=o.id; commit(); syncCtx(); S.angleDraft=null; render(); editValue(o);
     } else { if(d){d.bx=null;d.by=null;} toast(t('toast_draw_the_second_side')); render(); }
     act=null; return;
@@ -5355,12 +5361,24 @@ function commitQr(){
   if(v.length>QR_MAX || !qrMatrix(v)){ qrCountSync(); toast(t('toast_qr_long')); try{ $('qrInput').focus({preventScroll:true}); }catch(e){} return; }
   if(qrTarget){ beginEdit(); qrTarget.text=v; commit(); render(); }
   else { S.armedQR={text:v}; updateQr(); toast(t('toast_tap_to_place')); }
+  pushQr(v);
   qrTarget=null; hideOverlay('qrOverlay');
 }
 function cancelQr(){ qrTarget=null; hideOverlay('qrOverlay'); }
 function qrCountSync(){ const n=$('qrInput').value.trim().length, el=$('qrCount'), over=n>QR_MAX;
   el.classList.toggle('over',over);
   el.textContent = !n ? '' : over ? (n+' / '+QR_MAX+' · '+t('toast_qr_long')) : (n+' / '+QR_MAX); }
+function pushQr(v){ if(!v) return; S.recentQr=[v].concat(S.recentQr.filter(x=>x!==v)).slice(0,8); dirty(); }
+function qrShort(v){ return v.length>34 ? v.slice(0,20)+'…'+v.slice(-12) : v; }
+function qrTap(){ if(S.armedQR) return; if(S.recentQr.length){ S.armedQR={text:S.recentQr[0]}; updateQr(); updateQrCtl(); toast(t('toast_tap_to_place')); } else openQr(null); }
+function openQrMenu(btn){
+  const m=$('defMenu'), rec=S.recentQr.slice(0,5);
+  m.innerHTML = (rec.length
+    ? rec.map((x,i)=>'<button data-qridx="'+i+'"'+(S.armedQR&&S.armedQR.text===x?' class="on"':'')+'><span class="ltr">'+esc(qrShort(x))+'</span></button>').join('')
+    : '<button class="mm" disabled><span>'+esc(t('no_recent_labels'))+'</span></button>')
+    +'<div class="dsep"></div><button class="mm" data-qrnew="1"><span>'+esc(t('qr_new'))+'</span></button>';
+  m.classList.add('show'); placeMenu(m,btn);
+}
 function updateQr(){ $('qrcur').textContent = S.armedQR ? S.armedQR.text : t('choose_ellipsis'); }
 
 // ── Value editing (dimension / angle / number) ──────────
@@ -5432,6 +5450,7 @@ function updateQrCtl(){
   $('qrctl').classList.toggle('hidden',!show);
   if(show) updateQr();
 }
+function fillKey(ty){ return (ty==='text'||ty==='tag')?'text':(ty==='mline'||ty==='marea')?'measure':ty; }
 function updateTextCtl(){
   const o=S.sel!=null?getObj(S.sel):null;
   const isTextTool=S.tool==='text'||S.tool==='note'||S.tool==='dim'||S.tool==='angle'||S.tool==='measure';
@@ -5442,7 +5461,8 @@ function updateTextCtl(){
   ['lbllbl','lblcur','lblclear'].forEach(id=>{ $(id).style.display=a?'':'none'; });
   if(a){ $('lblcur').textContent=a.text; $('lblcur').style.color=a.color||''; $('lbllbl').textContent=t(S.tool==='text'?'label_label':'next'); }
   if(!show) return;
-  const fillOn=isTextObj ? o.fill!==false : S.textFill;
+  const fk=isTextObj?fillKey(o.type):S.tool;
+  const fillOn=isTextObj ? o.fill!==false : S.fillBy[fk]!==false;
   $('textfill').textContent=fillOn?t('fill_on'):t('fill_off');
 }
 const TIP_OPTS=['off','arrow','round'], END_OPTS=['bars','arrows'];
@@ -5680,7 +5700,7 @@ function dirty(){ clearTimeout(dirtyT); dirtyT=setTimeout(saveSession,1000); }
 function saveSession(){
   if(!db)return; stashCur();
   idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counters:p.counters||{},scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',repEx:!!p.repEx,kind:p.kind||'photo'})),
-    curId:S.curId, favs:S.favs, recent:S.recent, recentLbl:S.recentLbl, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, recentLen:S.recentLen, recentNote:S.recentNote, rep:S.rep, uid, pid });
+    curId:S.curId, favs:S.favs, recent:S.recent, recentLbl:S.recentLbl, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, recentLen:S.recentLen, recentNote:S.recentNote, recentQr:S.recentQr, rep:S.rep, uid, pid });
 }
 function clearSession(){ if(!db)return; try{ const st=db.transaction('session','readwrite').objectStore('session'), rq=st.getAllKeys();
   rq.onsuccess=()=>{ (rq.result||[]).forEach(k=>{ if(k!=='lang'&&k!=='units'&&k!=='repcfg'&&k!=='reppresets') st.delete(k); }); }; }catch(e){} }
@@ -5690,7 +5710,7 @@ async function restoreSession(){
   S.favs=migFavs(d.favs); S.recent=migRecent(d.recent); S.recentLbl=(d.recentLbl||[]).filter(x=>x&&x.t); S.elements=d.elements||[]; S.personal=migList(d.personal); S.perCat=d.perCat||{}; S.tagsOwn=d.tagsOwn||[];
   S.favs=S.favs.filter(f=>f.t!=='Review'); S.recentLbl=S.recentLbl.filter(x=>x.t!=='Review');
   S.numPrefix=d.numPrefix||''; $('numpre').value=S.numPrefix;
-  S.recentLen=(d.recentLen||[]).filter(x=>x&&typeof x.v==='string'&&x.v); S.recentNote=(d.recentNote||[]).filter(x=>typeof x==='string'&&x);
+  S.recentLen=(d.recentLen||[]).filter(x=>x&&typeof x.v==='string'&&x.v); S.recentNote=(d.recentNote||[]).filter(x=>typeof x==='string'&&x); S.recentQr=(d.recentQr||[]).filter(x=>typeof x==='string'&&x);
   if(d.rep) S.rep=Object.assign(S.rep,d.rep); if(!S.rep.ov) S.rep.ov={}; if(!S.rep.manual) S.rep.manual=[];
   if(d.fmt){ S.fmt=d.fmt; } $('fmtCur').textContent=(S.fmt==='png'?'PNG':'JPG');
   const recs=[];
@@ -6236,7 +6256,7 @@ function setTool(tl){
   S.tool=tl; document.querySelectorAll('.tool').forEach(b=>b.classList.toggle('on',b.dataset.tool===tl));
   $('numctl').classList.toggle('hidden',tl!=='number'); if(tl==='number')updateNext();
   $('defctl').classList.toggle('hidden',tl!=='defect'); if(tl==='defect'){ updateDef(); }
-  if(tl==='qr'){ updateQr(); openQr(null); }
+  if(tl==='qr'){ updateQr(); }
   $('measctl').classList.toggle('hidden',tl!=='measure');
   if(tl==='angle')toast(t('toast_draw_first_then_second'));
   if(tl==='measure'){ updateMeasCtl(); if(!(S.scale&&S.scale.pxMm>0)) toast(t('toast_set_scale_to_measure')); }
@@ -6319,10 +6339,14 @@ bindToolGestures('text', ()=>openPicker('arm',null,'label'), b=>openLblMenu(b));
 bindToolGestures('dim', null, b=>openLenMenu(b));
 bindToolGestures('note', null, b=>openNoteMenu(b));
 bindToolGestures('number', ()=>cyclePrefix(), b=>openNumMenu(b));
+bindToolGestures('qr', ()=>openQr(null), b=>openQrMenu(b), ()=>qrTap());
+bindToolGestures('measure', ()=>{ $('toast').classList.remove('show'); openScaleModal(); }, null);
 pipSync();
 $('defMenu').addEventListener('click',e=>{
   const np=e.target.closest('[data-npfx]'); if(np){ closeDefMenu(); setPrefix(np.dataset.npfx); toast(t('toast_next_val',{v:S.numPrefix+numN()})); return; }
   if(e.target.closest('[data-nreset]')){ closeDefMenu(); resetNum(); return; }
+  const qi=e.target.closest('[data-qridx]'); if(qi){ closeDefMenu(); const x=S.recentQr[+qi.dataset.qridx]; if(x){ S.armedQR={text:x}; pushQr(x); updateQr(); updateQrCtl(); toast(t('toast_tap_to_place')); } return; }
+  if(e.target.closest('[data-qrnew]')){ closeDefMenu(); openQr(null); return; }
   const li=e.target.closest('[data-lenidx]'); if(li){ closeDefMenu(); const x=S.recentLen[+li.dataset.lenidx]; if(x) armLen(x); return; }
   const ni=e.target.closest('[data-noteidx]'); if(ni){ closeDefMenu(); const x=S.recentNote[+ni.dataset.noteidx]; if(x) armNote(x); return; }
   if(e.target.closest('[data-rmore]')){ closeDefMenu(); openPicker('arm'); return; }
@@ -6386,7 +6410,7 @@ $('nextn').addEventListener('keydown',e=>{ if(e.key==='Enter') e.target.blur(); 
 $('numpre').addEventListener('input',()=>{ S.numPrefix=$('numpre').value.trim(); updateNext(); dirty(); });
 $('polyfill').onclick=()=>{
   const o=S.sel!=null?getObj(S.sel):null;
-  if(o&&o.type==='poly'){ beginEdit(); o.fill=!o.fill; commit(); }
+  if(o&&o.type==='poly'){ beginEdit(); o.fill=!o.fill; S.polyFill=o.fill; commit(); }
   else if(S.polyDraft){ S.polyDraft.fill=!S.polyDraft.fill; S.polyFill=S.polyDraft.fill; }
   else { S.polyFill=!S.polyFill; }
   updatePolyCtl(); render();
@@ -6409,8 +6433,10 @@ document.querySelectorAll('#tipseg button').forEach(b=>b.addEventListener('click
 $('textfill').onclick=()=>{
   const o=S.sel!=null?getObj(S.sel):null;
   const isTextObj=o&&(o.type==='text'||o.type==='note'||o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea'||(o.type==='tag'&&!isDefectObj(o)));
-  if(isTextObj){ beginEdit(); o.fill=o.fill===false; commit(); }
-  else { S.textFill=!S.textFill; }
+  const k=isTextObj?fillKey(o.type):S.tool;
+  const v=isTextObj ? (o.fill===false) : !(S.fillBy[k]!==false);
+  if(k in S.fillBy) S.fillBy[k]=v;
+  if(isTextObj){ beginEdit(); o.fill=v; commit(); }
   updateTextCtl(); render();
 };
 $('clearall').onclick=()=>{
@@ -6420,7 +6446,7 @@ $('clearall').onclick=()=>{
 };
 $('startover').onclick=()=>confirmBox(t('start_over_title'), t('start_over_body'),()=>{
   S.photos=[]; S.curId=null; S.img=null; S.objects=[]; S.sel=null; S.undo=[]; S.redo=[];
-  S.counters={}; S.armedLen=null; S.armedNote=null; S.recentLen=[]; S.recentNote=[]; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.armedLbl=null; S.armedQR=null; S.elements=[]; S.personal=[]; S.perCat={}; S.recent=[]; S.recentLbl=[]; S.favs=[]; S.tagsOwn=[];
+  S.counters={}; S.armedLen=null; S.armedNote=null; S.recentLen=[]; S.recentNote=[]; S.recentQr=[]; S.lastScale=null; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.armedLbl=null; S.armedQR=null; S.elements=[]; S.personal=[]; S.perCat={}; S.recent=[]; S.recentLbl=[]; S.favs=[]; S.tagsOwn=[];
   S.scale=null; S.measMode='line';
   S.rep={ structure:'', ref:'', date:'', inspector:'', weather:'', loclink:'', overall:'', sheets:true, perPage:1, schedule:true, stampNums:true, ov:{}, manual:[] };
   S.numPrefix=''; $('numpre').value='';
@@ -6571,7 +6597,7 @@ window.addEventListener('keydown',e=>{
   else if(e.key==='Escape'){ if(S.angleDraft)S.angleDraft=null; if(S.polyDraft){S.polyDraft=null;updatePolyCtl();updateMeasCtl();} S.sel=null; syncCtx(); render(); }
   else if(e.key==='#'){ if(!e.metaKey&&(!e.ctrlKey||e.altKey)) setTool('number'); }
   else if(!e.ctrlKey&&!e.metaKey&&!e.altKey&&e.key.length===1){
-    const tl=TOOL_KEYS[e.key.toLowerCase()]; if(tl) setTool(tl);
+    const tl=TOOL_KEYS[e.key.toLowerCase()]; if(tl){ setTool(tl); if(tl==='qr') qrTap(); }
   }
 });
 
@@ -6608,10 +6634,16 @@ function fillCamOptions(sel,selectedId){
     S.cams.map(c=>'<option value="'+c.id+'">'+esc(c.name)+'</option>').join('');
   sel.value=selectedId||'';
 }
+function lastScaleRef(){
+  if(S.lastScale) return S.lastScale;
+  for(let i=S.photos.length-1;i>=0;i--){ const sc=S.photos[i].scale; if(sc&&sc.pxMm>0) return sc; }
+  return null;
+}
 function openScaleModal(){
   if(!S.cams.length){ toast(t('toast_no_cameras_yet')); openCal(true); return; }
-  fillCamOptions($('scaleCam'), S.scale?S.scale.profileId:'');
-  $('scaleDist').value = S.scale?S.scale.distance:'';
+  const ref=S.scale||lastScaleRef();
+  fillCamOptions($('scaleCam'), ref?ref.profileId:'');
+  $('scaleDist').value = ref?ref.distance:'';
   updateScaleReadout();
   showOverlay('scaleOverlay');
 }
@@ -6628,7 +6660,7 @@ function applyScale(){
   if(!(d>0)){ toast(t('toast_enter_distance_m')); return; }
   const r=resFromCam(cam,d);
   if(!(r>0)){ toast(t('toast_could_not_compute_res')); return; }
-  S.scale={profileId:cam.id, distance:d, pxMm:r}; const rec=curRec(); if(rec)rec.scale=S.scale;
+  S.scale={profileId:cam.id, distance:d, pxMm:r}; S.lastScale=S.scale; const rec=curRec(); if(rec)rec.scale=S.scale;
   hideOverlay('scaleOverlay'); updateMeasCtl(); dirty();
   toast(t('toast_scale_set',{value:r.toFixed(2)}));
 }
@@ -7184,7 +7216,7 @@ function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'
 // one printed row's cells, in setup order; the group sub-line only where asked
 function colCells(x,withGrp){ return visCols().map(k=>'<td>'+(k==='cs'?csTd(x.cs):
   esc(x[k]||'')+(k==='def'&&withGrp&&rcSec('grp')&&x.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.grp)+'</span>':''))+'</td>').join(''); }
-const MARKUP_VER='1.5.0';
+const MARKUP_VER='1.5.1';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
