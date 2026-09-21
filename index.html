@@ -633,6 +633,13 @@ body.hasfine .emotip{display:block}
 .rp-empty{font-size:13px;color:var(--muted);padding:12px 2px;line-height:1.5}
 .rp-foot{flex:0 0 auto;display:flex;gap:8px;align-items:center;padding-top:10px;border-top:1px solid var(--panel-border);margin-top:6px}
 .rp-count{font-size:12px;color:var(--muted);margin-right:auto}
+.rs-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.rs-row input[type=checkbox]{width:18px;height:18px;flex:0 0 auto;accent-color:var(--accent)}
+.rs-row .rs-sp{width:18px;flex:0 0 auto}
+.rs-row.off input[type=text]{opacity:.45}
+.rs-secs{display:flex;flex-direction:column;gap:10px}
+.rs-dot{width:12px;height:12px;border-radius:50%;flex:0 0 auto}
+.rs-row input.rs-code{flex:0 0 84px;width:84px}
 @media (max-width:640px){ .rp-tbl{font-size:11px} .rp-photo .rp-th{width:52px;height:40px} }
 
 /* printable document (hidden on screen) */
@@ -737,7 +744,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.4.5 · BETA · multilingual</span>
+        <span class="ver">v1.4.8 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -949,7 +956,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.4.5</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.4.8</span></div>
   </nav>
 </div>
 
@@ -1018,13 +1025,30 @@ body.hasfine .emotip{display:block}
     <div class="sheet-head">
       <h3 data-i18n="report_title">Report</h3>
       <span class="rp-exp" data-i18n="rep_exp">Experimental</span>
+      <button class="x" id="repSetup" title="Report setup" aria-label="Report setup" data-i18n-title="rep_setup"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg></button>
       <button class="x" id="repClose">&times;</button>
     </div>
     <div class="rp-body" id="repBody"></div>
     <div class="rp-foot">
       <span class="rp-count" id="repCount"></span>
       <button class="btn ghost" id="repReset" data-i18n="rep_reset">Reset edits</button>
+      <button class="btn ghost" id="repCsv" title="Save findings as a CSV file (Excel, Sheets)" data-i18n-title="rep_csv_title">CSV</button>
       <button class="btn primary" id="repPrint" data-i18n="rep_print">Print / PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- report setup -->
+<div class="overlay sheetwrap" id="rsOverlay">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h3 data-i18n="rep_setup">Report setup</h3>
+      <button class="x" id="rsClose">&times;</button>
+    </div>
+    <div class="rp-body" id="rsBody"></div>
+    <div class="rp-foot">
+      <button class="btn ghost" id="rsReset" data-i18n="rep_setup_reset" style="margin-right:auto">Reset to standard</button>
+      <button class="btn primary" id="rsDone" data-i18n="done">Done</button>
     </div>
   </div>
 </div>
@@ -1337,6 +1361,25 @@ const I18N={
     "col_comment":"Comment",
     "col_action":"Action",
     "rep_counts":"Findings: {f} · Photos: {p}",
+    "rep_setup_cs":"Condition scale",
+    "rep_setup_cs_hint":"Code prints in the report; code and word show when choosing a defect. Untick states you do not use.",
+    "rep_setup":"Report setup",
+    "rep_setup_hint":"Untick to hide. Type to rename — leave blank for the standard name.",
+    "rep_setup_title_lbl":"Report title",
+    "rep_setup_fields":"Header fields",
+    "rep_setup_cols":"Columns",
+    "rep_setup_secs":"Sections",
+    "sec_summary":"Summary tiles on the cover",
+    "sec_qr":"Location link as QR code",
+    "sec_phtbl":"Findings table under each photo",
+    "sec_grp":"Group under the defect name",
+    "rep_setup_reset":"Reset to standard",
+    "rep_setup_reset_title":"Reset report setup?",
+    "rep_setup_reset_body":"All names return to standard and every item is switched back on.",
+    "done":"Done",
+    "col_group":"Group",
+    "col_file":"File",
+    "rep_csv_title":"Save findings as a CSV file (Excel, Sheets)",
     "add_photos":"Add photos",
     "untitled":"Untitled",
     "no_scale":"(no scale)",
@@ -1698,6 +1741,25 @@ const I18N={
     "col_comment":"备注",
     "col_action":"措施",
     "rep_counts":"结果：{f} · 照片：{p}",
+    "rep_setup_cs":"状况等级",
+    "rep_setup_cs_hint":"代码打印在报告中；选择缺陷时显示代码和文字。取消勾选不使用的等级。",
+    "rep_setup":"报告设置",
+    "rep_setup_hint":"取消勾选即隐藏。输入文字可重命名——留空则使用标准名称。",
+    "rep_setup_title_lbl":"报告标题",
+    "rep_setup_fields":"表头字段",
+    "rep_setup_cols":"列",
+    "rep_setup_secs":"内容",
+    "sec_summary":"封面上的汇总方块",
+    "sec_qr":"位置链接显示为二维码",
+    "sec_phtbl":"每张照片下的结果表",
+    "sec_grp":"缺陷名称下显示类别",
+    "rep_setup_reset":"恢复标准设置",
+    "rep_setup_reset_title":"重置报告设置？",
+    "rep_setup_reset_body":"所有名称恢复为标准名称，所有项目重新开启。",
+    "done":"完成",
+    "col_group":"类别",
+    "col_file":"文件",
+    "rep_csv_title":"将结果保存为 CSV 文件（Excel、表格）",
     "add_photos":"添加照片",
     "untitled":"无标题",
     "no_scale":"（无比例）",
@@ -2059,6 +2121,25 @@ const I18N={
     "col_comment":"Comentario",
     "col_action":"Acción",
     "rep_counts":"Hallazgos: {f} · Fotos: {p}",
+    "rep_setup_cs":"Escala de condición",
+    "rep_setup_cs_hint":"El código se imprime en el informe; código y palabra se muestran al elegir un defecto. Desmarca los estados que no uses.",
+    "rep_setup":"Configurar informe",
+    "rep_setup_hint":"Desmarca para ocultar. Escribe para cambiar el nombre; déjalo en blanco para usar el nombre estándar.",
+    "rep_setup_title_lbl":"Título del informe",
+    "rep_setup_fields":"Campos del encabezado",
+    "rep_setup_cols":"Columnas",
+    "rep_setup_secs":"Secciones",
+    "sec_summary":"Resumen en la portada",
+    "sec_qr":"Enlace de ubicación como código QR",
+    "sec_phtbl":"Tabla de hallazgos bajo cada foto",
+    "sec_grp":"Grupo bajo el nombre del defecto",
+    "rep_setup_reset":"Restablecer estándar",
+    "rep_setup_reset_title":"¿Restablecer la configuración del informe?",
+    "rep_setup_reset_body":"Todos los nombres vuelven al estándar y todo se vuelve a activar.",
+    "done":"Listo",
+    "col_group":"Grupo",
+    "col_file":"Archivo",
+    "rep_csv_title":"Guardar los hallazgos como archivo CSV (Excel, Sheets)",
     "add_photos":"Añadir fotos",
     "untitled":"Sin título",
     "no_scale":"(sin escala)",
@@ -2420,6 +2501,25 @@ const I18N={
     "col_comment":"टिप्पणी",
     "col_action":"कार्रवाई",
     "rep_counts":"निष्कर्ष: {f} · फ़ोटो: {p}",
+    "rep_setup_cs":"स्थिति पैमाना",
+    "rep_setup_cs_hint":"कोड रिपोर्ट में छपता है; दोष चुनते समय कोड और शब्द दिखते हैं। जिन स्थितियों का उपयोग नहीं करते, उनका टिक हटाएँ।",
+    "rep_setup":"रिपोर्ट सेटअप",
+    "rep_setup_hint":"छिपाने के लिए टिक हटाएँ। नाम बदलने के लिए लिखें — मानक नाम के लिए खाली छोड़ें।",
+    "rep_setup_title_lbl":"रिपोर्ट शीर्षक",
+    "rep_setup_fields":"हेडर फ़ील्ड",
+    "rep_setup_cols":"कॉलम",
+    "rep_setup_secs":"अनुभाग",
+    "sec_summary":"कवर पर सारांश टाइल",
+    "sec_qr":"स्थान लिंक QR कोड के रूप में",
+    "sec_phtbl":"हर फ़ोटो के नीचे निष्कर्ष तालिका",
+    "sec_grp":"दोष के नाम के नीचे समूह",
+    "rep_setup_reset":"मानक पर रीसेट करें",
+    "rep_setup_reset_title":"रिपोर्ट सेटअप रीसेट करें?",
+    "rep_setup_reset_body":"सभी नाम मानक पर लौट आएँगे और हर आइटम फिर से चालू हो जाएगा।",
+    "done":"हो गया",
+    "col_group":"समूह",
+    "col_file":"फ़ाइल",
+    "rep_csv_title":"निष्कर्षों को CSV फ़ाइल के रूप में सहेजें (Excel, Sheets)",
     "add_photos":"फ़ोटो जोड़ें",
     "untitled":"शीर्षकहीन",
     "no_scale":"(स्केल नहीं)",
@@ -2781,6 +2881,25 @@ const I18N={
     "col_comment":"ملاحظة",
     "col_action":"الإجراء",
     "rep_counts":"النتائج: {f} · الصور: {p}",
+    "rep_setup_cs":"مقياس الحالة",
+    "rep_setup_cs_hint":"يُطبع الرمز في التقرير؛ ويظهر الرمز والكلمة عند اختيار العيب. أزل العلامة عن الحالات التي لا تستخدمها.",
+    "rep_setup":"إعداد التقرير",
+    "rep_setup_hint":"أزل العلامة للإخفاء. اكتب لإعادة التسمية — اتركه فارغًا للاسم القياسي.",
+    "rep_setup_title_lbl":"عنوان التقرير",
+    "rep_setup_fields":"حقول الترويسة",
+    "rep_setup_cols":"الأعمدة",
+    "rep_setup_secs":"الأقسام",
+    "sec_summary":"مربعات الملخص في الغلاف",
+    "sec_qr":"رابط الموقع كرمز QR",
+    "sec_phtbl":"جدول النتائج أسفل كل صورة",
+    "sec_grp":"المجموعة تحت اسم العيب",
+    "rep_setup_reset":"استعادة الوضع القياسي",
+    "rep_setup_reset_title":"إعادة ضبط إعداد التقرير؟",
+    "rep_setup_reset_body":"تعود جميع الأسماء إلى الوضع القياسي ويُعاد تشغيل كل العناصر.",
+    "done":"تم",
+    "col_group":"المجموعة",
+    "col_file":"الملف",
+    "rep_csv_title":"حفظ النتائج كملف CSV (Excel، Sheets)",
     "add_photos":"إضافة صور",
     "untitled":"بدون عنوان",
     "no_scale":"(بدون مقياس)",
@@ -3142,6 +3261,25 @@ const I18N={
     "col_comment":"Комментарий",
     "col_action":"Меры",
     "rep_counts":"Дефекты: {f} · Фото: {p}",
+    "rep_setup_cs":"Шкала состояния",
+    "rep_setup_cs_hint":"Код печатается в отчёте; код и слово видны при выборе дефекта. Снимите флажки с неиспользуемых состояний.",
+    "rep_setup":"Настройка отчёта",
+    "rep_setup_hint":"Снимите флажок, чтобы скрыть. Введите текст, чтобы переименовать; оставьте пустым для стандартного названия.",
+    "rep_setup_title_lbl":"Заголовок отчёта",
+    "rep_setup_fields":"Поля заголовка",
+    "rep_setup_cols":"Столбцы",
+    "rep_setup_secs":"Разделы",
+    "sec_summary":"Сводка на титульном листе",
+    "sec_qr":"Ссылка на место в виде QR-кода",
+    "sec_phtbl":"Таблица дефектов под каждым фото",
+    "sec_grp":"Группа под названием дефекта",
+    "rep_setup_reset":"Сбросить до стандартных",
+    "rep_setup_reset_title":"Сбросить настройку отчёта?",
+    "rep_setup_reset_body":"Все названия станут стандартными, и все пункты снова будут включены.",
+    "done":"Готово",
+    "col_group":"Группа",
+    "col_file":"Файл",
+    "rep_csv_title":"Сохранить дефекты в файл CSV (Excel, Таблицы)",
     "add_photos":"Добавить фото",
     "untitled":"Без названия",
     "no_scale":"(нет масштаба)",
@@ -4167,6 +4305,7 @@ function applyI18n(){
   if($('pickOverlay')&&$('pickOverlay').classList.contains('show')&&typeof renderPicker==='function'){ renderTabs(); renderPicker(); }
   if(typeof updateTextCtl==='function') updateTextCtl();
   if(typeof renderTray==='function') renderTray();
+  if($('rsOverlay')&&$('rsOverlay').classList.contains('show')&&typeof renderSetup==='function') renderSetup();
   if(typeof render==='function') render();
   if($('calOverlay')&&$('calOverlay').classList.contains('show')&&typeof renderCalShots==='function') renderCalShots();
 }
@@ -4216,7 +4355,7 @@ const S = {
   armedDefect:null, armedLbl:null, recent:[], recentLbl:[], favs:[], tagsOwn:[],
   photos:[], curId:null, elements:[], personal:[], perCat:{},
   undo:[], redo:[], pending:null,
-  scale:null, measMode:'line', units:{dim:'mm',mline:'auto',marea:'auto'}, cams:[],
+  scale:null, measMode:'line', units:{dim:'mm',mline:'auto',marea:'auto'}, repCfg:{names:{},off:{},sec:{}}, cams:[],
   rep:{ structure:'', ref:'', date:'', inspector:'', weather:'', loclink:'', overall:'',
         sheets:true, perPage:1, schedule:true, stampNums:true, ov:{}, manual:[] },
 };
@@ -5338,7 +5477,7 @@ function saveSession(){
     curId:S.curId, favs:S.favs, recent:S.recent, recentLbl:S.recentLbl, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, rep:S.rep, uid, pid });
 }
 function clearSession(){ if(!db)return; try{ const st=db.transaction('session','readwrite').objectStore('session'), rq=st.getAllKeys();
-  rq.onsuccess=()=>{ (rq.result||[]).forEach(k=>{ if(k!=='lang'&&k!=='units') st.delete(k); }); }; }catch(e){} }
+  rq.onsuccess=()=>{ (rq.result||[]).forEach(k=>{ if(k!=='lang'&&k!=='units'&&k!=='repcfg') st.delete(k); }); }; }catch(e){} }
 async function restoreSession(){
   const d=await idbGet('current'); if(!d||!d.photos||!d.photos.length)return;
   uid=d.uid||uid; pid=d.pid||pid;
@@ -5369,6 +5508,7 @@ async function restoreSession(){
   toast(t('toast_session_restored'));
 }
 openDB().then(d=>{ db=d; idbGet('lang').then(l=>{ if(l) setLang(l,true); });
+  idbGet('repcfg').then(c=>{ if(c&&typeof c==='object') S.repCfg={names:c.names||{},off:c.off||{},sec:c.sec||{}}; });
   idbGet('units').then(u=>{ if(u&&typeof u==='object') ['dim','mline','marea'].forEach(k=>{ if(typeof u[k]==='string') S.units[k]=u[k]; }); });
   restoreSession(); });
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'&&S.photos.length){ clearTimeout(dirtyT); saveSession(); } });
@@ -5456,7 +5596,16 @@ function renderTabs(){
   $('pickTabs').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.tab===pickTab));
   $('pickTitle').textContent=t(lab?'tags_elements_title':'defects_title');
 }
-function sevLabel(s){ const w=trSev(s.word); return s.code? (s.code+' '+w) : w; }
+// condition scale: stored keys never change, only the printed code and the word
+const CS_STD={good:'CS1',fair:'CS2',poor:'CS3',severe:'CS4',unrated:'UR'};
+const CS_SEV={CS1:'good',CS2:'fair',CS3:'poor',CS4:'severe',UR:'unrated'};
+function csCfg(n){ return String(((S.repCfg||{}).names||{})[n]||'').trim(); }
+function csOn(k){ return k==='none'||!(((S.repCfg||{}).off||{})['cs_'+k]); }
+function csCode(k){ return csCfg('csc_'+k)||CS_STD[k]||''; }
+function csWord(k){ return csCfg('csw_'+k)||trSev(sevOf(k).word); }
+function csDisp(code){ const k=CS_SEV[code]; return k?csCode(k):(code||''); }
+function sevLabel(s){ if(s.k==='none') return trSev(s.word);
+  const c=csCfg('csc_'+s.k)||s.code, w=csWord(s.k); return c? (c+' '+w) : w; }
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
 function tnLabel(fn){ const s=String(fn||''); if(/^photo-\d+$/.test(s)) return s; return s.length>6?('...'+s.slice(-6)):s; }
 function sevOf(k){ return SEV.find(x=>x.k===k)||SEV[0]; }
@@ -5464,11 +5613,13 @@ function renderCS(){
   const b=$('csBtn'), off=(pickTab==='tags'||pickTab==='elements');
   b.style.display=off?'none':'';
   if(off) return;
+  if(!csOn(curSev)) curSev='none';
   const s=sevOf(curSev);
   b.innerHTML='<span class="dot" style="background:'+(s.color||'#7c8894')+'"></span>'+
     '<span class="cslab">'+esc(t('cs_title'))+'</span><span class="csval">'+esc(sevLabel(s))+'</span>';
 }
-function cycleSev(k){ const i=SEV.findIndex(x=>x.k===k); return SEV[(i+1)%SEV.length].k; }
+function cycleSev(k){ let i=SEV.findIndex(x=>x.k===k);
+  for(let n=0;n<SEV.length;n++){ i=(i+1)%SEV.length; if(csOn(SEV[i].k)) return SEV[i].k; } return 'none'; }
 function renderMat(){
   const r=$('matRow');
   if(pickTab!=='material'){ r.style.display='none'; return; }
@@ -5621,7 +5772,7 @@ function openWheel(term,x,y,mode,grp){
   const foot=(term&&!onEl?'<button data-wfav="1"><span>'+(isFav(term,grp)?'★':'☆')+'</span>'+esc(t('favourite'))+'</button>':'')+
              (own?'<button class="wdel" data-wdel="1"><span>&times;</span>'+esc(t('remove'))+'</button>':'');
   w.innerHTML=(term?'<div class="whead">'+esc(onEl?term:trTerm(term))+'</div>':'')+
-    (plain?'':SEV.map(sv=>'<button data-wsev="'+sv.k+'"><span class="dot" style="background:'+(sv.color||'#7c8894')+'"></span>'+esc(sevLabel(sv))+'</button>').join(''))+
+    (plain?'':SEV.filter(sv=>csOn(sv.k)).map(sv=>'<button data-wsev="'+sv.k+'"><span class="dot" style="background:'+(sv.color||'#7c8894')+'"></span>'+esc(sevLabel(sv))+'</button>').join(''))+
     (foot?(plain?'':'<div class="wsep"></div>')+foot:'');
   w.dataset.term=term; w.dataset.grp=(grp===undefined?'':grp);
   placeWheel(x,y);
@@ -5919,8 +6070,8 @@ function setInk(col){
 }
 INKS.forEach(col=>{ const b=document.createElement('button'); b.className='swatch'+(col===S.style.color?' on':''); b.style.background=col; b.title=col;
   b.addEventListener('click',()=>{ setInk(col);
-    if(S.sel!=null){ const o=getObj(S.sel); if(o){ beginEdit(); o.color=col; if(isDefectObj(o)&&INK_SEV[col]) o.sev=INK_SEV[col]; noteLblColor(o); commit(); render(); syncCtx(); } }
-    else if(INK_SEV[col]&&S.armedDefect){ setArmedSev(INK_SEV[col]);
+    if(S.sel!=null){ const o=getObj(S.sel); if(o){ beginEdit(); o.color=col; if(isDefectObj(o)&&INK_SEV[col]&&csOn(INK_SEV[col])) o.sev=INK_SEV[col]; noteLblColor(o); commit(); render(); syncCtx(); } }
+    else if(INK_SEV[col]&&S.armedDefect){ if(csOn(INK_SEV[col])) setArmedSev(INK_SEV[col]);
       // keep the swatch that was tapped: off-scale inks would otherwise snap to the CS colour
       if(S.armedDefect){ S.armedDefect.color=col; updateDef(); } } });
   sw.appendChild(b); });
@@ -6120,6 +6271,7 @@ const TOOL_KEYS={s:'select',t:'text',d:'pen',l:'dim',n:'note',p:'poly',g:'angle'
 window.addEventListener('keydown',e=>{
   const tgt=e.target;
   if(tgt&&((tgt.tagName==='INPUT'&&tgt.type!=='checkbox')||tgt.tagName==='TEXTAREA'||tgt.tagName==='SELECT'))return; // typing — never hijack
+  if($('rsOverlay').classList.contains('show')&&!$('cfmOverlay').classList.contains('show')){ if(e.key==='Escape')closeSetup(); return; }
   if($('repOverlay').classList.contains('show')&&!$('cfmOverlay').classList.contains('show')){ if(e.key==='Escape')hideOverlay('repOverlay'); return; }
   if($('aboutOverlay').classList.contains('show')){ if(e.key==='Escape')hideOverlay('aboutOverlay'); return; }
   if($('helpOverlay').classList.contains('show')){ if(e.key==='Escape')hideOverlay('helpOverlay'); return; }
@@ -6452,6 +6604,19 @@ function rowFromOv(id,base){
     act: e.act!=null?e.act:base.act, ex: !!e.ex };
 }
 
+// report setup: names and switches, kept on the device. Blank name = the standard, translated one
+const REP_FLDS=[['structure','rep_structure'],['ref','rep_ref'],['date','rep_date'],['inspector','rep_inspector'],['weather','rep_weather'],['loclink','rep_loclink'],['overall','rep_overall']];
+const REP_COLS=[['el','col_element'],['def','col_defect'],['cs','col_cs'],['ext','col_extent'],['com','col_comment'],['act','col_action']];
+const REP_SECS=[['summary','sec_summary'],['qr','sec_qr'],['phtbl','sec_phtbl'],['grp','sec_grp']];
+function rcName(k,key){ const n=String((S.repCfg.names||{})[k]||'').trim(); return n||t(key); }
+function rcOn(k){ return !(S.repCfg.off||{})[k]; }
+function rcSec(k){ return (S.repCfg.sec||{})[k]!==false; }
+function fldName(k){ return rcName(k,REP_FLDS.find(x=>x[0]===k)[1]); }
+function colName(k){ return rcName(k,REP_COLS.find(x=>x[0]===k)[1]); }
+function repTitleName(){ return rcName('title','rep_doc_title'); }
+function fv(k){ return rcOn(k)?String(S.rep[k]||''):''; }
+function visCols(){ return REP_COLS.filter(c=>rcOn(c[0])).map(c=>c[0]); }
+function saveRepCfg(){ idbPut('repcfg',S.repCfg); }
 let repBlocks=[], repManual=[];
 function harvest(){
   stashCur();
@@ -6511,7 +6676,7 @@ function repFld(key,label){
 }
 function csSelect(row){
   return '<select class="rp-cs" data-rid="'+row.id+'" data-f="cs">'+
-    CS_KEYS.map(k=>'<option value="'+k+'"'+(k===row.cs?' selected':'')+'>'+(k||'—')+'</option>').join('')+'</select>';
+    CS_KEYS.filter(k=>!k||k===row.cs||csOn(CS_SEV[k])).map(k=>'<option value="'+k+'"'+(k===row.cs?' selected':'')+'>'+esc(k?csDisp(k):'—')+'</option>').join('')+'</select>';
 }
 function cell(row,f,w){
   return '<td><input type="text" dir="auto" data-rid="'+row.id+'" data-f="'+f+'" value="'+esc(row[f]||'')+'" autocomplete="off"'+(w?' style="min-width:'+w+'px"':'')+'></td>';
@@ -6530,12 +6695,10 @@ function renderReport(){
   const nF=inc.reduce((s,b)=>s+b.rows.filter(x=>!x.ex).length,0)+repManual.filter(x=>!x.ex).length;
   $('repCount').textContent=t('rep_counts',{f:nF,p:inc.length});
 
-  let h='<div class="rp-sec"><div class="rp-h">'+t('rep_header')+'</div><div class="rp-grid">'+
-    repFld('structure',t('rep_structure'))+repFld('ref',t('rep_ref'))+repFld('date',t('rep_date'))+
-    repFld('inspector',t('rep_inspector'))+repFld('weather',t('rep_weather'))+
-    repFld('loclink',t('rep_loclink'))+'</div>'+
-    '<label style="display:block;margin-top:8px"><span class="rp-h" style="display:block;margin-bottom:4px">'+t('rep_overall')+'</span>'+
-    '<textarea data-rep="overall" placeholder="'+esc(t('rep_overall_ph'))+'">'+esc(r.overall||'')+'</textarea></label></div>';
+  const flds=REP_FLDS.filter(f=>f[0]!=='overall'&&rcOn(f[0])).map(f=>repFld(f[0],fldName(f[0]))).join('');
+  let h='<div class="rp-sec"><div class="rp-h">'+t('rep_header')+'</div>'+(flds?'<div class="rp-grid">'+flds+'</div>':'')+
+    (rcOn('overall')?'<label style="display:block;margin-top:8px"><span class="rp-h" style="display:block;margin-bottom:4px">'+esc(fldName('overall'))+'</span>'+
+    '<textarea data-rep="overall" placeholder="'+esc(t('rep_overall_ph'))+'">'+esc(r.overall||'')+'</textarea></label>':'')+'</div>';
 
   h+='<div class="rp-sec"><div class="rp-h">'+t('rep_options')+'</div><div class="rp-opts">'+
     '<label class="rp-chk"><input type="checkbox" data-opt="sheets"'+(r.sheets?' checked':'')+'>'+t('rep_sheets')+'</label>'+
@@ -6559,14 +6722,13 @@ function renderReport(){
   const anyRows=repBlocks.some(b=>!b.ex&&b.rows.length)||repManual.length;
   if(!anyRows){ h+='<div class="rp-empty">'+t('rep_none')+'<br>'+t('rep_none_body')+'</div>'; }
   else{
+    const cols=visCols(), CELL_W={el:110,def:130,ext:90,com:150,act:90};
     const tr=(row,photo,manual)=>'<tr><td><input type="checkbox" data-rinc="'+row.id+'"'+(row.ex?'':' checked')+'></td>'+
       '<td class="rp-it">'+esc(row.item||'—')+'</td><td class="rp-it" style="color:var(--muted)">'+photo+'</td>'+
-      cell(row,'el',110)+cell(row,'def',130)+'<td>'+csSelect(row)+'</td>'+
-      cell(row,'ext',90)+cell(row,'com',150)+cell(row,'act',90)+
+      cols.map(k=>k==='cs'?'<td>'+csSelect(row)+'</td>':cell(row,k,CELL_W[k])).join('')+
       (manual?'<td><button class="x rp-x" data-mdel="'+row.id+'" title="&times;">&times;</button></td>':'<td></td>')+'</tr>';
-    h+='<div class="rp-scroll"><table class="rp-tbl"><thead><tr><th></th><th>'+t('col_item')+'</th><th>'+t('col_photo')+'</th><th>'+
-      t('col_element')+'</th><th>'+t('col_defect')+'</th><th>'+t('col_cs')+'</th><th>'+t('col_extent')+'</th><th>'+
-      t('col_comment')+'</th><th>'+t('col_action')+'</th><th></th></tr></thead><tbody>';
+    h+='<div class="rp-scroll"><table class="rp-tbl"><thead><tr><th></th><th>'+t('col_item')+'</th><th>'+t('col_photo')+'</th>'+
+      cols.map(k=>'<th>'+esc(colName(k))+'</th>').join('')+'<th></th></tr></thead><tbody>';
     repBlocks.forEach(b=>{ if(b.ex) return; b.rows.forEach(row=>{ h+=tr(row,b.n,false); }); });
     repManual.forEach(row=>{ h+=tr(row,'—',true); });
     h+='</tbody></table></div>';
@@ -6610,6 +6772,35 @@ $('repClose').onclick=()=>hideOverlay('repOverlay');
 $('reportbtn').onclick=openReport;
 $('repReset').onclick=()=>confirmBox(t('rep_reset_title'),t('rep_reset_body'),()=>{ S.rep.ov={}; S.rep.manual=[]; dirty(); renderReport(); });
 $('repPrint').onclick=()=>{ printReport(); };
+$('repCsv').onclick=exportCSV;
+function renderSetup(){
+  const c=S.repCfg;
+  const row=(k,def,sw)=>'<div class="rs-row'+(sw&&!rcOn(k)?' off':'')+'">'+
+    (sw?'<input type="checkbox" data-rson="'+k+'"'+(rcOn(k)?' checked':'')+'>':'<span class="rs-sp"></span>')+
+    '<input type="text" data-rsn="'+k+'" value="'+esc((c.names||{})[k]||'')+'" placeholder="'+esc(t(def))+'" autocomplete="off"></div>';
+  $('rsBody').innerHTML='<div class="rp-empty" style="padding:0 0 12px">'+esc(t('rep_setup_hint'))+'</div>'+
+    '<div class="rp-sec"><div class="rp-h">'+esc(t('rep_setup_title_lbl'))+'</div>'+row('title','rep_doc_title',false)+'</div>'+
+    '<div class="rp-sec"><div class="rp-h">'+esc(t('rep_setup_fields'))+'</div>'+REP_FLDS.map(f=>row(f[0],f[1],true)).join('')+'</div>'+
+    '<div class="rp-sec"><div class="rp-h">'+esc(t('rep_setup_cols'))+'</div>'+REP_COLS.map(f=>row(f[0],f[1],true)).join('')+'</div>'+
+    '<div class="rp-sec"><div class="rp-h">'+esc(t('rep_setup_cs'))+'</div>'+
+      '<div class="rp-empty" style="padding:0 0 8px">'+esc(t('rep_setup_cs_hint'))+'</div>'+
+      SEV.filter(x=>x.k!=='none').map(x=>'<div class="rs-row'+(csOn(x.k)?'':' off')+'"><input type="checkbox" data-rson="cs_'+x.k+'"'+(csOn(x.k)?' checked':'')+'>'+
+        '<span class="rs-dot" style="background:'+x.color+'"></span>'+
+        '<input type="text" class="rs-code" data-rsn="csc_'+x.k+'" value="'+esc((c.names||{})['csc_'+x.k]||'')+'" placeholder="'+esc(CS_STD[x.k])+'" autocomplete="off">'+
+        '<input type="text" data-rsn="csw_'+x.k+'" value="'+esc((c.names||{})['csw_'+x.k]||'')+'" placeholder="'+esc(trSev(x.word))+'" autocomplete="off"></div>').join('')+'</div>'+
+    '<div class="rp-sec"><div class="rp-h">'+esc(t('rep_setup_secs'))+'</div><div class="rs-secs">'+
+      REP_SECS.map(x=>'<label class="rp-chk"><input type="checkbox" data-rssec="'+x[0]+'"'+(rcSec(x[0])?' checked':'')+'>'+esc(t(x[1]))+'</label>').join('')+'</div></div>';
+}
+function openSetup(){ renderSetup(); showOverlay('rsOverlay'); $('rsBody').scrollTop=0; }
+function closeSetup(){ hideOverlay('rsOverlay'); if($('repOverlay').classList.contains('show')) renderReport(); }
+$('repSetup').onclick=openSetup;
+$('rsClose').onclick=closeSetup; $('rsDone').onclick=closeSetup;
+$('rsReset').onclick=()=>confirmBox(t('rep_setup_reset_title'),t('rep_setup_reset_body'),()=>{ S.repCfg={names:{},off:{},sec:{}}; saveRepCfg(); renderSetup(); });
+$('rsBody').addEventListener('input',e=>{ const el=e.target; if(el.dataset.rsn){ S.repCfg.names[el.dataset.rsn]=el.value; saveRepCfg(); if(/^cs[cw]_/.test(el.dataset.rsn)) updateDef(); } });
+$('rsBody').addEventListener('change',e=>{ const el=e.target;
+  if(el.dataset.rson){ if(el.checked) delete S.repCfg.off[el.dataset.rson]; else S.repCfg.off[el.dataset.rson]=true;
+    el.closest('.rs-row').classList.toggle('off',!el.checked); saveRepCfg(); }
+  else if(el.dataset.rssec){ if(el.checked) delete S.repCfg.sec[el.dataset.rssec]; else S.repCfg.sec[el.dataset.rssec]=false; saveRepCfg(); } });
 
 // item badge drawn on the report image only — never on the photo itself
 function stampNum(cx,o,tf,label){
@@ -6634,14 +6825,14 @@ function repImg(rec,rows,maxPx){
   S.sel=savedSel; S.baseW=savedBase;
   return c.toDataURL('image/jpeg',0.85);
 }
-function csTd(cs){ return cs? '<span class="cs" style="background:'+(CS_COL[cs]||'#eee')+'">'+cs+'</span>' : ''; }
-function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th>'+t('col_element')+'</th><th>'+
-  t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+t('col_extent')+'</th><th>'+
-  t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
-function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+
-  t('col_photo')+'</th><th>'+t('col_element')+'</th><th>'+t('col_defect')+'</th><th style="width:17mm">'+t('col_cs')+'</th><th>'+
-  t('col_extent')+'</th><th>'+t('col_comment')+'</th><th>'+t('col_action')+'</th></tr></thead>'; }
-const MARKUP_VER='1.4.5';
+function csTd(cs){ return cs? '<span class="cs" style="background:'+(CS_COL[cs]||'#eee')+'">'+esc(csDisp(cs))+'</span>' : ''; }
+function colHeads(){ return visCols().map(k=>'<th'+(k==='cs'?' style="width:17mm"':'')+'>'+esc(colName(k))+'</th>').join(''); }
+function PH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th>'+colHeads()+'</tr></thead>'; }
+function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'</th><th style="width:11mm">'+t('col_photo')+'</th>'+colHeads()+'</tr></thead>'; }
+// one printed row's cells, in setup order; the group sub-line only where asked
+function colCells(x,withGrp){ return visCols().map(k=>'<td>'+(k==='cs'?csTd(x.cs):
+  esc(x[k]||'')+(k==='def'&&withGrp&&rcSec('grp')&&x.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.grp)+'</span>':''))+'</td>').join(''); }
+const MARKUP_VER='1.4.8';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
@@ -6660,7 +6851,7 @@ function pageChrome(pg,n,total,c){
   // the cover already carries the title as its H1 — no running header repeating it
   if(!pg.classList.contains('cover')){
     const h=document.createElement('div'); h.className='pg-h';
-    h.innerHTML='<span class="hl">'+esc(c.structure||t('rep_doc_title'))+'</span>'+
+    h.innerHTML='<span class="hl">'+esc(c.structure||repTitleName())+'</span>'+
                 (c.ref?'<span class="hr">'+esc(c.ref)+'</span>':'');
     pg.appendChild(h);
   }
@@ -6741,10 +6932,30 @@ function flowText(doc,pages,pg,titleHTML,text,tailHTML){
 }
 // the PDF takes its name from the document title
 function reportFileName(){
-  const r=S.rep;
-  const parts=[r.date,r.structure,r.inspector].map(x=>String(x||'').trim()).filter(Boolean);
+  const parts=[fv('date'),fv('structure'),fv('inspector')].map(x=>String(x||'').trim()).filter(Boolean);
   if(!parts.length) return 'Markup';
   return parts.join(' - ').replace(/[\\/:*?"<>|\u0000-\u001f]+/g,'-').replace(/\s+/g,' ').trim().slice(0,120);
+}
+// findings as CSV: a header block, a blank line, then one row per finding in report order
+function csvCell(v){ let x=String(v==null?'':v); if(/^[=+@\t\r]/.test(x)) x="'"+x; return '"'+x.replace(/"/g,'""')+'"'; }
+function csvSep(){ try{ return (1.5).toLocaleString(navigator.language||undefined).indexOf(',')>=0?';':','; }catch(e){ return ','; } }
+function exportCSV(){
+  repBlocks=harvest();
+  const sep=csvSep(), line=a=>a.map(csvCell).join(sep), rows=[];
+  repBlocks.forEach(b=>{ if(b.ex) return;
+    b.rows.forEach(x=>{ if(!x.ex) rows.push([x.item,b.n,b.rec.fileName,b.rec.loc||'',x.el,x.def,x.grp,csDisp(x.cs),x.ext,x.com,x.act]); }); });
+  repManual.forEach(x=>{ if(!x.ex) rows.push([x.item,'','','',x.el,x.def,x.grp,csDisp(x.cs),x.ext,x.com,x.act]); });
+  if(!rows.length){ toast(t('rep_none')); return; }
+  const out=[];
+  REP_FLDS.forEach(f=>{ const v=fv(f[0]); if(v.trim()) out.push(line([fldName(f[0]),v])); });
+  out.push(line([t('rep_generated',{date:new Date().toLocaleString()}),'Markup v'+MARKUP_VER]));
+  out.push('');
+  out.push(line([t('col_item'),t('col_photo'),t('col_file'),t('rep_location_ph'),colName('el'),colName('def'),
+    t('col_group'),colName('cs'),colName('ext'),colName('com'),colName('act')]));
+  rows.forEach(a=>out.push(line(a)));
+  const blob=new Blob(['\uFEFF'+out.join('\r\n')+'\r\n'],{type:'text/csv;charset=utf-8'});
+  saveBlobs([{blob:blob,name:reportFileName()+'.csv'}]);
+  toast(t('toast_exported',{fmt:'CSV'}));
 }
 let repTitle=null;
 function restoreTitle(){ if(repTitle!=null){ document.title=repTitle; repTitle=null; } }
@@ -6764,30 +6975,28 @@ async function printReport(){
     all.forEach(x=>{ if(counts[x.r.cs]!=null) counts[x.r.cs]++; });
 
     // ── cover ──
-    const link=(r.loclink||'').trim();
-    const qr=(link&&link.length<=QR_MAX)?qrDataURL(link,360):'';
-    const metaRows=[[t('rep_structure'),r.structure],[t('rep_ref'),r.ref],[t('rep_date'),r.date],
-                    [t('rep_inspector'),r.inspector],[t('rep_weather'),r.weather]];
-    if(link&&!qr) metaRows.push([t('rep_loclink'),link]);   // too long to encode — print it as text
+    const link=fv('loclink').trim();
+    const qr=(link&&rcSec('qr')&&link.length<=QR_MAX)?qrDataURL(link,360):'';
+    const metaRows=['structure','ref','date','inspector','weather'].map(k=>[fldName(k),fv(k)]);
+    if(link&&!qr) metaRows.push([fldName('loclink'),link]);   // no QR (switched off or too long) — print it as text
     let meta=metaRows.filter(m=>m[1]).map(m=>'<tr><td>'+esc(m[0])+'</td><td>'+esc(m[1])+'</td></tr>').join('');
-    if(qr) meta+='<tr><td>'+esc(t('rep_loclink'))+'</td><td class="qrcell"><img src="'+qr+'">'+
+    if(qr) meta+='<tr><td>'+esc(fldName('loclink'))+'</td><td class="qrcell"><img src="'+qr+'">'+
                  '<span class="qu">'+esc(link)+'</span></td></tr>';
     const cov=newPage('cover'); doc.appendChild(cov); pages.push(cov);
     pgBody(cov).innerHTML=
       '<div class="coverbrand"><span class="brandmark">Mark<b>up</b></span>'+
         '<span class="cbv">v'+MARKUP_VER+' · '+MARKUP_URL+'</span></div>'+
-      '<h1>'+esc(r.structure||t('rep_doc_title'))+'</h1>'+
-      '<p class="sub">'+esc(r.structure?t('rep_doc_title'):'')+'</p>'+
+      '<h1>'+esc(fv('structure')||repTitleName())+'</h1>'+
+      '<p class="sub">'+esc(fv('structure')?repTitleName():'')+'</p>'+
       (meta?'<table class="meta">'+meta+'</table>':'')+
-      '<h2>'+t('rep_summary')+'</h2><div class="sum">'+
+      (rcSec('summary')?'<h2>'+t('rep_summary')+'</h2><div class="sum">'+
         '<div><b>'+all.length+'</b>'+t('rep_total')+'</div>'+
         '<div><b>'+blocks.length+'</b>'+t('rep_photos_word')+'</div>'+
-        CS_KEYS.filter(k=>k).map(k=>'<div style="background:'+CS_COL[k]+'"><b>'+counts[k]+'</b>'+k+'</div>').join('')+
-      '</div>'+
-      '';
+        CS_KEYS.filter(k=>k&&csOn(CS_SEV[k])).map(k=>'<div style="background:'+CS_COL[k]+'"><b>'+counts[k]+'</b>'+esc(csDisp(k))+'</div>').join('')+
+      '</div>':'');
     await decodeIn(cov);
     const footHTML='<div class="foot">'+esc(t('rep_generated',{date:new Date().toLocaleString()}))+'</div>';
-    if(r.overall) flowText(doc,pages,cov,'<h2>'+t('rep_overall')+'</h2>',r.overall,footHTML);
+    if(fv('overall').trim()) flowText(doc,pages,cov,'<h2>'+esc(fldName('overall'))+'</h2>',fv('overall'),footHTML);
     else { pgBody(cov).insertAdjacentHTML('beforeend',footHTML); if(tooTall(cov)) markCut(cov); }
 
     // ── photo sheets ──
@@ -6806,10 +7015,9 @@ async function printReport(){
             (b.rec.loc?' · <span class="loc">'+esc(b.rec.loc)+'</span>':'')+
             (b.rec.caption?'<br>'+esc(b.rec.caption):'')+
             (b.loose.length?'<br><span class="loc">'+esc(b.loose.join(' · '))+'</span>':'')+'</div>';
-          const rowHTML=rows.map(x=>'<tr><td class="it">'+esc(x.item||'')+'</td><td>'+esc(x.el||'')+'</td><td>'+esc(x.def||'')+'</td><td>'+csTd(x.cs)+
-              '</td><td>'+esc(x.ext||'')+'</td><td>'+esc(x.com||'')+'</td><td>'+esc(x.act||'')+'</td></tr>');
-          const tbl=rows.length?('<table class="sch">'+PH_HEAD()+'<tbody>'+rowHTML.join('')+'</tbody></table>'):'';
-          spill.push(rows.length?{n:n,rows:rowHTML}:null);
+          const rowHTML=rows.map(x=>'<tr><td class="it">'+esc(x.item||'')+'</td>'+colCells(x,false)+'</tr>');
+          const tbl=(rows.length&&rcSec('phtbl'))?('<table class="sch">'+PH_HEAD()+'<tbody>'+rowHTML.join('')+'</tbody></table>'):'';
+          spill.push((rows.length&&rcSec('phtbl'))?{n:n,rows:rowHTML}:null);
           inner+='<div class="ph"><img src="'+url+'">'+cap+tbl+'</div>';
         }
         pgBody(pg).innerHTML=inner;
@@ -6840,13 +7048,11 @@ async function printReport(){
     // ── defect schedule ──
     if(r.schedule&&all.length){
       flowRows(doc,pages,'<h2>'+t('rep_schedule')+'</h2>',SCH_HEAD(),
-        all.map(x=>'<tr><td class="it">'+esc(x.r.item||'')+'</td><td class="it">'+(x.n)+'</td><td>'+esc(x.r.el||'')+'</td>'+
-          '<td>'+esc(x.r.def||'')+(x.r.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.r.grp)+'</span>':'')+'</td>'+
-          '<td>'+csTd(x.r.cs)+'</td><td>'+esc(x.r.ext||'')+'</td><td>'+esc(x.r.com||'')+'</td><td>'+esc(x.r.act||'')+'</td></tr>'));
+        all.map(x=>'<tr><td class="it">'+esc(x.r.item||'')+'</td><td class="it">'+(x.n)+'</td>'+colCells(x.r,true)+'</tr>'));
     }
 
     // ── header / footer last: page count is only known now ──
-    const ctx={structure:r.structure,ref:r.ref,date:r.date,inspector:r.inspector};
+    const ctx={structure:fv('structure'),ref:fv('ref'),date:fv('date'),inspector:fv('inspector')};
     pages.forEach((pg,i)=>pageChrome(pg,i+1,pages.length,ctx));
   }catch(err){
     doc.classList.remove('measuring'); doc.innerHTML=''; restoreTitle(); toast(t('toast_failed')); return;
