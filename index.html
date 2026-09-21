@@ -202,6 +202,12 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 }
 .tool{position:relative}
 .tool.on .hk{color:var(--accent);background:var(--accent-soft)}
+.tool .nb{position:absolute;top:4px;left:5px;max-width:44px;overflow:hidden;font-size:8.5px;font-weight:700;line-height:1;letter-spacing:.02em;color:var(--muted-2);padding:1px 3px;border-radius:4px;background:rgba(255,255,255,.06);direction:ltr;unicode-bidi:isolate;pointer-events:none}
+.tool.on .nb{color:var(--accent);background:var(--accent-soft)}
+.pfx.nxt{width:46px}
+.defmenu .ltr{direction:ltr;unicode-bidi:isolate}
+.defmenu .nsub{margin-inline-start:auto;color:var(--muted);font-size:12px}
+.defmenu button.on{background:var(--panel)}
 .thumb .hk{
   position:absolute;top:3px;left:3px;min-width:15px;height:15px;padding:0 3px;
   font-size:9px;font-weight:700;line-height:15px;text-align:center;border-radius:5px;
@@ -553,6 +559,8 @@ body.hasfine .emotip{display:block}
   .tool{flex:0 0 auto;min-width:50px;max-width:none;height:32px;flex-direction:row;gap:5px;padding:0 8px}
   .tool svg{width:14px;height:14px}
   .tool span{font-size:9px}
+  .tool .nb{position:static;font-size:8px}
+  .tool.pip::after{top:3px;right:3px}
   .zoomer{bottom:6px;right:6px}
   .zoomer button{width:34px;height:30px}
   .overlay.sheetwrap{padding:6px}
@@ -747,7 +755,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.4.9 · BETA · multilingual</span>
+        <span class="ver">v1.5.0 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -846,7 +854,7 @@ body.hasfine .emotip{display:block}
       <span class="lbl" data-i18n="prefix">Prefix</span>
       <input class="pfx" id="numpre" maxlength="4" placeholder="–" autocomplete="off">
       <span class="lbl" data-i18n="next">Next</span>
-      <span class="nn" id="nextn">1</span>
+      <input class="pfx nxt" id="nextn" type="text" inputmode="numeric" maxlength="4" autocomplete="off" value="1">
       <button class="mini" id="resetn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
         <span data-i18n="reset">Reset</span>
@@ -911,7 +919,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">D</span>
     </button>
-    <button class="tool" data-tool="dim">
+    <button class="tool" data-tool="dim" data-gest="1">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M4 8v8M20 8v8"/></svg>
       <span data-i18n="tool_length">Length</span>
     
@@ -923,7 +931,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">M</span>
     </button>
-    <button class="tool" data-tool="note">
+    <button class="tool" data-tool="note" data-gest="1">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 19 8-8h8"/><path d="M13 8h7" opacity=".55"/></svg>
       <span data-i18n="tool_note">Note</span>
     
@@ -941,7 +949,8 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">G</span>
     </button>
-    <button class="tool" data-tool="number">
+    <button class="tool" data-tool="number" data-gest="1">
+      <span class="nb" id="numBadge">1</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M11 9.5 13 8.5V16"/></svg>
       <span data-i18n="tool_number">Number</span>
     
@@ -959,7 +968,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.4.9</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.0</span></div>
   </nav>
 </div>
 
@@ -1250,13 +1259,13 @@ body.hasfine .emotip{display:block}
         <div class="grow"><b data-i18n="help_select_b">Select</b><span data-i18n="help_select_d">Tap an annotation to move, recolour, resize, or delete it. Drag its handles to reshape.</span></div>
         <div class="grow"><b data-i18n="help_text_b">Text &amp; Tag</b><span data-i18n="help_text_d">Tap the photo to type a label in place. Double-tap the tool for the tags and elements list, hold it for the last five things you placed. Anything picked is placed once and then released, so the next tap types again; the props strip shows what is waiting, and Clear drops it. Tags and elements take the text style, so Fill and the ink swatch apply to them, and the recents remember the colour each was last placed in.</span></div>
         <div class="grow"><b data-i18n="help_draw_b">Draw</b><span data-i18n="help_draw_d">Freehand ink for circling or sketching.</span></div>
-        <div class="grow"><b data-i18n="help_length_b">Length</b><span data-i18n="help_length_d">Drag a measured line. Short bars mark each end. Enter a value and pick a unit (mm, m, in, ft) — the number rides alongside the line.</span></div>
+        <div class="grow"><b data-i18n="help_length_b">Length</b><span data-i18n="help_length_d">Drag a measured line. Short bars mark each end. Enter a value and pick a unit (mm, m, in, ft) — the number rides alongside the line. Hold the tool for your last five values: pick one and the next line takes it without the dialog.</span></div>
         <div class="grow"><b data-i18n="help_measure_b">Measure</b><span data-i18n="help_measure_d">Auto-measures real size from a calibrated camera. Set a scale once (pick a camera + enter distance), then draw a line for length or an area for a polygon — the value is computed for you. Double-tap a measurement to change its unit.</span></div>
         <div class="grow"><b data-i18n="help_calib_b">Calibrate camera</b><span data-i18n="help_calib_d">In Measure, open Cameras… to teach the tool your camera. Photograph an object of known width at several known distances, mark it on each, and save. Reuse the saved camera on any photo — no ruler needed in the shot.</span></div>
-        <div class="grow"><b data-i18n="help_note_b">Note</b><span data-i18n="help_note_d">A leader line from a point to a text label. The line meets the label on its near side, so it always points cleanly at the target.</span></div>
+        <div class="grow"><b data-i18n="help_note_b">Note</b><span data-i18n="help_note_d">A leader line from a point to a text label. The line meets the label on its near side, so it always points cleanly at the target. Hold the tool for your last five notes: pick one and the next note takes it without typing.</span></div>
         <div class="grow"><b data-i18n="help_polygon_b">Polygon</b><span data-i18n="help_polygon_d">Tap to drop corners; use Close shape to finish. Shade an area or ring a region.</span></div>
         <div class="grow"><b data-i18n="help_angle_b">Angle</b><span data-i18n="help_angle_d">Draw one side from the corner, then the second. The measured angle is written in the arc.</span></div>
-        <div class="grow"><b data-i18n="help_number_b">Number</b><span data-i18n="help_number_d">Drops auto-incrementing markers for a legend or defect schedule. Set a prefix (e.g. B) and the counter continues B1, B2, B3. Clear all resets the count.</span></div>
+        <div class="grow"><b data-i18n="help_number_b">Number</b><span data-i18n="help_number_d">Drops auto-incrementing markers for a legend or defect schedule. Each prefix keeps its own count on each photo (B1, B2… P1, P2…). Double-tap the tool to step the prefix through none, A, B, P, S, J, H; hold it to pick one or reset. Type in Next to start from any number. Clear all resets the count.</span></div>
         <div class="grow"><b data-i18n="help_defect_b">Defect</b><span data-i18n="help_defect_d">Tags in a condition-state colour. Tap the tool to re-use the last defect, double-tap for the full list, hold it for your recent five. In the list, tap a tile to place at the shown CS, or hold a tile to pick a condition and favourite it.</span></div>
         <div class="grow"><b data-i18n="help_qr_b">QR</b><span data-i18n="help_qr_d">Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are drawn in black so the code still scans.</span></div>
       </div>
@@ -1637,6 +1646,7 @@ const I18N={
     "toast_draw_first_then_second":"Draw the first side, then the second",
     "toast_set_scale_to_measure":"Set a scale to start measuring",
     "toast_numbering_reset":"Numbering reset to 1",
+    "toast_next_val":"Next: {v}",
     "toast_no_cameras_yet":"No cameras yet — calibrate one first",
     "toast_select_camera":"Select a camera",
     "toast_enter_distance_m":"Enter a distance in metres",
@@ -1661,19 +1671,19 @@ const I18N={
     "help_draw_b":"Draw",
     "help_draw_d":"Freehand ink for circling or sketching.",
     "help_length_b":"Length",
-    "help_length_d":"Drag a measured line. Short bars mark each end. Enter a value and pick a unit (mm, m, in, ft) — the number rides alongside the line.",
+    "help_length_d":"Drag a measured line. Short bars mark each end. Enter a value and pick a unit (mm, m, in, ft) — the number rides alongside the line. Hold the tool for your last five values: pick one and the next line takes it without the dialog.",
     "help_measure_b":"Measure",
     "help_measure_d":"Auto-measures real size from a calibrated camera. Set a scale once (pick a camera + enter distance), then draw a line for length or an area for a polygon — the value is computed for you. Double-tap a measurement to change its unit.",
     "help_calib_b":"Calibrate camera",
     "help_calib_d":"In Measure, open Cameras… to teach the tool your camera. Photograph an object of known width at several known distances, mark it on each, and save. Reuse the saved camera on any photo — no ruler needed in the shot.",
     "help_note_b":"Note",
-    "help_note_d":"A leader line from a point to a text label. The line meets the label on its near side, so it always points cleanly at the target.",
+    "help_note_d":"A leader line from a point to a text label. The line meets the label on its near side, so it always points cleanly at the target. Hold the tool for your last five notes: pick one and the next note takes it without typing.",
     "help_polygon_b":"Polygon",
     "help_polygon_d":"Tap to drop corners; use Close shape to finish. Shade an area or ring a region.",
     "help_angle_b":"Angle",
     "help_angle_d":"Draw one side from the corner, then the second. The measured angle is written in the arc.",
     "help_number_b":"Number",
-    "help_number_d":"Drops auto-incrementing markers for a legend or defect schedule. Set a prefix (e.g. B) and the counter continues B1, B2, B3. Clear all resets the count.",
+    "help_number_d":"Drops auto-incrementing markers for a legend or defect schedule. Each prefix keeps its own count on each photo (B1, B2… P1, P2…). Double-tap the tool to step the prefix through none, A, B, P, S, J, H; hold it to pick one or reset. Type in Next to start from any number. Clear all resets the count.",
     "help_defect_b":"Defect",
     "help_defect_d":"Tags in a condition-state colour. Tap the tool to re-use the last defect, double-tap for the full list, hold it for your recent five. In the list, tap a tile to place at the shown CS, or hold a tile to pick a condition and favourite it.",
     "help_options_h":"Options",
@@ -2047,6 +2057,7 @@ const I18N={
     "toast_draw_first_then_second":"先绘制第一条边，再绘制第二条",
     "toast_set_scale_to_measure":"设置比例后即可开始测量",
     "toast_numbering_reset":"编号已重置为1",
+    "toast_next_val":"下一个：{v}",
     "toast_no_cameras_yet":"暂无相机——请先校准一台",
     "toast_select_camera":"请选择相机",
     "toast_enter_distance_m":"请输入以米为单位的距离",
@@ -2071,19 +2082,19 @@ const I18N={
     "help_draw_b":"绘制",
     "help_draw_d":"自由绘制，用于圈画或勾画。",
     "help_length_b":"长度",
-    "help_length_d":"拖出一条测量线，两端有短横标记。输入数值并选择单位（毫米、米、英寸、英尺）——数字会显示在线条旁边。",
+    "help_length_d":"拖出一条测量线，两端有短横标记。输入数值并选择单位（毫米、米、英寸、英尺）——数字会显示在线条旁边。长按工具可选最近五个数值：选中后，下一条线直接使用该数值，不弹出对话框。",
     "help_measure_b":"测量",
     "help_measure_d":"根据已校准的相机自动测量实际尺寸。设置一次比例（选择相机并输入距离），然后绘制线段测长度或多边形测面积——数值会自动计算。双击测量结果可更改单位。",
     "help_calib_b":"校准相机",
     "help_calib_d":"在\"测量\"中打开\"相机…\"来让工具学习您的相机。在几个已知距离处拍摄一个已知宽度的物体，逐一标记后保存。之后在任意照片中复用已保存的相机——拍摄时无需放置直尺。",
     "help_note_b":"备注",
-    "help_note_d":"从某点引出一条指引线连接文字标签。线条连接标签的靠近一侧，始终清晰指向目标。",
+    "help_note_d":"从某点引出一条指引线连接文字标签。线条连接标签的靠近一侧，始终清晰指向目标。长按工具可选最近五条注释：选中后，下一条注释直接使用该文字，无需输入。",
     "help_polygon_b":"多边形",
     "help_polygon_d":"点击放置各个顶点；使用\"闭合图形\"完成绘制。可对区域进行阴影填充或圈出范围。",
     "help_angle_b":"角度",
     "help_angle_d":"从角点绘制第一条边，再绘制第二条边。测得的角度会标注在弧线中。",
     "help_number_b":"编号",
-    "help_number_d":"放置自动递增的标记，用于图例或缺陷清单。设置前缀（例如B），计数器会依次为B1、B2、B3。\"清除全部\"会重置计数。",
+    "help_number_d":"放置自动递增的标记，用于图例或缺陷清单。每张照片上每个前缀各自计数（B1、B2… P1、P2…）。双击工具可依次切换前缀：无、A、B、P、S、J、H；长按可直接选择或重置。在“下一个”中输入数字即可从任意编号开始。\"清除全部\"会重置计数。",
     "help_defect_b":"缺陷",
     "help_defect_d":"带状态等级颜色的标签。轻点工具可重用上一个缺陷，双击打开完整列表，长按显示最近五个。在列表中轻点方块按当前 CS 放置，长按方块可选择状态等级并加入收藏。",
     "help_options_h":"选项",
@@ -2457,6 +2468,7 @@ const I18N={
     "toast_draw_first_then_second":"Dibuje el primer lado y luego el segundo",
     "toast_set_scale_to_measure":"Defina una escala para empezar a medir",
     "toast_numbering_reset":"Numeración reiniciada a 1",
+    "toast_next_val":"Siguiente: {v}",
     "toast_no_cameras_yet":"Aún no hay cámaras — calibre una primero",
     "toast_select_camera":"Seleccione una cámara",
     "toast_enter_distance_m":"Introduzca una distancia en metros",
@@ -2481,19 +2493,19 @@ const I18N={
     "help_draw_b":"Dibujar",
     "help_draw_d":"Trazo libre para encerrar en un círculo o esbozar.",
     "help_length_b":"Longitud",
-    "help_length_d":"Arrastre una línea medida. Barras cortas marcan cada extremo. Introduzca un valor y elija una unidad (mm, m, in, ft); el número aparece junto a la línea.",
+    "help_length_d":"Arrastre una línea medida. Barras cortas marcan cada extremo. Introduzca un valor y elija una unidad (mm, m, in, ft); el número aparece junto a la línea. Mantenga pulsada la herramienta para ver sus cinco últimos valores: elija uno y la siguiente línea lo toma sin el diálogo.",
     "help_measure_b":"Medir",
     "help_measure_d":"Mide automáticamente el tamaño real a partir de una cámara calibrada. Defina una escala una vez (elija una cámara e introduzca la distancia), luego dibuje una línea para la longitud o un área con un polígono; el valor se calcula por usted. Toque dos veces una medida para cambiar su unidad.",
     "help_calib_b":"Calibrar cámara",
     "help_calib_d":"En Medir, abra Cámaras… para enseñar a la herramienta su cámara. Fotografíe un objeto de ancho conocido a varias distancias conocidas, márquelo en cada una y guarde. Reutilice la cámara guardada en cualquier foto; no se necesita regla en la toma.",
     "help_note_b":"Nota",
-    "help_note_d":"Una línea guía desde un punto hasta una etiqueta de texto. La línea llega a la etiqueta por su lado cercano, así que siempre apunta con claridad al objetivo.",
+    "help_note_d":"Una línea guía desde un punto hasta una etiqueta de texto. La línea llega a la etiqueta por su lado cercano, así que siempre apunta con claridad al objetivo. Mantenga pulsada la herramienta para ver sus cinco últimas notas: elija una y la siguiente nota la toma sin escribir.",
     "help_polygon_b":"Polígono",
     "help_polygon_d":"Toque para colocar esquinas; use Cerrar forma para terminar. Sombree un área o rodee una región.",
     "help_angle_b":"Ángulo",
     "help_angle_d":"Dibuje un lado desde la esquina, luego el segundo. El ángulo medido se escribe en el arco.",
     "help_number_b":"Número",
-    "help_number_d":"Coloca marcadores autoincrementales para una leyenda o listado de defectos. Defina un prefijo (p. ej. B) y el contador continúa B1, B2, B3. Borrar todo reinicia el conteo.",
+    "help_number_d":"Coloca marcadores autoincrementales para una leyenda o listado de defectos. Cada prefijo lleva su propio conteo en cada foto (B1, B2… P1, P2…). Toque dos veces la herramienta para pasar el prefijo por ninguno, A, B, P, S, J, H; manténgala pulsada para elegir uno o reiniciar. Escriba en Siguiente para empezar desde cualquier número. Borrar todo reinicia el conteo.",
     "help_defect_b":"Defecto",
     "help_defect_d":"Etiquetas con el color del estado de condición. Toque la herramienta para reutilizar el último defecto, toque dos veces para la lista completa y manténgala pulsada para ver los cinco recientes. En la lista, toque un mosaico para colocarlo con el CS mostrado, o manténgalo pulsado para elegir el estado y marcarlo como favorito.",
     "help_options_h":"Opciones",
@@ -2867,6 +2879,7 @@ const I18N={
     "toast_draw_first_then_second":"पहला पक्ष बनाएं, फिर दूसरा",
     "toast_set_scale_to_measure":"मापना शुरू करने के लिए स्केल सेट करें",
     "toast_numbering_reset":"नंबरिंग 1 पर रीसेट हुई",
+    "toast_next_val":"अगला: {v}",
     "toast_no_cameras_yet":"अभी कोई कैमरा नहीं — पहले एक कैलिब्रेट करें",
     "toast_select_camera":"कैमरा चुनें",
     "toast_enter_distance_m":"मीटर में दूरी दर्ज करें",
@@ -2891,19 +2904,19 @@ const I18N={
     "help_draw_b":"ड्रा",
     "help_draw_d":"घेरने या स्केच करने के लिए फ्रीहैंड ड्रॉइंग।",
     "help_length_b":"लंबाई",
-    "help_length_d":"मापी गई रेखा खींचें। हर सिरे पर छोटी पट्टियाँ होती हैं। मान दर्ज करें और इकाई चुनें (मिमी, मी, इंच, फीट) — संख्या रेखा के साथ दिखती है।",
+    "help_length_d":"मापी गई रेखा खींचें। हर सिरे पर छोटी पट्टियाँ होती हैं। मान दर्ज करें और इकाई चुनें (मिमी, मी, इंच, फीट) — संख्या रेखा के साथ दिखती है। पिछले पाँच मानों के लिए टूल को दबाए रखें: एक चुनें और अगली रेखा उसे बिना डायलॉग के ले लेगी।",
     "help_measure_b":"मापें",
     "help_measure_d":"कैलिब्रेटेड कैमरे से वास्तविक आकार अपने आप मापता है। एक बार स्केल सेट करें (कैमरा चुनें + दूरी दर्ज करें), फिर लंबाई के लिए रेखा या क्षेत्र के लिए बहुभुज बनाएं — मान अपने आप गणना हो जाता है। इकाई बदलने के लिए माप पर डबल-टैप करें।",
     "help_calib_b":"कैमरा कैलिब्रेट करें",
     "help_calib_d":"मापें में, कैमरे… खोलकर टूल को अपना कैमरा सिखाएं। ज्ञात चौड़ाई की वस्तु को कई ज्ञात दूरियों पर फ़ोटो करें, हर एक पर चिह्नित करें, और सेव करें। सेव किए गए कैमरे को किसी भी फ़ोटो में दोबारा उपयोग करें — शॉट में रूलर की ज़रूरत नहीं।",
     "help_note_b":"नोट",
-    "help_note_d":"किसी बिंदु से टेक्स्ट लेबल तक जाने वाली लीडर लाइन। लाइन लेबल के निकटतम किनारे से मिलती है, इसलिए यह हमेशा लक्ष्य की ओर स्पष्ट रूप से इशारा करती है।",
+    "help_note_d":"किसी बिंदु से टेक्स्ट लेबल तक जाने वाली लीडर लाइन। लाइन लेबल के निकटतम किनारे से मिलती है, इसलिए यह हमेशा लक्ष्य की ओर स्पष्ट रूप से इशारा करती है। पिछले पाँच नोट्स के लिए टूल को दबाए रखें: एक चुनें और अगला नोट उसे बिना टाइप किए ले लेगा।",
     "help_polygon_b":"बहुभुज",
     "help_polygon_d":"कोने रखने के लिए टैप करें; समाप्त करने के लिए आकृति बंद करें का उपयोग करें। किसी क्षेत्र को छायांकित करें या घेरें।",
     "help_angle_b":"कोण",
     "help_angle_d":"कोने से एक पक्ष बनाएं, फिर दूसरा। मापा गया कोण चाप में लिखा जाता है।",
     "help_number_b":"संख्या",
-    "help_number_d":"लीजेंड या दोष सूची के लिए अपने आप बढ़ने वाले मार्कर रखता है। उपसर्ग सेट करें (जैसे B) और काउंटर B1, B2, B3 जारी रखता है। सभी साफ़ करें से गिनती रीसेट हो जाती है।",
+    "help_number_d":"लीजेंड या दोष सूची के लिए अपने आप बढ़ने वाले मार्कर रखता है। हर फ़ोटो पर हर उपसर्ग की अपनी गिनती होती है (B1, B2… P1, P2…)। उपसर्ग बदलने के लिए टूल पर डबल-टैप करें: कोई नहीं, A, B, P, S, J, H; चुनने या रीसेट करने के लिए दबाए रखें। किसी भी संख्या से शुरू करने के लिए अगला में लिखें। सभी साफ़ करें से गिनती रीसेट होती है।",
     "help_defect_b":"दोष",
     "help_defect_d":"स्थिति-स्तर रंग वाले टैग। पिछला दोष दोहराने के लिए टूल पर टैप करें, पूरी सूची के लिए डबल-टैप करें, और हाल के पाँच देखने के लिए दबाकर रखें। सूची में टाइल पर टैप करने से दिखाया गया CS लागू होता है; टाइल दबाकर रखने पर स्थिति चुनें और पसंदीदा बनाएं।",
     "help_options_h":"विकल्प",
@@ -3277,6 +3290,7 @@ const I18N={
     "toast_draw_first_then_second":"ارسم الجانب الأول ثم الثاني",
     "toast_set_scale_to_measure":"اضبط المقياس لبدء القياس",
     "toast_numbering_reset":"أُعيد ضبط الترقيم إلى 1",
+    "toast_next_val":"التالي: {v}",
     "toast_no_cameras_yet":"لا توجد كاميرات بعد — قم بمعايرة واحدة أولاً",
     "toast_select_camera":"اختر كاميرا",
     "toast_enter_distance_m":"أدخل مسافة بالأمتار",
@@ -3301,19 +3315,19 @@ const I18N={
     "help_draw_b":"رسم",
     "help_draw_d":"رسم حر للتحويط أو التخطيط.",
     "help_length_b":"الطول",
-    "help_length_d":"اسحب خطًا مقاسًا. تُحدَّد كل نهاية بشريط قصير. أدخل قيمة واختر وحدة (مم، م، بوصة، قدم) — يظهر الرقم بجانب الخط.",
+    "help_length_d":"اسحب خطًا مقاسًا. تُحدَّد كل نهاية بشريط قصير. أدخل قيمة واختر وحدة (مم، م، بوصة، قدم) — يظهر الرقم بجانب الخط. اضغط مطولًا على الأداة لآخر خمس قيم: اختر واحدة وسيأخذها الخط التالي دون نافذة الحوار.",
     "help_measure_b":"قياس",
     "help_measure_d":"يقيس الحجم الفعلي تلقائيًا من كاميرا معايرة. اضبط المقياس مرة واحدة (اختر كاميرا وأدخل المسافة)، ثم ارسم خطًا للطول أو مساحة لمضلع — تُحسب القيمة تلقائيًا. اضغط مرتين على القياس لتغيير وحدته.",
     "help_calib_b":"معايرة الكاميرا",
     "help_calib_d":"في القياس، افتح الكاميرات… لتعليم الأداة كاميرتك. صوّر جسمًا معروف العرض عند عدة مسافات معروفة، وحدده في كل منها، ثم احفظ. أعد استخدام الكاميرا المحفوظة في أي صورة — لا حاجة لمسطرة في اللقطة.",
     "help_note_b":"ملاحظة",
-    "help_note_d":"خط رابط من نقطة إلى تسمية نصية. يلتقي الخط بالتسمية من جانبها القريب، بحيث يشير دائمًا بوضوح إلى الهدف.",
+    "help_note_d":"خط رابط من نقطة إلى تسمية نصية. يلتقي الخط بالتسمية من جانبها القريب، بحيث يشير دائمًا بوضوح إلى الهدف. اضغط مطولًا على الأداة لآخر خمس ملاحظات: اختر واحدة وستأخذها الملاحظة التالية دون كتابة.",
     "help_polygon_b":"مضلع",
     "help_polygon_d":"اضغط لوضع الزوايا؛ استخدم إغلاق الشكل للإنهاء. ظلّل مساحة أو أحط بمنطقة.",
     "help_angle_b":"زاوية",
     "help_angle_d":"ارسم جانبًا من الزاوية، ثم الثاني. تُكتب الزاوية المقاسة على القوس.",
     "help_number_b":"رقم",
-    "help_number_d":"يضع علامات تزداد تلقائيًا لوسيلة إيضاح أو جدول عيوب. اضبط بادئة (مثل B) ويستمر العداد B1، B2، B3. مسح الكل يعيد ضبط العد.",
+    "help_number_d":"يضع علامات تزداد تلقائيًا لوسيلة إيضاح أو جدول عيوب. لكل بادئة عدّها الخاص في كل صورة (B1، B2… P1، P2…). انقر مرتين على الأداة للتنقل بين البادئات: بلا، A، B، P، S، J، H؛ واضغط مطولًا لاختيار واحدة أو إعادة الضبط. اكتب في التالي للبدء من أي رقم. مسح الكل يعيد ضبط العد.",
     "help_defect_b":"عيب",
     "help_defect_d":"وسوم بلون حالة العنصر. انقر الأداة لإعادة استخدام آخر عيب، وانقر نقرًا مزدوجًا لعرض القائمة الكاملة، واستمر بالضغط لعرض آخر خمسة. في القائمة، انقر مربعًا لوضعه بحالة CS المعروضة، أو استمر بالضغط على المربع لاختيار الحالة وإضافته إلى المفضلة.",
     "help_options_h":"الخيارات",
@@ -3687,6 +3701,7 @@ const I18N={
     "toast_draw_first_then_second":"Нарисуйте первую сторону, затем вторую",
     "toast_set_scale_to_measure":"Задайте масштаб, чтобы начать измерение",
     "toast_numbering_reset":"Нумерация сброшена на 1",
+    "toast_next_val":"Следующий: {v}",
     "toast_no_cameras_yet":"Пока нет камер — сначала откалибруйте одну",
     "toast_select_camera":"Выберите камеру",
     "toast_enter_distance_m":"Введите расстояние в метрах",
@@ -3711,19 +3726,19 @@ const I18N={
     "help_draw_b":"Рисование",
     "help_draw_d":"Произвольное рисование для обводки или наброска.",
     "help_length_b":"Длина",
-    "help_length_d":"Проведите измерительную линию. Короткие штрихи отмечают её концы. Введите значение и выберите единицу (мм, м, дюйм, фут) — число отображается рядом с линией.",
+    "help_length_d":"Проведите измерительную линию. Короткие штрихи отмечают её концы. Введите значение и выберите единицу (мм, м, дюйм, фут) — число отображается рядом с линией. Удерживайте инструмент, чтобы выбрать одно из пяти последних значений: следующая линия получит его без диалога.",
     "help_measure_b":"Измерение",
     "help_measure_d":"Автоматически измеряет реальный размер по откалиброванной камере. Задайте масштаб один раз (выберите камеру и введите расстояние), затем нарисуйте линию для длины или область для полигона — значение рассчитается само. Дважды нажмите на измерение, чтобы сменить единицу.",
     "help_calib_b":"Калибровка камеры",
     "help_calib_d":"В разделе «Измерение» откройте «Камеры…», чтобы обучить инструмент вашей камере. Сфотографируйте объект известной ширины на нескольких известных расстояниях, отметьте его на каждом снимке и сохраните. Используйте сохранённую камеру для любых фото — линейка в кадре не нужна.",
     "help_note_b":"Заметка",
-    "help_note_d":"Линия-выноска от точки к текстовой подписи. Линия подходит к подписи с ближней стороны, поэтому всегда чётко указывает на цель.",
+    "help_note_d":"Линия-выноска от точки к текстовой подписи. Линия подходит к подписи с ближней стороны, поэтому всегда чётко указывает на цель. Удерживайте инструмент, чтобы выбрать одну из пяти последних заметок: следующая заметка получит её без ввода текста.",
     "help_polygon_b":"Полигон",
     "help_polygon_d":"Нажимайте, чтобы ставить углы; используйте «Замкнуть фигуру», чтобы завершить. Закрасьте область или обведите участок.",
     "help_angle_b":"Угол",
     "help_angle_d":"Нарисуйте одну сторону от угла, затем вторую. Измеренный угол подписывается на дуге.",
     "help_number_b":"Номер",
-    "help_number_d":"Размещает автоматически нумеруемые метки для легенды или перечня дефектов. Задайте префикс (напр. B), и счётчик продолжит B1, B2, B3. «Очистить всё» сбрасывает счётчик.",
+    "help_number_d":"Размещает автоматически нумеруемые метки для легенды или перечня дефектов. У каждого префикса свой счёт на каждом фото (B1, B2… P1, P2…). Двойное касание инструмента переключает префикс: нет, A, B, P, S, J, H; удержание — выбор или сброс. Введите число в поле «Следующий», чтобы начать с любого номера. «Очистить всё» сбрасывает счётчик.",
     "help_defect_b":"Дефект",
     "help_defect_d":"Метки в цвете состояния. Нажмите инструмент, чтобы повторить последний дефект, двойное нажатие открывает полный список, удержание — пять недавних. В списке нажатие на плитку ставит дефект с показанным CS, удержание плитки позволяет выбрать состояние и добавить в избранное.",
     "help_options_h":"Настройки",
@@ -4535,7 +4550,8 @@ const S = {
   objects:[], sel:null, tool:'select', armedQR:null,
   style:{color:INKS[0], w:'M', tip:'off', dimEnds:'bars'},
   fmt:'jpg',
-  counter:1, angleDraft:null, polyDraft:null, polyFill:true, textFill:true, numPrefix:'',
+  counters:{}, angleDraft:null, polyDraft:null, polyFill:true, textFill:true, numPrefix:'',
+  armedLen:null, armedNote:null, recentLen:[], recentNote:[],
   armedDefect:null, armedLbl:null, recent:[], recentLbl:[], favs:[], tagsOwn:[],
   photos:[], curId:null, elements:[], personal:[], perCat:{},
   undo:[], redo:[], pending:null,
@@ -5171,8 +5187,8 @@ function onDown(p){
   } else if(S.tool==='number'){
     act=null; if(trySelect(ip)) return;
     beginEdit();
-    const o={id:newId(),type:'number',x:ip.x,y:ip.y,n:S.counter,pre:S.numPrefix,color:S.style.color,r:S.baseW*NUMR[S.style.w]};
-    S.objects.push(o); S.counter++; updateNext(); S.sel=o.id; commit(); syncCtx(); render();
+    const o={id:newId(),type:'number',x:ip.x,y:ip.y,n:numN(),pre:S.numPrefix,color:S.style.color,r:S.baseW*NUMR[S.style.w]};
+    S.objects.push(o); setNumN(numN()+1); updateNext(); S.sel=o.id; commit(); syncCtx(); render();
   } else if(S.tool==='angle'){
     if(!S.angleDraft){ if(trySelect(ip)) return; S.angleDraft={vx:ip.x,vy:ip.y,ax:ip.x,ay:ip.y,bx:null,by:null}; act={mode:'angleA'}; render(); }
     else { S.angleDraft.bx=ip.x; S.angleDraft.by=ip.y; act={mode:'angleB'}; render(); }
@@ -5219,6 +5235,8 @@ function onDown(p){
     if(S.tool==='note') o={id:newId(),type:'note',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),text:'',size:fontPx(),fill:S.textFill,tip:S.style.tip};
     else if(S.tool==='dim') o={id:newId(),type:'dim',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),value:'',unit:S.units.dim||'mm',size:fontPx(),fill:S.textFill,ends:S.style.dimEnds};
     else o={id:newId(),type:'pen',pts:[{x:ip.x,y:ip.y}],color:S.style.color,w:widthPx(),tip:S.style.tip};
+    if(o.type==='dim'&&S.armedLen){ o.value=S.armedLen.v; o.unit=S.armedLen.u; o._arm=1; }
+    if(o.type==='note'&&S.armedNote){ o.text=S.armedNote; o._arm=1; }
     act={mode:'draw',o,startImg:ip}; S.objects.push(o); render();
   }
 }
@@ -5274,7 +5292,11 @@ function onUp(){
     else if(o.type==='pen') degenerate=o.pts.length<2;
     if(degenerate){ S.objects.pop(); S.pending=null; render(); trySelect(act.startImg); act=null; return; }
     if(o.type==='mline'&&o.pxMm>0){ o.unit=autoUnit(o,S.units.mline); }
+    const pre=!!o._arm; delete o._arm;
+    if(pre&&o.type==='dim'){ S.armedLen=null; S.units.dim=o.unit; saveUnits(); pushLen(o.value,o.unit); }
+    if(pre&&o.type==='note'){ S.armedNote=null; pushNote(o.text); }
     S.sel=o.id; commit(); syncCtx(); render();
+    if(pre){ updateTextCtl(); act=null; return; }
     if(o.type==='dim'){ editValue(o); act=null; return; }
     if(o.type==='note'){ editLabel(); act=null; return; }
   } else if(act.mode==='move'||act.mode==='handle'||act.mode==='label'){ commit(); }
@@ -5306,7 +5328,7 @@ function commitLabel(){
   const v=$('txtInput').value.trim();
   if(editIsNew){ if(v){ beginEdit(); editTarget.text=v; S.objects.push(editTarget); S.sel=editTarget.id; commit(); syncCtx();
     if(editTarget.type==='text') pushLbl(v,'text',editTarget.color,''); } }
-  else { if(v){ beginEdit(); editTarget.text=v; commit(); }
+  else { if(v){ beginEdit(); editTarget.text=v; commit(); if(editTarget.type==='note') pushNote(v); }
     else { beginEdit(); setObjects(S.objects.filter(o=>o!==editTarget)); S.sel=null; commit(); syncCtx(); toast(t('toast_removed_text_required')); } }
   hideOverlay('txtOverlay'); editTarget=null; render();
 }
@@ -5380,7 +5402,7 @@ function commitValue(){
   }
   const v=$('valInput').value.trim(); beginEdit();
   if(valTarget.type==='number'){ const m=v.match(/^([^\d]{0,4})(\d+)$/); if(m){ valTarget.pre=m[1]; valTarget.n=parseInt(m[2],10); } }
-  else { valTarget.value=v; if(valTarget.type==='dim'){ valTarget.unit=valUnit; S.units.dim=valUnit; saveUnits(); } }
+  else { valTarget.value=v; if(valTarget.type==='dim'){ valTarget.unit=valUnit; S.units.dim=valUnit; saveUnits(); pushLen(v,valUnit); } }
   commit(); hideOverlay('valOverlay'); valTarget=null; render();
 }
 
@@ -5416,9 +5438,9 @@ function updateTextCtl(){
   const isTextObj=o&&(o.type==='text'||o.type==='note'||o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea'||(o.type==='tag'&&!isDefectObj(o)));
   const show=isTextTool||isTextObj;
   $('textctl').classList.toggle('hidden',!show);
-  const a=(S.tool==='text')?S.armedLbl:null;
+  const a=(S.tool==='text')?S.armedLbl:(S.tool==='dim'&&S.armedLen)?{text:lenText(S.armedLen)}:(S.tool==='note'&&S.armedNote)?{text:S.armedNote}:null;
   ['lbllbl','lblcur','lblclear'].forEach(id=>{ $(id).style.display=a?'':'none'; });
-  if(a){ $('lblcur').textContent=a.text; $('lblcur').style.color=a.color||''; }
+  if(a){ $('lblcur').textContent=a.text; $('lblcur').style.color=a.color||''; $('lbllbl').textContent=t(S.tool==='text'?'label_label':'next'); }
   if(!show) return;
   const fillOn=isTextObj ? o.fill!==false : S.textFill;
   $('textfill').textContent=fillOn?t('fill_on'):t('fill_off');
@@ -5474,7 +5496,7 @@ let pid=1;
 function curRec(){ return S.photos.find(p=>p.id===S.curId); }
 function stashCur(){
   const r=curRec(); if(!r) return;
-  r.objects=S.objects; r.undo=S.undo; r.redo=S.redo; r.counter=S.counter; r.scale=S.scale;
+  r.objects=S.objects; r.undo=S.undo; r.redo=S.redo; r.counters=S.counters; r.scale=S.scale;
 }
 function makeThumb(img){
   const t=document.createElement('canvas'); const sc=136/Math.max(img.naturalWidth,img.naturalHeight);
@@ -5492,7 +5514,7 @@ function addPhotoFile(file,cb,kind){
     const rec={ id:rid, blob:file, img:im, iw:im.naturalWidth, ih:im.naturalHeight,
       baseW:Math.max(2,Math.round(Math.max(im.naturalWidth,im.naturalHeight)/450)),
       fileName:fn,
-      objects:[], undo:[], redo:[], counter:1, scale:null, kind:kind||'photo',
+      objects:[], undo:[], redo:[], counters:{}, scale:null, kind:kind||'photo',
       caption:'', loc:'', repEx:(kind==='divider'), thumb:makeThumb(im) };
     S.photos.push(rec); URL.revokeObjectURL(url);
     persistBlob(rec);
@@ -5554,8 +5576,8 @@ function switchTo(id){
   stashCur();
   const r=S.photos.find(p=>p.id===id); if(!r) return;
   S.curId=id; S.img=r.img; S.iw=r.iw; S.ih=r.ih; S.baseW=r.baseW; S.fileName=r.fileName;
-  S.objects=r.objects; S.undo=r.undo; S.redo=r.redo; S.counter=r.counter; S.scale=r.scale||null;
-  S.sel=null; S.pending=null; S.angleDraft=null; S.polyDraft=null; updateUndo(); syncCtx(); if(S.tool==='number')updateNext();
+  S.objects=r.objects; S.undo=r.undo; S.redo=r.redo; S.counters=r.counters||(r.counters={}); S.scale=r.scale||null;
+  S.sel=null; S.pending=null; S.angleDraft=null; S.polyDraft=null; updateUndo(); syncCtx(); updateNext();
   $('empty').style.display='none'; $('zoomer').style.display='flex'; $('export').disabled=false;
   fit(); renderTray();
 }
@@ -5566,7 +5588,7 @@ function deletePhoto(id){
     if(S.curId===id){
       S.curId=null;
       if(S.photos.length){ switchTo(S.photos[Math.min(idx,S.photos.length-1)].id); }
-      else { S.img=null;S.objects=[];S.undo=[];S.redo=[];S.sel=null;S.counter=1;updateUndo();syncCtx();
+      else { S.img=null;S.objects=[];S.undo=[];S.redo=[];S.sel=null;S.counters={};updateUndo();syncCtx();
         $('empty').style.display='flex';$('zoomer').style.display='none';$('export').disabled=true; render(); renderTray(); }
     } else renderTray();
     dirty();
@@ -5657,8 +5679,8 @@ function persistBlob(rec){ idbPut('blob:'+rec.id, rec.blob); }
 function dirty(){ clearTimeout(dirtyT); dirtyT=setTimeout(saveSession,1000); }
 function saveSession(){
   if(!db)return; stashCur();
-  idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counter:p.counter,scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',repEx:!!p.repEx,kind:p.kind||'photo'})),
-    curId:S.curId, favs:S.favs, recent:S.recent, recentLbl:S.recentLbl, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, rep:S.rep, uid, pid });
+  idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counters:p.counters||{},scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',repEx:!!p.repEx,kind:p.kind||'photo'})),
+    curId:S.curId, favs:S.favs, recent:S.recent, recentLbl:S.recentLbl, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, recentLen:S.recentLen, recentNote:S.recentNote, rep:S.rep, uid, pid });
 }
 function clearSession(){ if(!db)return; try{ const st=db.transaction('session','readwrite').objectStore('session'), rq=st.getAllKeys();
   rq.onsuccess=()=>{ (rq.result||[]).forEach(k=>{ if(k!=='lang'&&k!=='units'&&k!=='repcfg'&&k!=='reppresets') st.delete(k); }); }; }catch(e){} }
@@ -5668,6 +5690,7 @@ async function restoreSession(){
   S.favs=migFavs(d.favs); S.recent=migRecent(d.recent); S.recentLbl=(d.recentLbl||[]).filter(x=>x&&x.t); S.elements=d.elements||[]; S.personal=migList(d.personal); S.perCat=d.perCat||{}; S.tagsOwn=d.tagsOwn||[];
   S.favs=S.favs.filter(f=>f.t!=='Review'); S.recentLbl=S.recentLbl.filter(x=>x.t!=='Review');
   S.numPrefix=d.numPrefix||''; $('numpre').value=S.numPrefix;
+  S.recentLen=(d.recentLen||[]).filter(x=>x&&typeof x.v==='string'&&x.v); S.recentNote=(d.recentNote||[]).filter(x=>typeof x==='string'&&x);
   if(d.rep) S.rep=Object.assign(S.rep,d.rep); if(!S.rep.ov) S.rep.ov={}; if(!S.rep.manual) S.rep.manual=[];
   if(d.fmt){ S.fmt=d.fmt; } $('fmtCur').textContent=(S.fmt==='png'?'PNG':'JPG');
   const recs=[];
@@ -5677,7 +5700,7 @@ async function restoreSession(){
       const url=URL.createObjectURL(blob); const im=new Image();
       im.onload=()=>{ res({ id:pd.id, blob, img:im, iw:im.naturalWidth, ih:im.naturalHeight,
         baseW:Math.max(2,Math.round(Math.max(im.naturalWidth,im.naturalHeight)/450)),
-        fileName:pd.fileName, objects:pd.objects||[], undo:[], redo:[], counter:pd.counter||1, scale:pd.scale||null,
+        fileName:pd.fileName, objects:pd.objects||[], undo:[], redo:[], counters:migCounters(pd,d.numPrefix||''), scale:pd.scale||null,
         caption:pd.caption||'', loc:pd.loc||'', repEx:!!pd.repEx, kind:pd.kind||'photo', thumb:makeThumb(im) });
         URL.revokeObjectURL(url); };
       im.onerror=()=>{ URL.revokeObjectURL(url); res(null); };
@@ -6221,7 +6244,48 @@ function setTool(tl){
   updatePolyCtl(); updateTextCtl(); updateQrCtl();
   render();
 }
-function updateNext(){ $('nextn').textContent=(S.numPrefix||'')+S.counter; }
+function numN(){ const n=S.counters[S.numPrefix]; return (n>0)?n:1; }
+function setNumN(n){ S.counters[S.numPrefix]=n; const r=curRec(); if(r) r.counters=S.counters; }
+function migCounters(pd,pre){ const c=pd.counters;
+  if(c&&typeof c==='object'){ const o={}; Object.keys(c).forEach(k=>{ const n=parseInt(c[k],10); if(n>0) o[k]=n; }); return o; }
+  const o={}; o[pre]=(pd.counter>0)?pd.counter:1; return o; }
+function updateNext(){
+  const el=$('nextn'); if(document.activeElement!==el) el.value=numN();
+  $('numBadge').textContent=(S.numPrefix||'')+numN();
+}
+const NUM_PFX=['','A','B','P','S','J','H'];
+function setPrefix(p){ S.numPrefix=p; $('numpre').value=p; updateNext(); dirty(); }
+function cyclePrefix(){
+  const i=NUM_PFX.indexOf(S.numPrefix), nx=(i<0)?'A':NUM_PFX[(i+1)%NUM_PFX.length];
+  setPrefix(nx); toast(t('toast_next_val',{v:nx+numN()}));
+}
+function resetNum(){ setNumN(1); updateNext(); dirty(); toast(t('toast_numbering_reset')); }
+function openNumMenu(btn){
+  const m=$('defMenu');
+  let h=NUM_PFX.map(p=>{ const n=S.counters[p]>0?S.counters[p]:1;
+    return '<button data-npfx="'+esc(p)+'"'+(p===S.numPrefix?' class="on"':'')+'><span class="dot" style="background:'+(p===S.numPrefix?'var(--accent)':'transparent')+'"></span><span class="ltr">'+(p?esc(p):'–')+'</span><span class="nsub ltr">'+esc(t('next'))+' '+esc(p+n)+'</span></button>'; }).join('');
+  h+='<div class="dsep"></div><button class="mm" data-nreset="1"><span>'+esc(t('reset'))+'</span></button>';
+  m.innerHTML=h; m.classList.add('show'); placeMenu(m,btn);
+}
+function pushLen(v,u){ if(!v) return; S.recentLen=[{v,u}].concat(S.recentLen.filter(x=>!(x.v===v&&x.u===u))).slice(0,8); dirty(); }
+function pushNote(v){ if(!v) return; S.recentNote=[v].concat(S.recentNote.filter(x=>x!==v)).slice(0,8); dirty(); }
+function lenText(x){ return x.v+' '+x.u; }
+function openLenMenu(btn){
+  const m=$('defMenu'), rec=S.recentLen.slice(0,5);
+  m.innerHTML = rec.length
+    ? rec.map((x,i)=>'<button data-lenidx="'+i+'"><span class="ltr">'+esc(lenText(x))+'</span></button>').join('')
+    : '<button class="mm" disabled><span>'+esc(t('no_recent_labels'))+'</span></button>';
+  m.classList.add('show'); placeMenu(m,btn);
+}
+function openNoteMenu(btn){
+  const m=$('defMenu'), rec=S.recentNote.slice(0,5);
+  m.innerHTML = rec.length
+    ? rec.map((x,i)=>'<button data-noteidx="'+i+'"><span>'+esc(x.replace(/\s+/g,' '))+'</span></button>').join('')
+    : '<button class="mm" disabled><span>'+esc(t('no_recent_labels'))+'</span></button>';
+  m.classList.add('show'); placeMenu(m,btn);
+}
+function armLen(x){ S.armedLen={v:x.v,u:x.u}; S.armedNote=null; updateTextCtl(); toast(t('toast_next_val',{v:lenText(x)})); }
+function armNote(v){ S.armedNote=v; S.armedLen=null; updateTextCtl(); toast(t('toast_next_val',{v:v.replace(/\s+/g,' ')})); }
 const GEST_KEY='dcg_gest_v1';
 let gestUse={};
 try{ gestUse=JSON.parse(localStorage.getItem(GEST_KEY)||'{}')||{}; }catch(e){ gestUse={}; }
@@ -6238,7 +6302,7 @@ document.querySelectorAll('.tool').forEach(b=>{ if(b.dataset.gest) return; b.add
 function bindToolGestures(tool,onDouble,onHold,onSingle){
   const b=document.querySelector('.tool[data-tool="'+tool+'"]'); if(!b) return;
   let held=false, timer=null, lastTap=0;
-  b.addEventListener('pointerdown',()=>{ held=false; clearTimeout(timer);
+  b.addEventListener('pointerdown',()=>{ held=false; clearTimeout(timer); if(!onHold) return;
     timer=setTimeout(()=>{ held=true; setTool(tool); pipUsed(tool); onHold(b); },450); });
   ['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,()=>clearTimeout(timer)));
   b.addEventListener('contextmenu',e=>e.preventDefault());
@@ -6246,14 +6310,21 @@ function bindToolGestures(tool,onDouble,onHold,onSingle){
     if(held){ held=false; return; }
     closeDefMenu(); setTool(tool);
     const now=Date.now(), dbl=(now-lastTap)<300; lastTap=now;
-    if(dbl){ pipUsed(tool); onDouble(); return; }
+    if(dbl&&onDouble){ lastTap=0; pipUsed(tool); onDouble(); return; }
     if(onSingle) onSingle();
   });
 }
 bindToolGestures('defect', ()=>openPicker('arm'), b=>openDefMenu(b), ()=>{ if(!armLast()) openPicker('arm'); });
 bindToolGestures('text', ()=>openPicker('arm',null,'label'), b=>openLblMenu(b));
+bindToolGestures('dim', null, b=>openLenMenu(b));
+bindToolGestures('note', null, b=>openNoteMenu(b));
+bindToolGestures('number', ()=>cyclePrefix(), b=>openNumMenu(b));
 pipSync();
 $('defMenu').addEventListener('click',e=>{
+  const np=e.target.closest('[data-npfx]'); if(np){ closeDefMenu(); setPrefix(np.dataset.npfx); toast(t('toast_next_val',{v:S.numPrefix+numN()})); return; }
+  if(e.target.closest('[data-nreset]')){ closeDefMenu(); resetNum(); return; }
+  const li=e.target.closest('[data-lenidx]'); if(li){ closeDefMenu(); const x=S.recentLen[+li.dataset.lenidx]; if(x) armLen(x); return; }
+  const ni=e.target.closest('[data-noteidx]'); if(ni){ closeDefMenu(); const x=S.recentNote[+ni.dataset.noteidx]; if(x) armNote(x); return; }
   if(e.target.closest('[data-rmore]')){ closeDefMenu(); openPicker('arm'); return; }
   if(e.target.closest('[data-lmore]')){ closeDefMenu(); openPicker('arm',null,'label'); return; }
   const l=e.target.closest('[data-lterm]');
@@ -6307,7 +6378,11 @@ $('undo').onclick=undo; $('redo').onclick=redo;
 function setObjects(arr){ S.objects=arr; const r=curRec(); if(r)r.objects=arr; }
 $('del').onclick=()=>{ if(S.sel!=null){ beginEdit(); setObjects(S.objects.filter(o=>o.id!==S.sel)); S.sel=null; commit(); syncCtx(); render(); } };
 $('editText').onclick=()=>{ if(S.sel==null)return; const o=getObj(S.sel); if(!o)return; if(o.type==='qr')openQr(o); else if(o.type==='text'||o.type==='note'||o.type==='tag')editLabel(); else editValue(o); };
-$('resetn').onclick=()=>{ S.counter=1; updateNext(); toast(t('toast_numbering_reset')); };
+$('resetn').onclick=resetNum;
+$('nextn').addEventListener('input',()=>{ const el=$('nextn'), d=el.value.replace(/\D/g,''); if(d!==el.value) el.value=d;
+  const n=parseInt(d,10); if(n>0){ setNumN(n); $('numBadge').textContent=(S.numPrefix||'')+n; dirty(); } });
+$('nextn').addEventListener('blur',updateNext);
+$('nextn').addEventListener('keydown',e=>{ if(e.key==='Enter') e.target.blur(); });
 $('numpre').addEventListener('input',()=>{ S.numPrefix=$('numpre').value.trim(); updateNext(); dirty(); });
 $('polyfill').onclick=()=>{
   const o=S.sel!=null?getObj(S.sel):null;
@@ -6340,12 +6415,12 @@ $('textfill').onclick=()=>{
 };
 $('clearall').onclick=()=>{
   if(!S.img||!S.objects.length) return;
-  beginEdit(); setObjects([]); S.sel=null; S.counter=1; S.angleDraft=null; S.polyDraft=null;
+  beginEdit(); setObjects([]); S.sel=null; S.counters={}; { const r=curRec(); if(r) r.counters=S.counters; } S.angleDraft=null; S.polyDraft=null;
   commit(); updateNext(); syncCtx(); render();
 };
 $('startover').onclick=()=>confirmBox(t('start_over_title'), t('start_over_body'),()=>{
   S.photos=[]; S.curId=null; S.img=null; S.objects=[]; S.sel=null; S.undo=[]; S.redo=[];
-  S.counter=1; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.armedLbl=null; S.armedQR=null; S.elements=[]; S.personal=[]; S.perCat={}; S.recent=[]; S.recentLbl=[]; S.favs=[]; S.tagsOwn=[];
+  S.counters={}; S.armedLen=null; S.armedNote=null; S.recentLen=[]; S.recentNote=[]; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.armedLbl=null; S.armedQR=null; S.elements=[]; S.personal=[]; S.perCat={}; S.recent=[]; S.recentLbl=[]; S.favs=[]; S.tagsOwn=[];
   S.scale=null; S.measMode='line';
   S.rep={ structure:'', ref:'', date:'', inspector:'', weather:'', loclink:'', overall:'', sheets:true, perPage:1, schedule:true, stampNums:true, ov:{}, manual:[] };
   S.numPrefix=''; $('numpre').value='';
@@ -6453,7 +6528,7 @@ $('txtDefect').onclick=()=>{
   if(editTarget&&!editIsNew){ openPicker('feed',(term)=>{ $('txtInput').value=term; },'label'); return; }
   cancelLabel(); setTool('text'); openPicker('arm',null,'label');
 };
-$('lblclear').onclick=clearLbl;
+$('lblclear').onclick=()=>{ if(S.tool==='dim'){ S.armedLen=null; updateTextCtl(); } else if(S.tool==='note'){ S.armedNote=null; updateTextCtl(); } else clearLbl(); };
 
 // divider card
 $('divider').onclick=()=>{ renderPhColors(); $('phTitle').value=''; showOverlay('phOverlay'); setTimeout(()=>$('phTitle').focus(),50); };
@@ -7109,7 +7184,7 @@ function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'
 // one printed row's cells, in setup order; the group sub-line only where asked
 function colCells(x,withGrp){ return visCols().map(k=>'<td>'+(k==='cs'?csTd(x.cs):
   esc(x[k]||'')+(k==='def'&&withGrp&&rcSec('grp')&&x.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.grp)+'</span>':''))+'</td>').join(''); }
-const MARKUP_VER='1.4.9';
+const MARKUP_VER='1.5.0';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
