@@ -638,6 +638,9 @@ body.hasfine .emotip{display:block}
 .rs-row .rs-sp{width:18px;flex:0 0 auto}
 .rs-row.off input[type=text]{opacity:.45}
 .rs-secs{display:flex;flex-direction:column;gap:10px}
+.rs-sel{flex:1;min-width:0}
+.rs-row .mini{flex:0 0 auto}
+.rs-ed{font-size:12px;color:var(--accent);margin:-2px 0 8px}
 .rs-dot{width:12px;height:12px;border-radius:50%;flex:0 0 auto}
 .rs-row input.rs-code{flex:0 0 84px;width:84px}
 @media (max-width:640px){ .rp-tbl{font-size:11px} .rp-photo .rp-th{width:52px;height:40px} }
@@ -744,7 +747,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.4.8 · BETA · multilingual</span>
+        <span class="ver">v1.4.9 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -956,7 +959,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.4.8</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.4.9</span></div>
   </nav>
 </div>
 
@@ -1046,8 +1049,9 @@ body.hasfine .emotip{display:block}
       <button class="x" id="rsClose">&times;</button>
     </div>
     <div class="rp-body" id="rsBody"></div>
+    <input type="file" id="rsImportFile" accept=".json,application/json" style="display:none">
     <div class="rp-foot">
-      <button class="btn ghost" id="rsReset" data-i18n="rep_setup_reset" style="margin-right:auto">Reset to standard</button>
+      <button class="btn ghost" id="rsReset" data-i18n="rep_setup_reset" style="margin-right:auto">Reset to preset</button>
       <button class="btn primary" id="rsDone" data-i18n="done">Done</button>
     </div>
   </div>
@@ -1361,10 +1365,40 @@ const I18N={
     "col_comment":"Comment",
     "col_action":"Action",
     "rep_counts":"Findings: {f} · Photos: {p}",
+    "rep_setup_preset":"Preset",
+    "preset_bridge":"Bridge (Austroads/NZTA)",
+    "preset_building":"Building",
+    "preset_edited":"Edited — save as a preset to keep",
+    "preset_name_ph":"New preset name",
+    "preset_switch_title":"Switch preset?",
+    "preset_switch_body":"Unsaved changes to the current setup will be lost.",
+    "preset_delete_title":"Delete preset?",
+    "preset_delete_body":"“{name}” will be removed from this device.",
+    "preset_replace_title":"Replace preset?",
+    "preset_replace_body":"A preset named “{name}” already exists. Replace it?",
+    "toast_preset_saved":"Preset saved",
+    "toast_preset_name":"Enter a name for the preset",
+    "toast_presets_none":"No saved presets to export",
+    "toast_presets_imported":"Presets imported: {n}",
+    "toast_presets_bad":"Not a Markup preset file",
+    "pb_title":"Building condition report",
+    "pb_structure":"Property / address",
+    "pb_ref":"Job number",
+    "pb_weather":"Access / limitations",
+    "pb_overall":"Summary of condition",
+    "pb_el":"Location / room",
+    "pb_cs":"Rating",
+    "pb_com":"Notes",
+    "pb_act":"Recommended action",
+    "pb_w1":"Good",
+    "pb_w2":"Minor repair",
+    "pb_w3":"Major repair",
+    "pb_w4":"Urgent / unsafe",
+    "pb_w5":"Not inspected",
     "rep_setup_cs":"Condition scale",
     "rep_setup_cs_hint":"Code prints in the report; code and word show when choosing a defect. Untick states you do not use.",
     "rep_setup":"Report setup",
-    "rep_setup_hint":"Untick to hide. Type to rename — leave blank for the standard name.",
+    "rep_setup_hint":"Untick to hide. Type to rename — leave blank to use the preset’s name.",
     "rep_setup_title_lbl":"Report title",
     "rep_setup_fields":"Header fields",
     "rep_setup_cols":"Columns",
@@ -1373,9 +1407,9 @@ const I18N={
     "sec_qr":"Location link as QR code",
     "sec_phtbl":"Findings table under each photo",
     "sec_grp":"Group under the defect name",
-    "rep_setup_reset":"Reset to standard",
-    "rep_setup_reset_title":"Reset report setup?",
-    "rep_setup_reset_body":"All names return to standard and every item is switched back on.",
+    "rep_setup_reset":"Reset to preset",
+    "rep_setup_reset_title":"Reset to preset?",
+    "rep_setup_reset_body":"All names and switches return to the selected preset.",
     "done":"Done",
     "col_group":"Group",
     "col_file":"File",
@@ -1741,10 +1775,40 @@ const I18N={
     "col_comment":"备注",
     "col_action":"措施",
     "rep_counts":"结果：{f} · 照片：{p}",
+    "rep_setup_preset":"预设",
+    "preset_bridge":"桥梁（Austroads/NZTA）",
+    "preset_building":"建筑",
+    "preset_edited":"已修改——保存为预设以保留",
+    "preset_name_ph":"新预设名称",
+    "preset_switch_title":"切换预设？",
+    "preset_switch_body":"当前设置中未保存的更改将丢失。",
+    "preset_delete_title":"删除预设？",
+    "preset_delete_body":"“{name}”将从此设备中删除。",
+    "preset_replace_title":"替换预设？",
+    "preset_replace_body":"已存在名为“{name}”的预设。要替换吗？",
+    "toast_preset_saved":"预设已保存",
+    "toast_preset_name":"请输入预设名称",
+    "toast_presets_none":"没有可导出的已保存预设",
+    "toast_presets_imported":"已导入预设：{n}",
+    "toast_presets_bad":"不是 Markup 预设文件",
+    "pb_title":"建筑状况报告",
+    "pb_structure":"物业 / 地址",
+    "pb_ref":"项目编号",
+    "pb_weather":"通行 / 限制",
+    "pb_overall":"状况总结",
+    "pb_el":"位置 / 房间",
+    "pb_cs":"评级",
+    "pb_com":"备注",
+    "pb_act":"建议措施",
+    "pb_w1":"良好",
+    "pb_w2":"小修",
+    "pb_w3":"大修",
+    "pb_w4":"紧急 / 不安全",
+    "pb_w5":"未检查",
     "rep_setup_cs":"状况等级",
     "rep_setup_cs_hint":"代码打印在报告中；选择缺陷时显示代码和文字。取消勾选不使用的等级。",
     "rep_setup":"报告设置",
-    "rep_setup_hint":"取消勾选即隐藏。输入文字可重命名——留空则使用标准名称。",
+    "rep_setup_hint":"取消勾选即隐藏。输入文字可重命名——留空则使用预设中的名称。",
     "rep_setup_title_lbl":"报告标题",
     "rep_setup_fields":"表头字段",
     "rep_setup_cols":"列",
@@ -1753,9 +1817,9 @@ const I18N={
     "sec_qr":"位置链接显示为二维码",
     "sec_phtbl":"每张照片下的结果表",
     "sec_grp":"缺陷名称下显示类别",
-    "rep_setup_reset":"恢复标准设置",
-    "rep_setup_reset_title":"重置报告设置？",
-    "rep_setup_reset_body":"所有名称恢复为标准名称，所有项目重新开启。",
+    "rep_setup_reset":"恢复预设",
+    "rep_setup_reset_title":"恢复为预设？",
+    "rep_setup_reset_body":"所有名称和开关恢复为所选预设。",
     "done":"完成",
     "col_group":"类别",
     "col_file":"文件",
@@ -2121,10 +2185,40 @@ const I18N={
     "col_comment":"Comentario",
     "col_action":"Acción",
     "rep_counts":"Hallazgos: {f} · Fotos: {p}",
+    "rep_setup_preset":"Plantilla",
+    "preset_bridge":"Puente (Austroads/NZTA)",
+    "preset_building":"Edificio",
+    "preset_edited":"Modificada: guárdala como plantilla para conservarla",
+    "preset_name_ph":"Nombre de la nueva plantilla",
+    "preset_switch_title":"¿Cambiar de plantilla?",
+    "preset_switch_body":"Se perderán los cambios no guardados de la configuración actual.",
+    "preset_delete_title":"¿Eliminar la plantilla?",
+    "preset_delete_body":"«{name}» se eliminará de este dispositivo.",
+    "preset_replace_title":"¿Reemplazar la plantilla?",
+    "preset_replace_body":"Ya existe una plantilla llamada «{name}». ¿Reemplazarla?",
+    "toast_preset_saved":"Plantilla guardada",
+    "toast_preset_name":"Escribe un nombre para la plantilla",
+    "toast_presets_none":"No hay plantillas guardadas para exportar",
+    "toast_presets_imported":"Plantillas importadas: {n}",
+    "toast_presets_bad":"No es un archivo de plantillas de Markup",
+    "pb_title":"Informe del estado del edificio",
+    "pb_structure":"Inmueble / dirección",
+    "pb_ref":"Número de trabajo",
+    "pb_weather":"Acceso / limitaciones",
+    "pb_overall":"Resumen del estado",
+    "pb_el":"Ubicación / estancia",
+    "pb_cs":"Calificación",
+    "pb_com":"Notas",
+    "pb_act":"Acción recomendada",
+    "pb_w1":"Bueno",
+    "pb_w2":"Reparación menor",
+    "pb_w3":"Reparación mayor",
+    "pb_w4":"Urgente / inseguro",
+    "pb_w5":"No inspeccionado",
     "rep_setup_cs":"Escala de condición",
     "rep_setup_cs_hint":"El código se imprime en el informe; código y palabra se muestran al elegir un defecto. Desmarca los estados que no uses.",
     "rep_setup":"Configurar informe",
-    "rep_setup_hint":"Desmarca para ocultar. Escribe para cambiar el nombre; déjalo en blanco para usar el nombre estándar.",
+    "rep_setup_hint":"Desmarca para ocultar. Escribe para cambiar el nombre; déjalo en blanco para usar el de la plantilla.",
     "rep_setup_title_lbl":"Título del informe",
     "rep_setup_fields":"Campos del encabezado",
     "rep_setup_cols":"Columnas",
@@ -2133,9 +2227,9 @@ const I18N={
     "sec_qr":"Enlace de ubicación como código QR",
     "sec_phtbl":"Tabla de hallazgos bajo cada foto",
     "sec_grp":"Grupo bajo el nombre del defecto",
-    "rep_setup_reset":"Restablecer estándar",
-    "rep_setup_reset_title":"¿Restablecer la configuración del informe?",
-    "rep_setup_reset_body":"Todos los nombres vuelven al estándar y todo se vuelve a activar.",
+    "rep_setup_reset":"Restablecer plantilla",
+    "rep_setup_reset_title":"¿Restablecer la plantilla?",
+    "rep_setup_reset_body":"Todos los nombres e interruptores vuelven a la plantilla seleccionada.",
     "done":"Listo",
     "col_group":"Grupo",
     "col_file":"Archivo",
@@ -2501,10 +2595,40 @@ const I18N={
     "col_comment":"टिप्पणी",
     "col_action":"कार्रवाई",
     "rep_counts":"निष्कर्ष: {f} · फ़ोटो: {p}",
+    "rep_setup_preset":"प्रीसेट",
+    "preset_bridge":"पुल (Austroads/NZTA)",
+    "preset_building":"भवन",
+    "preset_edited":"संपादित — रखने के लिए प्रीसेट के रूप में सहेजें",
+    "preset_name_ph":"नए प्रीसेट का नाम",
+    "preset_switch_title":"प्रीसेट बदलें?",
+    "preset_switch_body":"वर्तमान सेटअप में बिना सहेजे बदलाव खो जाएँगे।",
+    "preset_delete_title":"प्रीसेट हटाएँ?",
+    "preset_delete_body":"“{name}” इस डिवाइस से हटा दिया जाएगा।",
+    "preset_replace_title":"प्रीसेट प्रतिस्थापित करें?",
+    "preset_replace_body":"“{name}” नाम का प्रीसेट पहले से मौजूद है। क्या उसे बदलना है?",
+    "toast_preset_saved":"प्रीसेट सहेजा गया",
+    "toast_preset_name":"प्रीसेट का नाम दर्ज करें",
+    "toast_presets_none":"निर्यात करने के लिए कोई सहेजा गया प्रीसेट नहीं",
+    "toast_presets_imported":"आयात किए गए प्रीसेट: {n}",
+    "toast_presets_bad":"यह Markup प्रीसेट फ़ाइल नहीं है",
+    "pb_title":"भवन स्थिति रिपोर्ट",
+    "pb_structure":"संपत्ति / पता",
+    "pb_ref":"जॉब नंबर",
+    "pb_weather":"पहुँच / सीमाएँ",
+    "pb_overall":"स्थिति का सारांश",
+    "pb_el":"स्थान / कमरा",
+    "pb_cs":"रेटिंग",
+    "pb_com":"टिप्पणियाँ",
+    "pb_act":"अनुशंसित कार्रवाई",
+    "pb_w1":"अच्छा",
+    "pb_w2":"छोटी मरम्मत",
+    "pb_w3":"बड़ी मरम्मत",
+    "pb_w4":"अत्यावश्यक / असुरक्षित",
+    "pb_w5":"निरीक्षण नहीं किया गया",
     "rep_setup_cs":"स्थिति पैमाना",
     "rep_setup_cs_hint":"कोड रिपोर्ट में छपता है; दोष चुनते समय कोड और शब्द दिखते हैं। जिन स्थितियों का उपयोग नहीं करते, उनका टिक हटाएँ।",
     "rep_setup":"रिपोर्ट सेटअप",
-    "rep_setup_hint":"छिपाने के लिए टिक हटाएँ। नाम बदलने के लिए लिखें — मानक नाम के लिए खाली छोड़ें।",
+    "rep_setup_hint":"छिपाने के लिए टिक हटाएँ। नाम बदलने के लिए लिखें — प्रीसेट का नाम रखने के लिए खाली छोड़ें।",
     "rep_setup_title_lbl":"रिपोर्ट शीर्षक",
     "rep_setup_fields":"हेडर फ़ील्ड",
     "rep_setup_cols":"कॉलम",
@@ -2513,9 +2637,9 @@ const I18N={
     "sec_qr":"स्थान लिंक QR कोड के रूप में",
     "sec_phtbl":"हर फ़ोटो के नीचे निष्कर्ष तालिका",
     "sec_grp":"दोष के नाम के नीचे समूह",
-    "rep_setup_reset":"मानक पर रीसेट करें",
-    "rep_setup_reset_title":"रिपोर्ट सेटअप रीसेट करें?",
-    "rep_setup_reset_body":"सभी नाम मानक पर लौट आएँगे और हर आइटम फिर से चालू हो जाएगा।",
+    "rep_setup_reset":"प्रीसेट पर रीसेट करें",
+    "rep_setup_reset_title":"प्रीसेट पर रीसेट करें?",
+    "rep_setup_reset_body":"सभी नाम और स्विच चुने गए प्रीसेट पर लौट आएँगे।",
     "done":"हो गया",
     "col_group":"समूह",
     "col_file":"फ़ाइल",
@@ -2881,10 +3005,40 @@ const I18N={
     "col_comment":"ملاحظة",
     "col_action":"الإجراء",
     "rep_counts":"النتائج: {f} · الصور: {p}",
+    "rep_setup_preset":"القالب",
+    "preset_bridge":"جسر (Austroads/NZTA)",
+    "preset_building":"مبنى",
+    "preset_edited":"معدَّل — احفظه كقالب للاحتفاظ به",
+    "preset_name_ph":"اسم القالب الجديد",
+    "preset_switch_title":"تبديل القالب؟",
+    "preset_switch_body":"ستفقد التغييرات غير المحفوظة في الإعداد الحالي.",
+    "preset_delete_title":"حذف القالب؟",
+    "preset_delete_body":"سيُحذف «{name}» من هذا الجهاز.",
+    "preset_replace_title":"استبدال القالب؟",
+    "preset_replace_body":"يوجد قالب باسم «{name}» بالفعل. هل تريد استبداله؟",
+    "toast_preset_saved":"تم حفظ القالب",
+    "toast_preset_name":"أدخل اسمًا للقالب",
+    "toast_presets_none":"لا توجد قوالب محفوظة للتصدير",
+    "toast_presets_imported":"القوالب المستوردة: {n}",
+    "toast_presets_bad":"ليس ملف قوالب Markup",
+    "pb_title":"تقرير حالة المبنى",
+    "pb_structure":"العقار / العنوان",
+    "pb_ref":"رقم العمل",
+    "pb_weather":"الوصول / القيود",
+    "pb_overall":"ملخص الحالة",
+    "pb_el":"الموقع / الغرفة",
+    "pb_cs":"التقييم",
+    "pb_com":"ملاحظات",
+    "pb_act":"الإجراء الموصى به",
+    "pb_w1":"جيد",
+    "pb_w2":"إصلاح بسيط",
+    "pb_w3":"إصلاح كبير",
+    "pb_w4":"عاجل / غير آمن",
+    "pb_w5":"لم يُفحص",
     "rep_setup_cs":"مقياس الحالة",
     "rep_setup_cs_hint":"يُطبع الرمز في التقرير؛ ويظهر الرمز والكلمة عند اختيار العيب. أزل العلامة عن الحالات التي لا تستخدمها.",
     "rep_setup":"إعداد التقرير",
-    "rep_setup_hint":"أزل العلامة للإخفاء. اكتب لإعادة التسمية — اتركه فارغًا للاسم القياسي.",
+    "rep_setup_hint":"أزل العلامة للإخفاء. اكتب لإعادة التسمية — اتركه فارغًا لاستخدام اسم القالب.",
     "rep_setup_title_lbl":"عنوان التقرير",
     "rep_setup_fields":"حقول الترويسة",
     "rep_setup_cols":"الأعمدة",
@@ -2893,9 +3047,9 @@ const I18N={
     "sec_qr":"رابط الموقع كرمز QR",
     "sec_phtbl":"جدول النتائج أسفل كل صورة",
     "sec_grp":"المجموعة تحت اسم العيب",
-    "rep_setup_reset":"استعادة الوضع القياسي",
-    "rep_setup_reset_title":"إعادة ضبط إعداد التقرير؟",
-    "rep_setup_reset_body":"تعود جميع الأسماء إلى الوضع القياسي ويُعاد تشغيل كل العناصر.",
+    "rep_setup_reset":"استعادة القالب",
+    "rep_setup_reset_title":"استعادة القالب؟",
+    "rep_setup_reset_body":"تعود جميع الأسماء والمفاتيح إلى القالب المحدد.",
     "done":"تم",
     "col_group":"المجموعة",
     "col_file":"الملف",
@@ -3261,10 +3415,40 @@ const I18N={
     "col_comment":"Комментарий",
     "col_action":"Меры",
     "rep_counts":"Дефекты: {f} · Фото: {p}",
+    "rep_setup_preset":"Шаблон",
+    "preset_bridge":"Мост (Austroads/NZTA)",
+    "preset_building":"Здание",
+    "preset_edited":"Изменено — сохраните как шаблон, чтобы не потерять",
+    "preset_name_ph":"Название нового шаблона",
+    "preset_switch_title":"Сменить шаблон?",
+    "preset_switch_body":"Несохранённые изменения текущей настройки будут потеряны.",
+    "preset_delete_title":"Удалить шаблон?",
+    "preset_delete_body":"«{name}» будет удалён с этого устройства.",
+    "preset_replace_title":"Заменить шаблон?",
+    "preset_replace_body":"Шаблон «{name}» уже существует. Заменить его?",
+    "toast_preset_saved":"Шаблон сохранён",
+    "toast_preset_name":"Введите название шаблона",
+    "toast_presets_none":"Нет сохранённых шаблонов для экспорта",
+    "toast_presets_imported":"Импортировано шаблонов: {n}",
+    "toast_presets_bad":"Это не файл шаблонов Markup",
+    "pb_title":"Отчёт о техническом состоянии здания",
+    "pb_structure":"Объект / адрес",
+    "pb_ref":"Номер заказа",
+    "pb_weather":"Доступ / ограничения",
+    "pb_overall":"Общее состояние",
+    "pb_el":"Место / помещение",
+    "pb_cs":"Оценка",
+    "pb_com":"Примечания",
+    "pb_act":"Рекомендуемые меры",
+    "pb_w1":"Хорошее",
+    "pb_w2":"Мелкий ремонт",
+    "pb_w3":"Капитальный ремонт",
+    "pb_w4":"Срочно / опасно",
+    "pb_w5":"Не обследовано",
     "rep_setup_cs":"Шкала состояния",
     "rep_setup_cs_hint":"Код печатается в отчёте; код и слово видны при выборе дефекта. Снимите флажки с неиспользуемых состояний.",
     "rep_setup":"Настройка отчёта",
-    "rep_setup_hint":"Снимите флажок, чтобы скрыть. Введите текст, чтобы переименовать; оставьте пустым для стандартного названия.",
+    "rep_setup_hint":"Снимите флажок, чтобы скрыть. Введите текст, чтобы переименовать; оставьте пустым для названия из шаблона.",
     "rep_setup_title_lbl":"Заголовок отчёта",
     "rep_setup_fields":"Поля заголовка",
     "rep_setup_cols":"Столбцы",
@@ -3273,9 +3457,9 @@ const I18N={
     "sec_qr":"Ссылка на место в виде QR-кода",
     "sec_phtbl":"Таблица дефектов под каждым фото",
     "sec_grp":"Группа под названием дефекта",
-    "rep_setup_reset":"Сбросить до стандартных",
-    "rep_setup_reset_title":"Сбросить настройку отчёта?",
-    "rep_setup_reset_body":"Все названия станут стандартными, и все пункты снова будут включены.",
+    "rep_setup_reset":"Сбросить к шаблону",
+    "rep_setup_reset_title":"Сбросить к шаблону?",
+    "rep_setup_reset_body":"Все названия и переключатели вернутся к выбранному шаблону.",
     "done":"Готово",
     "col_group":"Группа",
     "col_file":"Файл",
@@ -4355,7 +4539,7 @@ const S = {
   armedDefect:null, armedLbl:null, recent:[], recentLbl:[], favs:[], tagsOwn:[],
   photos:[], curId:null, elements:[], personal:[], perCat:{},
   undo:[], redo:[], pending:null,
-  scale:null, measMode:'line', units:{dim:'mm',mline:'auto',marea:'auto'}, repCfg:{names:{},off:{},sec:{}}, cams:[],
+  scale:null, measMode:'line', units:{dim:'mm',mline:'auto',marea:'auto'}, repCfg:{preset:'bridge',names:{},off:{},sec:{}}, repPresets:[], cams:[],
   rep:{ structure:'', ref:'', date:'', inspector:'', weather:'', loclink:'', overall:'',
         sheets:true, perPage:1, schedule:true, stampNums:true, ov:{}, manual:[] },
 };
@@ -5477,7 +5661,7 @@ function saveSession(){
     curId:S.curId, favs:S.favs, recent:S.recent, recentLbl:S.recentLbl, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, rep:S.rep, uid, pid });
 }
 function clearSession(){ if(!db)return; try{ const st=db.transaction('session','readwrite').objectStore('session'), rq=st.getAllKeys();
-  rq.onsuccess=()=>{ (rq.result||[]).forEach(k=>{ if(k!=='lang'&&k!=='units'&&k!=='repcfg') st.delete(k); }); }; }catch(e){} }
+  rq.onsuccess=()=>{ (rq.result||[]).forEach(k=>{ if(k!=='lang'&&k!=='units'&&k!=='repcfg'&&k!=='reppresets') st.delete(k); }); }; }catch(e){} }
 async function restoreSession(){
   const d=await idbGet('current'); if(!d||!d.photos||!d.photos.length)return;
   uid=d.uid||uid; pid=d.pid||pid;
@@ -5508,7 +5692,9 @@ async function restoreSession(){
   toast(t('toast_session_restored'));
 }
 openDB().then(d=>{ db=d; idbGet('lang').then(l=>{ if(l) setLang(l,true); });
-  idbGet('repcfg').then(c=>{ if(c&&typeof c==='object') S.repCfg={names:c.names||{},off:c.off||{},sec:c.sec||{}}; });
+  idbGet('reppresets').then(a=>{ if(Array.isArray(a)) S.repPresets=a.filter(p=>p&&p.id&&p.name);
+    return idbGet('repcfg'); }).then(c=>{ if(c&&typeof c==='object') S.repCfg={preset:c.preset||'bridge',names:c.names||{},off:c.off||{},sec:c.sec||{}};
+    if(!PRESETS[S.repCfg.preset]&&!ownPreset(S.repCfg.preset)) S.repCfg.preset='bridge'; });
   idbGet('units').then(u=>{ if(u&&typeof u==='object') ['dim','mline','marea'].forEach(k=>{ if(typeof u[k]==='string') S.units[k]=u[k]; }); });
   restoreSession(); });
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'&&S.photos.length){ clearTimeout(dirtyT); saveSession(); } });
@@ -5599,8 +5785,24 @@ function renderTabs(){
 // condition scale: stored keys never change, only the printed code and the word
 const CS_STD={good:'CS1',fair:'CS2',poor:'CS3',severe:'CS4',unrated:'UR'};
 const CS_SEV={CS1:'good',CS2:'fair',CS3:'poor',CS4:'severe',UR:'unrated'};
-function csCfg(n){ return String(((S.repCfg||{}).names||{})[n]||'').trim(); }
-function csOn(k){ return k==='none'||!(((S.repCfg||{}).off||{})['cs_'+k]); }
+// report presets: a built-in base ('@key' = translated string) under the user's own names and switches
+const PRESETS={
+  bridge:{name:'@preset_bridge',names:{},off:{},sec:{}},
+  building:{name:'@preset_building',off:{},sec:{grp:false},names:{title:'@pb_title',structure:'@pb_structure',ref:'@pb_ref',weather:'@pb_weather',overall:'@pb_overall',
+    el:'@pb_el',cs:'@pb_cs',com:'@pb_com',act:'@pb_act',
+    csc_good:'1',csc_fair:'2',csc_poor:'3',csc_severe:'4',csc_unrated:'NI',
+    csw_good:'@pb_w1',csw_fair:'@pb_w2',csw_poor:'@pb_w3',csw_severe:'@pb_w4',csw_unrated:'@pb_w5'}}
+};
+function pv(v){ return (typeof v==='string'&&v[0]==='@')?t(v.slice(1)):String(v||''); }
+function presetId(){ return ((S.repCfg||{}).preset)||'bridge'; }
+function ownPreset(id){ return (S.repPresets||[]).find(p=>'u:'+p.id===id); }
+function baseOf(id){ const o=ownPreset(id); return PRESETS[o?o.base:id]||PRESETS.bridge; }
+function curBase(){ return baseOf(presetId()); }
+function baseName(k){ return pv(curBase().names[k]); }
+function cfgOff(k){ const o=((S.repCfg||{}).off||{}); return (k in o)?!!o[k]:!!curBase().off[k]; }
+function cfgSec(k){ const o=((S.repCfg||{}).sec||{}); return ((k in o)?o[k]:curBase().sec[k])!==false; }
+function csCfg(n){ return String(((S.repCfg||{}).names||{})[n]||'').trim()||baseName(n); }
+function csOn(k){ return k==='none'||!cfgOff('cs_'+k); }
 function csCode(k){ return csCfg('csc_'+k)||CS_STD[k]||''; }
 function csWord(k){ return csCfg('csw_'+k)||trSev(sevOf(k).word); }
 function csDisp(code){ const k=CS_SEV[code]; return k?csCode(k):(code||''); }
@@ -6608,15 +6810,64 @@ function rowFromOv(id,base){
 const REP_FLDS=[['structure','rep_structure'],['ref','rep_ref'],['date','rep_date'],['inspector','rep_inspector'],['weather','rep_weather'],['loclink','rep_loclink'],['overall','rep_overall']];
 const REP_COLS=[['el','col_element'],['def','col_defect'],['cs','col_cs'],['ext','col_extent'],['com','col_comment'],['act','col_action']];
 const REP_SECS=[['summary','sec_summary'],['qr','sec_qr'],['phtbl','sec_phtbl'],['grp','sec_grp']];
-function rcName(k,key){ const n=String((S.repCfg.names||{})[k]||'').trim(); return n||t(key); }
-function rcOn(k){ return !(S.repCfg.off||{})[k]; }
-function rcSec(k){ return (S.repCfg.sec||{})[k]!==false; }
+function rcName(k,key){ const n=String((S.repCfg.names||{})[k]||'').trim()||baseName(k); return n||t(key); }
+function rcOn(k){ return !cfgOff(k); }
+function rcSec(k){ return cfgSec(k); }
 function fldName(k){ return rcName(k,REP_FLDS.find(x=>x[0]===k)[1]); }
 function colName(k){ return rcName(k,REP_COLS.find(x=>x[0]===k)[1]); }
 function repTitleName(){ return rcName('title','rep_doc_title'); }
 function fv(k){ return rcOn(k)?String(S.rep[k]||''):''; }
 function visCols(){ return REP_COLS.filter(c=>rcOn(c[0])).map(c=>c[0]); }
 function saveRepCfg(){ idbPut('repcfg',S.repCfg); }
+function savePresets(){ idbPut('reppresets',S.repPresets); }
+// what differs from the base, so 'edited' compares like with like
+function normCfg(c,base){ const o={names:{},off:{},sec:{}};
+  Object.keys(c.names||{}).forEach(k=>{ const v=String(c.names[k]||'').trim(); if(v) o.names[k]=v; });
+  Object.keys(c.off||{}).forEach(k=>{ const v=!!c.off[k]; if(v!==!!base.off[k]) o.off[k]=v; });
+  Object.keys(c.sec||{}).forEach(k=>{ const v=c.sec[k]!==false; if(v!==(base.sec[k]!==false)) o.sec[k]=v; });
+  return o; }
+function cfgKey(o){ const f=x=>JSON.stringify(Object.keys(x).sort().map(k=>[k,x[k]])); return f(o.names)+f(o.off)+f(o.sec); }
+function presetEdited(){ const b=curBase(), own=ownPreset(presetId());
+  return cfgKey(normCfg(S.repCfg,b))!==cfgKey(normCfg(own||{},b)); }
+function applyPreset(id){ const o=ownPreset(id);
+  S.repCfg={preset:(o||PRESETS[id])?id:'bridge', names:o?clone(o.names||{}):{}, off:o?clone(o.off||{}):{}, sec:o?clone(o.sec||{}):{}};
+  saveRepCfg(); renderSetup(); updateDef(); }
+function presetLabel(id){ const o=ownPreset(id); return o?o.name:pv((PRESETS[id]||PRESETS.bridge).name); }
+function savePresetAs(name){
+  const id=presetId(), own=ownPreset(id), baseId=own?own.base:(PRESETS[id]?id:'bridge'), n=normCfg(S.repCfg,PRESETS[baseId]);
+  const done=ex=>{ const rec=Object.assign({id:ex?ex.id:uidP(),name:name,base:baseId},n);
+    if(ex) Object.assign(ex,rec); else S.repPresets.push(rec);
+    savePresets(); S.repCfg.preset='u:'+rec.id; saveRepCfg(); renderSetup(); toast(t('toast_preset_saved')); };
+  const ex=S.repPresets.find(p=>p.name.toLowerCase()===name.toLowerCase());
+  if(ex&&ex!==own) confirmBox(t('preset_replace_title'),t('preset_replace_body',{name:name}),()=>done(ex)); else done(ex);
+}
+function uidP(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+const P_NAMES=()=>['title'].concat(REP_FLDS.map(x=>x[0]),REP_COLS.map(x=>x[0]),['good','fair','poor','severe','unrated'].flatMap(k=>['csc_'+k,'csw_'+k]));
+const P_OFF=()=>REP_FLDS.map(x=>x[0]).concat(REP_COLS.map(x=>x[0]),['good','fair','poor','severe','unrated'].map(k=>'cs_'+k));
+function cleanPreset(p){
+  if(!p||typeof p.name!=='string'||!p.name.trim()) return null;
+  const o={name:p.name.trim().slice(0,60),base:PRESETS[p.base]?p.base:'bridge',names:{},off:{},sec:{}};
+  P_NAMES().forEach(k=>{ const v=(p.names||{})[k]; if(typeof v==='string'&&v.trim()) o.names[k]=v.trim().slice(0,80); });
+  P_OFF().forEach(k=>{ const v=(p.off||{})[k]; if(typeof v==='boolean') o.off[k]=v; });
+  REP_SECS.forEach(x=>{ const v=(p.sec||{})[x[0]]; if(typeof v==='boolean') o.sec[x[0]]=v; });
+  return o; }
+function exportPresets(){
+  if(!S.repPresets.length){ toast(t('toast_presets_none')); return; }
+  downloadJSON({tool:'Markup',type:'report-presets',version:1,presets:S.repPresets.map(p=>({name:p.name,base:p.base,names:p.names,off:p.off,sec:p.sec}))},'Markup-presets.json');
+}
+function importPresets(file){
+  const rd=new FileReader();
+  rd.onload=()=>{ let n=0; try{
+    const d=JSON.parse(rd.result);
+    const arr=(d&&d.type==='report-presets'&&Array.isArray(d.presets))?d.presets:null;
+    if(!arr){ toast(t('toast_presets_bad')); return; }
+    arr.forEach(x=>{ const c=cleanPreset(x); if(!c) return;
+      const ex=S.repPresets.find(p=>p.name.toLowerCase()===c.name.toLowerCase());
+      if(ex) Object.assign(ex,c); else S.repPresets.push(Object.assign({id:uidP()},c)); n++; });
+    savePresets(); renderSetup(); toast(t('toast_presets_imported',{n:n}));
+  }catch(e){ toast(t('toast_presets_bad')); } };
+  rd.readAsText(file);
+}
 let repBlocks=[], repManual=[];
 function harvest(){
   stashCur();
@@ -6774,11 +7025,22 @@ $('repReset').onclick=()=>confirmBox(t('rep_reset_title'),t('rep_reset_body'),()
 $('repPrint').onclick=()=>{ printReport(); };
 $('repCsv').onclick=exportCSV;
 function renderSetup(){
-  const c=S.repCfg;
+  const c=S.repCfg, id=presetId(), own=ownPreset(id), ed=presetEdited();
   const row=(k,def,sw)=>'<div class="rs-row'+(sw&&!rcOn(k)?' off':'')+'">'+
     (sw?'<input type="checkbox" data-rson="'+k+'"'+(rcOn(k)?' checked':'')+'>':'<span class="rs-sp"></span>')+
-    '<input type="text" data-rsn="'+k+'" value="'+esc((c.names||{})[k]||'')+'" placeholder="'+esc(t(def))+'" autocomplete="off"></div>';
-  $('rsBody').innerHTML='<div class="rp-empty" style="padding:0 0 12px">'+esc(t('rep_setup_hint'))+'</div>'+
+    '<input type="text" data-rsn="'+k+'" value="'+esc((c.names||{})[k]||'')+'" placeholder="'+esc(baseName(k)||t(def))+'" autocomplete="off"></div>';
+  const opt=(v,l)=>'<option value="'+esc(v)+'"'+(v===id?' selected':'')+'>'+esc(l)+'</option>';
+  $('rsBody').innerHTML=
+    '<div class="rp-sec"><div class="rp-h">'+esc(t('rep_setup_preset'))+'</div>'+
+      '<div class="rs-row"><select id="rsPreset" class="rs-sel">'+Object.keys(PRESETS).map(k=>opt(k,presetLabel(k))).join('')+
+        S.repPresets.map(p=>opt('u:'+p.id,p.name)).join('')+'</select>'+
+        (own?'<button class="mini" id="rsPDel">'+esc(t('delete_btn'))+'</button>':'')+'</div>'+
+      (ed?'<div class="rs-ed" id="rsEdited">'+esc(t('preset_edited'))+'</div>':'')+
+      '<div class="rs-row"><input type="text" id="rsPName" placeholder="'+esc(t('preset_name_ph'))+'" autocomplete="off" maxlength="60">'+
+        '<button class="mini" id="rsPSave">'+esc(t('save'))+'</button></div>'+
+      '<div class="rs-row"><button class="mini" id="rsPExport">'+esc(t('export_all2'))+'</button>'+
+        '<button class="mini" id="rsPImport">'+esc(t('import_btn'))+'</button></div></div>'+
+    '<div class="rp-empty" style="padding:0 0 12px">'+esc(t('rep_setup_hint'))+'</div>'+
     '<div class="rp-sec"><div class="rp-h">'+esc(t('rep_setup_title_lbl'))+'</div>'+row('title','rep_doc_title',false)+'</div>'+
     '<div class="rp-sec"><div class="rp-h">'+esc(t('rep_setup_fields'))+'</div>'+REP_FLDS.map(f=>row(f[0],f[1],true)).join('')+'</div>'+
     '<div class="rp-sec"><div class="rp-h">'+esc(t('rep_setup_cols'))+'</div>'+REP_COLS.map(f=>row(f[0],f[1],true)).join('')+'</div>'+
@@ -6786,8 +7048,8 @@ function renderSetup(){
       '<div class="rp-empty" style="padding:0 0 8px">'+esc(t('rep_setup_cs_hint'))+'</div>'+
       SEV.filter(x=>x.k!=='none').map(x=>'<div class="rs-row'+(csOn(x.k)?'':' off')+'"><input type="checkbox" data-rson="cs_'+x.k+'"'+(csOn(x.k)?' checked':'')+'>'+
         '<span class="rs-dot" style="background:'+x.color+'"></span>'+
-        '<input type="text" class="rs-code" data-rsn="csc_'+x.k+'" value="'+esc((c.names||{})['csc_'+x.k]||'')+'" placeholder="'+esc(CS_STD[x.k])+'" autocomplete="off">'+
-        '<input type="text" data-rsn="csw_'+x.k+'" value="'+esc((c.names||{})['csw_'+x.k]||'')+'" placeholder="'+esc(trSev(x.word))+'" autocomplete="off"></div>').join('')+'</div>'+
+        '<input type="text" class="rs-code" data-rsn="csc_'+x.k+'" value="'+esc((c.names||{})['csc_'+x.k]||'')+'" placeholder="'+esc(baseName('csc_'+x.k)||CS_STD[x.k])+'" autocomplete="off">'+
+        '<input type="text" data-rsn="csw_'+x.k+'" value="'+esc((c.names||{})['csw_'+x.k]||'')+'" placeholder="'+esc(baseName('csw_'+x.k)||trSev(x.word))+'" autocomplete="off"></div>').join('')+'</div>'+
     '<div class="rp-sec"><div class="rp-h">'+esc(t('rep_setup_secs'))+'</div><div class="rs-secs">'+
       REP_SECS.map(x=>'<label class="rp-chk"><input type="checkbox" data-rssec="'+x[0]+'"'+(rcSec(x[0])?' checked':'')+'>'+esc(t(x[1]))+'</label>').join('')+'</div></div>';
 }
@@ -6795,12 +7057,27 @@ function openSetup(){ renderSetup(); showOverlay('rsOverlay'); $('rsBody').scrol
 function closeSetup(){ hideOverlay('rsOverlay'); if($('repOverlay').classList.contains('show')) renderReport(); }
 $('repSetup').onclick=openSetup;
 $('rsClose').onclick=closeSetup; $('rsDone').onclick=closeSetup;
-$('rsReset').onclick=()=>confirmBox(t('rep_setup_reset_title'),t('rep_setup_reset_body'),()=>{ S.repCfg={names:{},off:{},sec:{}}; saveRepCfg(); renderSetup(); });
-$('rsBody').addEventListener('input',e=>{ const el=e.target; if(el.dataset.rsn){ S.repCfg.names[el.dataset.rsn]=el.value; saveRepCfg(); if(/^cs[cw]_/.test(el.dataset.rsn)) updateDef(); } });
+$('rsReset').onclick=()=>confirmBox(t('rep_setup_reset_title'),t('rep_setup_reset_body'),()=>applyPreset(presetId()));
+function syncEdited(){ const ed=presetEdited(), el=$('rsEdited');
+  if(ed&&!el){ const d=document.createElement('div'); d.className='rs-ed'; d.id='rsEdited'; d.textContent=t('preset_edited'); $('rsPreset').parentNode.insertAdjacentElement('afterend',d); }
+  else if(!ed&&el) el.remove(); }
+$('rsBody').addEventListener('input',e=>{ const el=e.target; if(el.dataset.rsn){ S.repCfg.names[el.dataset.rsn]=el.value; saveRepCfg(); syncEdited(); if(/^cs[cw]_/.test(el.dataset.rsn)) updateDef(); } });
 $('rsBody').addEventListener('change',e=>{ const el=e.target;
-  if(el.dataset.rson){ if(el.checked) delete S.repCfg.off[el.dataset.rson]; else S.repCfg.off[el.dataset.rson]=true;
-    el.closest('.rs-row').classList.toggle('off',!el.checked); saveRepCfg(); }
-  else if(el.dataset.rssec){ if(el.checked) delete S.repCfg.sec[el.dataset.rssec]; else S.repCfg.sec[el.dataset.rssec]=false; saveRepCfg(); } });
+  if(el.dataset.rson){ S.repCfg.off[el.dataset.rson]=!el.checked;
+    el.closest('.rs-row').classList.toggle('off',!el.checked); saveRepCfg(); syncEdited(); }
+  else if(el.dataset.rssec){ S.repCfg.sec[el.dataset.rssec]=el.checked; saveRepCfg(); syncEdited(); }
+  else if(el.id==='rsPreset'){ const v=el.value; renderSetup();
+    if(presetEdited()) confirmBox(t('preset_switch_title'),t('preset_switch_body'),()=>applyPreset(v)); else applyPreset(v); }
+ });
+$('rsBody').addEventListener('click',e=>{ const id=e.target.id;
+  if(id==='rsPSave'){ const nm=$('rsPName').value.trim(); if(!nm){ toast(t('toast_preset_name')); $('rsPName').focus(); return; } savePresetAs(nm); }
+  else if(id==='rsPDel'){ const o=ownPreset(presetId()); if(!o) return;
+    confirmBox(t('preset_delete_title'),t('preset_delete_body',{name:o.name}),()=>{
+      S.repPresets=S.repPresets.filter(p=>p!==o); savePresets(); S.repCfg.preset=o.base; saveRepCfg(); renderSetup(); }); }
+  else if(id==='rsPExport') exportPresets();
+  else if(id==='rsPImport') $('rsImportFile').click(); });
+$('rsImportFile').addEventListener('change',e=>{ const el=e.target, f=el.files&&el.files[0]; el.value=''; if(f) importPresets(f); });
+$('rsBody').addEventListener('keydown',e=>{ if(e.target.id==='rsPName'&&e.key==='Enter') $('rsPSave').click(); });
 
 // item badge drawn on the report image only — never on the photo itself
 function stampNum(cx,o,tf,label){
@@ -6832,7 +7109,7 @@ function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'
 // one printed row's cells, in setup order; the group sub-line only where asked
 function colCells(x,withGrp){ return visCols().map(k=>'<td>'+(k==='cs'?csTd(x.cs):
   esc(x[k]||'')+(k==='def'&&withGrp&&rcSec('grp')&&x.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.grp)+'</span>':''))+'</td>').join(''); }
-const MARKUP_VER='1.4.8';
+const MARKUP_VER='1.4.9';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
