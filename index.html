@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
-<title>Markup</title>
+<title>Markup · Draw, measure, report</title>
+<meta name="description" content="Mark up photos, maps and plans in your browser — measure, number, tag defects and print reports. Works offline, nothing uploaded.">
 <style>
 /* ── Offline embedded font ─────────────────────────────── */
 @font-face{
@@ -537,6 +538,7 @@ body.hasfine .emotip{display:block}
 .defmenu button span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .defmenu .dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
 .defmenu .mm{color:var(--muted);font-size:12.5px}
+.defmenu .dhd{padding:4px 10px 6px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .defmenu .dsep{height:1px;background:var(--hairline);margin:5px 4px}
 #phColors .swatch{width:30px;height:30px}
 
@@ -707,7 +709,7 @@ body.hasfine .emotip{display:block}
   body>.app,.overlay,.langmenu,#toast,#fmtMenu{display:none!important}
   #reportDoc{display:block!important;position:static!important;left:auto!important;top:auto!important;
     visibility:visible!important;color:#000;font-family:var(--font-ui);font-size:10pt;line-height:1.45}
-  @page{size:A4;margin:0}
+  @page{size:A4;margin:26mm 25.5mm}
 }
 #reportDoc .pg{
   position:relative;box-sizing:border-box;width:auto;height:245mm;
@@ -796,7 +798,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.5.5 · BETA · multilingual</span>
+        <span class="ver">v1.5.6 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -875,10 +877,10 @@ body.hasfine .emotip{display:block}
     </div>
     <div class="divider"></div>
     <div class="grp">
-      <span class="lbl" data-i18n="size">Size</span>
-      <button class="wbtn" data-w="S">S</button>
-      <button class="wbtn on" data-w="M">M</button>
-      <button class="wbtn" data-w="L">L</button>
+      <span class="lbl" data-i18n="size">Size</span><span class="lbl" id="mscaleLbl" style="display:none;color:var(--accent)"></span>
+      <button class="wbtn" title="Hold for overall markup size" data-i18n-title="mscale_hint" data-w="S">S</button>
+      <button class="wbtn on" title="Hold for overall markup size" data-i18n-title="mscale_hint" data-w="M">M</button>
+      <button class="wbtn" title="Hold for overall markup size" data-i18n-title="mscale_hint" data-w="L">L</button>
     </div>
     <div class="divider ctx-div hidden"></div>
     <div class="ctx hidden" id="ctx">
@@ -931,6 +933,7 @@ body.hasfine .emotip{display:block}
       <span class="lbl" data-i18n="qr_link">Link</span>
       <span class="nn" id="qrcur" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;justify-content:flex-start" data-i18n="choose_ellipsis">Choose…</span>
       <button class="mini" id="qrchange" data-i18n="change">Change</button>
+      <button class="mini" id="qrstyle" data-i18n="qr_style_n">Style: Normal</button>
     </div>
     <div style="flex:1 1 auto"></div>
     <button class="btn ghost" id="paste1" style="flex:0 0 auto;height:32px;font-size:12px" data-i18n="paste_btn">Paste</button>
@@ -1012,7 +1015,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.5</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.6</span></div>
   </nav>
 </div>
 
@@ -1332,7 +1335,7 @@ body.hasfine .emotip{display:block}
         <div class="grow"><b data-i18n="help_angle_b">Angle</b><span data-i18n="help_angle_d">Draw one side from the corner, then the second. The measured angle is written in the arc. Hold the tool for your last five angles: pick one and the next angle takes it without the dialog.</span></div>
         <div class="grow"><b data-i18n="help_number_b">Number</b><span data-i18n="help_number_d">Drops auto-incrementing markers for a legend or defect schedule. Each prefix keeps its own count on each photo (B1, B2… P1, P2…). Double-tap the tool to step the prefix through none, A, B, P, S, J, H; hold it to pick one or reset. Type in Next to start from any number. Clear all resets the count.</span></div>
         <div class="grow"><b data-i18n="help_defect_b">Defect</b><span data-i18n="help_defect_d">Tags in a condition-state colour. Tap the tool to re-use the last defect, double-tap for the full list, hold it for your recent five. In the list, tap a tile to place at the shown CS, or hold a tile to pick a condition and favourite it.</span></div>
-        <div class="grow"><b data-i18n="help_qr_b">QR</b><span data-i18n="help_qr_d">Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are drawn in black so the code still scans. Tap the tool to re-use the last link, double-tap it to enter a new one, hold it for your last five.</span></div>
+        <div class="grow"><b data-i18n="help_qr_b">QR</b><span data-i18n="help_qr_d">Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are darkened just enough to scan, with a frame in the exact ink colour; Style switches to Inverted (white code on colour), which phone cameras read but some older scanner apps do not. Tap the tool to re-use the last link, double-tap it to enter a new one, hold it for your last five.</span></div>
       </div>
       <div class="gsec">
         <h4 data-i18n="help_pick_h">Choosing defects</h4>
@@ -1586,6 +1589,10 @@ const I18N={
     "emoji_tip":"Emoji: press Win + . on Windows, or Control + Command + Space on Mac.",
     "tool_qr":"QR",
     "qr_title":"QR code",
+    "mscale":"Markup size",
+    "mscale_hint":"Hold for overall markup size",
+    "qr_style_n":"Style: Normal",
+    "qr_style_i":"Style: Inverted",
     "qr_new":"New link…",
     "qr_edit_title":"Edit QR link",
     "qr_placeholder":"https://…",
@@ -1598,7 +1605,7 @@ const I18N={
     "toast_pasted":"Pasted",
     "ctx_label_qr":"Link",
     "help_qr_b":"QR",
-    "help_qr_d":"Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are drawn in black so the code still scans. Tap the tool to re-use the last link, double-tap it to enter a new one, hold it for your last five.",
+    "help_qr_d":"Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are darkened just enough to scan, with a frame in the exact ink colour; Style switches to Inverted (white code on colour), which phone cameras read but some older scanner apps do not. Tap the tool to re-use the last link, double-tap it to enter a new one, hold it for your last five.",
     "help_pick_h":"Choosing defects",
     "help_picktool_b":"The tool button",
     "help_picktool_d":"Tap it to re-arm the last defect and place straight away. Double-tap to open the list. Hold it for the five most recent, each at the condition you used it at.",
@@ -2005,6 +2012,10 @@ const I18N={
     "emoji_tip":"表情符号：Windows 按 Win + .，Mac 按 Control + Command + 空格。",
     "tool_qr":"二维码",
     "qr_title":"二维码",
+    "mscale":"标注大小",
+    "mscale_hint":"长按可设置整体标注大小",
+    "qr_style_n":"样式：常规",
+    "qr_style_i":"样式：反色",
     "qr_new":"新链接…",
     "qr_edit_title":"编辑二维码链接",
     "qr_placeholder":"https://…",
@@ -2017,7 +2028,7 @@ const I18N={
     "toast_pasted":"已粘贴",
     "ctx_label_qr":"链接",
     "help_qr_b":"二维码",
-    "help_qr_d":"在照片上放置可扫描的二维码——输入链接后点击放置。使用当前墨水颜色和 S/M/L 尺寸。双击可更改链接。浅色会以黑色绘制，以保证可扫描。点击工具可重用上一个链接，双击可输入新链接，长按可选最近五个。",
+    "help_qr_d":"在照片上放置可扫描的二维码——输入链接后点击放置。使用当前墨水颜色和 S/M/L 尺寸。双击可更改链接。浅色会自动加深到可扫描的程度，并加上原墨水颜色的边框；“样式”可切换为反色（彩色底白码），手机相机可识别，但部分旧扫码应用无法识别。点击工具可重用上一个链接，双击可输入新链接，长按可选最近五个。",
     "help_pick_h":"选择缺陷",
     "help_picktool_b":"工具按钮",
     "help_picktool_d":"轻点即可重新装载上一个缺陷并立即标注。双击打开列表。长按显示最近五个，各自保留上次使用的状态等级。",
@@ -2428,6 +2439,10 @@ const I18N={
     "emoji_tip":"Emoji: pulse Win + . en Windows, o Control + Comando + Espacio en Mac.",
     "tool_qr":"QR",
     "qr_title":"Código QR",
+    "mscale":"Tamaño de marcas",
+    "mscale_hint":"Mantenga pulsado para el tamaño general de las marcas",
+    "qr_style_n":"Estilo: normal",
+    "qr_style_i":"Estilo: invertido",
     "qr_new":"Enlace nuevo…",
     "qr_edit_title":"Editar enlace QR",
     "qr_placeholder":"https://…",
@@ -2440,7 +2455,7 @@ const I18N={
     "toast_pasted":"Pegado",
     "ctx_label_qr":"Enlace",
     "help_qr_b":"QR",
-    "help_qr_d":"Coloca un código escaneable sobre la foto: introduce un enlace y luego toca para situarlo. Usa el color de tinta actual y el tamaño S/M/L. Toca dos veces para cambiar el enlace. Los colores claros se dibujan en negro para que el código siga siendo legible. Toque la herramienta para reutilizar el último enlace, tóquela dos veces para introducir uno nuevo, manténgala pulsada para los cinco últimos.",
+    "help_qr_d":"Coloca un código escaneable sobre la foto: introduce un enlace y luego toca para situarlo. Usa el color de tinta actual y el tamaño S/M/L. Toca dos veces para cambiar el enlace. Los colores claros se oscurecen lo justo para escanearse, con un marco en el color exacto de la tinta; Estilo cambia a invertido (código blanco sobre color), que leen las cámaras de los teléfonos pero no algunas apps de escaneo antiguas. Toque la herramienta para reutilizar el último enlace, tóquela dos veces para introducir uno nuevo, manténgala pulsada para los cinco últimos.",
     "help_pick_h":"Elegir defectos",
     "help_picktool_b":"El botón de la herramienta",
     "help_picktool_d":"Tóquelo para recuperar el último defecto y colocarlo de inmediato. Toque dos veces para abrir la lista. Manténgalo pulsado para ver los cinco más recientes, cada uno con el estado con el que lo usó.",
@@ -2851,6 +2866,10 @@ const I18N={
     "emoji_tip":"इमोजी: Windows पर Win + . दबाएँ, या Mac पर Control + Command + Space।",
     "tool_qr":"QR",
     "qr_title":"QR कोड",
+    "mscale":"मार्कअप आकार",
+    "mscale_hint":"कुल मार्कअप आकार के लिए दबाए रखें",
+    "qr_style_n":"शैली: सामान्य",
+    "qr_style_i":"शैली: उलटा",
     "qr_new":"नया लिंक…",
     "qr_edit_title":"QR लिंक संपादित करें",
     "qr_placeholder":"https://…",
@@ -2863,7 +2882,7 @@ const I18N={
     "toast_pasted":"पेस्ट किया गया",
     "ctx_label_qr":"लिंक",
     "help_qr_b":"QR",
-    "help_qr_d":"फ़ोटो पर स्कैन करने योग्य कोड रखता है — एक लिंक दर्ज करें, फिर रखने के लिए टैप करें। वर्तमान स्याही रंग और S/M/L आकार का उपयोग करता है। लिंक बदलने के लिए डबल-टैप करें। हल्के रंग काले रंग में बनाए जाते हैं ताकि कोड स्कैन होता रहे। पिछला लिंक दोबारा इस्तेमाल करने के लिए टूल पर टैप करें, नया लिंक डालने के लिए डबल-टैप करें, पिछले पाँच के लिए दबाए रखें।",
+    "help_qr_d":"फ़ोटो पर स्कैन करने योग्य कोड रखता है — एक लिंक दर्ज करें, फिर रखने के लिए टैप करें। वर्तमान स्याही रंग और S/M/L आकार का उपयोग करता है। लिंक बदलने के लिए डबल-टैप करें। हल्के रंग स्कैन होने लायक गहरे किए जाते हैं, और असली स्याही रंग का फ्रेम जुड़ता है; शैली से उलटा (रंग पर सफ़ेद कोड) चुनें, जिसे फ़ोन कैमरे पढ़ते हैं पर कुछ पुराने स्कैनर ऐप नहीं। पिछला लिंक दोबारा इस्तेमाल करने के लिए टूल पर टैप करें, नया लिंक डालने के लिए डबल-टैप करें, पिछले पाँच के लिए दबाए रखें।",
     "help_pick_h":"दोष चुनना",
     "help_picktool_b":"टूल बटन",
     "help_picktool_d":"पिछला दोष दोबारा तैयार करने और तुरंत लगाने के लिए टैप करें। सूची खोलने के लिए डबल-टैप करें। हाल के पाँच देखने के लिए दबाकर रखें — हर एक उसी स्थिति स्तर के साथ जिस पर उसे लगाया गया था।",
@@ -3274,6 +3293,10 @@ const I18N={
     "emoji_tip":"الرموز التعبيرية: اضغط Win + ‎.‎ على ويندوز، أو Control + Command + Space على ماك.",
     "tool_qr":"رمز QR",
     "qr_title":"رمز QR",
+    "mscale":"حجم العلامات",
+    "mscale_hint":"اضغط مطولًا لضبط الحجم العام للعلامات",
+    "qr_style_n":"النمط: عادي",
+    "qr_style_i":"النمط: معكوس",
     "qr_new":"رابط جديد…",
     "qr_edit_title":"تعديل رابط QR",
     "qr_placeholder":"https://…",
@@ -3286,7 +3309,7 @@ const I18N={
     "toast_pasted":"تم اللصق",
     "ctx_label_qr":"الرابط",
     "help_qr_b":"رمز QR",
-    "help_qr_d":"يضع رمزًا قابلاً للمسح على الصورة — أدخل رابطًا ثم اضغط لوضعه. يستخدم لون الحبر الحالي والحجم S/M/L. اضغط مرتين لتغيير الرابط. تُرسم الألوان الفاتحة بالأسود ليظل الرمز قابلاً للمسح. اضغط على الأداة لإعادة استخدام آخر رابط، واضغط مرتين لإدخال رابط جديد، واضغط مطولًا لآخر خمسة روابط.",
+    "help_qr_d":"يضع رمزًا قابلاً للمسح على الصورة — أدخل رابطًا ثم اضغط لوضعه. يستخدم لون الحبر الحالي والحجم S/M/L. اضغط مرتين لتغيير الرابط. تُغمَّق الألوان الفاتحة بالقدر الكافي للمسح، مع إطار بلون الحبر نفسه؛ ويبدّل النمط إلى معكوس (رمز أبيض على لون)، تقرؤه كاميرات الهواتف لكن بعض تطبيقات المسح القديمة لا تقرؤه. اضغط على الأداة لإعادة استخدام آخر رابط، واضغط مرتين لإدخال رابط جديد، واضغط مطولًا لآخر خمسة روابط.",
     "help_pick_h":"اختيار العيوب",
     "help_picktool_b":"زر الأداة",
     "help_picktool_d":"انقره لإعادة تجهيز آخر عيب ووضعه مباشرة. انقر نقرًا مزدوجًا لفتح القائمة. استمر بالضغط لعرض آخر خمسة، كل منها بالحالة التي استُخدم بها.",
@@ -3697,6 +3720,10 @@ const I18N={
     "emoji_tip":"Эмодзи: нажмите Win + . в Windows или Control + Command + Пробел в Mac.",
     "tool_qr":"QR",
     "qr_title":"QR-код",
+    "mscale":"Размер разметки",
+    "mscale_hint":"Удерживайте для общего размера разметки",
+    "qr_style_n":"Стиль: обычный",
+    "qr_style_i":"Стиль: инверсный",
     "qr_new":"Новая ссылка…",
     "qr_edit_title":"Изменить ссылку QR",
     "qr_placeholder":"https://…",
@@ -3709,7 +3736,7 @@ const I18N={
     "toast_pasted":"Вставлено",
     "ctx_label_qr":"Ссылка",
     "help_qr_b":"QR",
-    "help_qr_d":"Размещает сканируемый код на фото — введите ссылку, затем нажмите для размещения. Использует текущий цвет чернил и размер S/M/L. Двойное нажатие меняет ссылку. Светлые цвета рисуются чёрным, чтобы код читался. Нажмите инструмент, чтобы снова использовать последнюю ссылку, дважды — чтобы ввести новую, удерживайте — для пяти последних.",
+    "help_qr_d":"Размещает сканируемый код на фото — введите ссылку, затем нажмите для размещения. Использует текущий цвет чернил и размер S/M/L. Двойное нажатие меняет ссылку. Светлые цвета затемняются ровно настолько, чтобы код читался, и получают рамку точного цвета; «Стиль» включает инверсию (белый код на цвете) — её читают камеры телефонов, но не некоторые старые сканеры. Нажмите инструмент, чтобы снова использовать последнюю ссылку, дважды — чтобы ввести новую, удерживайте — для пяти последних.",
     "help_pick_h":"Выбор дефектов",
     "help_picktool_b":"Кнопка инструмента",
     "help_picktool_d":"Нажмите, чтобы вернуть последний дефект и сразу поставить его. Двойное нажатие открывает список. Удержание показывает пять недавних, каждый с тем состоянием, с которым он использовался.",
@@ -4687,7 +4714,7 @@ const S = {
   objects:[], sel:null, tool:'select', armedQR:null,
   style:{color:INKS[0], w:'M', tip:'off', dimEnds:'bars'},
   fmt:'jpg',
-  counters:{}, angleDraft:null, polyDraft:null, polyFill:true, tipBy:{pen:'off',note:'off'}, armedAng:null, recentAng:[], stamp:{cap:false,date:false,pos:'bl'}, fillBy:{text:true,note:true,dim:true,angle:true,measure:true}, lastScale:null, recentQr:[], numPrefix:'',
+  counters:{}, angleDraft:null, polyDraft:null, polyFill:true, tipBy:{pen:'off',note:'off'}, armedAng:null, recentAng:[], stamp:{cap:false,date:false,pos:'bl'}, mscale:1, qrStyle:'n', fillBy:{text:true,note:true,dim:true,angle:true,measure:true}, lastScale:null, recentQr:[], numPrefix:'',
   armedLen:null, armedNote:null, recentLen:[], recentNote:[],
   armedDefect:null, armedLbl:null, recent:[], recentLbl:[], favs:[], tagsOwn:[],
   photos:[], curId:null, elements:[], personal:[], perCat:{},
@@ -4721,8 +4748,10 @@ function shade(hex,amt){ const c=hex.replace('#','');
 }
 // Windows-folder amber. The palette's yellow is a highlighter lemon and does not read as a folder.
 const FOLDER_COL='#f7c948';
-function widthPx(){ return S.baseW * WIDTHS[S.style.w]; }
-function fontPx(){ return S.baseW * FONTS[S.style.w]; }
+function widthPx(){ return S.baseW * WIDTHS[S.style.w] * S.mscale; }
+function fontPx(){ return S.baseW * FONTS[S.style.w] * S.mscale; }
+function numRPx(){ return S.baseW * NUMR[S.style.w] * S.mscale; }
+function qrRPx(){ return S.baseW * QRR[S.style.w] * S.mscale; }
 
 // ── Sizing / view ───────────────────────────────────────
 let lastFitW=0, lastFitH=0, refitT=null;
@@ -5195,7 +5224,14 @@ function qrMatrix(text){
   if(qrCache.size>40)qrCache.clear();
   qrCache.set(text,m); return m;
 }
-const qrInk = col => isLight(col) ? '#111418' : col;
+function qrDark(col){
+  if(contrastOf(col,'#ffffff')>=4.5) return col;
+  const c=col.replace('#',''); let r=parseInt(c.substr(0,2),16),g=parseInt(c.substr(2,2),16),b=parseInt(c.substr(4,2),16);
+  if(Math.max(r,g,b)-Math.min(r,g,b)<40) return '#111418';
+  const hx=v=>('0'+Math.round(v).toString(16)).slice(-2);
+  for(let k=0;k<40;k++){ r*=0.93; g*=0.93; b*=0.93; const h='#'+hx(r)+hx(g)+hx(b); if(contrastOf(h,'#ffffff')>=4.5) return h; }
+  return '#111418';
+}
 // flat black-on-white QR for the printed report
 function qrDataURL(text,px){
   const m=qrMatrix(text); if(!m) return '';
@@ -5213,8 +5249,11 @@ function drawQR(ctx,o,tf){
   const n=m.length, tot=n+QR_QUIET*2;
   const p=mapPt(tf,o.x,o.y), half=mapLen(tf,o.r), box=half*2, cell=box/tot;
   const x0=p.x-half, y0=p.y-half;
-  ctx.fillStyle='#ffffff'; ctx.fillRect(x0,y0,box,box);
-  ctx.fillStyle=qrInk(o.color);
+  const dk=qrDark(o.color), inv=o.qs==='i';
+  ctx.fillStyle=inv?dk:'#ffffff'; ctx.fillRect(x0,y0,box,box);
+  if(!inv&&contrastOf(o.color,'#ffffff')>1.04){ const fw=Math.max(1,cell*1.2); ctx.fillStyle=o.color;
+    ctx.fillRect(x0,y0,box,fw); ctx.fillRect(x0,y0+box-fw,box,fw); ctx.fillRect(x0,y0,fw,box); ctx.fillRect(x0+box-fw,y0,fw,box); }
+  ctx.fillStyle=inv?'#ffffff':dk;
   const gx=i=>Math.round(x0+(i+QR_QUIET)*cell), gy=i=>Math.round(y0+(i+QR_QUIET)*cell);
   for(let r=0;r<n;r++){ const ya=gy(r), yb=gy(r+1);
     for(let c=0;c<n;c++) if(m[r][c]){ const xa=gx(c); ctx.fillRect(xa,ya,gx(c+1)-xa,yb-ya); } }
@@ -5402,7 +5441,7 @@ function onDown(p){
   } else if(S.tool==='number'){
     act=null; if(trySelect(ip)) return;
     beginEdit();
-    const o={id:newId(),type:'number',x:ip.x,y:ip.y,n:numN(),pre:S.numPrefix,color:S.style.color,r:S.baseW*NUMR[S.style.w]};
+    const o={id:newId(),type:'number',x:ip.x,y:ip.y,n:numN(),pre:S.numPrefix,color:S.style.color,r:numRPx()};
     S.objects.push(o); setNumN(numN()+1); updateNext(); S.sel=o.id; commit(); syncCtx(); render();
   } else if(S.tool==='angle'){
     if(!S.angleDraft){ if(trySelect(ip)) return; S.angleDraft={vx:ip.x,vy:ip.y,ax:ip.x,ay:ip.y,bx:null,by:null}; act={mode:'angleA'}; render(); }
@@ -5436,7 +5475,7 @@ function onDown(p){
     act=null; if(trySelect(ip)) return;
     if(!S.armedQR){ pendingDlg=()=>openQr(null); return; }
     beginEdit();
-    const o={id:newId(),type:'qr',x:ip.x,y:ip.y,r:S.baseW*QRR[S.style.w],text:S.armedQR.text,color:S.style.color};
+    const o={id:newId(),type:'qr',x:ip.x,y:ip.y,r:qrRPx(),text:S.armedQR.text,color:S.style.color,qs:S.qrStyle==='i'?'i':undefined};
     S.objects.push(o); S.sel=o.id; commit(); syncCtx(); render();
   } else if(S.tool==='defect'){
     act=null; if(trySelect(ip)) return;
@@ -5658,9 +5697,12 @@ function syncCtx(){
 function updateQrCtl(){
   const o=S.sel!=null?getObj(S.sel):null;
   // the arming readout only exists to set the NEXT stamp — redundant once one is selected
-  const show = S.tool==='qr' && !(o&&o.type==='qr');
+  const selQ=!!(o&&o.type==='qr'), show=S.tool==='qr'||selQ;
   $('qrctl').classList.toggle('hidden',!show);
-  if(show) updateQr();
+  ['qrcur','qrchange'].forEach(id=>{ $(id).style.display=selQ?'none':''; }); $('qrctl').querySelector('.lbl').style.display=selQ?'none':'';
+  const inv=selQ?o.qs==='i':S.qrStyle==='i';
+  $('qrstyle').textContent=t(inv?'qr_style_i':'qr_style_n');
+  if(show&&!selQ) updateQr();
 }
 function fillKey(ty){ return (ty==='text'||ty==='tag')?'text':(ty==='mline'||ty==='marea')?'measure':ty; }
 function updateTextCtl(){
@@ -5956,7 +5998,7 @@ function saveSession(){
     curId:S.curId, favs:S.favs, recent:S.recent, recentLbl:S.recentLbl, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, recentLen:S.recentLen, recentNote:S.recentNote, recentQr:S.recentQr, recentAng:S.recentAng, rep:S.rep, uid, pid });
 }
 function clearSession(){ if(!db)return; try{ const st=db.transaction('session','readwrite').objectStore('session'), rq=st.getAllKeys();
-  rq.onsuccess=()=>{ (rq.result||[]).forEach(k=>{ if(k!=='lang'&&k!=='units'&&k!=='stamp'&&k!=='repcfg'&&k!=='reppresets') st.delete(k); }); }; }catch(e){} }
+  rq.onsuccess=()=>{ (rq.result||[]).forEach(k=>{ if(k!=='lang'&&k!=='units'&&k!=='stamp'&&k!=='mscale'&&k!=='repcfg'&&k!=='reppresets') st.delete(k); }); }; }catch(e){} }
 async function restoreSession(){
   const d=await idbGet('current'); if(!d||!d.photos||!d.photos.length)return;
   uid=d.uid||uid; pid=d.pid||pid;
@@ -5991,6 +6033,7 @@ openDB().then(d=>{ db=d; idbGet('lang').then(l=>{ if(l) setLang(l,true); });
   idbGet('reppresets').then(a=>{ if(Array.isArray(a)) S.repPresets=a.filter(p=>p&&p.id&&p.name);
     return idbGet('repcfg'); }).then(c=>{ if(c&&typeof c==='object') S.repCfg={preset:c.preset||'bridge',names:c.names||{},off:c.off||{},sec:c.sec||{}};
     if(!PRESETS[S.repCfg.preset]&&!ownPreset(S.repCfg.preset)) S.repCfg.preset='bridge'; });
+  idbGet('mscale').then(v=>{ if(MSCALES.indexOf(v)>=0){ S.mscale=v; mscaleSync(); } });
   idbGet('stamp').then(v=>{ if(v&&typeof v==='object'){ S.stamp={cap:!!v.cap,date:!!v.date,pos:v.pos==='tl'?'tl':'bl'}; render(); } });
   idbGet('units').then(u=>{ if(u&&typeof u==='object') ['dim','mline','marea'].forEach(k=>{ if(typeof u[k]==='string') S.units[k]=u[k]; }); });
   restoreSession(); });
@@ -6567,7 +6610,7 @@ function objSize(o){
   else if(o.type==='pen'||o.type==='poly'){ v=o.w; tb=WIDTHS; } else { v=o.size; tb=FONTS; }
   if(!(v>0)) return null;
   let best=null, bd=Infinity;
-  for(const k of ['S','M','L']){ const d=Math.abs(v-S.baseW*tb[k]); if(d<bd){ bd=d; best=k; } }
+  for(const k of ['S','M','L']){ const d=Math.abs(v-S.baseW*tb[k]*S.mscale); if(d<bd){ bd=d; best=k; } }
   return bd<=v*0.05 ? best : null;
 }
 const DUP_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>';
@@ -6662,6 +6705,7 @@ bindToolGestures('qr', ()=>openQr(null), b=>openQrMenu(b), ()=>qrTap());
 bindToolGestures('measure', ()=>{ $('toast').classList.remove('show'); openScaleModal(); }, null);
 pipSync();
 $('defMenu').addEventListener('click',e=>{
+  const ms=e.target.closest('[data-msc]'); if(ms){ closeDefMenu(); S.mscale=+ms.dataset.msc; idbPut('mscale',S.mscale); mscaleSync(); toast(t('mscale')+': '+Math.round(S.mscale*100)+'%'); return; }
   const xf=e.target.closest('[data-xfmt]'); if(xf){ const m=$('defMenu'), run=m._run; closeDefMenu(); setFmt(xf.dataset.xfmt); if(run) run(); return; }
   const oi=e.target.closest('[data-oink]'); if(oi){ const sw=document.querySelectorAll('#swatches .swatch')[+oi.dataset.oink]; if(sw) sw.click(); objMenuSync(); return; }
   const oz=e.target.closest('[data-osz]'); if(oz){ const wb=document.querySelector('.wbtn[data-w="'+oz.dataset.osz+'"]'); if(wb) wb.click(); objMenuSync(); return; }
@@ -6698,8 +6742,21 @@ INKS.forEach(col=>{ const b=document.createElement('button'); b.className='swatc
       if(S.armedDefect){ S.armedDefect.color=col; updateDef(); } } });
   sw.appendChild(b); });
 // widths
+const MSCALES=[0.75,1,1.25,1.5];
+function mscaleSync(){ const el=$('mscaleLbl'); const on=S.mscale!==1; el.style.display=on?'':'none'; el.textContent=Math.round(S.mscale*100)+'%'; }
+function openScaleMenu(btn){
+  const m=$('defMenu'); m.classList.remove('objmenu');
+  m.innerHTML='<div class="dhd">'+esc(t('mscale'))+'</div>'+MSCALES.map(v=>'<button data-msc="'+v+'"'+(v===S.mscale?' class="on"':'')+'><span class="dot" style="background:'+(v===S.mscale?'var(--accent)':'transparent')+'"></span><span class="ltr">'+Math.round(v*100)+'%</span></button>').join('');
+  m.classList.add('show'); placeMenu(m,btn);
+}
+document.querySelectorAll('.wbtn').forEach(b=>{ let held=false, tm=null;
+  b.addEventListener('pointerdown',()=>{ held=false; clearTimeout(tm); tm=setTimeout(()=>{ held=true; openScaleMenu(b); },450); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,()=>clearTimeout(tm)));
+  b.addEventListener('contextmenu',e=>e.preventDefault());
+  b.addEventListener('click',e=>{ if(held){ held=false; e.stopImmediatePropagation(); e.preventDefault(); } },true);
+});
 document.querySelectorAll('.wbtn').forEach(b=>b.addEventListener('click',()=>{ S.style.w=b.dataset.w; document.querySelectorAll('.wbtn').forEach(x=>x.classList.remove('on')); b.classList.add('on');
-  if(S.sel!=null){ const o=getObj(S.sel); if(o){ beginEdit(); if(o.type==='text'||o.type==='tag')o.size=fontPx(); else if(o.type==='note'||o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea'){o.w=widthPx();o.size=fontPx();} else if(o.type==='number')o.r=S.baseW*NUMR[S.style.w]; else if(o.type==='qr')o.r=S.baseW*QRR[S.style.w]; else o.w=widthPx(); commit(); render(); } } }));
+  if(S.sel!=null){ const o=getObj(S.sel); if(o){ beginEdit(); if(o.type==='text'||o.type==='tag')o.size=fontPx(); else if(o.type==='note'||o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea'){o.w=widthPx();o.size=fontPx();} else if(o.type==='number')o.r=numRPx(); else if(o.type==='qr')o.r=qrRPx(); else o.w=widthPx(); commit(); render(); } } }));
 
 $('load2').onclick=()=>$('file').click();
 $('paste1').onclick=pasteFromClipboard;
@@ -6816,6 +6873,10 @@ canvas.addEventListener('wheel',e=>{ if(!S.img)return; e.preventDefault(); const
 $('qrOk').onclick=commitQr;
 $('qrCancel').onclick=cancelQr;
 $('qrchange').onclick=()=>openQr(null);
+$('qrstyle').onclick=()=>{ const o=S.sel!=null?getObj(S.sel):null;
+  const v=((o&&o.type==='qr')?o.qs==='i':S.qrStyle==='i')?'n':'i';
+  S.qrStyle=v; if(o&&o.type==='qr'){ beginEdit(); if(v==='i') o.qs='i'; else delete o.qs; commit(); }
+  updateQrCtl(); render(); };
 $('qrInput').addEventListener('input',qrCountSync);
 $('qrInput').addEventListener('keydown',e=>{ if(e.key==='Enter')commitQr(); if(e.key==='Escape')cancelQr(); });
 $('txtOk').onclick=commitLabel;
@@ -7569,7 +7630,7 @@ function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'
 // one printed row's cells, in setup order; the group sub-line only where asked
 function colCells(x,withGrp){ return visCols().map(k=>'<td>'+(k==='cs'?csTd(x.cs):
   esc(x[k]||'')+(k==='def'&&withGrp&&rcSec('grp')&&x.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.grp)+'</span>':''))+'</td>').join(''); }
-const MARKUP_VER='1.5.5';
+const MARKUP_VER='1.5.6';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
