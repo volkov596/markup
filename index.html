@@ -238,6 +238,33 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   background:rgba(6,8,10,.6);backdrop-filter:blur(4px);
   overscroll-behavior:contain;touch-action:pan-y;
 }
+#pdOverlay{align-items:flex-end;padding:0;background:rgba(6,8,10,.3);backdrop-filter:none}
+.pdsheet{width:100%;max-width:480px;background:linear-gradient(160deg,#232a31,#141a1f);border:1px solid var(--panel-border);border-bottom:0;
+  border-radius:16px 16px 0 0;padding:8px 14px calc(14px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(0,0,0,.5)}
+.pdgrab{width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.2);margin:0 auto 8px}
+.pdhd{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.pdt{flex:1 1 auto;min-width:0}
+.pdn{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pdn span{color:var(--muted)}
+.pdk{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pdib{width:34px;height:32px;flex:0 0 auto;border-radius:8px;border:1px solid var(--hairline);background:var(--panel);color:var(--text);display:grid;place-items:center}
+.pdib svg{width:16px;height:16px}
+[dir=rtl] #pdLeft svg,[dir=rtl] #pdRight svg{transform:scaleX(-1)}
+.pdib:disabled{opacity:.3}
+.pddel{color:#ff6b6b}
+.pdx{width:30px;height:32px;flex:0 0 auto;font-size:22px;line-height:1;color:var(--muted);background:none}
+.pdsheet input[type=text]{width:100%;height:36px;border-radius:9px;border:1px solid var(--hairline);background:rgba(0,0,0,.25);color:var(--text);padding:0 10px;font-size:13px;margin-bottom:6px;unicode-bidi:plaintext}
+.pdinc{display:flex;align-items:center;gap:8px;font-size:12.5px;margin:4px 2px 10px;cursor:pointer}
+.pdinc input{width:16px;height:16px;accent-color:var(--accent);margin:0}
+.pdrow{display:flex;align-items:center;gap:6px;padding-top:10px;border-top:1px solid var(--hairline)}
+.pdlab{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-inline-end:2px;white-space:nowrap}
+.pdchip{height:30px;padding:0 10px;border-radius:100px;border:1px solid var(--hairline);font-size:12px;color:var(--muted);background:var(--panel);white-space:nowrap}
+.pdchip.on{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.pdseg{display:flex;border:1px solid var(--hairline);border-radius:8px;overflow:hidden;margin-inline-start:auto;flex:0 0 auto}
+.pdseg button{width:34px;height:30px;display:grid;place-items:center;color:var(--muted);background:none}
+.pdseg button+button{border-inline-start:1px solid var(--hairline)}
+.pdseg button.on{background:var(--accent-soft);color:var(--accent)}
+.pdseg svg{width:15px;height:15px}
 .overlay *{overscroll-behavior:contain}
 .overlay.show{display:flex}
 .qrcount{min-height:16px;margin-top:6px;font-size:11.5px;color:var(--muted);text-align:end;unicode-bidi:plaintext}
@@ -769,7 +796,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.5.3 · BETA · multilingual</span>
+        <span class="ver">v1.5.5 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -927,13 +954,15 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">T</span>
     </button>
-    <button class="tool" data-tool="pen">
+    <button class="tool" data-tool="pen" data-gest="1">
+      <span class="nb" id="tipb_pen" style="display:none"></span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c3-1 3-9 6-9s3 8 6 8 3-6 6-6"/></svg>
       <span data-i18n="tool_draw">Draw</span>
     
       <span class="hk">D</span>
     </button>
     <button class="tool" data-tool="dim" data-gest="1">
+      <span class="nb" id="tipb_dim" style="display:none"></span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M4 8v8M20 8v8"/></svg>
       <span data-i18n="tool_length">Length</span>
     
@@ -946,18 +975,19 @@ body.hasfine .emotip{display:block}
       <span class="hk">M</span>
     </button>
     <button class="tool" data-tool="note" data-gest="1">
+      <span class="nb" id="tipb_note" style="display:none"></span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 19 8-8h8"/><path d="M13 8h7" opacity=".55"/></svg>
       <span data-i18n="tool_note">Note</span>
     
       <span class="hk">N</span>
     </button>
-    <button class="tool" data-tool="poly">
+    <button class="tool" data-tool="poly" data-gest="1">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 20 9l-3 10.5H7L4 9Z"/></svg>
       <span data-i18n="tool_polygon">Polygon</span>
     
       <span class="hk">P</span>
     </button>
-    <button class="tool" data-tool="angle">
+    <button class="tool" data-tool="angle" data-gest="1">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5v14h14"/><path d="M19 19 7 7"/><path d="M5 12a7 7 0 0 0 5 5" opacity=".7"/></svg>
       <span data-i18n="tool_angle">Angle</span>
     
@@ -982,7 +1012,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.3</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.5</span></div>
   </nav>
 </div>
 
@@ -1081,6 +1111,27 @@ body.hasfine .emotip{display:block}
 </div>
 
 <!-- divider card generator -->
+<div class="overlay" id="pdOverlay">
+  <div class="pdsheet" id="pdSheet">
+    <div class="pdgrab"></div>
+    <div class="pdhd">
+      <div class="pdt"><div class="pdn"><b id="pdNum"></b> <span id="pdFile"></span></div><div class="pdk" id="pdTaken"></div></div>
+      <button class="pdib" id="pdLeft" title="Move left" data-i18n-title="move_left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button class="pdib" id="pdRight" title="Move right" data-i18n-title="move_right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      <button class="pdib pddel" id="pdDel" title="Remove" data-i18n-title="remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+      <button class="pdx" id="pdClose" aria-label="Close">&times;</button>
+    </div>
+    <input type="text" id="pdCap" placeholder="Caption" data-i18n-placeholder="rep_caption_ph" autocomplete="off">
+    <input type="text" id="pdLoc" placeholder="Location / chainage" data-i18n-placeholder="rep_location_ph" autocomplete="off">
+    <label class="pdinc"><input type="checkbox" id="pdInc"><span data-i18n="pd_include">Include this photo in the report</span></label>
+    <div class="pdrow" id="pdStampRow">
+      <span class="pdlab" data-i18n="pd_onphotos">On photos</span>
+      <button class="pdchip" id="pdChipCap" data-i18n="rep_caption_ph">Caption</button>
+      <button class="pdchip" id="pdChipDate" data-i18n="pd_date">Date</button>
+      <div class="pdseg"><button id="pdPosB" title="Bottom left" data-i18n-title="pd_bottom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M6 17h7" stroke-width="3"/></svg></button><button id="pdPosT" title="Top left" data-i18n-title="pd_top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M6 7h7" stroke-width="3"/></svg></button></div>
+    </div>
+  </div>
+</div>
 <div class="overlay" id="phOverlay">
   <div class="modal">
     <h3 data-i18n="new_divider_title">New divider card</h3>
@@ -1272,13 +1323,13 @@ body.hasfine .emotip{display:block}
         <h4 data-i18n="help_tools_h">Tools</h4>
         <div class="grow"><b data-i18n="help_select_b">Select</b><span data-i18n="help_select_d">Tap an annotation to move, recolour, resize, or delete it. Drag its handles to reshape. Hold an annotation (or right-click it) for a menu: colour, size, edit, duplicate, delete.</span></div>
         <div class="grow"><b data-i18n="help_text_b">Text &amp; Tag</b><span data-i18n="help_text_d">Tap the photo to type a label in place. Double-tap the tool for the tags and elements list, hold it for the last five things you placed. Anything picked is placed once and then released, so the next tap types again; the props strip shows what is waiting, and Clear drops it. Tags and elements take the text style, so Fill and the ink swatch apply to them, and the recents remember the colour each was last placed in.</span></div>
-        <div class="grow"><b data-i18n="help_draw_b">Draw</b><span data-i18n="help_draw_d">Freehand ink for circling or sketching.</span></div>
-        <div class="grow"><b data-i18n="help_length_b">Length</b><span data-i18n="help_length_d">Drag a measured line. Short bars mark each end. Enter a value and pick a unit (mm, m, in, ft) — the number rides alongside the line. Hold the tool for your last five values: pick one and the next line takes it without the dialog.</span></div>
+        <div class="grow"><b data-i18n="help_draw_b">Draw</b><span data-i18n="help_draw_d">Freehand ink for circling or sketching. Double-tap the tool to step the start tip: Off, Arrow, Round.</span></div>
+        <div class="grow"><b data-i18n="help_length_b">Length</b><span data-i18n="help_length_d">Drag a measured line. Short bars mark each end. Enter a value and pick a unit (mm, m, in, ft) — the number rides alongside the line. Hold the tool for your last five values: pick one and the next line takes it without the dialog. Double-tap the tool to switch the ends between bars and arrows.</span></div>
         <div class="grow"><b data-i18n="help_measure_b">Measure</b><span data-i18n="help_measure_d">Auto-measures real size from a calibrated camera. Set a scale once (pick a camera + enter distance), then draw a line for length or an area for a polygon — the value is computed for you. Double-tap a measurement to change its unit. Double-tap the tool to set the scale; a new photo starts from the camera and distance you used last.</span></div>
         <div class="grow"><b data-i18n="help_calib_b">Calibrate camera</b><span data-i18n="help_calib_d">In Measure, open Cameras… to teach the tool your camera. Photograph an object of known width at several known distances, mark it on each, and save. Reuse the saved camera on any photo — no ruler needed in the shot.</span></div>
-        <div class="grow"><b data-i18n="help_note_b">Note</b><span data-i18n="help_note_d">A leader line from a point to a text label. The line meets the label on its near side, so it always points cleanly at the target. Hold the tool for your last five notes: pick one and the next note takes it without typing.</span></div>
-        <div class="grow"><b data-i18n="help_polygon_b">Polygon</b><span data-i18n="help_polygon_d">Tap to drop corners; use Close shape to finish. Shade an area or ring a region.</span></div>
-        <div class="grow"><b data-i18n="help_angle_b">Angle</b><span data-i18n="help_angle_d">Draw one side from the corner, then the second. The measured angle is written in the arc.</span></div>
+        <div class="grow"><b data-i18n="help_note_b">Note</b><span data-i18n="help_note_d">A leader line from a point to a text label. The line meets the label on its near side, so it always points cleanly at the target. Hold the tool for your last five notes: pick one and the next note takes it without typing. Double-tap the tool to step the tip: Off, Arrow, Round.</span></div>
+        <div class="grow"><b data-i18n="help_polygon_b">Polygon</b><span data-i18n="help_polygon_d">Tap to drop corners; use Close shape to finish. Shade an area or ring a region. Double-tap the tool to switch Fill on or off.</span></div>
+        <div class="grow"><b data-i18n="help_angle_b">Angle</b><span data-i18n="help_angle_d">Draw one side from the corner, then the second. The measured angle is written in the arc. Hold the tool for your last five angles: pick one and the next angle takes it without the dialog.</span></div>
         <div class="grow"><b data-i18n="help_number_b">Number</b><span data-i18n="help_number_d">Drops auto-incrementing markers for a legend or defect schedule. Each prefix keeps its own count on each photo (B1, B2… P1, P2…). Double-tap the tool to step the prefix through none, A, B, P, S, J, H; hold it to pick one or reset. Type in Next to start from any number. Clear all resets the count.</span></div>
         <div class="grow"><b data-i18n="help_defect_b">Defect</b><span data-i18n="help_defect_d">Tags in a condition-state colour. Tap the tool to re-use the last defect, double-tap for the full list, hold it for your recent five. In the list, tap a tile to place at the shown CS, or hold a tile to pick a condition and favourite it.</span></div>
         <div class="grow"><b data-i18n="help_qr_b">QR</b><span data-i18n="help_qr_d">Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are drawn in black so the code still scans. Tap the tool to re-use the last link, double-tap it to enter a new one, hold it for your last five.</span></div>
@@ -1309,9 +1360,9 @@ body.hasfine .emotip{display:block}
       </div>
       <div class="gsec">
         <h4 data-i18n="help_around_h">Getting around</h4>
-        <div class="grow"><b data-i18n="help_zoom_b">Zoom &amp; pan</b><span data-i18n="help_zoom_d">Pinch or scroll to zoom; drag with two fingers, or use the +, fit, − buttons. Fit re-centres the photo.</span></div>
+        <div class="grow"><b data-i18n="help_zoom_b">Zoom &amp; pan</b><span data-i18n="help_zoom_d">Pinch or scroll to zoom; drag with two fingers, or use the +, fit, − buttons. Fit re-centres the photo. Double-tap fit to zoom to full size at the centre. Hold Export one or Export all to choose JPG or PNG and export.</span></div>
         <div class="grow"><b data-i18n="help_paste_b">Paste</b><span data-i18n="help_paste_d">Adds an image copied to the clipboard as a new photo. Press Ctrl/Cmd+V, or use the Paste button. Phones will ask for clipboard permission the first time.</span></div>
-        <div class="grow"><b data-i18n="help_photos_b">Photos</b><span data-i18n="help_photos_d">Thumbnails along the bottom switch between loaded photos. Everything is saved on this device automatically — nothing is uploaded.</span></div>
+        <div class="grow"><b data-i18n="help_photos_b">Photos</b><span data-i18n="help_photos_d">Thumbnails along the bottom switch between loaded photos. Everything is saved on this device automatically — nothing is uploaded. Double-tap a thumbnail (or right-click it) for its details: caption, location, include in report, move left/right, remove. The same panel can show the caption and the date taken on all photos.</span></div>
       </div>
       <div class="gsec">
         <h4 data-i18n="help_keys_h">Keyboard shortcuts</h4>
@@ -1372,6 +1423,16 @@ const I18N={
     "rep_photos":"Photos",
     "rep_location_ph":"Location / chainage",
     "rep_caption_ph":"Caption",
+    "pd_photo":"Photo {n}",
+    "pd_taken":"Taken {d}",
+    "pd_nodate":"No date in file",
+    "pd_include":"Include this photo in the report",
+    "pd_onphotos":"On photos",
+    "pd_date":"Date",
+    "pd_bottom":"Bottom left",
+    "pd_top":"Top left",
+    "move_left":"Move left",
+    "move_right":"Move right",
     "rep_findings":"Findings",
     "rep_none":"No findings yet.",
     "rep_none_body":"A row appears here for every defect placed from the Defects tab. Tags and elements are picked up as columns, not rows.",
@@ -1684,19 +1745,19 @@ const I18N={
     "help_text_b":"Text & Tag",
     "help_text_d":"Tap the photo to type a label in place. Double-tap the tool for the tags and elements list, hold it for the last five things you placed. Anything picked is placed once and then released, so the next tap types again; the props strip shows what is waiting, and Clear drops it. Tags and elements take the text style, so Fill and the ink swatch apply to them, and the recents remember the colour each was last placed in.",
     "help_draw_b":"Draw",
-    "help_draw_d":"Freehand ink for circling or sketching.",
+    "help_draw_d":"Freehand ink for circling or sketching. Double-tap the tool to step the start tip: Off, Arrow, Round.",
     "help_length_b":"Length",
-    "help_length_d":"Drag a measured line. Short bars mark each end. Enter a value and pick a unit (mm, m, in, ft) — the number rides alongside the line. Hold the tool for your last five values: pick one and the next line takes it without the dialog.",
+    "help_length_d":"Drag a measured line. Short bars mark each end. Enter a value and pick a unit (mm, m, in, ft) — the number rides alongside the line. Hold the tool for your last five values: pick one and the next line takes it without the dialog. Double-tap the tool to switch the ends between bars and arrows.",
     "help_measure_b":"Measure",
     "help_measure_d":"Auto-measures real size from a calibrated camera. Set a scale once (pick a camera + enter distance), then draw a line for length or an area for a polygon — the value is computed for you. Double-tap a measurement to change its unit. Double-tap the tool to set the scale; a new photo starts from the camera and distance you used last.",
     "help_calib_b":"Calibrate camera",
     "help_calib_d":"In Measure, open Cameras… to teach the tool your camera. Photograph an object of known width at several known distances, mark it on each, and save. Reuse the saved camera on any photo — no ruler needed in the shot.",
     "help_note_b":"Note",
-    "help_note_d":"A leader line from a point to a text label. The line meets the label on its near side, so it always points cleanly at the target. Hold the tool for your last five notes: pick one and the next note takes it without typing.",
+    "help_note_d":"A leader line from a point to a text label. The line meets the label on its near side, so it always points cleanly at the target. Hold the tool for your last five notes: pick one and the next note takes it without typing. Double-tap the tool to step the tip: Off, Arrow, Round.",
     "help_polygon_b":"Polygon",
-    "help_polygon_d":"Tap to drop corners; use Close shape to finish. Shade an area or ring a region.",
+    "help_polygon_d":"Tap to drop corners; use Close shape to finish. Shade an area or ring a region. Double-tap the tool to switch Fill on or off.",
     "help_angle_b":"Angle",
-    "help_angle_d":"Draw one side from the corner, then the second. The measured angle is written in the arc.",
+    "help_angle_d":"Draw one side from the corner, then the second. The measured angle is written in the arc. Hold the tool for your last five angles: pick one and the next angle takes it without the dialog.",
     "help_number_b":"Number",
     "help_number_d":"Drops auto-incrementing markers for a legend or defect schedule. Each prefix keeps its own count on each photo (B1, B2… P1, P2…). Double-tap the tool to step the prefix through none, A, B, P, S, J, H; hold it to pick one or reset. Type in Next to start from any number. Clear all resets the count.",
     "help_defect_b":"Defect",
@@ -1714,9 +1775,9 @@ const I18N={
     "help_startover_d":"Wipes all photos and annotations and returns to a blank session.",
     "help_around_h":"Getting around",
     "help_zoom_b":"Zoom & pan",
-    "help_zoom_d":"Pinch or scroll to zoom; drag with two fingers, or use the +, fit, − buttons. Fit re-centres the photo.",
+    "help_zoom_d":"Pinch or scroll to zoom; drag with two fingers, or use the +, fit, − buttons. Fit re-centres the photo. Double-tap fit to zoom to full size at the centre. Hold Export one or Export all to choose JPG or PNG and export.",
     "help_photos_b":"Photos",
-    "help_photos_d":"Thumbnails along the bottom switch between loaded photos. Everything is saved on this device automatically — nothing is uploaded.",
+    "help_photos_d":"Thumbnails along the bottom switch between loaded photos. Everything is saved on this device automatically — nothing is uploaded. Double-tap a thumbnail (or right-click it) for its details: caption, location, include in report, move left/right, remove. The same panel can show the caption and the date taken on all photos.",
     "help_keys_h":"Keyboard shortcuts",
     "help_k_select":"Select",
     "help_k_text":"Text",
@@ -1786,6 +1847,16 @@ const I18N={
     "rep_photos":"照片",
     "rep_location_ph":"位置 / 桩号",
     "rep_caption_ph":"图注",
+    "pd_photo":"照片 {n}",
+    "pd_taken":"拍摄于 {d}",
+    "pd_nodate":"文件中无日期",
+    "pd_include":"在报告中包含此照片",
+    "pd_onphotos":"显示在照片上",
+    "pd_date":"日期",
+    "pd_bottom":"左下",
+    "pd_top":"左上",
+    "move_left":"左移",
+    "move_right":"右移",
     "rep_findings":"检查结果",
     "rep_none":"暂无结果。",
     "rep_none_body":"从“缺陷”选项卡放置的每个缺陷都会在此生成一行。标签和部位只填入列，不生成行。",
@@ -2097,19 +2168,19 @@ const I18N={
     "help_text_b":"文字与标签",
     "help_text_d":"点按照片即可就地输入文字标注。双击该工具可打开标签与部位列表，长按可显示最近放置的五项。所选内容放置一次后即自动释放，因此下一次点按会重新进入输入；属性栏会显示待放置的内容，点击“清除”可取消。标签与部位采用文字样式，因此填充与墨色同样适用，最近列表也会记住每项上次使用的颜色。",
     "help_draw_b":"绘制",
-    "help_draw_d":"自由绘制，用于圈画或勾画。",
+    "help_draw_d":"自由绘制，用于圈画或勾画。双击工具可切换起点样式：无、箭头、圆点。",
     "help_length_b":"长度",
-    "help_length_d":"拖出一条测量线，两端有短横标记。输入数值并选择单位（毫米、米、英寸、英尺）——数字会显示在线条旁边。长按工具可选最近五个数值：选中后，下一条线直接使用该数值，不弹出对话框。",
+    "help_length_d":"拖出一条测量线，两端有短横标记。输入数值并选择单位（毫米、米、英寸、英尺）——数字会显示在线条旁边。长按工具可选最近五个数值：选中后，下一条线直接使用该数值，不弹出对话框。双击工具可在短横与箭头端点之间切换。",
     "help_measure_b":"测量",
     "help_measure_d":"根据已校准的相机自动测量实际尺寸。设置一次比例（选择相机并输入距离），然后绘制线段测长度或多边形测面积——数值会自动计算。双击测量结果可更改单位。双击工具可设置比例；新照片会沿用上次使用的相机和距离。",
     "help_calib_b":"校准相机",
     "help_calib_d":"在\"测量\"中打开\"相机…\"来让工具学习您的相机。在几个已知距离处拍摄一个已知宽度的物体，逐一标记后保存。之后在任意照片中复用已保存的相机——拍摄时无需放置直尺。",
     "help_note_b":"备注",
-    "help_note_d":"从某点引出一条指引线连接文字标签。线条连接标签的靠近一侧，始终清晰指向目标。长按工具可选最近五条注释：选中后，下一条注释直接使用该文字，无需输入。",
+    "help_note_d":"从某点引出一条指引线连接文字标签。线条连接标签的靠近一侧，始终清晰指向目标。长按工具可选最近五条注释：选中后，下一条注释直接使用该文字，无需输入。双击工具可切换端点样式：无、箭头、圆点。",
     "help_polygon_b":"多边形",
-    "help_polygon_d":"点击放置各个顶点；使用\"闭合图形\"完成绘制。可对区域进行阴影填充或圈出范围。",
+    "help_polygon_d":"点击放置各个顶点；使用\"闭合图形\"完成绘制。可对区域进行阴影填充或圈出范围。双击工具可开关填充。",
     "help_angle_b":"角度",
-    "help_angle_d":"从角点绘制第一条边，再绘制第二条边。测得的角度会标注在弧线中。",
+    "help_angle_d":"从角点绘制第一条边，再绘制第二条边。测得的角度会标注在弧线中。长按工具可选最近五个角度：选中后，下一个角度直接使用该数值，不弹出对话框。",
     "help_number_b":"编号",
     "help_number_d":"放置自动递增的标记，用于图例或缺陷清单。每张照片上每个前缀各自计数（B1、B2… P1、P2…）。双击工具可依次切换前缀：无、A、B、P、S、J、H；长按可直接选择或重置。在“下一个”中输入数字即可从任意编号开始。\"清除全部\"会重置计数。",
     "help_defect_b":"缺陷",
@@ -2127,9 +2198,9 @@ const I18N={
     "help_startover_d":"清除所有照片和标注，回到空白会话。",
     "help_around_h":"操作导览",
     "help_zoom_b":"缩放与平移",
-    "help_zoom_d":"捏合或滚动可缩放；双指拖动可平移，或使用+、适应、−按钮。\"适应\"会重新居中照片。",
+    "help_zoom_d":"捏合或滚动可缩放；双指拖动可平移，或使用+、适应、−按钮。\"适应\"会重新居中照片。双击“适应窗口”按钮可在中心放大到原始尺寸。长按“导出一张”或“导出全部”可选择 JPG 或 PNG 并导出。",
     "help_photos_b":"照片",
-    "help_photos_d":"底部的缩略图可在已加载的照片之间切换。所有内容都会自动保存在本设备上——不会上传任何内容。",
+    "help_photos_d":"底部的缩略图可在已加载的照片之间切换。所有内容都会自动保存在本设备上——不会上传任何内容。双击缩略图（或右键单击）可查看详情：图注、位置、是否纳入报告、左移/右移、删除。同一面板还可在所有照片上显示图注和拍摄日期。",
     "help_keys_h":"键盘快捷键",
     "help_k_select":"选择",
     "help_k_text":"文字",
@@ -2199,6 +2270,16 @@ const I18N={
     "rep_photos":"Fotos",
     "rep_location_ph":"Ubicación / progresiva",
     "rep_caption_ph":"Pie de foto",
+    "pd_photo":"Foto {n}",
+    "pd_taken":"Tomada {d}",
+    "pd_nodate":"Sin fecha en el archivo",
+    "pd_include":"Incluir esta foto en el informe",
+    "pd_onphotos":"En las fotos",
+    "pd_date":"Fecha",
+    "pd_bottom":"Abajo a la izquierda",
+    "pd_top":"Arriba a la izquierda",
+    "move_left":"Mover a la izquierda",
+    "move_right":"Mover a la derecha",
     "rep_findings":"Hallazgos",
     "rep_none":"Aún no hay hallazgos.",
     "rep_none_body":"Aparece una fila por cada defecto colocado desde la pestaña Defectos. Las etiquetas y los elementos llenan columnas, no crean filas.",
@@ -2510,19 +2591,19 @@ const I18N={
     "help_text_b":"Texto y etiqueta",
     "help_text_d":"Toque la foto para escribir una etiqueta en ese punto. Toque dos veces la herramienta para la lista de etiquetas y elementos, o manténgala pulsada para las últimas cinco cosas que colocó. Lo que elija se coloca una vez y se libera, así que el siguiente toque vuelve a escribir; la barra de propiedades muestra lo que está en espera y Borrar lo descarta. Las etiquetas y los elementos usan el estilo de texto, así que Relleno y el color de tinta se les aplican, y los recientes recuerdan el color con el que se colocó cada uno.",
     "help_draw_b":"Dibujar",
-    "help_draw_d":"Trazo libre para encerrar en un círculo o esbozar.",
+    "help_draw_d":"Trazo libre para encerrar en un círculo o esbozar. Toque dos veces la herramienta para cambiar la punta inicial: No, Flecha, Redonda.",
     "help_length_b":"Longitud",
-    "help_length_d":"Arrastre una línea medida. Barras cortas marcan cada extremo. Introduzca un valor y elija una unidad (mm, m, in, ft); el número aparece junto a la línea. Mantenga pulsada la herramienta para ver sus cinco últimos valores: elija uno y la siguiente línea lo toma sin el diálogo.",
+    "help_length_d":"Arrastre una línea medida. Barras cortas marcan cada extremo. Introduzca un valor y elija una unidad (mm, m, in, ft); el número aparece junto a la línea. Mantenga pulsada la herramienta para ver sus cinco últimos valores: elija uno y la siguiente línea lo toma sin el diálogo. Toque dos veces la herramienta para alternar los extremos entre barras y flechas.",
     "help_measure_b":"Medir",
     "help_measure_d":"Mide automáticamente el tamaño real a partir de una cámara calibrada. Defina una escala una vez (elija una cámara e introduzca la distancia), luego dibuje una línea para la longitud o un área con un polígono; el valor se calcula por usted. Toque dos veces una medida para cambiar su unidad. Toque dos veces la herramienta para definir la escala; una foto nueva parte de la cámara y la distancia usadas la última vez.",
     "help_calib_b":"Calibrar cámara",
     "help_calib_d":"En Medir, abra Cámaras… para enseñar a la herramienta su cámara. Fotografíe un objeto de ancho conocido a varias distancias conocidas, márquelo en cada una y guarde. Reutilice la cámara guardada en cualquier foto; no se necesita regla en la toma.",
     "help_note_b":"Nota",
-    "help_note_d":"Una línea guía desde un punto hasta una etiqueta de texto. La línea llega a la etiqueta por su lado cercano, así que siempre apunta con claridad al objetivo. Mantenga pulsada la herramienta para ver sus cinco últimas notas: elija una y la siguiente nota la toma sin escribir.",
+    "help_note_d":"Una línea guía desde un punto hasta una etiqueta de texto. La línea llega a la etiqueta por su lado cercano, así que siempre apunta con claridad al objetivo. Mantenga pulsada la herramienta para ver sus cinco últimas notas: elija una y la siguiente nota la toma sin escribir. Toque dos veces la herramienta para cambiar la punta: No, Flecha, Redonda.",
     "help_polygon_b":"Polígono",
-    "help_polygon_d":"Toque para colocar esquinas; use Cerrar forma para terminar. Sombree un área o rodee una región.",
+    "help_polygon_d":"Toque para colocar esquinas; use Cerrar forma para terminar. Sombree un área o rodee una región. Toque dos veces la herramienta para activar o desactivar el relleno.",
     "help_angle_b":"Ángulo",
-    "help_angle_d":"Dibuje un lado desde la esquina, luego el segundo. El ángulo medido se escribe en el arco.",
+    "help_angle_d":"Dibuje un lado desde la esquina, luego el segundo. El ángulo medido se escribe en el arco. Mantenga pulsada la herramienta para ver sus cinco últimos ángulos: elija uno y el siguiente ángulo lo toma sin el diálogo.",
     "help_number_b":"Número",
     "help_number_d":"Coloca marcadores autoincrementales para una leyenda o listado de defectos. Cada prefijo lleva su propio conteo en cada foto (B1, B2… P1, P2…). Toque dos veces la herramienta para pasar el prefijo por ninguno, A, B, P, S, J, H; manténgala pulsada para elegir uno o reiniciar. Escriba en Siguiente para empezar desde cualquier número. Borrar todo reinicia el conteo.",
     "help_defect_b":"Defecto",
@@ -2540,9 +2621,9 @@ const I18N={
     "help_startover_d":"Borra todas las fotos y anotaciones y vuelve a una sesión en blanco.",
     "help_around_h":"Navegación",
     "help_zoom_b":"Zoom y desplazamiento",
-    "help_zoom_d":"Pellizque o desplace para hacer zoom; arrastre con dos dedos, o use los botones +, ajustar, −. Ajustar vuelve a centrar la foto.",
+    "help_zoom_d":"Pellizque o desplace para hacer zoom; arrastre con dos dedos, o use los botones +, ajustar, −. Ajustar vuelve a centrar la foto. Toque dos veces Ajustar para ampliar a tamaño real en el centro. Mantenga pulsado Exportar una o Exportar todo para elegir JPG o PNG y exportar.",
     "help_photos_b":"Fotos",
-    "help_photos_d":"Las miniaturas en la parte inferior cambian entre las fotos cargadas. Todo se guarda automáticamente en este dispositivo; nada se sube.",
+    "help_photos_d":"Las miniaturas en la parte inferior cambian entre las fotos cargadas. Todo se guarda automáticamente en este dispositivo; nada se sube. Toque dos veces una miniatura (o haga clic derecho) para ver sus datos: pie de foto, ubicación, incluir en el informe, mover a izquierda/derecha, quitar. El mismo panel puede mostrar el pie de foto y la fecha de toma en todas las fotos.",
     "help_keys_h":"Atajos de teclado",
     "help_k_select":"Seleccionar",
     "help_k_text":"Texto",
@@ -2612,6 +2693,16 @@ const I18N={
     "rep_photos":"फ़ोटो",
     "rep_location_ph":"स्थान / चेनेज",
     "rep_caption_ph":"कैप्शन",
+    "pd_photo":"फ़ोटो {n}",
+    "pd_taken":"लिया गया {d}",
+    "pd_nodate":"फ़ाइल में तारीख नहीं",
+    "pd_include":"इस फ़ोटो को रिपोर्ट में शामिल करें",
+    "pd_onphotos":"फ़ोटो पर",
+    "pd_date":"तारीख",
+    "pd_bottom":"नीचे बाएँ",
+    "pd_top":"ऊपर बाएँ",
+    "move_left":"बाएँ ले जाएँ",
+    "move_right":"दाएँ ले जाएँ",
     "rep_findings":"निष्कर्ष",
     "rep_none":"अभी कोई निष्कर्ष नहीं।",
     "rep_none_body":"दोष टैब से रखे गए हर दोष के लिए यहाँ एक पंक्ति बनती है। टैग और तत्व पंक्ति नहीं, केवल कॉलम भरते हैं।",
@@ -2923,19 +3014,19 @@ const I18N={
     "help_text_b":"टेक्स्ट और टैग",
     "help_text_d":"फ़ोटो पर टैप करके वहीं लेबल लिखें। टूल पर दो बार टैप करने से टैग और घटक की सूची खुलती है, दबाकर रखने पर पिछली पाँच रखी गई चीज़ें दिखती हैं। चुनी गई चीज़ एक बार रखने के बाद छूट जाती है, इसलिए अगला टैप फिर से टाइपिंग खोलता है; प्रॉपर्टी पट्टी दिखाती है कि क्या प्रतीक्षा में है और “साफ़ करें” उसे हटा देता है। टैग और घटक टेक्स्ट शैली लेते हैं, इसलिए भराव और स्याही का रंग उन पर लागू होते हैं, और हाल की सूची हर प्रविष्टि का पिछला रंग याद रखती है।",
     "help_draw_b":"ड्रा",
-    "help_draw_d":"घेरने या स्केच करने के लिए फ्रीहैंड ड्रॉइंग।",
+    "help_draw_d":"घेरने या स्केच करने के लिए फ्रीहैंड ड्रॉइंग। शुरुआती सिरा बदलने के लिए टूल पर डबल-टैप करें: बंद, तीर, गोल।",
     "help_length_b":"लंबाई",
-    "help_length_d":"मापी गई रेखा खींचें। हर सिरे पर छोटी पट्टियाँ होती हैं। मान दर्ज करें और इकाई चुनें (मिमी, मी, इंच, फीट) — संख्या रेखा के साथ दिखती है। पिछले पाँच मानों के लिए टूल को दबाए रखें: एक चुनें और अगली रेखा उसे बिना डायलॉग के ले लेगी।",
+    "help_length_d":"मापी गई रेखा खींचें। हर सिरे पर छोटी पट्टियाँ होती हैं। मान दर्ज करें और इकाई चुनें (मिमी, मी, इंच, फीट) — संख्या रेखा के साथ दिखती है। पिछले पाँच मानों के लिए टूल को दबाए रखें: एक चुनें और अगली रेखा उसे बिना डायलॉग के ले लेगी। सिरों को पट्टी और तीर के बीच बदलने के लिए टूल पर डबल-टैप करें।",
     "help_measure_b":"मापें",
     "help_measure_d":"कैलिब्रेटेड कैमरे से वास्तविक आकार अपने आप मापता है। एक बार स्केल सेट करें (कैमरा चुनें + दूरी दर्ज करें), फिर लंबाई के लिए रेखा या क्षेत्र के लिए बहुभुज बनाएं — मान अपने आप गणना हो जाता है। इकाई बदलने के लिए माप पर डबल-टैप करें। स्केल सेट करने के लिए टूल पर डबल-टैप करें; नई फ़ोटो पिछली बार इस्तेमाल किए गए कैमरे और दूरी से शुरू होती है।",
     "help_calib_b":"कैमरा कैलिब्रेट करें",
     "help_calib_d":"मापें में, कैमरे… खोलकर टूल को अपना कैमरा सिखाएं। ज्ञात चौड़ाई की वस्तु को कई ज्ञात दूरियों पर फ़ोटो करें, हर एक पर चिह्नित करें, और सेव करें। सेव किए गए कैमरे को किसी भी फ़ोटो में दोबारा उपयोग करें — शॉट में रूलर की ज़रूरत नहीं।",
     "help_note_b":"नोट",
-    "help_note_d":"किसी बिंदु से टेक्स्ट लेबल तक जाने वाली लीडर लाइन। लाइन लेबल के निकटतम किनारे से मिलती है, इसलिए यह हमेशा लक्ष्य की ओर स्पष्ट रूप से इशारा करती है। पिछले पाँच नोट्स के लिए टूल को दबाए रखें: एक चुनें और अगला नोट उसे बिना टाइप किए ले लेगा।",
+    "help_note_d":"किसी बिंदु से टेक्स्ट लेबल तक जाने वाली लीडर लाइन। लाइन लेबल के निकटतम किनारे से मिलती है, इसलिए यह हमेशा लक्ष्य की ओर स्पष्ट रूप से इशारा करती है। पिछले पाँच नोट्स के लिए टूल को दबाए रखें: एक चुनें और अगला नोट उसे बिना टाइप किए ले लेगा। सिरा बदलने के लिए टूल पर डबल-टैप करें: बंद, तीर, गोल।",
     "help_polygon_b":"बहुभुज",
-    "help_polygon_d":"कोने रखने के लिए टैप करें; समाप्त करने के लिए आकृति बंद करें का उपयोग करें। किसी क्षेत्र को छायांकित करें या घेरें।",
+    "help_polygon_d":"कोने रखने के लिए टैप करें; समाप्त करने के लिए आकृति बंद करें का उपयोग करें। किसी क्षेत्र को छायांकित करें या घेरें। भराव चालू या बंद करने के लिए टूल पर डबल-टैप करें।",
     "help_angle_b":"कोण",
-    "help_angle_d":"कोने से एक पक्ष बनाएं, फिर दूसरा। मापा गया कोण चाप में लिखा जाता है।",
+    "help_angle_d":"कोने से एक पक्ष बनाएं, फिर दूसरा। मापा गया कोण चाप में लिखा जाता है। पिछले पाँच कोणों के लिए टूल को दबाए रखें: एक चुनें और अगला कोण उसे बिना डायलॉग के ले लेगा।",
     "help_number_b":"संख्या",
     "help_number_d":"लीजेंड या दोष सूची के लिए अपने आप बढ़ने वाले मार्कर रखता है। हर फ़ोटो पर हर उपसर्ग की अपनी गिनती होती है (B1, B2… P1, P2…)। उपसर्ग बदलने के लिए टूल पर डबल-टैप करें: कोई नहीं, A, B, P, S, J, H; चुनने या रीसेट करने के लिए दबाए रखें। किसी भी संख्या से शुरू करने के लिए अगला में लिखें। सभी साफ़ करें से गिनती रीसेट होती है।",
     "help_defect_b":"दोष",
@@ -2953,9 +3044,9 @@ const I18N={
     "help_startover_d":"सभी फ़ोटो और एनोटेशन मिटाता है और खाली सत्र पर लौटता है।",
     "help_around_h":"नेविगेशन",
     "help_zoom_b":"ज़ूम और पैन",
-    "help_zoom_d":"ज़ूम के लिए पिंच करें या स्क्रॉल करें; दो उंगलियों से खींचें, या +, फ़िट, − बटन का उपयोग करें। फ़िट फ़ोटो को फिर से केंद्रित करता है।",
+    "help_zoom_d":"ज़ूम के लिए पिंच करें या स्क्रॉल करें; दो उंगलियों से खींचें, या +, फ़िट, − बटन का उपयोग करें। फ़िट फ़ोटो को फिर से केंद्रित करता है। मूल आकार में बीच से ज़ूम करने के लिए फ़िट पर डबल-टैप करें। JPG या PNG चुनकर निर्यात करने के लिए एक निर्यात करें या सभी निर्यात करें को दबाए रखें।",
     "help_photos_b":"फ़ोटो",
-    "help_photos_d":"नीचे थंबनेल लोड की गई फ़ोटो के बीच स्विच करते हैं। सब कुछ इस डिवाइस पर अपने आप सेव हो जाता है — कुछ भी अपलोड नहीं होता।",
+    "help_photos_d":"नीचे थंबनेल लोड की गई फ़ोटो के बीच स्विच करते हैं। सब कुछ इस डिवाइस पर अपने आप सेव हो जाता है — कुछ भी अपलोड नहीं होता। विवरण के लिए थंबनेल पर डबल-टैप करें (या राइट-क्लिक करें): कैप्शन, स्थान, रिपोर्ट में शामिल करें, बाएँ/दाएँ ले जाएँ, हटाएँ। यही पैनल सभी फ़ोटो पर कैप्शन और ली गई तारीख दिखा सकता है।",
     "help_keys_h":"कीबोर्ड शॉर्टकट",
     "help_k_select":"चयन",
     "help_k_text":"टेक्स्ट",
@@ -3025,6 +3116,16 @@ const I18N={
     "rep_photos":"الصور",
     "rep_location_ph":"الموقع / الكيلومتر",
     "rep_caption_ph":"تعليق",
+    "pd_photo":"صورة {n}",
+    "pd_taken":"التُقطت {d}",
+    "pd_nodate":"لا يوجد تاريخ في الملف",
+    "pd_include":"تضمين هذه الصورة في التقرير",
+    "pd_onphotos":"على الصور",
+    "pd_date":"التاريخ",
+    "pd_bottom":"أسفل اليسار",
+    "pd_top":"أعلى اليسار",
+    "move_left":"نقل لليمين",
+    "move_right":"نقل لليسار",
     "rep_findings":"النتائج",
     "rep_none":"لا توجد نتائج بعد.",
     "rep_none_body":"يظهر صف لكل عيب يُوضع من تبويب «العيوب». أما الوسوم والعناصر فتملأ الأعمدة ولا تنشئ صفوفًا.",
@@ -3336,19 +3437,19 @@ const I18N={
     "help_text_b":"نص ووسم",
     "help_text_d":"انقر الصورة لكتابة تسمية في مكانها. انقر نقرتين على الأداة لفتح قائمة الوسوم والعناصر، أو استمر بالضغط لعرض آخر خمسة عناصر وضعتها. ما تختاره يوضع مرة واحدة ثم يُحرَّر، فتعود النقرة التالية إلى الكتابة؛ ويعرض شريط الخصائص ما هو بالانتظار، و«مسح» يلغيه. تأخذ الوسوم والعناصر نمط النص، فيسري عليها التعبئة ولون القلم، وتتذكر القائمة الحديثة لون كل عنصر عند وضعه آخر مرة.",
     "help_draw_b":"رسم",
-    "help_draw_d":"رسم حر للتحويط أو التخطيط.",
+    "help_draw_d":"رسم حر للتحويط أو التخطيط. انقر مرتين على الأداة لتبديل طرف البداية: بلا، سهم، دائري.",
     "help_length_b":"الطول",
-    "help_length_d":"اسحب خطًا مقاسًا. تُحدَّد كل نهاية بشريط قصير. أدخل قيمة واختر وحدة (مم، م، بوصة، قدم) — يظهر الرقم بجانب الخط. اضغط مطولًا على الأداة لآخر خمس قيم: اختر واحدة وسيأخذها الخط التالي دون نافذة الحوار.",
+    "help_length_d":"اسحب خطًا مقاسًا. تُحدَّد كل نهاية بشريط قصير. أدخل قيمة واختر وحدة (مم، م، بوصة، قدم) — يظهر الرقم بجانب الخط. اضغط مطولًا على الأداة لآخر خمس قيم: اختر واحدة وسيأخذها الخط التالي دون نافذة الحوار. انقر مرتين على الأداة للتبديل بين الأشرطة والأسهم في الطرفين.",
     "help_measure_b":"قياس",
     "help_measure_d":"يقيس الحجم الفعلي تلقائيًا من كاميرا معايرة. اضبط المقياس مرة واحدة (اختر كاميرا وأدخل المسافة)، ثم ارسم خطًا للطول أو مساحة لمضلع — تُحسب القيمة تلقائيًا. اضغط مرتين على القياس لتغيير وحدته. اضغط مرتين على الأداة لضبط المقياس؛ تبدأ الصورة الجديدة بالكاميرا والمسافة المستخدمتين آخر مرة.",
     "help_calib_b":"معايرة الكاميرا",
     "help_calib_d":"في القياس، افتح الكاميرات… لتعليم الأداة كاميرتك. صوّر جسمًا معروف العرض عند عدة مسافات معروفة، وحدده في كل منها، ثم احفظ. أعد استخدام الكاميرا المحفوظة في أي صورة — لا حاجة لمسطرة في اللقطة.",
     "help_note_b":"ملاحظة",
-    "help_note_d":"خط رابط من نقطة إلى تسمية نصية. يلتقي الخط بالتسمية من جانبها القريب، بحيث يشير دائمًا بوضوح إلى الهدف. اضغط مطولًا على الأداة لآخر خمس ملاحظات: اختر واحدة وستأخذها الملاحظة التالية دون كتابة.",
+    "help_note_d":"خط رابط من نقطة إلى تسمية نصية. يلتقي الخط بالتسمية من جانبها القريب، بحيث يشير دائمًا بوضوح إلى الهدف. اضغط مطولًا على الأداة لآخر خمس ملاحظات: اختر واحدة وستأخذها الملاحظة التالية دون كتابة. انقر مرتين على الأداة لتبديل الطرف: بلا، سهم، دائري.",
     "help_polygon_b":"مضلع",
-    "help_polygon_d":"اضغط لوضع الزوايا؛ استخدم إغلاق الشكل للإنهاء. ظلّل مساحة أو أحط بمنطقة.",
+    "help_polygon_d":"اضغط لوضع الزوايا؛ استخدم إغلاق الشكل للإنهاء. ظلّل مساحة أو أحط بمنطقة. انقر مرتين على الأداة لتشغيل التعبئة أو إيقافها.",
     "help_angle_b":"زاوية",
-    "help_angle_d":"ارسم جانبًا من الزاوية، ثم الثاني. تُكتب الزاوية المقاسة على القوس.",
+    "help_angle_d":"ارسم جانبًا من الزاوية، ثم الثاني. تُكتب الزاوية المقاسة على القوس. اضغط مطولًا على الأداة لآخر خمس زوايا: اختر واحدة وستأخذها الزاوية التالية دون نافذة الحوار.",
     "help_number_b":"رقم",
     "help_number_d":"يضع علامات تزداد تلقائيًا لوسيلة إيضاح أو جدول عيوب. لكل بادئة عدّها الخاص في كل صورة (B1، B2… P1، P2…). انقر مرتين على الأداة للتنقل بين البادئات: بلا، A، B، P، S، J، H؛ واضغط مطولًا لاختيار واحدة أو إعادة الضبط. اكتب في التالي للبدء من أي رقم. مسح الكل يعيد ضبط العد.",
     "help_defect_b":"عيب",
@@ -3366,9 +3467,9 @@ const I18N={
     "help_startover_d":"يمحو جميع الصور والعلامات ويعود إلى جلسة فارغة.",
     "help_around_h":"التنقل",
     "help_zoom_b":"التكبير والتحريك",
-    "help_zoom_d":"قرّب/باعد أصابعك أو مرّر للتكبير؛ اسحب بإصبعين، أو استخدم أزرار +، احتواء، −. يعيد \"احتواء\" توسيط الصورة.",
+    "help_zoom_d":"قرّب/باعد أصابعك أو مرّر للتكبير؛ اسحب بإصبعين، أو استخدم أزرار +، احتواء، −. يعيد \"احتواء\" توسيط الصورة. انقر مرتين على زر الاحتواء للتكبير إلى الحجم الكامل في المنتصف. اضغط مطولًا على تصدير واحدة أو تصدير الكل لاختيار JPG أو PNG والتصدير.",
     "help_photos_b":"الصور",
-    "help_photos_d":"تُبدّل الصور المصغّرة أسفل الشاشة بين الصور المحمّلة. يُحفظ كل شيء تلقائيًا على هذا الجهاز — لا يُرفع شيء إلى الإنترنت.",
+    "help_photos_d":"تُبدّل الصور المصغّرة أسفل الشاشة بين الصور المحمّلة. يُحفظ كل شيء تلقائيًا على هذا الجهاز — لا يُرفع شيء إلى الإنترنت. انقر مرتين على صورة مصغرة (أو انقر بالزر الأيمن) لعرض تفاصيلها: التعليق، الموقع، التضمين في التقرير، النقل يسارًا/يمينًا، الإزالة. يمكن للوحة نفسها عرض التعليق وتاريخ الالتقاط على جميع الصور.",
     "help_keys_h":"اختصارات لوحة المفاتيح",
     "help_k_select":"تحديد",
     "help_k_text":"نص",
@@ -3438,6 +3539,16 @@ const I18N={
     "rep_photos":"Фотографии",
     "rep_location_ph":"Место / пикет",
     "rep_caption_ph":"Подпись",
+    "pd_photo":"Фото {n}",
+    "pd_taken":"Снято {d}",
+    "pd_nodate":"В файле нет даты",
+    "pd_include":"Включить это фото в отчёт",
+    "pd_onphotos":"На фото",
+    "pd_date":"Дата",
+    "pd_bottom":"Слева внизу",
+    "pd_top":"Слева вверху",
+    "move_left":"Сдвинуть влево",
+    "move_right":"Сдвинуть вправо",
     "rep_findings":"Дефекты",
     "rep_none":"Дефектов пока нет.",
     "rep_none_body":"Строка появляется для каждого дефекта, поставленного на вкладке «Дефекты». Метки и конструктивные элементы заполняют столбцы, но строк не создают.",
@@ -3749,19 +3860,19 @@ const I18N={
     "help_text_b":"Текст и метка",
     "help_text_d":"Нажмите на фото, чтобы ввести подпись на месте. Двойное нажатие на инструмент открывает список меток и элементов, удержание показывает последние пять поставленных записей. Выбранное ставится один раз и освобождается, поэтому следующее нажатие снова открывает ввод; в строке свойств видно, что ожидает, а «Очистить» убирает его. Метки и элементы используют стиль текста, поэтому заливка и цвет чернил действуют и на них, а список последних запоминает цвет каждой записи.",
     "help_draw_b":"Рисование",
-    "help_draw_d":"Произвольное рисование для обводки или наброска.",
+    "help_draw_d":"Произвольное рисование для обводки или наброска. Двойное касание инструмента меняет начало линии: нет, стрелка, точка.",
     "help_length_b":"Длина",
-    "help_length_d":"Проведите измерительную линию. Короткие штрихи отмечают её концы. Введите значение и выберите единицу (мм, м, дюйм, фут) — число отображается рядом с линией. Удерживайте инструмент, чтобы выбрать одно из пяти последних значений: следующая линия получит его без диалога.",
+    "help_length_d":"Проведите измерительную линию. Короткие штрихи отмечают её концы. Введите значение и выберите единицу (мм, м, дюйм, фут) — число отображается рядом с линией. Удерживайте инструмент, чтобы выбрать одно из пяти последних значений: следующая линия получит его без диалога. Двойное касание инструмента переключает концы: штрихи или стрелки.",
     "help_measure_b":"Измерение",
     "help_measure_d":"Автоматически измеряет реальный размер по откалиброванной камере. Задайте масштаб один раз (выберите камеру и введите расстояние), затем нарисуйте линию для длины или область для полигона — значение рассчитается само. Дважды нажмите на измерение, чтобы сменить единицу. Двойное касание инструмента задаёт масштаб; новое фото начинается с последних использованных камеры и расстояния.",
     "help_calib_b":"Калибровка камеры",
     "help_calib_d":"В разделе «Измерение» откройте «Камеры…», чтобы обучить инструмент вашей камере. Сфотографируйте объект известной ширины на нескольких известных расстояниях, отметьте его на каждом снимке и сохраните. Используйте сохранённую камеру для любых фото — линейка в кадре не нужна.",
     "help_note_b":"Заметка",
-    "help_note_d":"Линия-выноска от точки к текстовой подписи. Линия подходит к подписи с ближней стороны, поэтому всегда чётко указывает на цель. Удерживайте инструмент, чтобы выбрать одну из пяти последних заметок: следующая заметка получит её без ввода текста.",
+    "help_note_d":"Линия-выноска от точки к текстовой подписи. Линия подходит к подписи с ближней стороны, поэтому всегда чётко указывает на цель. Удерживайте инструмент, чтобы выбрать одну из пяти последних заметок: следующая заметка получит её без ввода текста. Двойное касание инструмента меняет наконечник: нет, стрелка, точка.",
     "help_polygon_b":"Полигон",
-    "help_polygon_d":"Нажимайте, чтобы ставить углы; используйте «Замкнуть фигуру», чтобы завершить. Закрасьте область или обведите участок.",
+    "help_polygon_d":"Нажимайте, чтобы ставить углы; используйте «Замкнуть фигуру», чтобы завершить. Закрасьте область или обведите участок. Двойное касание инструмента включает или выключает заливку.",
     "help_angle_b":"Угол",
-    "help_angle_d":"Нарисуйте одну сторону от угла, затем вторую. Измеренный угол подписывается на дуге.",
+    "help_angle_d":"Нарисуйте одну сторону от угла, затем вторую. Измеренный угол подписывается на дуге. Удерживайте инструмент, чтобы выбрать один из пяти последних углов: следующий угол получит его без диалога.",
     "help_number_b":"Номер",
     "help_number_d":"Размещает автоматически нумеруемые метки для легенды или перечня дефектов. У каждого префикса свой счёт на каждом фото (B1, B2… P1, P2…). Двойное касание инструмента переключает префикс: нет, A, B, P, S, J, H; удержание — выбор или сброс. Введите число в поле «Следующий», чтобы начать с любого номера. «Очистить всё» сбрасывает счётчик.",
     "help_defect_b":"Дефект",
@@ -3779,9 +3890,9 @@ const I18N={
     "help_startover_d":"Удаляет все фото и аннотации, возвращая к пустой сессии.",
     "help_around_h":"Навигация",
     "help_zoom_b":"Масштаб и панорамирование",
-    "help_zoom_d":"Сведите пальцы или прокрутите для масштабирования; перетаскивайте двумя пальцами или используйте кнопки +, «по размеру», −. «По размеру» центрирует фото.",
+    "help_zoom_d":"Сведите пальцы или прокрутите для масштабирования; перетаскивайте двумя пальцами или используйте кнопки +, «по размеру», −. «По размеру» центрирует фото. Двойное касание кнопки «По размеру» увеличивает до полного размера по центру. Удерживайте «Экспорт одного» или «Экспорт всех», чтобы выбрать JPG или PNG и экспортировать.",
     "help_photos_b":"Фото",
-    "help_photos_d":"Миниатюры внизу переключают между загруженными фото. Всё сохраняется на этом устройстве автоматически — ничего не загружается в сеть.",
+    "help_photos_d":"Миниатюры внизу переключают между загруженными фото. Всё сохраняется на этом устройстве автоматически — ничего не загружается в сеть. Двойное касание миниатюры (или правый щелчок) открывает её данные: подпись, место, включение в отчёт, сдвиг влево/вправо, удаление. Там же можно показать подпись и дату съёмки на всех фото.",
     "help_keys_h":"Горячие клавиши",
     "help_k_select":"Выбор",
     "help_k_text":"Текст",
@@ -4576,7 +4687,7 @@ const S = {
   objects:[], sel:null, tool:'select', armedQR:null,
   style:{color:INKS[0], w:'M', tip:'off', dimEnds:'bars'},
   fmt:'jpg',
-  counters:{}, angleDraft:null, polyDraft:null, polyFill:true, fillBy:{text:true,note:true,dim:true,angle:true,measure:true}, lastScale:null, recentQr:[], numPrefix:'',
+  counters:{}, angleDraft:null, polyDraft:null, polyFill:true, tipBy:{pen:'off',note:'off'}, armedAng:null, recentAng:[], stamp:{cap:false,date:false,pos:'bl'}, fillBy:{text:true,note:true,dim:true,angle:true,measure:true}, lastScale:null, recentQr:[], numPrefix:'',
   armedLen:null, armedNote:null, recentLen:[], recentNote:[],
   armedDefect:null, armedLbl:null, recent:[], recentLbl:[], favs:[], tagsOwn:[],
   photos:[], curId:null, elements:[], personal:[], perCat:{},
@@ -4654,6 +4765,7 @@ function render(){
   // photo
   ctx.imageSmoothingQuality='high';
   ctx.drawImage(S.img, tf.ox, tf.oy, S.iw*tf.s, S.ih*tf.s);
+  drawStamp(ctx,curRec(),tf);
   // objects
   for(const o of S.objects) drawObj(ctx,o,tf);
   if(S.angleDraft) drawAngleDraft(ctx,tf);
@@ -4662,6 +4774,62 @@ function render(){
   if(S.sel!=null){ const o=getObj(S.sel); if(o) drawSel(ctx,o,tf); }
 }
 
+function fmtTaken(v){
+  const m=/^(\d{4})[:\-](\d{2})[:\-](\d{2})[ T](\d{2}):(\d{2})/.exec(v||''); if(!m) return '';
+  const d=new Date(+m[1],+m[2]-1,+m[3],+m[4],+m[5]);
+  const loc={zh:'zh-CN',ar:'ar-u-nu-latn',hi:'hi-IN-u-nu-latn'}[curLang]||curLang;
+  try{ return d.toLocaleString(loc,{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); }
+  catch(e){ return m[1]+'-'+m[2]+'-'+m[3]+' '+m[4]+':'+m[5]; }
+}
+function fitLine(ctx,txt,maxw){
+  if(ctx.measureText(txt).width<=maxw) return txt;
+  let lo=0, hi=txt.length;
+  while(lo<hi){ const mid=(lo+hi+1)>>1; if(ctx.measureText(txt.slice(0,mid)+'…').width<=maxw) lo=mid; else hi=mid-1; }
+  return txt.slice(0,lo)+'…';
+}
+function drawStamp(ctx,rec,tf){
+  if(!rec||(rec.kind&&rec.kind!=='photo')) return;
+  const st=S.stamp; if(!st.cap&&!st.date) return;
+  const l1=st.cap?(rec.caption||'').trim():'';
+  const l2=[st.cap?(rec.loc||'').trim():'', st.date?fmtTaken(rec.taken):''].filter(Boolean).join(' · ');
+  const lines=[]; if(l1) lines.push([l1,600]); if(l2) lines.push([l2,300]);
+  if(!lines.length) return;
+  const fs=Math.min(rec.iw,rec.ih)*0.03*tf.s, pad=fs*0.55, gap=fs*0.3, mg=fs*0.6;
+  const maxw=rec.iw*tf.s*0.9-pad*2;
+  ctx.save(); ctx.direction='ltr'; ctx.textAlign='left'; ctx.textBaseline='top';
+  let w=0; const out=lines.map(([tx,wt])=>{ ctx.font=wt+' '+fs+'px '+UIFONT; const f=fitLine(ctx,tx,maxw); w=Math.max(w,ctx.measureText(f).width); return [f,wt]; });
+  const bw=w+pad*2, bh=out.length*fs*1.15+(out.length-1)*gap+pad*2;
+  const x=tf.ox+mg, y=(st.pos==='tl')?tf.oy+mg:tf.oy+rec.ih*tf.s-mg-bh;
+  roundRect(ctx,x,y,bw,bh,fs*0.3); ctx.fillStyle='rgba(0,0,0,.62)'; ctx.fill();
+  ctx.fillStyle='#ffffff'; let yy=y+pad;
+  out.forEach(([tx,wt])=>{ ctx.font=wt+' '+fs+'px '+UIFONT; ctx.fillText(tx,x+pad,yy+fs*0.05); yy+=fs*1.15+gap; });
+  ctx.restore();
+}
+async function readTaken(blob){
+  try{
+    const b=new DataView(await blob.slice(0,262144).arrayBuffer());
+    if(b.byteLength<4||b.getUint16(0)!==0xFFD8) return null;
+    let o=2;
+    while(o+4<b.byteLength){
+      if(b.getUint8(o)!==0xFF) return null;
+      const mk=b.getUint8(o+1), len=b.getUint16(o+2);
+      if(mk===0xE1&&b.getUint32(o+4)===0x45786966){
+        const t0=o+10, le=b.getUint16(t0)===0x4949;
+        const u16=i=>b.getUint16(i,le), u32=i=>b.getUint32(i,le);
+        const str=(i,n)=>{ let r=''; for(let k=0;k<n;k++){ const c=b.getUint8(i+k); if(!c) break; r+=String.fromCharCode(c); } return r; };
+        const tag=(ifd,want)=>{ const n=u16(t0+ifd); for(let k=0;k<n;k++){ const e=t0+ifd+2+k*12; if(u16(e)===want) return e; } return -1; };
+        const ifd0=u32(t0+4); let dt=null;
+        const ex=tag(ifd0,0x8769);
+        if(ex>=0){ const e=tag(u32(ex+8),0x9003); if(e>=0) dt=str(t0+u32(e+8),19); }
+        if(!dt){ const e=tag(ifd0,0x0132); if(e>=0) dt=str(t0+u32(e+8),19); }
+        return (dt&&/^\d{4}:\d{2}:\d{2} \d{2}:\d{2}/.test(dt)&&!/^0000/.test(dt))?dt:null;
+      }
+      if(mk===0xDA) return null;
+      o+=2+len;
+    }
+  }catch(e){}
+  return null;
+}
 function drawObj(ctx,o,tf){
   ctx.lineJoin='round'; ctx.lineCap='round';
   ctx.direction=(o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea'||o.type==='number')?'ltr':'inherit';
@@ -5279,9 +5447,9 @@ function onDown(p){
   } else {
     beginEdit();
     let o;
-    if(S.tool==='note') o={id:newId(),type:'note',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),text:'',size:fontPx(),fill:S.fillBy.note,tip:S.style.tip};
+    if(S.tool==='note') o={id:newId(),type:'note',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),text:'',size:fontPx(),fill:S.fillBy.note,tip:S.tipBy.note};
     else if(S.tool==='dim') o={id:newId(),type:'dim',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),value:'',unit:S.units.dim||'mm',size:fontPx(),fill:S.fillBy.dim,ends:S.style.dimEnds};
-    else o={id:newId(),type:'pen',pts:[{x:ip.x,y:ip.y}],color:S.style.color,w:widthPx(),tip:S.style.tip};
+    else o={id:newId(),type:'pen',pts:[{x:ip.x,y:ip.y}],color:S.style.color,w:widthPx(),tip:S.tipBy.pen};
     if(o.type==='dim'&&S.armedLen){ o.value=S.armedLen.v; o.unit=S.armedLen.u; o._arm=1; }
     if(o.type==='note'&&S.armedNote){ o.text=S.armedNote; o._arm=1; }
     act={mode:'draw',o,startImg:ip}; S.objects.push(o); render();
@@ -5332,7 +5500,8 @@ function onUp(){
     if(d && Math.hypot(d.bx-d.vx,d.by-d.vy)>8/S.view.s){
       beginEdit();
       const o={id:newId(),type:'angle',vx:d.vx,vy:d.vy,ax:d.ax,ay:d.ay,bx:d.bx,by:d.by,color:S.style.color,w:widthPx(),value:'',unit:'°',size:fontPx(),fill:S.fillBy.angle};
-      S.objects.push(o); S.sel=o.id; commit(); syncCtx(); S.angleDraft=null; render(); editValue(o);
+      if(S.armedAng){ o.value=S.armedAng; S.armedAng=null; pushAng(o.value); }
+      S.objects.push(o); S.sel=o.id; commit(); syncCtx(); S.angleDraft=null; render(); if(!o.value) editValue(o); else updateTextCtl();
     } else { if(d){d.bx=null;d.by=null;} toast(t('toast_draw_the_second_side')); render(); }
     act=null; return;
   }
@@ -5463,7 +5632,7 @@ function commitValue(){
   }
   const v=$('valInput').value.trim(); beginEdit();
   if(valTarget.type==='number'){ const m=v.match(/^([^\d]{0,4})(\d+)$/); if(m){ valTarget.pre=m[1]; valTarget.n=parseInt(m[2],10); } }
-  else { valTarget.value=v; if(valTarget.type==='dim'){ valTarget.unit=valUnit; S.units.dim=valUnit; saveUnits(); pushLen(v,valUnit); } }
+  else { valTarget.value=v; if(valTarget.type==='dim'){ valTarget.unit=valUnit; S.units.dim=valUnit; saveUnits(); pushLen(v,valUnit); } if(valTarget.type==='angle') pushAng(v); }
   commit(); hideOverlay('valOverlay'); valTarget=null; render();
 }
 
@@ -5500,7 +5669,7 @@ function updateTextCtl(){
   const isTextObj=o&&(o.type==='text'||o.type==='note'||o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea'||(o.type==='tag'&&!isDefectObj(o)));
   const show=isTextTool||isTextObj;
   $('textctl').classList.toggle('hidden',!show);
-  const a=(S.tool==='text')?S.armedLbl:(S.tool==='dim'&&S.armedLen)?{text:lenText(S.armedLen)}:(S.tool==='note'&&S.armedNote)?{text:S.armedNote}:null;
+  const a=(S.tool==='text')?S.armedLbl:(S.tool==='dim'&&S.armedLen)?{text:lenText(S.armedLen)}:(S.tool==='note'&&S.armedNote)?{text:S.armedNote}:(S.tool==='angle'&&S.armedAng)?{text:S.armedAng+'\u00B0'}:null;
   ['lbllbl','lblcur','lblclear'].forEach(id=>{ $(id).style.display=a?'':'none'; });
   if(a){ $('lblcur').textContent=a.text; $('lblcur').style.color=a.color||''; $('lbllbl').textContent=t(S.tool==='text'?'label_label':'next'); }
   if(!show) return;
@@ -5530,7 +5699,7 @@ function updateTipCtl(){
   const opts=ends?END_OPTS:TIP_OPTS;
   const cur = ends
     ? ((o&&o.type==='dim') ? (o.ends||'bars') : S.style.dimEnds)
-    : ((o&&(o.type==='pen'||o.type==='note')) ? (o.tip||'off') : S.style.tip);
+    : ((o&&(o.type==='pen'||o.type==='note')) ? (o.tip||'off') : (S.tipBy[S.tool]||'off'));
   document.querySelectorAll('#tipseg button').forEach(b=>{
     const mine=opts.indexOf(b.dataset.tip)>=0;
     b.style.display=mine?'':'none';
@@ -5578,7 +5747,8 @@ function addPhotoFile(file,cb,kind){
       baseW:Math.max(2,Math.round(Math.max(im.naturalWidth,im.naturalHeight)/450)),
       fileName:fn,
       objects:[], undo:[], redo:[], counters:{}, scale:null, kind:kind||'photo',
-      caption:'', loc:'', repEx:(kind==='divider'), thumb:makeThumb(im) };
+      caption:'', loc:'', repEx:(kind==='divider'), taken:null, thumb:makeThumb(im) };
+    if(!kind||kind==='photo') readTaken(file).then(d=>{ if(d){ rec.taken=d; dirty(); pdSync(); if(S.stamp.date) render(); } });
     S.photos.push(rec); URL.revokeObjectURL(url);
     persistBlob(rec);
     switchTo(rec.id); dirty(); if(cb)cb();
@@ -5669,12 +5839,51 @@ function renderTray(){
     '<button class="tx" data-del="'+p.id+'" title="'+esc(t('remove'))+'">&times;</button>'+
     '<span class="tn">'+esc(tnLabel(p.fileName))+'</span></div>'
   ).join('') + '<button class="thumb add" id="trayAdd" title="'+esc(t('add_photos'))+'">+</button>';
+  if(typeof pdSync==='function') pdSync();
 }
 $('tray').addEventListener('click',e=>{
   const d=e.target.closest('[data-del]'); if(d){ e.stopPropagation(); deletePhoto(+d.dataset.del); return; }
   if(e.target.closest('#trayAdd')){ $('file').click(); return; }
-  const t=e.target.closest('[data-pid]'); if(t) switchTo(+t.dataset.pid);
+  const t=e.target.closest('[data-pid]'); if(!t) return;
+  const id=+t.dataset.pid, now=Date.now();
+  if(thumbTap.id===id&&now-thumbTap.t<320){ thumbTap={id:0,t:0}; switchTo(id); openPd(); return; }
+  thumbTap={id,t:now}; switchTo(id);
 });
+let thumbTap={id:0,t:0};
+$('tray').addEventListener('contextmenu',e=>{ const t=e.target.closest('[data-pid]'); if(!t) return; e.preventDefault(); switchTo(+t.dataset.pid); openPd(); });
+function openPd(){ if(!curRec()) return; showOverlay('pdOverlay'); pdSync(); }
+function closePd(){ hideOverlay('pdOverlay'); }
+function pdSync(){
+  if(!$('pdOverlay').classList.contains('show')) return;
+  const r=curRec(); if(!r){ closePd(); return; }
+  const i=S.photos.indexOf(r), isPh=!r.kind||r.kind==='photo';
+  $('pdNum').textContent=t('pd_photo',{n:i+1}); $('pdFile').textContent='· '+r.fileName;
+  $('pdTaken').textContent=isPh?(r.taken?t('pd_taken',{d:fmtTaken(r.taken)}):t('pd_nodate')):'';
+  $('pdTaken').style.display=isPh?'':'none';
+  if(document.activeElement!==$('pdCap')) $('pdCap').value=r.caption||'';
+  if(document.activeElement!==$('pdLoc')) $('pdLoc').value=r.loc||'';
+  $('pdInc').checked=!r.repEx;
+  $('pdLeft').disabled=i<=0; $('pdRight').disabled=i>=S.photos.length-1;
+  $('pdStampRow').style.display=isPh?'':'none';
+  $('pdChipCap').classList.toggle('on',S.stamp.cap); $('pdChipDate').classList.toggle('on',S.stamp.date);
+  $('pdPosB').classList.toggle('on',S.stamp.pos!=='tl'); $('pdPosT').classList.toggle('on',S.stamp.pos==='tl');
+}
+$('pdOverlay').addEventListener('pointerdown',e=>{ if(e.target.id==='pdOverlay') closePd(); });
+$('pdClose').onclick=closePd;
+['pdCap','pdLoc'].forEach(id=>$(id).addEventListener('input',()=>{ const r=curRec(); if(!r) return;
+  r[id==='pdCap'?'caption':'loc']=$(id).value; dirty(); if(S.stamp.cap) render(); }));
+['pdCap','pdLoc'].forEach(id=>$(id).addEventListener('keydown',e=>{ if(e.key==='Enter') e.target.blur(); if(e.key==='Escape') closePd(); }));
+$('pdInc').onchange=()=>{ const r=curRec(); if(r){ r.repEx=!$('pdInc').checked; dirty(); } };
+function saveStamp(){ idbPut('stamp',S.stamp); pdSync(); render(); }
+$('pdChipCap').onclick=()=>{ S.stamp.cap=!S.stamp.cap; saveStamp(); };
+$('pdChipDate').onclick=()=>{ S.stamp.date=!S.stamp.date; saveStamp(); };
+$('pdPosB').onclick=()=>{ S.stamp.pos='bl'; saveStamp(); };
+$('pdPosT').onclick=()=>{ S.stamp.pos='tl'; saveStamp(); };
+function movePhoto(d){ const r=curRec(); if(!r) return; const i=S.photos.indexOf(r), j=i+d;
+  if(j<0||j>=S.photos.length) return; S.photos.splice(i,1); S.photos.splice(j,0,r); renderTray(); dirty(); }
+$('pdLeft').onclick=()=>movePhoto(-1);
+$('pdRight').onclick=()=>movePhoto(1);
+$('pdDel').onclick=()=>{ const r=curRec(); closePd(); if(r) deletePhoto(r.id); };
 
 // ── Export ──────────────────────────────────────────────
 const IS_IOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
@@ -5698,6 +5907,7 @@ function renderRec(rec){ // flatten one photo record → Promise<blob>
     const c=document.createElement('canvas'); c.width=rec.iw; c.height=rec.ih; const cx=c.getContext('2d');
     if(S.fmt!=='png'){ cx.fillStyle='#ffffff'; cx.fillRect(0,0,c.width,c.height); }
     cx.drawImage(rec.img,0,0);
+    drawStamp(cx,rec,{s:1,ox:0,oy:0});
     const savedSel=S.sel, savedBase=S.baseW; S.sel=null; S.baseW=rec.baseW;
     for(const o of rec.objects) drawObj(cx,o,{s:1,ox:0,oy:0});
     S.sel=savedSel; S.baseW=savedBase;
@@ -5742,18 +5952,18 @@ function persistBlob(rec){ idbPut('blob:'+rec.id, rec.blob); }
 function dirty(){ clearTimeout(dirtyT); dirtyT=setTimeout(saveSession,1000); }
 function saveSession(){
   if(!db)return; stashCur();
-  idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counters:p.counters||{},scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',repEx:!!p.repEx,kind:p.kind||'photo'})),
-    curId:S.curId, favs:S.favs, recent:S.recent, recentLbl:S.recentLbl, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, recentLen:S.recentLen, recentNote:S.recentNote, recentQr:S.recentQr, rep:S.rep, uid, pid });
+  idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counters:p.counters||{},scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',taken:p.taken||null,repEx:!!p.repEx,kind:p.kind||'photo'})),
+    curId:S.curId, favs:S.favs, recent:S.recent, recentLbl:S.recentLbl, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, recentLen:S.recentLen, recentNote:S.recentNote, recentQr:S.recentQr, recentAng:S.recentAng, rep:S.rep, uid, pid });
 }
 function clearSession(){ if(!db)return; try{ const st=db.transaction('session','readwrite').objectStore('session'), rq=st.getAllKeys();
-  rq.onsuccess=()=>{ (rq.result||[]).forEach(k=>{ if(k!=='lang'&&k!=='units'&&k!=='repcfg'&&k!=='reppresets') st.delete(k); }); }; }catch(e){} }
+  rq.onsuccess=()=>{ (rq.result||[]).forEach(k=>{ if(k!=='lang'&&k!=='units'&&k!=='stamp'&&k!=='repcfg'&&k!=='reppresets') st.delete(k); }); }; }catch(e){} }
 async function restoreSession(){
   const d=await idbGet('current'); if(!d||!d.photos||!d.photos.length)return;
   uid=d.uid||uid; pid=d.pid||pid;
   S.favs=migFavs(d.favs); S.recent=migRecent(d.recent); S.recentLbl=(d.recentLbl||[]).filter(x=>x&&x.t); S.elements=d.elements||[]; S.personal=migList(d.personal); S.perCat=d.perCat||{}; S.tagsOwn=d.tagsOwn||[];
   S.favs=S.favs.filter(f=>f.t!=='Review'); S.recentLbl=S.recentLbl.filter(x=>x.t!=='Review');
   S.numPrefix=d.numPrefix||''; $('numpre').value=S.numPrefix;
-  S.recentLen=(d.recentLen||[]).filter(x=>x&&typeof x.v==='string'&&x.v); S.recentNote=(d.recentNote||[]).filter(x=>typeof x==='string'&&x); S.recentQr=(d.recentQr||[]).filter(x=>typeof x==='string'&&x);
+  S.recentLen=(d.recentLen||[]).filter(x=>x&&typeof x.v==='string'&&x.v); S.recentNote=(d.recentNote||[]).filter(x=>typeof x==='string'&&x); S.recentQr=(d.recentQr||[]).filter(x=>typeof x==='string'&&x); S.recentAng=(d.recentAng||[]).filter(x=>typeof x==='string'&&x);
   if(d.rep) S.rep=Object.assign(S.rep,d.rep); if(!S.rep.ov) S.rep.ov={}; if(!S.rep.manual) S.rep.manual=[];
   if(d.fmt){ S.fmt=d.fmt; } $('fmtCur').textContent=(S.fmt==='png'?'PNG':'JPG');
   const recs=[];
@@ -5764,12 +5974,12 @@ async function restoreSession(){
       im.onload=()=>{ res({ id:pd.id, blob, img:im, iw:im.naturalWidth, ih:im.naturalHeight,
         baseW:Math.max(2,Math.round(Math.max(im.naturalWidth,im.naturalHeight)/450)),
         fileName:pd.fileName, objects:pd.objects||[], undo:[], redo:[], counters:migCounters(pd,d.numPrefix||''), scale:pd.scale||null,
-        caption:pd.caption||'', loc:pd.loc||'', repEx:!!pd.repEx, kind:pd.kind||'photo', thumb:makeThumb(im) });
+        caption:pd.caption||'', loc:pd.loc||'', repEx:!!pd.repEx, kind:pd.kind||'photo', taken:(pd.taken===undefined?undefined:pd.taken), thumb:makeThumb(im) });
         URL.revokeObjectURL(url); };
       im.onerror=()=>{ URL.revokeObjectURL(url); res(null); };
       im.src=url;
     });
-    if(rec) recs.push(rec);
+    if(rec){ if(rec.taken===undefined){ rec.taken=null; if(rec.kind==='photo') readTaken(blob).then(d=>{ if(d){ rec.taken=d; dirty(); } }); } recs.push(rec); }
   }
   if(!recs.length)return;
   if(S.photos.length){ return; } // user already started a new session while restoring — don't clobber it
@@ -5781,6 +5991,7 @@ openDB().then(d=>{ db=d; idbGet('lang').then(l=>{ if(l) setLang(l,true); });
   idbGet('reppresets').then(a=>{ if(Array.isArray(a)) S.repPresets=a.filter(p=>p&&p.id&&p.name);
     return idbGet('repcfg'); }).then(c=>{ if(c&&typeof c==='object') S.repCfg={preset:c.preset||'bridge',names:c.names||{},off:c.off||{},sec:c.sec||{}};
     if(!PRESETS[S.repCfg.preset]&&!ownPreset(S.repCfg.preset)) S.repCfg.preset='bridge'; });
+  idbGet('stamp').then(v=>{ if(v&&typeof v==='object'){ S.stamp={cap:!!v.cap,date:!!v.date,pos:v.pos==='tl'?'tl':'bl'}; render(); } });
   idbGet('units').then(u=>{ if(u&&typeof u==='object') ['dim','mline','marea'].forEach(k=>{ if(typeof u[k]==='string') S.units[k]=u[k]; }); });
   restoreSession(); });
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'&&S.photos.length){ clearTimeout(dirtyT); saveSession(); } });
@@ -6312,6 +6523,27 @@ function setNumN(n){ S.counters[S.numPrefix]=n; const r=curRec(); if(r) r.counte
 function migCounters(pd,pre){ const c=pd.counters;
   if(c&&typeof c==='object'){ const o={}; Object.keys(c).forEach(k=>{ const n=parseInt(c[k],10); if(n>0) o[k]=n; }); return o; }
   const o={}; o[pre]=(pd.counter>0)?pd.counter:1; return o; }
+const TIP_GLYPH={arrow:'\u2192',round:'\u25CF',arrows:'\u2194'};
+function tipBadges(){
+  const set=(id,v)=>{ const e=$(id); if(!e) return; const g=TIP_GLYPH[v]||''; e.textContent=g; e.style.display=g?'':'none'; };
+  set('tipb_pen',S.tipBy.pen); set('tipb_note',S.tipBy.note); set('tipb_dim',S.style.dimEnds);
+}
+function cycleTip(tool){
+  if(tool==='dim'){ const i=END_OPTS.indexOf(S.style.dimEnds); S.style.dimEnds=END_OPTS[(i+1)%END_OPTS.length];
+    toast(t('ends_label')+': '+t('ends_'+S.style.dimEnds)); }
+  else { const i=TIP_OPTS.indexOf(S.tipBy[tool]||'off'); S.tipBy[tool]=TIP_OPTS[(i+1)%TIP_OPTS.length];
+    toast(t('tip_label')+': '+t('tip_'+S.tipBy[tool])); }
+  tipBadges(); updateTipCtl();
+}
+function pushAng(v){ if(!v) return; S.recentAng=[v].concat(S.recentAng.filter(x=>x!==v)).slice(0,8); dirty(); }
+function openAngMenu(btn){
+  const m=$('defMenu'), rec=S.recentAng.slice(0,5);
+  m.classList.remove('objmenu');
+  m.innerHTML = rec.length
+    ? rec.map((x,i)=>'<button data-angidx="'+i+'"><span class="ltr">'+esc(x)+'\u00B0</span></button>').join('')
+    : '<button class="mm" disabled><span>'+esc(t('no_recent_labels'))+'</span></button>';
+  m.classList.add('show'); placeMenu(m,btn);
+}
 function updateNext(){
   const el=$('nextn'); if(document.activeElement!==el) el.value=numN();
   $('numBadge').textContent=(S.numPrefix||'')+numN();
@@ -6387,8 +6619,8 @@ function openNoteMenu(btn){
     : '<button class="mm" disabled><span>'+esc(t('no_recent_labels'))+'</span></button>';
   m.classList.remove('objmenu'); m.classList.add('show'); placeMenu(m,btn);
 }
-function armLen(x){ S.armedLen={v:x.v,u:x.u}; S.armedNote=null; updateTextCtl(); toast(t('toast_next_val',{v:lenText(x)})); }
-function armNote(v){ S.armedNote=v; S.armedLen=null; updateTextCtl(); toast(t('toast_next_val',{v:v.replace(/\s+/g,' ')})); }
+function armLen(x){ S.armedLen={v:x.v,u:x.u}; S.armedNote=null; S.armedAng=null; updateTextCtl(); toast(t('toast_next_val',{v:lenText(x)})); }
+function armNote(v){ S.armedNote=v; S.armedLen=null; S.armedAng=null; updateTextCtl(); toast(t('toast_next_val',{v:v.replace(/\s+/g,' ')})); }
 const GEST_KEY='dcg_gest_v1';
 let gestUse={};
 try{ gestUse=JSON.parse(localStorage.getItem(GEST_KEY)||'{}')||{}; }catch(e){ gestUse={}; }
@@ -6419,13 +6651,18 @@ function bindToolGestures(tool,onDouble,onHold,onSingle){
 }
 bindToolGestures('defect', ()=>openPicker('arm'), b=>openDefMenu(b), ()=>{ if(!armLast()) openPicker('arm'); });
 bindToolGestures('text', ()=>openPicker('arm',null,'label'), b=>openLblMenu(b));
-bindToolGestures('dim', null, b=>openLenMenu(b));
-bindToolGestures('note', null, b=>openNoteMenu(b));
+bindToolGestures('dim', ()=>cycleTip('dim'), b=>openLenMenu(b));
+bindToolGestures('pen', ()=>cycleTip('pen'), null);
+bindToolGestures('poly', ()=>{ $('polyfill').onclick(); toast(S.polyFill?t('fill_on'):t('fill_off')); }, null);
+bindToolGestures('angle', null, b=>openAngMenu(b));
+tipBadges();
+bindToolGestures('note', ()=>cycleTip('note'), b=>openNoteMenu(b));
 bindToolGestures('number', ()=>cyclePrefix(), b=>openNumMenu(b));
 bindToolGestures('qr', ()=>openQr(null), b=>openQrMenu(b), ()=>qrTap());
 bindToolGestures('measure', ()=>{ $('toast').classList.remove('show'); openScaleModal(); }, null);
 pipSync();
 $('defMenu').addEventListener('click',e=>{
+  const xf=e.target.closest('[data-xfmt]'); if(xf){ const m=$('defMenu'), run=m._run; closeDefMenu(); setFmt(xf.dataset.xfmt); if(run) run(); return; }
   const oi=e.target.closest('[data-oink]'); if(oi){ const sw=document.querySelectorAll('#swatches .swatch')[+oi.dataset.oink]; if(sw) sw.click(); objMenuSync(); return; }
   const oz=e.target.closest('[data-osz]'); if(oz){ const wb=document.querySelector('.wbtn[data-w="'+oz.dataset.osz+'"]'); if(wb) wb.click(); objMenuSync(); return; }
   const oa=e.target.closest('[data-oact]'); if(oa){ const a=oa.dataset.oact; closeDefMenu();
@@ -6434,6 +6671,7 @@ $('defMenu').addEventListener('click',e=>{
   if(e.target.closest('[data-nreset]')){ closeDefMenu(); resetNum(); return; }
   const qi=e.target.closest('[data-qridx]'); if(qi){ closeDefMenu(); const x=S.recentQr[+qi.dataset.qridx]; if(x){ S.armedQR={text:x}; pushQr(x); updateQr(); updateQrCtl(); toast(t('toast_tap_to_place')); } return; }
   if(e.target.closest('[data-qrnew]')){ closeDefMenu(); openQr(null); return; }
+  const ai=e.target.closest('[data-angidx]'); if(ai){ closeDefMenu(); const x=S.recentAng[+ai.dataset.angidx]; if(x){ S.armedAng=x; S.armedLen=null; S.armedNote=null; updateTextCtl(); toast(t('toast_next_val',{v:x+'\u00B0'})); } return; }
   const li=e.target.closest('[data-lenidx]'); if(li){ closeDefMenu(); const x=S.recentLen[+li.dataset.lenidx]; if(x) armLen(x); return; }
   const ni=e.target.closest('[data-noteidx]'); if(ni){ closeDefMenu(); const x=S.recentNote[+ni.dataset.noteidx]; if(x) armNote(x); return; }
   if(e.target.closest('[data-rmore]')){ closeDefMenu(); openPicker('arm'); return; }
@@ -6485,6 +6723,22 @@ $('fmtBtn').addEventListener('click',e=>{ e.stopPropagation(); renderFmtMenu();
 $('fmtMenu').addEventListener('click',e=>{ const b=e.target.closest('[data-fmt]'); if(!b)return; setFmt(b.dataset.fmt); $('fmtMenu').classList.add('hidden'); });
 $('export').onclick=exportImg;
 $('exportall').onclick=exportAll;
+function openFmtHold(btn,run){
+  const m=$('defMenu'); m.classList.remove('objmenu');
+  m.innerHTML=FMTS.map(f=>'<button data-xfmt="'+f.k+'"'+(f.k===S.fmt?' class="on"':'')+'><span class="dot" style="background:'+(f.k===S.fmt?'var(--accent)':'transparent')+'"></span><span>'+f.label+'</span></button>').join('');
+  m._run=run; m.classList.add('show');
+  const r=btn.getBoundingClientRect(), mr=m.getBoundingClientRect();
+  m.style.left=Math.min(Math.max(8,r.left+r.width/2-mr.width/2), innerWidth-mr.width-8)+'px';
+  m.style.top=Math.min(r.bottom+6, innerHeight-mr.height-8)+'px';
+}
+[['export',exportImg],['exportall',exportAll]].forEach(([id,run])=>{
+  const b=$(id); let held=false, tm=null;
+  b.addEventListener('pointerdown',()=>{ held=false; clearTimeout(tm); if(b.disabled) return;
+    tm=setTimeout(()=>{ held=true; openFmtHold(b,run); },450); });
+  ['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,()=>clearTimeout(tm)));
+  b.addEventListener('contextmenu',e=>e.preventDefault());
+  b.addEventListener('click',e=>{ if(held){ held=false; e.stopImmediatePropagation(); e.preventDefault(); } },true);
+});
 $('undo').onclick=undo; $('redo').onclick=redo;
 function setObjects(arr){ S.objects=arr; const r=curRec(); if(r)r.objects=arr; }
 $('del').onclick=()=>{ if(S.sel!=null){ beginEdit(); setObjects(S.objects.filter(o=>o.id!==S.sel)); S.sel=null; commit(); syncCtx(); render(); } };
@@ -6512,10 +6766,11 @@ document.querySelectorAll('#tipseg button').forEach(b=>b.addEventListener('click
     S.style.dimEnds=v;
     if(o&&o.type==='dim'){ beginEdit(); o.ends=v; commit(); }
   } else {
-    S.style.tip=v;
+    const k=(o&&(o.type==='pen'||o.type==='note'))?o.type:S.tool;
+    if(k in S.tipBy) S.tipBy[k]=v;
     if(o&&(o.type==='pen'||o.type==='note')){ beginEdit(); o.tip=v; commit(); }
   }
-  updateTipCtl(); render();
+  updateTipCtl(); tipBadges(); render();
 }));
 $('textfill').onclick=()=>{
   const o=S.sel!=null?getObj(S.sel):null;
@@ -6533,7 +6788,7 @@ $('clearall').onclick=()=>{
 };
 $('startover').onclick=()=>confirmBox(t('start_over_title'), t('start_over_body'),()=>{
   S.photos=[]; S.curId=null; S.img=null; S.objects=[]; S.sel=null; S.undo=[]; S.redo=[];
-  S.counters={}; S.armedLen=null; S.armedNote=null; S.recentLen=[]; S.recentNote=[]; S.recentQr=[]; S.lastScale=null; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.armedLbl=null; S.armedQR=null; S.elements=[]; S.personal=[]; S.perCat={}; S.recent=[]; S.recentLbl=[]; S.favs=[]; S.tagsOwn=[];
+  S.counters={}; S.armedLen=null; S.armedNote=null; S.recentLen=[]; S.recentNote=[]; S.recentQr=[]; S.recentAng=[]; S.armedAng=null; S.lastScale=null; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.armedLbl=null; S.armedQR=null; S.elements=[]; S.personal=[]; S.perCat={}; S.recent=[]; S.recentLbl=[]; S.favs=[]; S.tagsOwn=[];
   S.scale=null; S.measMode='line';
   S.rep={ structure:'', ref:'', date:'', inspector:'', weather:'', loclink:'', overall:'', sheets:true, perPage:1, schedule:true, stampNums:true, ov:{}, manual:[] };
   S.numPrefix=''; $('numpre').value='';
@@ -6545,7 +6800,16 @@ $('startover').onclick=()=>confirmBox(t('start_over_title'), t('start_over_body'
 // zoom buttons
 $('zin').onclick=()=>{ const st=$('stage'); zoomAt(st.clientWidth/2,st.clientHeight/2,1.25); };
 $('zout').onclick=()=>{ const st=$('stage'); zoomAt(st.clientWidth/2,st.clientHeight/2,0.8); };
-$('zfit').onclick=fit;
+let fitTap=0;
+$('zfit').onclick=()=>{ const now=Date.now();
+  if(now-fitTap<300){ fitTap=0; zoomFull(); return; }
+  fitTap=now; fit(); };
+function zoomFull(){
+  if(!S.img) return;
+  const st=$('stage'), w=st.clientWidth, h=st.clientHeight;
+  const s0=(S.fitS>=1)?S.fitS*2:1;
+  S.view.s=clampScale(s0); S.view.ox=w/2-S.iw/2*S.view.s; S.view.oy=h/2-S.ih/2*S.view.s; render();
+}
 canvas.addEventListener('wheel',e=>{ if(!S.img)return; e.preventDefault(); const p=getPos(e); zoomAt(p.x,p.y, e.deltaY<0?1.1:1/1.1); },{passive:false});
 
 // modal buttons
@@ -6641,7 +6905,7 @@ $('txtDefect').onclick=()=>{
   if(editTarget&&!editIsNew){ openPicker('feed',(term)=>{ $('txtInput').value=term; },'label'); return; }
   cancelLabel(); setTool('text'); openPicker('arm',null,'label');
 };
-$('lblclear').onclick=()=>{ if(S.tool==='dim'){ S.armedLen=null; updateTextCtl(); } else if(S.tool==='note'){ S.armedNote=null; updateTextCtl(); } else clearLbl(); };
+$('lblclear').onclick=()=>{ if(S.tool==='dim'){ S.armedLen=null; updateTextCtl(); } else if(S.tool==='note'){ S.armedNote=null; updateTextCtl(); } else if(S.tool==='angle'){ S.armedAng=null; updateTextCtl(); } else clearLbl(); };
 
 // divider card
 $('divider').onclick=()=>{ renderPhColors(); $('phTitle').value=''; showOverlay('phOverlay'); setTimeout(()=>$('phTitle').focus(),50); };
@@ -6673,6 +6937,7 @@ window.addEventListener('keydown',e=>{
     if(ph){ e.preventDefault(); switchTo(ph.id); }
     return;
   }
+  if($('pdOverlay').classList.contains('show')&&!$('cfmOverlay').classList.contains('show')){ if(e.key==='Escape') closePd(); return; }
   const overlays=['txtOverlay','valOverlay','pickOverlay','phOverlay','skOverlay','cfmOverlay','qrOverlay'];
   if(overlays.some(id=>$(id).classList.contains('show'))){
     if(e.key==='Escape'){ if($('qrOverlay').classList.contains('show'))cancelQr(); if($('txtOverlay').classList.contains('show'))cancelLabel(); if($('valOverlay').classList.contains('show')){hideOverlay('valOverlay');valTarget=null;} closeWheel(); closeDefMenu(); hideOverlay('pickOverlay'); hideOverlay('phOverlay'); hideOverlay('skOverlay'); hideOverlay('cfmOverlay'); cfmCb=null; }
@@ -7288,6 +7553,7 @@ function repImg(rec,rows,maxPx){
   cx.drawImage(rec.img,0,0,c.width,c.height);
   const savedSel=S.sel, savedBase=S.baseW; S.sel=null; S.baseW=rec.baseW;
   const tf={s:k,ox:0,oy:0};
+  drawStamp(cx,rec,tf);
   for(const o of rec.objects) drawObj(cx,o,tf);
   if(S.rep.stampNums){
     for(const row of rows){ if(row.ex||row.badge!=null||!row.item) continue;
@@ -7303,7 +7569,7 @@ function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'
 // one printed row's cells, in setup order; the group sub-line only where asked
 function colCells(x,withGrp){ return visCols().map(k=>'<td>'+(k==='cs'?csTd(x.cs):
   esc(x[k]||'')+(k==='def'&&withGrp&&rcSec('grp')&&x.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.grp)+'</span>':''))+'</td>').join(''); }
-const MARKUP_VER='1.5.3';
+const MARKUP_VER='1.5.5';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
