@@ -111,12 +111,20 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 /* ── Stage ─────────────────────────────────────────────── */
 .stage{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;touch-action:none}
 #canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
-.defmenu.objmenu{width:236px;max-width:calc(100vw - 16px)}
-.objmenu .orow{display:flex;gap:6px;padding:4px 6px 6px;flex-wrap:wrap}
-.objmenu .osw{width:24px;height:24px;border-radius:50%;padding:0;flex:0 0 auto;border:2px solid rgba(255,255,255,.25)}
+.defmenu.objmenu{width:auto;min-width:0;max-width:calc(100vw - 16px);padding:8px}
+.objmenu .orow{display:flex;gap:6px;align-items:center}
+.objmenu .orow+.orow{margin-top:8px}
+.objmenu .osw{width:26px;height:26px;border-radius:50%;padding:0;flex:0 0 auto;border:2px solid rgba(255,255,255,.25)}
 .objmenu .osw.on{border-color:var(--accent);box-shadow:0 0 0 2px rgba(245,166,35,.35)}
-.objmenu .osz{flex:1 1 0;height:32px;justify-content:center;border:1px solid var(--hairline);font-weight:600}
-.objmenu .odel{color:#ff6b6b}
+.objmenu .oseg{display:flex;border:1px solid var(--hairline);border-radius:8px;overflow:hidden;flex:0 0 auto}
+.defmenu.objmenu .oseg button{width:30px;height:34px;padding:0;border-radius:0;justify-content:center;font-size:12.5px;font-weight:700;color:var(--muted)}
+.defmenu.objmenu .oseg button+button{border-inline-start:1px solid var(--hairline)}
+.defmenu.objmenu .oseg button.on{background:var(--accent-soft);color:var(--accent)}
+.objmenu .ovd{width:1px;align-self:stretch;background:var(--hairline);margin:0 2px}
+.defmenu.objmenu .oic{width:36px;height:34px;padding:0;justify-content:center;border:1px solid var(--hairline);flex:0 0 auto}
+.objmenu .oic svg{width:17px;height:17px}
+.defmenu.objmenu .oic:disabled{opacity:.3;pointer-events:none}
+.defmenu.objmenu .odel{color:#ff6b6b}
 
 .empty{
   position:absolute;inset:0;display:flex;flex-direction:column;
@@ -761,7 +769,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.5.2 · BETA · multilingual</span>
+        <span class="ver">v1.5.3 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -974,7 +982,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.2</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.3</span></div>
   </nav>
 </div>
 
@@ -5206,8 +5214,8 @@ function onDown(p){
     if(h&&h.handle!=null){ beginEdit(); act={mode:'handle',id:h.id,handle:h.handle}; }
     else if(h&&h.part==='label'){ S.sel=h.id; const o=getObj(h.id); const lp=labelPos(o); beginEdit(); act={mode:'label',id:h.id,start:ip,orig:{lx:lp.x,ly:lp.y}}; syncCtx(); }
     else if(h){ S.sel=h.id; beginEdit(); act={mode:'move',id:h.id,start:ip,orig:clone(getObj(h.id))}; syncCtx(); }
-    if(h&&h.handle==null&&lastPtrType!=='mouse'){ cancelHold(); holdP=p; holdT=setTimeout(fireHold,450); }
     else { S.sel=null; syncCtx(); act={mode:'pan',sx:p.x,sy:p.y,ox:S.view.ox,oy:S.view.oy}; }
+    if(h&&h.handle==null&&lastPtrType!=='mouse'){ cancelHold(); holdP=p; holdT=setTimeout(fireHold,450); }
     render();
   } else if(S.tool==='text'){
     act=null; if(trySelect(ip)) return;
@@ -6321,16 +6329,33 @@ function placeAt(m,x,y){
   m.style.left=Math.min(Math.max(8,x-mr.width/2), innerWidth-mr.width-8)+'px';
   m.style.top=Math.max(8,top)+'px';
 }
+function objSize(o){
+  let v,tb;
+  if(o.type==='number'){ v=o.r; tb=NUMR; } else if(o.type==='qr'){ v=o.r; tb=QRR; }
+  else if(o.type==='pen'||o.type==='poly'){ v=o.w; tb=WIDTHS; } else { v=o.size; tb=FONTS; }
+  if(!(v>0)) return null;
+  let best=null, bd=Infinity;
+  for(const k of ['S','M','L']){ const d=Math.abs(v-S.baseW*tb[k]); if(d<bd){ bd=d; best=k; } }
+  return bd<=v*0.05 ? best : null;
+}
+const DUP_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>';
+function objMenuSync(){
+  const o=S.sel!=null?getObj(S.sel):null; if(!o) return;
+  const sz=objSize(o);
+  document.querySelectorAll('#defMenu .osw').forEach(b=>b.classList.toggle('on',b.title===o.color));
+  document.querySelectorAll('#defMenu [data-osz]').forEach(b=>b.classList.toggle('on',b.dataset.osz===sz));
+}
 function openObjMenu(x,y){
   const o=S.sel!=null?getObj(S.sel):null; if(!o) return;
   const m=$('defMenu'); m.classList.add('objmenu');
   const canEdit=$('editText').style.display!=='none';
-  let h='<div class="orow">'+INKS.map((c,i)=>'<button class="osw'+(o.color===c?' on':'')+'" data-oink="'+i+'" style="background:'+c+'" title="'+c+'"></button>').join('')+'</div>';
-  h+='<div class="orow">'+['S','M','L'].map(w=>'<button class="osz" data-osz="'+w+'">'+w+'</button>').join('')+'</div><div class="dsep"></div>';
-  if(canEdit) h+='<button data-oact="edit"><span>'+esc(t('ctx_label_edit'))+'</span></button>';
-  h+='<button data-oact="dup"><span>'+esc(t('duplicate'))+'</span></button>';
-  h+='<button class="odel" data-oact="del"><span>'+esc(t('delete_btn'))+'</span></button>';
-  m.innerHTML=h; m.classList.add('show'); placeAt(m,x,y);
+  const ic=id=>{ const v=$(id).querySelector('svg'); return v?v.outerHTML:''; };
+  let h='<div class="orow">'+INKS.map((c,i)=>'<button class="osw" data-oink="'+i+'" style="background:'+c+'" title="'+c+'"></button>').join('')+'</div>';
+  h+='<div class="orow"><div class="oseg">'+['S','M','L'].map(w=>'<button data-osz="'+w+'">'+w+'</button>').join('')+'</div><span class="ovd"></span>';
+  h+='<button class="oic" data-oact="edit" title="'+esc(t('ctx_label_edit'))+'" aria-label="'+esc(t('ctx_label_edit'))+'"'+(canEdit?'':' disabled')+'>'+ic('editText')+'</button>';
+  h+='<button class="oic" data-oact="dup" title="'+esc(t('duplicate'))+'" aria-label="'+esc(t('duplicate'))+'">'+DUP_SVG+'</button>';
+  h+='<button class="oic odel" data-oact="del" title="'+esc(t('delete_btn'))+'" aria-label="'+esc(t('delete_btn'))+'">'+ic('del')+'</button></div>';
+  m.innerHTML=h; m.classList.add('show'); objMenuSync(); placeAt(m,x,y);
 }
 function dupSel(){
   const o=S.sel!=null?getObj(S.sel):null; if(!o) return;
@@ -6401,9 +6426,8 @@ bindToolGestures('qr', ()=>openQr(null), b=>openQrMenu(b), ()=>qrTap());
 bindToolGestures('measure', ()=>{ $('toast').classList.remove('show'); openScaleModal(); }, null);
 pipSync();
 $('defMenu').addEventListener('click',e=>{
-  const oi=e.target.closest('[data-oink]'); if(oi){ const sw=document.querySelectorAll('#swatches .swatch')[+oi.dataset.oink]; if(sw) sw.click();
-    const o=getObj(S.sel); document.querySelectorAll('#defMenu .osw').forEach(b=>b.classList.toggle('on',!!o&&b.title===o.color)); return; }
-  const oz=e.target.closest('[data-osz]'); if(oz){ const wb=document.querySelector('.wbtn[data-w="'+oz.dataset.osz+'"]'); if(wb) wb.click(); return; }
+  const oi=e.target.closest('[data-oink]'); if(oi){ const sw=document.querySelectorAll('#swatches .swatch')[+oi.dataset.oink]; if(sw) sw.click(); objMenuSync(); return; }
+  const oz=e.target.closest('[data-osz]'); if(oz){ const wb=document.querySelector('.wbtn[data-w="'+oz.dataset.osz+'"]'); if(wb) wb.click(); objMenuSync(); return; }
   const oa=e.target.closest('[data-oact]'); if(oa){ const a=oa.dataset.oact; closeDefMenu();
     if(a==='edit') $('editText').onclick(); else if(a==='dup') dupSel(); else if(a==='del') $('del').onclick(); return; }
   const np=e.target.closest('[data-npfx]'); if(np){ closeDefMenu(); setPrefix(np.dataset.npfx); toast(t('toast_next_val',{v:S.numPrefix+numN()})); return; }
@@ -7279,7 +7303,7 @@ function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'
 // one printed row's cells, in setup order; the group sub-line only where asked
 function colCells(x,withGrp){ return visCols().map(k=>'<td>'+(k==='cs'?csTd(x.cs):
   esc(x[k]||'')+(k==='def'&&withGrp&&rcSec('grp')&&x.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.grp)+'</span>':''))+'</td>').join(''); }
-const MARKUP_VER='1.5.2';
+const MARKUP_VER='1.5.3';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
