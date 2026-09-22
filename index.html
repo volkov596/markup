@@ -110,7 +110,13 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* ── Stage ─────────────────────────────────────────────── */
 .stage{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;touch-action:none}
-#canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+#canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.defmenu.objmenu{width:236px;max-width:calc(100vw - 16px)}
+.objmenu .orow{display:flex;gap:6px;padding:4px 6px 6px;flex-wrap:wrap}
+.objmenu .osw{width:24px;height:24px;border-radius:50%;padding:0;flex:0 0 auto;border:2px solid rgba(255,255,255,.25)}
+.objmenu .osw.on{border-color:var(--accent);box-shadow:0 0 0 2px rgba(245,166,35,.35)}
+.objmenu .osz{flex:1 1 0;height:32px;justify-content:center;border:1px solid var(--hairline);font-weight:600}
+.objmenu .odel{color:#ff6b6b}
 
 .empty{
   position:absolute;inset:0;display:flex;flex-direction:column;
@@ -755,7 +761,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.5.1 · BETA · multilingual</span>
+        <span class="ver">v1.5.2 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -968,7 +974,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.1</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.2</span></div>
   </nav>
 </div>
 
@@ -1256,7 +1262,7 @@ body.hasfine .emotip{display:block}
     <div class="gbody">
       <div class="gsec">
         <h4 data-i18n="help_tools_h">Tools</h4>
-        <div class="grow"><b data-i18n="help_select_b">Select</b><span data-i18n="help_select_d">Tap an annotation to move, recolour, resize, or delete it. Drag its handles to reshape.</span></div>
+        <div class="grow"><b data-i18n="help_select_b">Select</b><span data-i18n="help_select_d">Tap an annotation to move, recolour, resize, or delete it. Drag its handles to reshape. Hold an annotation (or right-click it) for a menu: colour, size, edit, duplicate, delete.</span></div>
         <div class="grow"><b data-i18n="help_text_b">Text &amp; Tag</b><span data-i18n="help_text_d">Tap the photo to type a label in place. Double-tap the tool for the tags and elements list, hold it for the last five things you placed. Anything picked is placed once and then released, so the next tap types again; the props strip shows what is waiting, and Clear drops it. Tags and elements take the text style, so Fill and the ink swatch apply to them, and the recents remember the colour each was last placed in.</span></div>
         <div class="grow"><b data-i18n="help_draw_b">Draw</b><span data-i18n="help_draw_d">Freehand ink for circling or sketching.</span></div>
         <div class="grow"><b data-i18n="help_length_b">Length</b><span data-i18n="help_length_d">Drag a measured line. Short bars mark each end. Enter a value and pick a unit (mm, m, in, ft) — the number rides alongside the line. Hold the tool for your last five values: pick one and the next line takes it without the dialog.</span></div>
@@ -1666,7 +1672,7 @@ const I18N={
     "toast_no_cameras_export":"No cameras to export",
     "help_tools_h":"Tools",
     "help_select_b":"Select",
-    "help_select_d":"Tap an annotation to move, recolour, resize, or delete it. Drag its handles to reshape.",
+    "help_select_d":"Tap an annotation to move, recolour, resize, or delete it. Drag its handles to reshape. Hold an annotation (or right-click it) for a menu: colour, size, edit, duplicate, delete.",
     "help_text_b":"Text & Tag",
     "help_text_d":"Tap the photo to type a label in place. Double-tap the tool for the tags and elements list, hold it for the last five things you placed. Anything picked is placed once and then released, so the next tap types again; the props strip shows what is waiting, and Clear drops it. Tags and elements take the text style, so Fill and the ink swatch apply to them, and the recents remember the colour each was last placed in.",
     "help_draw_b":"Draw",
@@ -1741,6 +1747,7 @@ const I18N={
     "language_tooltip":"Language",
     "ctx_label_text":"Text",
     "ctx_label_edit":"Edit",
+    "duplicate":"Duplicate",
     "ctx_label_value":"Value",
     "ctx_label_angle":"Angle",
     "ctx_label_number":"Number",
@@ -2078,7 +2085,7 @@ const I18N={
     "toast_no_cameras_export":"没有可导出的相机",
     "help_tools_h":"工具",
     "help_select_b":"选择",
-    "help_select_d":"点击标注即可移动、改色、调整大小或删除。拖动控制点可改变形状。",
+    "help_select_d":"点击标注即可移动、改色、调整大小或删除。拖动控制点可改变形状。长按标注（或右键单击）可打开菜单：颜色、大小、编辑、复制、删除。",
     "help_text_b":"文字与标签",
     "help_text_d":"点按照片即可就地输入文字标注。双击该工具可打开标签与部位列表，长按可显示最近放置的五项。所选内容放置一次后即自动释放，因此下一次点按会重新进入输入；属性栏会显示待放置的内容，点击“清除”可取消。标签与部位采用文字样式，因此填充与墨色同样适用，最近列表也会记住每项上次使用的颜色。",
     "help_draw_b":"绘制",
@@ -2153,6 +2160,7 @@ const I18N={
     "language_tooltip":"语言",
     "ctx_label_text":"文字",
     "ctx_label_edit":"编辑",
+    "duplicate":"复制",
     "ctx_label_value":"数值",
     "ctx_label_angle":"角度",
     "ctx_label_number":"编号",
@@ -2490,7 +2498,7 @@ const I18N={
     "toast_no_cameras_export":"No hay cámaras para exportar",
     "help_tools_h":"Herramientas",
     "help_select_b":"Seleccionar",
-    "help_select_d":"Toque una anotación para moverla, cambiar su color, redimensionarla o eliminarla. Arrastre sus asas para remodelarla.",
+    "help_select_d":"Toque una anotación para moverla, cambiar su color, redimensionarla o eliminarla. Arrastre sus asas para remodelarla. Mantenga pulsada una anotación (o haga clic derecho) para un menú: color, tamaño, editar, duplicar, eliminar.",
     "help_text_b":"Texto y etiqueta",
     "help_text_d":"Toque la foto para escribir una etiqueta en ese punto. Toque dos veces la herramienta para la lista de etiquetas y elementos, o manténgala pulsada para las últimas cinco cosas que colocó. Lo que elija se coloca una vez y se libera, así que el siguiente toque vuelve a escribir; la barra de propiedades muestra lo que está en espera y Borrar lo descarta. Las etiquetas y los elementos usan el estilo de texto, así que Relleno y el color de tinta se les aplican, y los recientes recuerdan el color con el que se colocó cada uno.",
     "help_draw_b":"Dibujar",
@@ -2565,6 +2573,7 @@ const I18N={
     "language_tooltip":"Idioma",
     "ctx_label_text":"Texto",
     "ctx_label_edit":"Editar",
+    "duplicate":"Duplicar",
     "ctx_label_value":"Valor",
     "ctx_label_angle":"Ángulo",
     "ctx_label_number":"Número",
@@ -2902,7 +2911,7 @@ const I18N={
     "toast_no_cameras_export":"निर्यात के लिए कोई कैमरा नहीं",
     "help_tools_h":"टूल्स",
     "help_select_b":"चयन",
-    "help_select_d":"किसी एनोटेशन को टैप करके उसे हिलाएं, रंग बदलें, आकार बदलें या हटाएं। आकार बदलने के लिए उसके हैंडल खींचें।",
+    "help_select_d":"किसी एनोटेशन को टैप करके उसे हिलाएं, रंग बदलें, आकार बदलें या हटाएं। आकार बदलने के लिए उसके हैंडल खींचें। मेनू के लिए किसी एनोटेशन को दबाए रखें (या राइट-क्लिक करें): रंग, आकार, संपादन, डुप्लिकेट, हटाएं।",
     "help_text_b":"टेक्स्ट और टैग",
     "help_text_d":"फ़ोटो पर टैप करके वहीं लेबल लिखें। टूल पर दो बार टैप करने से टैग और घटक की सूची खुलती है, दबाकर रखने पर पिछली पाँच रखी गई चीज़ें दिखती हैं। चुनी गई चीज़ एक बार रखने के बाद छूट जाती है, इसलिए अगला टैप फिर से टाइपिंग खोलता है; प्रॉपर्टी पट्टी दिखाती है कि क्या प्रतीक्षा में है और “साफ़ करें” उसे हटा देता है। टैग और घटक टेक्स्ट शैली लेते हैं, इसलिए भराव और स्याही का रंग उन पर लागू होते हैं, और हाल की सूची हर प्रविष्टि का पिछला रंग याद रखती है।",
     "help_draw_b":"ड्रा",
@@ -2977,6 +2986,7 @@ const I18N={
     "language_tooltip":"भाषा",
     "ctx_label_text":"टेक्स्ट",
     "ctx_label_edit":"संपादित करें",
+    "duplicate":"डुप्लिकेट",
     "ctx_label_value":"मान",
     "ctx_label_angle":"कोण",
     "ctx_label_number":"संख्या",
@@ -3314,7 +3324,7 @@ const I18N={
     "toast_no_cameras_export":"لا توجد كاميرات للتصدير",
     "help_tools_h":"الأدوات",
     "help_select_b":"تحديد",
-    "help_select_d":"اضغط على أي علامة لتحريكها أو تغيير لونها أو تغيير حجمها أو حذفها. اسحب مقابضها لإعادة تشكيلها.",
+    "help_select_d":"اضغط على أي علامة لتحريكها أو تغيير لونها أو تغيير حجمها أو حذفها. اسحب مقابضها لإعادة تشكيلها. اضغط مطولًا على علامة (أو انقر بزر الفأرة الأيمن) لقائمة: اللون، الحجم، التعديل، التكرار، الحذف.",
     "help_text_b":"نص ووسم",
     "help_text_d":"انقر الصورة لكتابة تسمية في مكانها. انقر نقرتين على الأداة لفتح قائمة الوسوم والعناصر، أو استمر بالضغط لعرض آخر خمسة عناصر وضعتها. ما تختاره يوضع مرة واحدة ثم يُحرَّر، فتعود النقرة التالية إلى الكتابة؛ ويعرض شريط الخصائص ما هو بالانتظار، و«مسح» يلغيه. تأخذ الوسوم والعناصر نمط النص، فيسري عليها التعبئة ولون القلم، وتتذكر القائمة الحديثة لون كل عنصر عند وضعه آخر مرة.",
     "help_draw_b":"رسم",
@@ -3389,6 +3399,7 @@ const I18N={
     "language_tooltip":"اللغة",
     "ctx_label_text":"نص",
     "ctx_label_edit":"تعديل",
+    "duplicate":"تكرار",
     "ctx_label_value":"القيمة",
     "ctx_label_angle":"زاوية",
     "ctx_label_number":"رقم",
@@ -3726,7 +3737,7 @@ const I18N={
     "toast_no_cameras_export":"Нет камер для экспорта",
     "help_tools_h":"Инструменты",
     "help_select_b":"Выбор",
-    "help_select_d":"Нажмите на аннотацию, чтобы переместить, изменить цвет, размер или удалить её. Перетаскивайте маркеры, чтобы изменить форму.",
+    "help_select_d":"Нажмите на аннотацию, чтобы переместить, изменить цвет, размер или удалить её. Перетаскивайте маркеры, чтобы изменить форму. Удерживайте аннотацию (или щёлкните правой кнопкой) для меню: цвет, размер, изменить, дублировать, удалить.",
     "help_text_b":"Текст и метка",
     "help_text_d":"Нажмите на фото, чтобы ввести подпись на месте. Двойное нажатие на инструмент открывает список меток и элементов, удержание показывает последние пять поставленных записей. Выбранное ставится один раз и освобождается, поэтому следующее нажатие снова открывает ввод; в строке свойств видно, что ожидает, а «Очистить» убирает его. Метки и элементы используют стиль текста, поэтому заливка и цвет чернил действуют и на них, а список последних запоминает цвет каждой записи.",
     "help_draw_b":"Рисование",
@@ -3801,6 +3812,7 @@ const I18N={
     "language_tooltip":"Язык",
     "ctx_label_text":"Текст",
     "ctx_label_edit":"Изменить",
+    "duplicate":"Дублировать",
     "ctx_label_value":"Значение",
     "ctx_label_angle":"Угол",
     "ctx_label_number":"Номер",
@@ -5122,9 +5134,22 @@ const pts=new Map(); let pinch=null; let act=null; let lastTap=0, lastTapPt=null
 function getPos(e){ const r=canvas.getBoundingClientRect(); return {x:e.clientX-r.left, y:e.clientY-r.top}; }
 
 let pendingDlg=null;
+let holdT=null, holdP=null, lastPtrType='', holdAt=0;
+function cancelHold(){ clearTimeout(holdT); holdT=null; holdP=null; }
+function fireHold(){
+  holdT=null; if(!act||S.tool!=='select') return;
+  const o=getObj(act.id); if(!o){ holdP=null; return; }
+  if(act.mode==='move'){ const i=S.objects.indexOf(o), c=clone(act.orig); if(i>=0){ S.objects[i]=c; const r=curRec(); if(r) r.objects=S.objects; } }
+  else if(act.mode==='label'){ o.lx=act.orig.lx; o.ly=act.orig.ly; }
+  const id=act.id, p=holdP; act=null; S.pending=null; lastTap=0; holdP=null; holdAt=Date.now();
+  S.sel=id; syncCtx(); render();
+  const r=canvas.getBoundingClientRect(); openObjMenu(r.left+p.x, r.top+p.y);
+}
 canvas.addEventListener('pointerdown',e=>{
-  if(!S.img)return; canvas.setPointerCapture(e.pointerId); pts.set(e.pointerId,getPos(e));
-  if(pts.size===2){
+  lastPtrType=e.pointerType;
+  if(!S.img)return; if(e.pointerType==='mouse'&&e.button!==0) return;
+  canvas.setPointerCapture(e.pointerId); pts.set(e.pointerId,getPos(e));
+  if(pts.size===2){ cancelHold();
     if(act&&act.mode==='draw'){ S.objects.pop(); S.pending=null; }
     else if(act&&(act.mode==='move'||act.mode==='handle'||act.mode==='label')) commit();
     act=null; pendingDlg=null; startPinch(); render(); return;
@@ -5136,8 +5161,15 @@ canvas.addEventListener('pointermove',e=>{
   if(pinch){ updatePinch(); return; }
   if(pts.size===1 && act) onMove(getPos(e));
 });
-function up(e){ pts.delete(e.pointerId); if(pinch&&pts.size<2)pinch=null; if(pts.size===0) onUp(); }
+function up(e){ if(!pts.has(e.pointerId)) return; pts.delete(e.pointerId); if(pinch&&pts.size<2)pinch=null; if(pts.size===0) onUp(); }
 canvas.addEventListener('pointerup',up); canvas.addEventListener('pointercancel',up);
+canvas.addEventListener('contextmenu',e=>{
+  e.preventDefault();
+  if(lastPtrType!=='mouse'||!S.img||act||Date.now()-holdAt<800) return;
+  const p=getPos(e), h=hitTest(toImg(p.x,p.y)); if(!h) return;
+  if(S.tool!=='select') setTool('select');
+  S.sel=h.id; syncCtx(); render(); openObjMenu(e.clientX,e.clientY);
+});
 
 function startPinch(){ const a=[...pts.values()]; const mid={x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2}; pinch={d:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y), mid, anchor:toImg(mid.x,mid.y), s:S.view.s}; }
 function updatePinch(){ const a=[...pts.values()]; if(a.length<2)return; const d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y); const mid={x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2}; S.view.s=clampScale(pinch.s*d/pinch.d); S.view.ox=mid.x-pinch.anchor.x*S.view.s; S.view.oy=mid.y-pinch.anchor.y*S.view.s; render(); }
@@ -5174,6 +5206,7 @@ function onDown(p){
     if(h&&h.handle!=null){ beginEdit(); act={mode:'handle',id:h.id,handle:h.handle}; }
     else if(h&&h.part==='label'){ S.sel=h.id; const o=getObj(h.id); const lp=labelPos(o); beginEdit(); act={mode:'label',id:h.id,start:ip,orig:{lx:lp.x,ly:lp.y}}; syncCtx(); }
     else if(h){ S.sel=h.id; beginEdit(); act={mode:'move',id:h.id,start:ip,orig:clone(getObj(h.id))}; syncCtx(); }
+    if(h&&h.handle==null&&lastPtrType!=='mouse'){ cancelHold(); holdP=p; holdT=setTimeout(fireHold,450); }
     else { S.sel=null; syncCtx(); act={mode:'pan',sx:p.x,sy:p.y,ox:S.view.ox,oy:S.view.oy}; }
     render();
   } else if(S.tool==='text'){
@@ -5262,6 +5295,7 @@ function closeMArea(){
   S.polyDraft=null; updateMeasCtl(); render();
 }
 function onMove(p){
+  if(holdT&&holdP&&Math.hypot(p.x-holdP.x,p.y-holdP.y)>8) cancelHold();
   const ip=toImg(p.x,p.y);
   if(act.mode==='pan'){ S.view.ox=act.ox+(p.x-act.sx); S.view.oy=act.oy+(p.y-act.sy); render(); return; }
   if(act.mode==='angleA'){ if(S.angleDraft){S.angleDraft.ax=ip.x;S.angleDraft.ay=ip.y;} render(); return; }
@@ -5276,6 +5310,7 @@ function onMove(p){
   if(act.mode==='handle'){ const o=getObj(act.id); moveHandle(o,act.handle,ip); render(); return; }
 }
 function onUp(){
+  cancelHold();
   if(pendingDlg){ const f=pendingDlg; pendingDlg=null; act=null; f(); return; }
   if(!act){ return; }
   if(act.mode==='angleA'){
@@ -5377,7 +5412,7 @@ function openQrMenu(btn){
     ? rec.map((x,i)=>'<button data-qridx="'+i+'"'+(S.armedQR&&S.armedQR.text===x?' class="on"':'')+'><span class="ltr">'+esc(qrShort(x))+'</span></button>').join('')
     : '<button class="mm" disabled><span>'+esc(t('no_recent_labels'))+'</span></button>')
     +'<div class="dsep"></div><button class="mm" data-qrnew="1"><span>'+esc(t('qr_new'))+'</span></button>';
-  m.classList.add('show'); placeMenu(m,btn);
+  m.classList.remove('objmenu'); m.classList.add('show'); placeMenu(m,btn);
 }
 function updateQr(){ $('qrcur').textContent = S.armedQR ? S.armedQR.text : t('choose_ellipsis'); }
 
@@ -6089,7 +6124,7 @@ function updateDef(){
 }
 
 // ── recent-defect menu, held on the rail button ──
-function closeDefMenu(){ $('defMenu').classList.remove('show'); }
+function closeDefMenu(){ $('defMenu').classList.remove('show','objmenu'); }
 function openLblMenu(btn){
   const m=$('defMenu'), rec=S.recentLbl.slice(0,5);
   let h='';
@@ -6102,7 +6137,7 @@ function openLblMenu(btn){
   }).join('')+'<div class="dsep"></div>';
   else h+='<button class="mm" disabled><span>'+esc(t('no_recent_labels'))+'</span></button><div class="dsep"></div>';
   h+='<button class="mm" data-lmore="1"><span>'+esc(t('pick_more_tags'))+'</span></button>';
-  m.innerHTML=h; m.classList.add('show'); placeMenu(m,btn);
+  m.classList.remove('objmenu'); m.innerHTML=h; m.classList.add('show'); placeMenu(m,btn);
 }
 function placeMenu(m,btn){
   const r=btn.getBoundingClientRect(), mr=m.getBoundingClientRect();
@@ -6115,7 +6150,7 @@ function openDefMenu(btn){
   if(rec.length) h+=rec.map(r=>'<button data-rterm="'+esc(r.t)+'" data-rsev="'+esc(r.s||'none')+'" data-rgrp="'+esc(r.g||'')+'"><span class="dot" style="background:'+(sevOf(r.s).color||'#7c8894')+'"></span><span>'+esc(trTerm(r.t))+'</span></button>').join('')+'<div class="dsep"></div>';
   else h+='<button class="mm" disabled><span>'+esc(t('no_recent_defects'))+'</span></button><div class="dsep"></div>';
   h+='<button class="mm" data-rmore="1"><span>'+esc(t('pick_more'))+'</span></button>';
-  m.innerHTML=h; m.classList.add('show'); placeMenu(m,btn);
+  m.classList.remove('objmenu'); m.innerHTML=h; m.classList.add('show'); placeMenu(m,btn);
 }
 
 
@@ -6280,12 +6315,35 @@ function cyclePrefix(){
   setPrefix(nx); toast(t('toast_next_val',{v:nx+numN()}));
 }
 function resetNum(){ setNumN(1); updateNext(); dirty(); toast(t('toast_numbering_reset')); }
+function placeAt(m,x,y){
+  const mr=m.getBoundingClientRect();
+  let top=y-mr.height-28; if(top<8) top=Math.min(y+28, innerHeight-mr.height-8);
+  m.style.left=Math.min(Math.max(8,x-mr.width/2), innerWidth-mr.width-8)+'px';
+  m.style.top=Math.max(8,top)+'px';
+}
+function openObjMenu(x,y){
+  const o=S.sel!=null?getObj(S.sel):null; if(!o) return;
+  const m=$('defMenu'); m.classList.add('objmenu');
+  const canEdit=$('editText').style.display!=='none';
+  let h='<div class="orow">'+INKS.map((c,i)=>'<button class="osw'+(o.color===c?' on':'')+'" data-oink="'+i+'" style="background:'+c+'" title="'+c+'"></button>').join('')+'</div>';
+  h+='<div class="orow">'+['S','M','L'].map(w=>'<button class="osz" data-osz="'+w+'">'+w+'</button>').join('')+'</div><div class="dsep"></div>';
+  if(canEdit) h+='<button data-oact="edit"><span>'+esc(t('ctx_label_edit'))+'</span></button>';
+  h+='<button data-oact="dup"><span>'+esc(t('duplicate'))+'</span></button>';
+  h+='<button class="odel" data-oact="del"><span>'+esc(t('delete_btn'))+'</span></button>';
+  m.innerHTML=h; m.classList.add('show'); placeAt(m,x,y);
+}
+function dupSel(){
+  const o=S.sel!=null?getObj(S.sel):null; if(!o) return;
+  const d=Math.max(8,Math.round(Math.min(S.iw,S.ih)*0.03));
+  beginEdit(); const c=clone(o); c.id=newId(); applyMove(c,clone(o),d,d);
+  S.objects.push(c); S.sel=c.id; commit(); syncCtx(); render();
+}
 function openNumMenu(btn){
   const m=$('defMenu');
   let h=NUM_PFX.map(p=>{ const n=S.counters[p]>0?S.counters[p]:1;
     return '<button data-npfx="'+esc(p)+'"'+(p===S.numPrefix?' class="on"':'')+'><span class="dot" style="background:'+(p===S.numPrefix?'var(--accent)':'transparent')+'"></span><span class="ltr">'+(p?esc(p):'–')+'</span><span class="nsub ltr">'+esc(t('next'))+' '+esc(p+n)+'</span></button>'; }).join('');
   h+='<div class="dsep"></div><button class="mm" data-nreset="1"><span>'+esc(t('reset'))+'</span></button>';
-  m.innerHTML=h; m.classList.add('show'); placeMenu(m,btn);
+  m.classList.remove('objmenu'); m.innerHTML=h; m.classList.add('show'); placeMenu(m,btn);
 }
 function pushLen(v,u){ if(!v) return; S.recentLen=[{v,u}].concat(S.recentLen.filter(x=>!(x.v===v&&x.u===u))).slice(0,8); dirty(); }
 function pushNote(v){ if(!v) return; S.recentNote=[v].concat(S.recentNote.filter(x=>x!==v)).slice(0,8); dirty(); }
@@ -6295,14 +6353,14 @@ function openLenMenu(btn){
   m.innerHTML = rec.length
     ? rec.map((x,i)=>'<button data-lenidx="'+i+'"><span class="ltr">'+esc(lenText(x))+'</span></button>').join('')
     : '<button class="mm" disabled><span>'+esc(t('no_recent_labels'))+'</span></button>';
-  m.classList.add('show'); placeMenu(m,btn);
+  m.classList.remove('objmenu'); m.classList.add('show'); placeMenu(m,btn);
 }
 function openNoteMenu(btn){
   const m=$('defMenu'), rec=S.recentNote.slice(0,5);
   m.innerHTML = rec.length
     ? rec.map((x,i)=>'<button data-noteidx="'+i+'"><span>'+esc(x.replace(/\s+/g,' '))+'</span></button>').join('')
     : '<button class="mm" disabled><span>'+esc(t('no_recent_labels'))+'</span></button>';
-  m.classList.add('show'); placeMenu(m,btn);
+  m.classList.remove('objmenu'); m.classList.add('show'); placeMenu(m,btn);
 }
 function armLen(x){ S.armedLen={v:x.v,u:x.u}; S.armedNote=null; updateTextCtl(); toast(t('toast_next_val',{v:lenText(x)})); }
 function armNote(v){ S.armedNote=v; S.armedLen=null; updateTextCtl(); toast(t('toast_next_val',{v:v.replace(/\s+/g,' ')})); }
@@ -6343,6 +6401,11 @@ bindToolGestures('qr', ()=>openQr(null), b=>openQrMenu(b), ()=>qrTap());
 bindToolGestures('measure', ()=>{ $('toast').classList.remove('show'); openScaleModal(); }, null);
 pipSync();
 $('defMenu').addEventListener('click',e=>{
+  const oi=e.target.closest('[data-oink]'); if(oi){ const sw=document.querySelectorAll('#swatches .swatch')[+oi.dataset.oink]; if(sw) sw.click();
+    const o=getObj(S.sel); document.querySelectorAll('#defMenu .osw').forEach(b=>b.classList.toggle('on',!!o&&b.title===o.color)); return; }
+  const oz=e.target.closest('[data-osz]'); if(oz){ const wb=document.querySelector('.wbtn[data-w="'+oz.dataset.osz+'"]'); if(wb) wb.click(); return; }
+  const oa=e.target.closest('[data-oact]'); if(oa){ const a=oa.dataset.oact; closeDefMenu();
+    if(a==='edit') $('editText').onclick(); else if(a==='dup') dupSel(); else if(a==='del') $('del').onclick(); return; }
   const np=e.target.closest('[data-npfx]'); if(np){ closeDefMenu(); setPrefix(np.dataset.npfx); toast(t('toast_next_val',{v:S.numPrefix+numN()})); return; }
   if(e.target.closest('[data-nreset]')){ closeDefMenu(); resetNum(); return; }
   const qi=e.target.closest('[data-qridx]'); if(qi){ closeDefMenu(); const x=S.recentQr[+qi.dataset.qridx]; if(x){ S.armedQR={text:x}; pushQr(x); updateQr(); updateQrCtl(); toast(t('toast_tap_to_place')); } return; }
@@ -7216,7 +7279,7 @@ function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'
 // one printed row's cells, in setup order; the group sub-line only where asked
 function colCells(x,withGrp){ return visCols().map(k=>'<td>'+(k==='cs'?csTd(x.cs):
   esc(x[k]||'')+(k==='def'&&withGrp&&rcSec('grp')&&x.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.grp)+'</span>':''))+'</td>').join(''); }
-const MARKUP_VER='1.5.1';
+const MARKUP_VER='1.5.2';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
