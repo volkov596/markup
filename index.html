@@ -709,28 +709,30 @@ body.hasfine .emotip{display:block}
   body>.app,.overlay,.langmenu,#toast,#fmtMenu{display:none!important}
   #reportDoc{display:block!important;position:static!important;left:auto!important;top:auto!important;
     visibility:visible!important;color:#000;font-family:var(--font-ui);font-size:10pt;line-height:1.45}
-  @page{size:A4;margin:26mm 25.5mm}
+  @page{size:A4;margin:12mm}
 }
+#reportDoc{--pgh:273mm;--pgw:186mm;--imgw:170mm;--imgh:147mm;--imgh2:89mm}
+#reportDoc.wide{--pgh:245mm;--pgw:159mm;--imgw:143mm;--imgh:132mm;--imgh2:80mm}
 #reportDoc .pg{
-  position:relative;box-sizing:border-box;width:auto;height:245mm;
-  padding:15mm 10mm 13mm;overflow:hidden;background:#fff;
+  position:relative;box-sizing:border-box;width:auto;height:var(--pgh);
+  padding:11mm 8mm 10mm;overflow:hidden;background:#fff;
   page-break-after:always;break-after:page;page-break-inside:avoid;break-inside:avoid;
 }
 /* box and measuring width fit A4 inside 1in browser margins, so on paper a page can
    only come out shorter than it measured here — never taller */
-#reportDoc.measuring .pg{width:159mm}
+#reportDoc.measuring .pg{width:var(--pgw)}
 #reportDoc .pg:last-child{page-break-after:auto;break-after:auto}
 #reportDoc .pg-body{height:100%;overflow:hidden}
 /* running header / footer — drawn by the app, not the browser */
 #reportDoc .pg-h{
-  position:absolute;left:10mm;right:10mm;top:6mm;
+  position:absolute;left:8mm;right:8mm;top:4.5mm;
   display:flex;align-items:flex-end;justify-content:space-between;gap:6mm;
   border-bottom:.5pt solid #bbb;padding-bottom:1.6mm;font-size:9.5pt;color:#222;
 }
 #reportDoc .pg-h .hl{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #reportDoc .pg-h .hr{color:#666;white-space:nowrap;font-size:8pt;flex:0 0 auto}
 #reportDoc .pg-f{
-  position:absolute;left:10mm;right:10mm;bottom:4mm;
+  position:absolute;left:8mm;right:8mm;bottom:3.5mm;
   display:flex;align-items:flex-start;justify-content:space-between;gap:5mm;
   border-top:.5pt solid #bbb;padding-top:1.6mm;font-size:7.5pt;color:#666;
 }
@@ -767,8 +769,8 @@ body.hasfine .emotip{display:block}
 #reportDoc .sum div{border:.6pt solid #bbb;border-radius:1.5mm;padding:2mm 4mm;font-size:9pt;min-width:22mm}
 #reportDoc .sum b{display:block;font-size:15pt;font-weight:600;line-height:1.2}
 #reportDoc .ph{margin:0 0 4mm;page-break-inside:avoid;break-inside:avoid}
-#reportDoc .ph img{display:block;width:auto;max-width:min(100%,139mm);max-height:132mm;margin:0 auto;border:.4pt solid #ddd}
-#reportDoc .two .ph img{max-height:80mm}
+#reportDoc .ph img{display:block;width:auto;max-width:min(100%,var(--imgw));max-height:var(--imgh);margin:0 auto;border:.4pt solid #ddd}
+#reportDoc .two .ph img{max-height:var(--imgh2)}
 #reportDoc .cap{font-size:9pt;margin:1.5mm 0 0}
 #reportDoc .cap .no{font-weight:600}
 #reportDoc .cap .loc{color:#555}
@@ -798,7 +800,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.5.6 · BETA · multilingual</span>
+        <span class="ver">v1.5.8 · BETA · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -1015,7 +1017,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.6</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.8</span></div>
   </nav>
 </div>
 
@@ -1494,6 +1496,7 @@ const I18N={
     "sec_qr":"Location link as QR code",
     "sec_phtbl":"Findings table under each photo",
     "sec_grp":"Group under the defect name",
+    "sec_narrow":"Narrow page margins (12mm)",
     "rep_setup_reset":"Reset to preset",
     "rep_setup_reset_title":"Reset to preset?",
     "rep_setup_reset_body":"All names and switches return to the selected preset.",
@@ -1921,6 +1924,7 @@ const I18N={
     "sec_qr":"位置链接显示为二维码",
     "sec_phtbl":"每张照片下的结果表",
     "sec_grp":"缺陷名称下显示类别",
+    "sec_narrow":"窄页边距（12 毫米）",
     "rep_setup_reset":"恢复预设",
     "rep_setup_reset_title":"恢复为预设？",
     "rep_setup_reset_body":"所有名称和开关恢复为所选预设。",
@@ -2348,6 +2352,7 @@ const I18N={
     "sec_qr":"Enlace de ubicación como código QR",
     "sec_phtbl":"Tabla de hallazgos bajo cada foto",
     "sec_grp":"Grupo bajo el nombre del defecto",
+    "sec_narrow":"Márgenes de página estrechos (12 mm)",
     "rep_setup_reset":"Restablecer plantilla",
     "rep_setup_reset_title":"¿Restablecer la plantilla?",
     "rep_setup_reset_body":"Todos los nombres e interruptores vuelven a la plantilla seleccionada.",
@@ -2775,6 +2780,7 @@ const I18N={
     "sec_qr":"स्थान लिंक QR कोड के रूप में",
     "sec_phtbl":"हर फ़ोटो के नीचे निष्कर्ष तालिका",
     "sec_grp":"दोष के नाम के नीचे समूह",
+    "sec_narrow":"संकरे पेज मार्जिन (12 मिमी)",
     "rep_setup_reset":"प्रीसेट पर रीसेट करें",
     "rep_setup_reset_title":"प्रीसेट पर रीसेट करें?",
     "rep_setup_reset_body":"सभी नाम और स्विच चुने गए प्रीसेट पर लौट आएँगे।",
@@ -3202,6 +3208,7 @@ const I18N={
     "sec_qr":"رابط الموقع كرمز QR",
     "sec_phtbl":"جدول النتائج أسفل كل صورة",
     "sec_grp":"المجموعة تحت اسم العيب",
+    "sec_narrow":"هوامش صفحة ضيقة (12 مم)",
     "rep_setup_reset":"استعادة القالب",
     "rep_setup_reset_title":"استعادة القالب؟",
     "rep_setup_reset_body":"تعود جميع الأسماء والمفاتيح إلى القالب المحدد.",
@@ -3629,6 +3636,7 @@ const I18N={
     "sec_qr":"Ссылка на место в виде QR-кода",
     "sec_phtbl":"Таблица дефектов под каждым фото",
     "sec_grp":"Группа под названием дефекта",
+    "sec_narrow":"Узкие поля страницы (12 мм)",
     "rep_setup_reset":"Сбросить к шаблону",
     "rep_setup_reset_title":"Сбросить к шаблону?",
     "rep_setup_reset_body":"Все названия и переключатели вернутся к выбранному шаблону.",
@@ -5249,10 +5257,9 @@ function drawQR(ctx,o,tf){
   const n=m.length, tot=n+QR_QUIET*2;
   const p=mapPt(tf,o.x,o.y), half=mapLen(tf,o.r), box=half*2, cell=box/tot;
   const x0=p.x-half, y0=p.y-half;
-  const dk=qrDark(o.color), inv=o.qs==='i';
+  // white ink reads as the inverted code, so its two styles are the other way round
+  const dk=qrDark(o.color), inv=(o.qs==='i')!==(contrastOf(o.color,'#ffffff')<1.05);
   ctx.fillStyle=inv?dk:'#ffffff'; ctx.fillRect(x0,y0,box,box);
-  if(!inv&&contrastOf(o.color,'#ffffff')>1.04){ const fw=Math.max(1,cell*1.2); ctx.fillStyle=o.color;
-    ctx.fillRect(x0,y0,box,fw); ctx.fillRect(x0,y0+box-fw,box,fw); ctx.fillRect(x0,y0,fw,box); ctx.fillRect(x0+box-fw,y0,fw,box); }
   ctx.fillStyle=inv?'#ffffff':dk;
   const gx=i=>Math.round(x0+(i+QR_QUIET)*cell), gy=i=>Math.round(y0+(i+QR_QUIET)*cell);
   for(let r=0;r<n;r++){ const ya=gy(r), yb=gy(r+1);
@@ -7329,7 +7336,7 @@ function rowFromOv(id,base){
 // report setup: names and switches, kept on the device. Blank name = the standard, translated one
 const REP_FLDS=[['structure','rep_structure'],['ref','rep_ref'],['date','rep_date'],['inspector','rep_inspector'],['weather','rep_weather'],['loclink','rep_loclink'],['overall','rep_overall']];
 const REP_COLS=[['el','col_element'],['def','col_defect'],['cs','col_cs'],['ext','col_extent'],['com','col_comment'],['act','col_action']];
-const REP_SECS=[['summary','sec_summary'],['qr','sec_qr'],['phtbl','sec_phtbl'],['grp','sec_grp']];
+const REP_SECS=[['summary','sec_summary'],['qr','sec_qr'],['phtbl','sec_phtbl'],['grp','sec_grp'],['narrow','sec_narrow']];
 function rcName(k,key){ const n=String((S.repCfg.names||{})[k]||'').trim()||baseName(k); return n||t(key); }
 function rcOn(k){ return !cfgOff(k); }
 function rcSec(k){ return cfgSec(k); }
@@ -7630,7 +7637,7 @@ function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'
 // one printed row's cells, in setup order; the group sub-line only where asked
 function colCells(x,withGrp){ return visCols().map(k=>'<td>'+(k==='cs'?csTd(x.cs):
   esc(x[k]||'')+(k==='def'&&withGrp&&rcSec('grp')&&x.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.grp)+'</span>':''))+'</td>').join(''); }
-const MARKUP_VER='1.5.6';
+const MARKUP_VER='1.5.8';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
@@ -7757,8 +7764,16 @@ function exportCSV(){
 }
 let repTitle=null;
 function restoreTitle(){ if(repTitle!=null){ document.title=repTitle; repTitle=null; } }
+function repNarrow(){ return rcSec('narrow'); }
+function applyPageCss(){
+  let el=document.getElementById('pgcss');
+  if(!el){ el=document.createElement('style'); el.id='pgcss'; document.head.appendChild(el); }
+  el.textContent='@media print{@page{size:A4;margin:'+(repNarrow()?'12mm':'26mm 25.5mm')+'}}';
+  $('reportDoc').classList.toggle('wide',!repNarrow());
+}
 async function printReport(){
   const r=S.rep, doc=$('reportDoc');
+  applyPageCss();
   repBlocks=harvest();                       // pick up anything typed into the review table
   const blocks=repBlocks.filter(b=>!b.ex);
   if(!blocks.length){ toast(t('rep_no_photos')); return; }
@@ -7800,7 +7815,7 @@ async function printReport(){
     // ── photo sheets ──
     if(r.sheets){
       const per=(r.perPage===2)?2:1;
-      const capMax=per===2?80:132;
+      const capMax=per===2?(repNarrow()?89:80):(repNarrow()?147:132);
       for(let i=0;i<blocks.length;i+=per){
         const pg=newPage(per===2?'two':''); doc.appendChild(pg); pages.push(pg);
         let inner='';
