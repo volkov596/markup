@@ -106,7 +106,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 /* segmented format toggle */
 .seg{display:inline-flex;border:1px solid var(--panel-border);border-radius:var(--r-sm);overflow:hidden;background:var(--panel)}
 .seg button{height:38px;padding:0 11px;font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--muted)}
-.props .seg button{height:32px;padding:0 10px}
+.props .seg button{height:30px;padding:0 10px}
 .seg button.on{background:var(--accent-soft);color:var(--accent)}
 
 /* ── Stage ─────────────────────────────────────────────── */
@@ -647,12 +647,7 @@ body.hasfine .emotip{display:block}
 [dir="rtl"] .hk{margin-left:0;margin-right:auto}
 
 /* ── Report ────────────────────────────────────────────── */
-.rp-exp{
-  align-self:center;margin:0 auto 0 10px;padding:3px 8px;border-radius:999px;
-  font-size:10px;letter-spacing:.06em;text-transform:uppercase;
-  background:var(--accent-soft);color:var(--accent);border:1px solid var(--panel-border);white-space:nowrap;
-}
-[dir="rtl"] .rp-exp{margin:0 10px 0 auto}
+.rp-sp{flex:1 1 auto}
 .rp-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px}
 .rp-sec{margin:0 0 16px}
 .rp-h{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted-2);margin:0 0 8px}
@@ -715,7 +710,7 @@ body.hasfine .emotip{display:block}
 #reportDoc.wide{--pgh:245mm;--pgw:159mm;--imgw:143mm;--imgh:132mm;--imgh2:80mm}
 #reportDoc .pg{
   position:relative;box-sizing:border-box;width:auto;height:var(--pgh);
-  padding:11mm 8mm 10mm;overflow:hidden;background:#fff;
+  padding:13.5mm 8mm 10mm;overflow:hidden;background:#fff;
   page-break-after:always;break-after:page;page-break-inside:avoid;break-inside:avoid;
 }
 /* box and measuring width fit A4 inside 1in browser margins, so on paper a page can
@@ -797,10 +792,10 @@ body.hasfine .emotip{display:block}
   <!-- Top bar -->
   <header class="topbar">
     <div class="brandrow">
-      <button class="infobtn" id="about" title="About" aria-label="About" data-i18n-title="about_title">i</button>
+      <button class="infobtn" id="about" title="About &amp; support" aria-label="About &amp; support" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.5.8 · BETA · multilingual</span>
+        <span class="ver">v1.5.10 · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -1017,7 +1012,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.8</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.10</span></div>
   </nav>
 </div>
 
@@ -1068,7 +1063,7 @@ body.hasfine .emotip{display:block}
     <div class="srow">
       <span class="sfield">
         <input id="pickSearch" type="text" placeholder="Search terms…" autocomplete="off" data-i18n-placeholder="search_placeholder">
-        <button class="sclr" id="pickClr" data-i18n-title="clear" aria-label="Clear">&times;</button>
+        <button class="sclr" id="pickClr" title="Clear" data-i18n-title="clear" aria-label="Clear">&times;</button>
       </span>
       <button class="mini" id="pickAdd" disabled data-i18n="add">Add</button>
     </div>
@@ -1085,7 +1080,7 @@ body.hasfine .emotip{display:block}
   <div class="sheet">
     <div class="sheet-head">
       <h3 data-i18n="report_title">Report</h3>
-      <span class="rp-exp" data-i18n="rep_exp">Experimental</span>
+      <span class="rp-sp"></span>
       <button class="x" id="repSetup" title="Report setup" aria-label="Report setup" data-i18n-title="rep_setup"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg></button>
       <button class="x" id="repClose">&times;</button>
     </div>
@@ -1140,7 +1135,7 @@ body.hasfine .emotip{display:block}
 <div class="overlay" id="phOverlay">
   <div class="modal">
     <h3 data-i18n="new_divider_title">New divider card</h3>
-    <p data-i18n="new_divider_body">A blank titled photo added to your album to separate structures. Export it with the rest.</p>
+    <p data-i18n="new_divider_body">A titled folder card added to your album to separate structures. Exports with the rest; left out of the report by default.</p>
     <input id="phTitle" type="text" placeholder="Structure / site name" autocomplete="off" style="margin-top:12px" data-i18n-placeholder="structure_site_placeholder">
     <input id="phSub" type="text" placeholder="Date · ID · inspector (optional)" autocomplete="off" style="margin-top:10px" data-i18n-placeholder="date_id_inspector_placeholder">
     <div class="grp" style="margin-top:14px"><span class="lbl" data-i18n="folder_label">Folder</span><div id="phColors" style="display:flex;gap:8px"></div></div>
@@ -1289,7 +1284,7 @@ body.hasfine .emotip{display:block}
     <button class="gclose" id="aboutClose" aria-label="Close">&times;</button>
     <h3 data-i18n="about_title">About &amp; support</h3>
     <div class="gbody">
-      <p data-i18n-html="about_intro"><b style="color:var(--text)">Mark<span style="color:var(--accent)">up</span></b> — bridge-inspection photo annotation. Works locally on your device, nothing is uploaded.</p>
+      <p data-i18n-html="about_intro"><b style="color:var(--text)">Mark<span style="color:var(--accent)">up</span></b> — photo, map and plan markup with measurements and printable reports. Built for field work, private by design: everything stays on your device.</p>
 
       <h4 data-i18n="about_author_h">Author</h4>
       <div class="links">
@@ -1325,6 +1320,12 @@ body.hasfine .emotip{display:block}
     <h3 data-i18n="guide_title">Guide</h3>
     <div class="gbody">
       <div class="gsec">
+        <h4 data-i18n="help_g_h">Gestures</h4>
+        <div class="grow"><b data-i18n="help_g_tool_b">Tool buttons</b><span data-i18n="help_g_tool_d">Tap to use a tool. Double-tap for its main setting; hold for your recent items. An orange dot marks the buttons that have extras — it goes after three uses.</span></div>
+        <div class="grow"><b data-i18n="help_g_photo_b">On the photo</b><span data-i18n="help_g_photo_d">Tap any mark to select it and drag it, whatever tool is on. Double-tap it to change its text or value. In Select, hold it (or right-click) for colour, size, edit, duplicate and delete.</span></div>
+        <div class="grow"><b data-i18n="help_g_armed_b">Picked values</b><span data-i18n="help_g_armed_d">A value picked from a hold list is used once — by the next line, note or angle — then the dialog comes back. The toolbar shows it waiting; Clear drops it.</span></div>
+      </div>
+      <div class="gsec">
         <h4 data-i18n="help_tools_h">Tools</h4>
         <div class="grow"><b data-i18n="help_select_b">Select</b><span data-i18n="help_select_d">Tap an annotation to move, recolour, resize, or delete it. Drag its handles to reshape. Hold an annotation (or right-click it) for a menu: colour, size, edit, duplicate, delete.</span></div>
         <div class="grow"><b data-i18n="help_text_b">Text &amp; Tag</b><span data-i18n="help_text_d">Tap the photo to type a label in place. Double-tap the tool for the tags and elements list, hold it for the last five things you placed. Anything picked is placed once and then released, so the next tap types again; the props strip shows what is waiting, and Clear drops it. Tags and elements take the text style, so Fill and the ink swatch apply to them, and the recents remember the colour each was last placed in.</span></div>
@@ -1337,7 +1338,7 @@ body.hasfine .emotip{display:block}
         <div class="grow"><b data-i18n="help_angle_b">Angle</b><span data-i18n="help_angle_d">Draw one side from the corner, then the second. The measured angle is written in the arc. Hold the tool for your last five angles: pick one and the next angle takes it without the dialog.</span></div>
         <div class="grow"><b data-i18n="help_number_b">Number</b><span data-i18n="help_number_d">Drops auto-incrementing markers for a legend or defect schedule. Each prefix keeps its own count on each photo (B1, B2… P1, P2…). Double-tap the tool to step the prefix through none, A, B, P, S, J, H; hold it to pick one or reset. Type in Next to start from any number. Clear all resets the count.</span></div>
         <div class="grow"><b data-i18n="help_defect_b">Defect</b><span data-i18n="help_defect_d">Tags in a condition-state colour. Tap the tool to re-use the last defect, double-tap for the full list, hold it for your recent five. In the list, tap a tile to place at the shown CS, or hold a tile to pick a condition and favourite it.</span></div>
-        <div class="grow"><b data-i18n="help_qr_b">QR</b><span data-i18n="help_qr_d">Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are darkened just enough to scan, with a frame in the exact ink colour; Style switches to Inverted (white code on colour), which phone cameras read but some older scanner apps do not. Tap the tool to re-use the last link, double-tap it to enter a new one, hold it for your last five.</span></div>
+        <div class="grow"><b data-i18n="help_qr_b">QR</b><span data-i18n="help_qr_d">Drops a scannable code onto the photo — enter a link, then tap to place. Tap the tool to re-use the last link, double-tap it for a new one, hold it for your last five. Takes the ink colour (darkened just enough to scan) and the S/M/L size. Style: Inverted puts a white code on colour — phone cameras read it, some older scanner apps do not. White ink works the other way round.</span></div>
       </div>
       <div class="gsec">
         <h4 data-i18n="help_pick_h">Choosing defects</h4>
@@ -1349,32 +1350,41 @@ body.hasfine .emotip{display:block}
         <div class="grow"><b data-i18n="help_pickur_b">Unrated</b><span data-i18n="help_pickur_d">The sixth condition, in blue. For a defect you can see but cannot judge — no access, obscured, or wanting a second opinion. It prints as UR in the schedule and is counted in its own column rather than folded into CS1.</span></div>
       </div>
       <div class="gsec">
+        <h4 data-i18n="help_photos_h">Photos &amp; export</h4>
+        <div class="grow"><b data-i18n="help_photos_b">Photos</b><span data-i18n="help_photos_d">Thumbnails along the bottom switch between photos; keys 1–9 and 0 do the same. Everything is saved on this device automatically — nothing is uploaded.</span></div>
+        <div class="grow"><b data-i18n="help_pdet_b">Photo details</b><span data-i18n="help_pdet_d">Double-tap a thumbnail (or right-click it) to open its details: caption, location, include in the report, move left or right, remove. The date taken is read from the photo file.</span></div>
+        <div class="grow"><b data-i18n="help_strip_b">Caption and date on photos</b><span data-i18n="help_strip_d">In the same panel, On photos writes the caption and location, the date, or both onto every photo — bottom-left or top-left. They appear in exports and in the report. Off by default.</span></div>
+        <div class="grow"><b data-i18n="help_export_b">Export</b><span data-i18n="help_export_d">Export one saves the current photo at full resolution with its markup; Export all saves every photo. Pick JPG or PNG in the menu beside them, or hold either button to pick and export in one go.</span></div>
+        <div class="grow"><b data-i18n="help_paste_b">Paste</b><span data-i18n="help_paste_d">Adds an image copied to the clipboard as a new photo. Press Ctrl/Cmd+V, or use the Paste button. Phones will ask for clipboard permission the first time.</span></div>
+      </div>
+      <div class="gsec">
         <h4 data-i18n="help_options_h">Options</h4>
         <div class="grow"><b data-i18n="help_fill_b">Fill</b><span data-i18n="help_fill_d">On the text-bearing tools, toggles the solid backing behind text. Off swaps it for a crisp outline so the photo shows through while staying readable.</span></div>
+        <div class="grow"><b data-i18n="help_msize_b">Markup size</b><span data-i18n="help_msize_d">Hold S, M or L to scale all new markup between 75% and 150%. Marks already placed keep their size.</span></div>
         <div class="grow"><b data-i18n="help_colour_b">Same as ink</b><span data-i18n="help_colour_d">Setting the condition to Same as ink keeps the swatch you picked instead of forcing a condition colour, and leaves the CS cell blank in the report. Unrated, by contrast, is a condition: it prints as UR.</span></div>
         <div class="grow"><b data-i18n="help_sketch_b">Sketch</b><span data-i18n="help_sketch_d">Adds a blank landscape sheet to the album — punched like a page from a sketch pad — to draw on with the normal tools. Included in the report.</span></div>
-        <div class="grow"><b data-i18n="help_divider_b">Divider</b><span data-i18n="help_divider_d">Drops a straight rule across the photo — handy for splitting a composite shot.</span></div>
+        <div class="grow"><b data-i18n="help_divider_b">Divider</b><span data-i18n="help_divider_d">Adds a folder card to the album to separate structures or visits. Titled, coloured, and left out of the report by default.</span></div>
         <div class="grow"><b data-i18n="help_clearall_b">Clear all</b><span data-i18n="help_clearall_d">Removes every annotation on the current photo only. Undoable.</span></div>
         <div class="grow"><b data-i18n="help_startover_b">Start over</b><span data-i18n="help_startover_d">Wipes all photos and annotations and returns to a blank session.</span></div>
       </div>
       <div class="gsec">
         <h4 data-i18n="help_report_h">Report</h4>
-        <div class="grow"><b data-i18n="help_rep_rows_b">What fills the table</b><span data-i18n="help_rep_rows_d">Every defect placed from the Defects tab becomes one row. Tags, elements, measurements, notes and number badges near it fill that row's columns. Freehand marks and dividers stay decoration. Rows can also be typed by hand for things observed but not photographed.</span></div>
+        <div class="grow"><b data-i18n="help_rep_rows_b">What fills the table</b><span data-i18n="help_rep_rows_d">Every defect placed from the Defects tab becomes one row, numbered 1, 2, 3… in report order. Tags, elements, measurements and notes near it fill that row's columns. Number badges, freehand marks and dividers stay decoration. Rows can also be typed by hand for things observed but not photographed.</span></div>
         <div class="grow"><b data-i18n="help_rep_edit_b">Review before printing</b><span data-i18n="help_rep_edit_d">Fill in the header, caption each photo, then correct any cell by typing in it. Untick a row or a photo to leave it out. Edits are remembered; Reset edits rebuilds the table from the photos.</span></div>
-        <div class="grow"><b data-i18n="help_rep_print_b">Print / PDF</b><span data-i18n="help_rep_print_d">Builds a cover page, photo sheets and a defect schedule, then opens the print dialog — choose "Save as PDF". Photos are reduced for printing; the normal export is untouched.</span></div>
+        <div class="grow"><b data-i18n="help_rep_setup_b">Report setup</b><span data-i18n="help_rep_setup_d">The sliders button in the Report header: rename or hide header fields and columns, rename the condition scale, switch sections on or off — including narrow page margins — and save it all as a preset. Presets export and import as a file, so a whole team can share one.</span></div>
+        <div class="grow"><b data-i18n="help_rep_csv_b">CSV</b><span data-i18n="help_rep_csv_d">Saves the findings table as a file for Excel or Sheets, with the same rows and item numbers as the PDF.</span></div>
+        <div class="grow"><b data-i18n="help_rep_print_b">Print / PDF</b><span data-i18n="help_rep_print_d">Builds a cover page, photo sheets and a defect schedule, then opens the print dialog — choose “Save as PDF” and leave the margins on Default. Photos are reduced for printing; the normal export is untouched.</span></div>
       </div>
       <div class="gsec">
         <h4 data-i18n="help_around_h">Getting around</h4>
-        <div class="grow"><b data-i18n="help_zoom_b">Zoom &amp; pan</b><span data-i18n="help_zoom_d">Pinch or scroll to zoom; drag with two fingers, or use the +, fit, − buttons. Fit re-centres the photo. Double-tap fit to zoom to full size at the centre. Hold Export one or Export all to choose JPG or PNG and export.</span></div>
-        <div class="grow"><b data-i18n="help_paste_b">Paste</b><span data-i18n="help_paste_d">Adds an image copied to the clipboard as a new photo. Press Ctrl/Cmd+V, or use the Paste button. Phones will ask for clipboard permission the first time.</span></div>
-        <div class="grow"><b data-i18n="help_photos_b">Photos</b><span data-i18n="help_photos_d">Thumbnails along the bottom switch between loaded photos. Everything is saved on this device automatically — nothing is uploaded. Double-tap a thumbnail (or right-click it) for its details: caption, location, include in report, move left/right, remove. The same panel can show the caption and the date taken on all photos.</span></div>
+        <div class="grow"><b data-i18n="help_zoom_b">Zoom &amp; pan</b><span data-i18n="help_zoom_d">Pinch or scroll to zoom; drag with two fingers, or use the +, fit, − buttons. Fit re-centres the photo; double-tap it to zoom to full size at the centre.</span></div>
       </div>
       <div class="gsec">
         <h4 data-i18n="help_keys_h">Keyboard shortcuts</h4>
         <div class="gkeys">
           <span><kbd>S</kbd> <span data-i18n="help_k_select">Select</span></span><span><kbd>T</kbd> <span data-i18n="help_k_text">Text</span></span><span><kbd>D</kbd> <span data-i18n="help_k_draw">Draw</span></span>
           <span><kbd>L</kbd> <span data-i18n="help_k_length">Length</span></span><span><kbd>M</kbd> <span data-i18n="help_k_measure">Measure</span></span><span><kbd>N</kbd> <span data-i18n="help_k_note">Note</span></span><span><kbd>P</kbd> <span data-i18n="help_k_polygon">Polygon</span></span>
-          <span><kbd>G</kbd> <span data-i18n="help_k_angle">Angle</span></span><span><kbd>#</kbd> <span data-i18n="help_k_number">Number</span></span><span><kbd>F</kbd> <span data-i18n="help_k_defect">Defect</span></span>
+          <span><kbd>G</kbd> <span data-i18n="help_k_angle">Angle</span></span><span><kbd>#</kbd> <span data-i18n="help_k_number">Number</span></span><span><kbd>F</kbd> <span data-i18n="help_k_defect">Defect</span></span><span><kbd>Q</kbd> <span data-i18n="help_k_qr">QR</span></span>
           <span><kbd>1</kbd>–<kbd>9</kbd>, <kbd>0</kbd> <span data-i18n="help_k_photo">Photo 1–10</span></span>
           <span><kbd>Del</kbd> <span data-i18n="help_k_delete">Delete selected</span></span><span><kbd>Ctrl</kbd>+<kbd>Z</kbd> <span data-i18n="help_k_undo">Undo</span></span>
           <span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> <span data-i18n="help_k_redo">Redo</span></span><span><kbd>Esc</kbd> <span data-i18n="help_k_esc">Deselect / cancel</span></span>
@@ -1444,7 +1454,6 @@ const I18N={
     "rep_no_photos":"Load a photo first.",
     "col_item":"Item",
     "col_photo":"Photo",
-    "rep_exp":"Experimental",
     "col_element":"Element",
     "col_defect":"Defect",
     "col_cs":"Condition state",
@@ -1511,11 +1520,11 @@ const I18N={
     "rep_photo_n":"Photo {n}",
     "help_report_h":"Report",
     "help_rep_rows_b":"What fills the table",
-    "help_rep_rows_d":"Every defect placed from the Defects tab becomes one row. Tags, elements, measurements, notes and number badges near it fill that row's columns. Freehand marks and dividers stay decoration. Rows can also be typed by hand for things observed but not photographed.",
+    "help_rep_rows_d":"Every defect placed from the Defects tab becomes one row, numbered 1, 2, 3… in report order. Tags, elements, measurements and notes near it fill that row's columns. Number badges, freehand marks and dividers stay decoration. Rows can also be typed by hand for things observed but not photographed.",
     "help_rep_edit_b":"Review before printing",
     "help_rep_edit_d":"Fill in the header, caption each photo, then correct any cell by typing in it. Untick a row or a photo to leave it out. Edits are remembered; Reset edits rebuilds the table from the photos.",
     "help_rep_print_b":"Print / PDF",
-    "help_rep_print_d":"Builds a cover page, photo sheets and a defect schedule, then opens the print dialog — choose \"Save as PDF\". Photos are reduced for printing; the normal export is untouched.",
+    "help_rep_print_d":"Builds a cover page, photo sheets and a defect schedule, then opens the print dialog — choose “Save as PDF” and leave the margins on Default. Photos are reduced for printing; the normal export is untouched.",
     "rep_doc_title":"Inspection report",
     "rep_summary":"Summary",
     "rep_total":"Findings",
@@ -1528,7 +1537,6 @@ const I18N={
     "rep_print_hint":"In the print dialog choose “Save as PDF”. Turn off headers and footers for a cleaner page.",
     "undo_title":"Undo",
     "redo_title":"Redo",
-    "photo_btn":"Photo",
     "export_one":"Export one",
     "export_all":"Export all",
     "guide_title":"Guide",
@@ -1608,7 +1616,7 @@ const I18N={
     "toast_pasted":"Pasted",
     "ctx_label_qr":"Link",
     "help_qr_b":"QR",
-    "help_qr_d":"Drops a scannable code onto the photo — enter a link, then tap to place. Uses the current ink colour and the S/M/L size. Double-tap to change the link. Pale colours are darkened just enough to scan, with a frame in the exact ink colour; Style switches to Inverted (white code on colour), which phone cameras read but some older scanner apps do not. Tap the tool to re-use the last link, double-tap it to enter a new one, hold it for your last five.",
+    "help_qr_d":"Drops a scannable code onto the photo — enter a link, then tap to place. Tap the tool to re-use the last link, double-tap it for a new one, hold it for your last five. Takes the ink colour (darkened just enough to scan) and the S/M/L size. Style: Inverted puts a white code on colour — phone cameras read it, some older scanner apps do not. White ink works the other way round.",
     "help_pick_h":"Choosing defects",
     "help_picktool_b":"The tool button",
     "help_picktool_d":"Tap it to re-arm the last defect and place straight away. Double-tap to open the list. Hold it for the five most recent, each at the condition you used it at.",
@@ -1639,7 +1647,7 @@ const I18N={
     "remove":"Remove",
     "toast_removed":"Removed {term}",
     "about_report_h":"Report a bug",
-    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — bridge-inspection photo annotation. Works locally on your device, nothing is uploaded.",
+    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — photo, map and plan markup with measurements and printable reports. Built for field work, private by design: everything stays on your device.",
     "about_licence":"Released under <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a>. Free to use, share, and adapt, as long as credit is given to the author.",
     "about_support":"The tool is free. If it saves you time, a contribution keeps it maintained.",
     "save":"Save",
@@ -1659,7 +1667,6 @@ const I18N={
     "favourite":"Favourite",
     "tab_tags":"Tags",
     "tab_elements":"Elements",
-    "uses_current_ink":"Uses current ink colour",
     "no_matching_elements":"No matching elements.",
     "name_repeated_elements":"Name repeated elements once — e.g. \"Beam B3\" — then tap to label them identically in every photo.",
     "no_matches_custom":"No matches. Tap Add to keep what you typed.",
@@ -1668,7 +1675,6 @@ const I18N={
     "new_divider_body":"A titled folder card added to your album to separate structures. Exports with the rest; left out of the report by default.",
     "structure_site_placeholder":"Structure / site name",
     "date_id_inspector_placeholder":"Date · ID · inspector (optional)",
-    "background_label":"Background",
     "folder_label":"Folder",
     "add_to_album":"Add to album",
     "dimension_title":"Dimension",
@@ -1676,7 +1682,6 @@ const I18N={
     "number_title":"Number",
     "length_measured_title":"Length (measured)",
     "area_measured_title":"Area (measured)",
-    "are_you_sure":"Are you sure?",
     "confirm_btn":"Confirm",
     "remove_photo_title":"Remove photo?",
     "remove_photo_body":"\"{name}\" and its markup will be removed from the session.",
@@ -1785,9 +1790,9 @@ const I18N={
     "help_startover_d":"Wipes all photos and annotations and returns to a blank session.",
     "help_around_h":"Getting around",
     "help_zoom_b":"Zoom & pan",
-    "help_zoom_d":"Pinch or scroll to zoom; drag with two fingers, or use the +, fit, − buttons. Fit re-centres the photo. Double-tap fit to zoom to full size at the centre. Hold Export one or Export all to choose JPG or PNG and export.",
+    "help_zoom_d":"Pinch or scroll to zoom; drag with two fingers, or use the +, fit, − buttons. Fit re-centres the photo; double-tap it to zoom to full size at the centre.",
     "help_photos_b":"Photos",
-    "help_photos_d":"Thumbnails along the bottom switch between loaded photos. Everything is saved on this device automatically — nothing is uploaded. Double-tap a thumbnail (or right-click it) for its details: caption, location, include in report, move left/right, remove. The same panel can show the caption and the date taken on all photos.",
+    "help_photos_d":"Thumbnails along the bottom switch between photos; keys 1–9 and 0 do the same. Everything is saved on this device automatically — nothing is uploaded.",
     "help_keys_h":"Keyboard shortcuts",
     "help_k_select":"Select",
     "help_k_text":"Text",
@@ -1804,6 +1809,27 @@ const I18N={
     "help_k_undo":"Undo",
     "help_k_redo":"Redo",
     "help_k_esc":"Deselect / cancel",
+    "help_g_h":"Gestures",
+    "help_g_tool_b":"Tool buttons",
+    "help_g_tool_d":"Tap to use a tool. Double-tap for its main setting; hold for your recent items. An orange dot marks the buttons that have extras — it goes after three uses.",
+    "help_g_photo_b":"On the photo",
+    "help_g_photo_d":"Tap any mark to select it and drag it, whatever tool is on. Double-tap it to change its text or value. In Select, hold it (or right-click) for colour, size, edit, duplicate and delete.",
+    "help_g_armed_b":"Picked values",
+    "help_g_armed_d":"A value picked from a hold list is used once — by the next line, note or angle — then the dialog comes back. The toolbar shows it waiting; Clear drops it.",
+    "help_photos_h":"Photos & export",
+    "help_pdet_b":"Photo details",
+    "help_pdet_d":"Double-tap a thumbnail (or right-click it) to open its details: caption, location, include in the report, move left or right, remove. The date taken is read from the photo file.",
+    "help_strip_b":"Caption and date on photos",
+    "help_strip_d":"In the same panel, On photos writes the caption and location, the date, or both onto every photo — bottom-left or top-left. They appear in exports and in the report. Off by default.",
+    "help_export_b":"Export",
+    "help_export_d":"Export one saves the current photo at full resolution with its markup; Export all saves every photo. Pick JPG or PNG in the menu beside them, or hold either button to pick and export in one go.",
+    "help_msize_b":"Markup size",
+    "help_msize_d":"Hold S, M or L to scale all new markup between 75% and 150%. Marks already placed keep their size.",
+    "help_rep_setup_b":"Report setup",
+    "help_rep_setup_d":"The sliders button in the Report header: rename or hide header fields and columns, rename the condition scale, switch sections on or off — including narrow page margins — and save it all as a preset. Presets export and import as a file, so a whole team can share one.",
+    "help_rep_csv_b":"CSV",
+    "help_rep_csv_d":"Saves the findings table as a file for Excel or Sheets, with the same rows and item numbers as the PDF.",
+    "help_k_qr":"QR",
     "value_ph_dim":"e.g. 0.35",
     "value_ph_angle":"e.g. 45",
     "value_ph_number":"e.g. B3",
@@ -1831,13 +1857,15 @@ const I18N={
     "ctx_label_angle":"Angle",
     "ctx_label_number":"Number",
     "ctx_label_unit":"Unit",
-    "scale_colon":"Scale: {value} px/mm"
+    "scale_colon":"Scale: {value} px/mm",
+    "toast_save_failed":"Not saved on this device — storage may be full. Export your work.",
+    "toast_restore_skip":"Photos not opened: {n} — kept for next time",
+    "toast_export_skip":"Photos not exported: {n}"
   },
   zh:{
     "rep_add_row":"添加行",
     "report_title":"报告",
     "report_btn":"报告",
-    "rep_exp":"实验性",
     "rep_print":"打印 / PDF",
     "rep_reset":"重置修改",
     "rep_header":"报告抬头",
@@ -1949,14 +1977,13 @@ const I18N={
     "rep_print_hint":"在打印对话框中选择“另存为 PDF”。关闭页眉页脚可获得更整洁的版面。",
     "help_report_h":"报告",
     "help_rep_rows_b":"表格如何填充",
-    "help_rep_rows_d":"从“缺陷”选项卡放置的每个缺陷生成一行。其附近的标签、部位、测量、注释和编号徽章会填入该行各列。徒手标记和分隔线仅作标注，不入表。未拍照的观察项也可手动添加为行。",
+    "help_rep_rows_d":"从“缺陷”选项卡放置的每个缺陷生成一行，按报告顺序编号 1、2、3…。其附近的标签、部位、测量和注释会填入该行各列。编号徽章、徒手标记和分隔线仅作标注，不入表。未拍照的观察项也可手动添加为行。",
     "help_rep_edit_b":"打印前复核",
     "help_rep_edit_d":"填写抬头，为每张照片添加图注，然后直接在单元格中输入以修改。取消勾选可排除某行或某张照片。修改会被保存；“重置修改”将根据照片重新生成表格。",
     "help_rep_print_b":"打印 / PDF",
-    "help_rep_print_d":"生成封面、照片页和缺陷清单，然后打开打印对话框 — 选择“另存为 PDF”。打印用照片会压缩；常规导出不受影响。",
+    "help_rep_print_d":"生成封面、照片页和缺陷清单，然后打开打印对话框——选择“另存为 PDF”，页边距保持“默认”。照片会为打印而缩小；普通导出不受影响。",
     "undo_title":"撤销",
     "redo_title":"重做",
-    "photo_btn":"照片",
     "export_one":"导出一张",
     "export_all":"导出全部",
     "guide_title":"指南",
@@ -2032,7 +2059,7 @@ const I18N={
     "toast_pasted":"已粘贴",
     "ctx_label_qr":"链接",
     "help_qr_b":"二维码",
-    "help_qr_d":"在照片上放置可扫描的二维码——输入链接后点击放置。使用当前墨水颜色和 S/M/L 尺寸。双击可更改链接。浅色会自动加深到可扫描的程度，并加上原墨水颜色的边框；“样式”可切换为反色（彩色底白码），手机相机可识别，但部分旧扫码应用无法识别。点击工具可重用上一个链接，双击可输入新链接，长按可选最近五个。",
+    "help_qr_d":"在照片上放置可扫描的二维码——输入链接后点击放置。点击工具可重用上一个链接，双击可输入新链接，长按可选最近五个。使用当前墨水颜色（仅加深到可扫描的程度）和 S/M/L 尺寸。“样式：反色”在彩色底上显示白色二维码——手机相机可识别，但部分旧扫码应用无法识别。白色墨水则正好相反。",
     "help_pick_h":"选择缺陷",
     "help_picktool_b":"工具按钮",
     "help_picktool_d":"轻点即可重新装载上一个缺陷并立即标注。双击打开列表。长按显示最近五个，各自保留上次使用的状态等级。",
@@ -2067,7 +2094,7 @@ const I18N={
     "about_licence_h":"许可",
     "about_report_h":"报告问题",
     "about_support_h":"支持本工具",
-    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — 桥梁检测照片标注。完全在您的设备上本地运行，不会上传任何内容。",
+    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — 照片、地图和图纸标注，带测量与可打印报告。为现场工作而设计，隐私优先：所有内容都保存在你的设备上。",
     "about_licence":"依据 <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a> 发布。可自由使用、分享和修改，只需注明作者。",
     "about_support":"本工具免费。如果它为您节省了时间，您的捐助将帮助其持续维护。",
     "save":"保存",
@@ -2087,7 +2114,6 @@ const I18N={
     "favourite":"收藏",
     "tab_tags":"标签",
     "tab_elements":"部位",
-    "uses_current_ink":"使用当前颜色",
     "no_matching_elements":"没有匹配的部位。",
     "name_repeated_elements":"为重复出现的部位命名一次——例如\"梁 B3\"——之后点击即可在每张照片中使用相同标签。",
     "no_matches_custom":"没有匹配项。点按“添加”即可保留您输入的内容。",
@@ -2096,7 +2122,6 @@ const I18N={
     "new_divider_body":"在相册中添加一张带标题的文件夹卡片，用于区分不同结构。随其他照片一起导出，默认不计入报告。",
     "structure_site_placeholder":"结构/场地名称",
     "date_id_inspector_placeholder":"日期·编号·检查员（可选）",
-    "background_label":"背景",
     "folder_label":"文件夹",
     "add_to_album":"添加到相册",
     "dimension_title":"尺寸",
@@ -2104,7 +2129,6 @@ const I18N={
     "number_title":"编号",
     "length_measured_title":"长度（测量值）",
     "area_measured_title":"面积（测量值）",
-    "are_you_sure":"确定吗？",
     "confirm_btn":"确认",
     "remove_photo_title":"移除照片？",
     "remove_photo_body":"\"{name}\"及其标注将从本次会话中移除。",
@@ -2213,9 +2237,9 @@ const I18N={
     "help_startover_d":"清除所有照片和标注，回到空白会话。",
     "help_around_h":"操作导览",
     "help_zoom_b":"缩放与平移",
-    "help_zoom_d":"捏合或滚动可缩放；双指拖动可平移，或使用+、适应、−按钮。\"适应\"会重新居中照片。双击“适应窗口”按钮可在中心放大到原始尺寸。长按“导出一张”或“导出全部”可选择 JPG 或 PNG 并导出。",
+    "help_zoom_d":"双指捏合或滚动缩放；双指拖动，或使用 +、适应窗口、− 按钮。“适应窗口”会重新居中照片；双击它可在中心放大到原始尺寸。",
     "help_photos_b":"照片",
-    "help_photos_d":"底部的缩略图可在已加载的照片之间切换。所有内容都会自动保存在本设备上——不会上传任何内容。双击缩略图（或右键单击）可查看详情：图注、位置、是否纳入报告、左移/右移、删除。同一面板还可在所有照片上显示图注和拍摄日期。",
+    "help_photos_d":"底部的缩略图用于切换照片；按键 1–9 和 0 也可以。所有内容都会自动保存在此设备上——不会上传任何内容。",
     "help_keys_h":"键盘快捷键",
     "help_k_select":"选择",
     "help_k_text":"文字",
@@ -2232,6 +2256,27 @@ const I18N={
     "help_k_undo":"撤销",
     "help_k_redo":"重做",
     "help_k_esc":"取消选择/取消",
+    "help_g_h":"手势",
+    "help_g_tool_b":"工具按钮",
+    "help_g_tool_d":"点击使用工具。双击打开其主要设置；长按显示最近使用的项目。橙色圆点标出带有额外功能的按钮，使用三次后消失。",
+    "help_g_photo_b":"在照片上",
+    "help_g_photo_d":"无论当前是什么工具，点击任一标注即可选中并拖动。双击可修改其文字或数值。在“选择”工具中长按（或右键单击）可打开菜单：颜色、大小、编辑、复制、删除。",
+    "help_g_armed_b":"预选的数值",
+    "help_g_armed_d":"从长按列表中选取的数值只使用一次——用于下一条线、注释或角度——之后对话框会再次出现。工具栏会显示待用的数值；“清除”可取消。",
+    "help_photos_h":"照片与导出",
+    "help_pdet_b":"照片详情",
+    "help_pdet_d":"双击缩略图（或右键单击）打开详情：图注、位置、是否纳入报告、左移或右移、删除。拍摄日期从照片文件中读取。",
+    "help_strip_b":"照片上的图注和日期",
+    "help_strip_d":"在同一面板中，“显示在照片上”可将图注和位置、日期或两者写在每张照片上——左下或左上。它们会出现在导出图片和报告中。默认关闭。",
+    "help_export_b":"导出",
+    "help_export_d":"“导出一张”以全分辨率保存当前照片及其标注；“导出全部”保存所有照片。在旁边的菜单中选择 JPG 或 PNG，或长按任一按钮一次完成选择和导出。",
+    "help_msize_b":"标注大小",
+    "help_msize_d":"长按 S、M 或 L 可将所有新标注缩放到 75% 至 150%。已放置的标注保持原大小。",
+    "help_rep_setup_b":"报告设置",
+    "help_rep_setup_d":"报告标题栏中的滑块按钮：重命名或隐藏表头字段和列，重命名状况等级，开关各个部分（包括窄页边距），并将全部设置保存为预设。预设可导出和导入为文件，整个团队可以共用。",
+    "help_rep_csv_b":"CSV",
+    "help_rep_csv_d":"将结果表保存为可用 Excel 或 Sheets 打开的文件，行和编号与 PDF 相同。",
+    "help_k_qr":"二维码",
     "value_ph_dim":"例如：0.35",
     "value_ph_angle":"例如：45",
     "value_ph_number":"例如：B3",
@@ -2259,13 +2304,15 @@ const I18N={
     "ctx_label_angle":"角度",
     "ctx_label_number":"编号",
     "ctx_label_unit":"单位",
-    "scale_colon":"比例：{value} 像素/毫米"
+    "scale_colon":"比例：{value} 像素/毫米",
+    "toast_save_failed":"未能保存到本设备——存储空间可能已满。请导出你的工作。",
+    "toast_restore_skip":"未能打开的照片：{n} —— 已保留，下次再试",
+    "toast_export_skip":"未导出的照片：{n}"
   },
   es:{
     "rep_add_row":"Añadir fila",
     "report_title":"Informe",
     "report_btn":"Informe",
-    "rep_exp":"Experimental",
     "rep_print":"Imprimir / PDF",
     "rep_reset":"Restablecer ediciones",
     "rep_header":"Encabezado del informe",
@@ -2377,14 +2424,13 @@ const I18N={
     "rep_print_hint":"En el diálogo de impresión elija «Guardar como PDF». Desactive encabezados y pies de página para una hoja más limpia.",
     "help_report_h":"Informe",
     "help_rep_rows_b":"Qué llena la tabla",
-    "help_rep_rows_d":"Cada defecto colocado desde la pestaña Defectos genera una fila. Las etiquetas, elementos, mediciones, notas y números cercanos llenan las columnas de esa fila. Los trazos a mano alzada y los divisores quedan como decoración. También se pueden escribir filas a mano para lo observado sin foto.",
+    "help_rep_rows_d":"Cada defecto colocado desde la pestaña Defectos genera una fila, numerada 1, 2, 3… en el orden del informe. Las etiquetas, elementos, mediciones y notas cercanos llenan las columnas de esa fila. Los números, los trazos a mano alzada y los divisores quedan como decoración. También se pueden escribir filas a mano para lo observado sin foto.",
     "help_rep_edit_b":"Revisar antes de imprimir",
     "help_rep_edit_d":"Complete el encabezado, ponga un pie a cada foto y corrija cualquier celda escribiendo en ella. Desmarque una fila o una foto para excluirla. Las ediciones se recuerdan; «Restablecer ediciones» reconstruye la tabla a partir de las fotos.",
     "help_rep_print_b":"Imprimir / PDF",
-    "help_rep_print_d":"Crea una portada, fichas de fotos y un listado de defectos, y abre el diálogo de impresión: elija «Guardar como PDF». Las fotos se reducen para imprimir; la exportación normal no cambia.",
+    "help_rep_print_d":"Crea una portada, fichas de fotos y un listado de defectos, y abre el diálogo de impresión: elija «Guardar como PDF» y deje los márgenes en Predeterminado. Las fotos se reducen para imprimir; la exportación normal no cambia.",
     "undo_title":"Deshacer",
     "redo_title":"Rehacer",
-    "photo_btn":"Foto",
     "export_one":"Exportar una",
     "export_all":"Exportar todo",
     "guide_title":"Guía",
@@ -2460,7 +2506,7 @@ const I18N={
     "toast_pasted":"Pegado",
     "ctx_label_qr":"Enlace",
     "help_qr_b":"QR",
-    "help_qr_d":"Coloca un código escaneable sobre la foto: introduce un enlace y luego toca para situarlo. Usa el color de tinta actual y el tamaño S/M/L. Toca dos veces para cambiar el enlace. Los colores claros se oscurecen lo justo para escanearse, con un marco en el color exacto de la tinta; Estilo cambia a invertido (código blanco sobre color), que leen las cámaras de los teléfonos pero no algunas apps de escaneo antiguas. Toque la herramienta para reutilizar el último enlace, tóquela dos veces para introducir uno nuevo, manténgala pulsada para los cinco últimos.",
+    "help_qr_d":"Coloca un código escaneable sobre la foto: introduzca un enlace y toque para situarlo. Toque la herramienta para reutilizar el último enlace, tóquela dos veces para uno nuevo, manténgala pulsada para los cinco últimos. Usa el color de tinta (oscurecido lo justo para escanearse) y el tamaño S/M/L. Estilo: invertido pone un código blanco sobre color: lo leen las cámaras de los teléfonos, no algunas apps de escaneo antiguas. Con tinta blanca funciona al revés.",
     "help_pick_h":"Elegir defectos",
     "help_picktool_b":"El botón de la herramienta",
     "help_picktool_d":"Tóquelo para recuperar el último defecto y colocarlo de inmediato. Toque dos veces para abrir la lista. Manténgalo pulsado para ver los cinco más recientes, cada uno con el estado con el que lo usó.",
@@ -2495,7 +2541,7 @@ const I18N={
     "about_licence_h":"Licencia",
     "about_report_h":"Informar de un error",
     "about_support_h":"Apoya esta herramienta",
-    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — anotación de fotos de inspección de puentes. Funciona localmente en tu dispositivo; no se sube nada.",
+    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — marcado de fotos, mapas y planos con mediciones e informes imprimibles. Pensado para el trabajo de campo y privado por diseño: todo se queda en su dispositivo.",
     "about_licence":"Publicado bajo <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a>. Libre de usar, compartir y adaptar, siempre que se cite al autor.",
     "about_support":"La herramienta es gratuita. Si te ahorra tiempo, una contribución ayuda a mantenerla.",
     "save":"Guardar",
@@ -2506,7 +2552,7 @@ const I18N={
     "search_placeholder":"Buscar términos…",
     
     "cs_title":"Condición",
-    "mat_favs":"Favs",
+    "mat_favs":"Favoritos",
     "no_favs_yet":"Mantenga pulsado un mosaico para marcarlo como favorito.",
     "mat_all":"Todos",
     "pick_more":"Todos los defectos…",
@@ -2515,7 +2561,6 @@ const I18N={
     "favourite":"Favorito",
     "tab_tags":"Etiquetas",
     "tab_elements":"Elementos",
-    "uses_current_ink":"Usa el color de tinta actual",
     "no_matching_elements":"No hay elementos coincidentes.",
     "name_repeated_elements":"Nombre los elementos repetidos una vez — p. ej. \"Viga B3\" — luego toque para etiquetarlos igual en cada foto.",
     "no_matches_custom":"Sin coincidencias. Pulse Añadir para conservar lo que escribió.",
@@ -2524,7 +2569,6 @@ const I18N={
     "new_divider_body":"Se añade a su álbum una tarjeta de carpeta con título para separar estructuras. Se exporta con el resto y se excluye del informe por defecto.",
     "structure_site_placeholder":"Nombre de la estructura / sitio",
     "date_id_inspector_placeholder":"Fecha · ID · inspector (opcional)",
-    "background_label":"Fondo",
     "folder_label":"Carpeta",
     "add_to_album":"Añadir al álbum",
     "dimension_title":"Dimensión",
@@ -2532,7 +2576,6 @@ const I18N={
     "number_title":"Número",
     "length_measured_title":"Longitud (medida)",
     "area_measured_title":"Área (medida)",
-    "are_you_sure":"¿Está seguro?",
     "confirm_btn":"Confirmar",
     "remove_photo_title":"¿Quitar foto?",
     "remove_photo_body":"\"{name}\" y sus marcas se eliminarán de la sesión.",
@@ -2641,9 +2684,9 @@ const I18N={
     "help_startover_d":"Borra todas las fotos y anotaciones y vuelve a una sesión en blanco.",
     "help_around_h":"Navegación",
     "help_zoom_b":"Zoom y desplazamiento",
-    "help_zoom_d":"Pellizque o desplace para hacer zoom; arrastre con dos dedos, o use los botones +, ajustar, −. Ajustar vuelve a centrar la foto. Toque dos veces Ajustar para ampliar a tamaño real en el centro. Mantenga pulsado Exportar una o Exportar todo para elegir JPG o PNG y exportar.",
+    "help_zoom_d":"Pellizque o use la rueda para ampliar; arrastre con dos dedos o use los botones +, Ajustar, −. Ajustar vuelve a centrar la foto; tóquelo dos veces para ampliar a tamaño real en el centro.",
     "help_photos_b":"Fotos",
-    "help_photos_d":"Las miniaturas en la parte inferior cambian entre las fotos cargadas. Todo se guarda automáticamente en este dispositivo; nada se sube. Toque dos veces una miniatura (o haga clic derecho) para ver sus datos: pie de foto, ubicación, incluir en el informe, mover a izquierda/derecha, quitar. El mismo panel puede mostrar el pie de foto y la fecha de toma en todas las fotos.",
+    "help_photos_d":"Las miniaturas de abajo cambian de foto; las teclas 1–9 y 0 también. Todo se guarda automáticamente en este dispositivo; no se sube nada.",
     "help_keys_h":"Atajos de teclado",
     "help_k_select":"Seleccionar",
     "help_k_text":"Texto",
@@ -2660,6 +2703,27 @@ const I18N={
     "help_k_undo":"Deshacer",
     "help_k_redo":"Rehacer",
     "help_k_esc":"Deseleccionar / cancelar",
+    "help_g_h":"Gestos",
+    "help_g_tool_b":"Botones de herramienta",
+    "help_g_tool_d":"Toque para usar una herramienta. Toque dos veces para su ajuste principal; manténgala pulsada para sus elementos recientes. Un punto naranja marca los botones con extras y desaparece tras tres usos.",
+    "help_g_photo_b":"En la foto",
+    "help_g_photo_d":"Toque cualquier marca para seleccionarla y arrastrarla, sea cual sea la herramienta activa. Tóquela dos veces para cambiar su texto o valor. En Seleccionar, manténgala pulsada (o haga clic derecho) para color, tamaño, editar, duplicar y eliminar.",
+    "help_g_armed_b":"Valores elegidos",
+    "help_g_armed_d":"Un valor elegido de una lista de pulsación larga se usa una vez —en la siguiente línea, nota o ángulo— y luego vuelve el diálogo. La barra lo muestra en espera; Borrar lo descarta.",
+    "help_photos_h":"Fotos y exportación",
+    "help_pdet_b":"Datos de la foto",
+    "help_pdet_d":"Toque dos veces una miniatura (o haga clic derecho) para abrir sus datos: pie de foto, ubicación, incluir en el informe, mover a izquierda o derecha, quitar. La fecha de toma se lee del archivo de la foto.",
+    "help_strip_b":"Pie y fecha en las fotos",
+    "help_strip_d":"En el mismo panel, En las fotos escribe el pie de foto y la ubicación, la fecha o ambos en todas las fotos, abajo o arriba a la izquierda. Aparecen en las exportaciones y en el informe. Desactivado por defecto.",
+    "help_export_b":"Exportar",
+    "help_export_d":"Exportar una guarda la foto actual a resolución completa con sus marcas; Exportar todo guarda todas las fotos. Elija JPG o PNG en el menú junto a ellos, o mantenga pulsado cualquiera de los dos botones para elegir y exportar de una vez.",
+    "help_msize_b":"Tamaño de marcas",
+    "help_msize_d":"Mantenga pulsado S, M o L para escalar todas las marcas nuevas entre el 75 % y el 150 %. Las marcas ya colocadas conservan su tamaño.",
+    "help_rep_setup_b":"Configuración del informe",
+    "help_rep_setup_d":"El botón de controles deslizantes en la cabecera del Informe: renombre u oculte campos y columnas, renombre la escala de estado, active o desactive secciones —incluidos los márgenes estrechos— y guárdelo todo como un preajuste. Los preajustes se exportan e importan como archivo, para que todo un equipo comparta uno.",
+    "help_rep_csv_b":"CSV",
+    "help_rep_csv_d":"Guarda la tabla de hallazgos como archivo para Excel o Sheets, con las mismas filas y números que el PDF.",
+    "help_k_qr":"QR",
     "value_ph_dim":"p. ej. 0.35",
     "value_ph_angle":"p. ej. 45",
     "value_ph_number":"p. ej. B3",
@@ -2687,13 +2751,15 @@ const I18N={
     "ctx_label_angle":"Ángulo",
     "ctx_label_number":"Número",
     "ctx_label_unit":"Unidad",
-    "scale_colon":"Escala: {value} px/mm"
+    "scale_colon":"Escala: {value} px/mm",
+    "toast_save_failed":"No se guardó en este dispositivo: puede que el almacenamiento esté lleno. Exporte su trabajo.",
+    "toast_restore_skip":"Fotos no abiertas: {n}; se conservan para la próxima vez",
+    "toast_export_skip":"Fotos no exportadas: {n}"
   },
   hi:{
     "rep_add_row":"पंक्ति जोड़ें",
     "report_title":"रिपोर्ट",
     "report_btn":"रिपोर्ट",
-    "rep_exp":"प्रायोगिक",
     "rep_print":"प्रिंट / PDF",
     "rep_reset":"बदलाव रीसेट करें",
     "rep_header":"रिपोर्ट शीर्षक",
@@ -2805,14 +2871,13 @@ const I18N={
     "rep_print_hint":"प्रिंट डायलॉग में “Save as PDF” चुनें। साफ़ पृष्ठ के लिए हेडर और फ़ुटर बंद करें।",
     "help_report_h":"रिपोर्ट",
     "help_rep_rows_b":"तालिका कैसे भरती है",
-    "help_rep_rows_d":"दोष टैब से रखा गया हर दोष एक पंक्ति बनाता है। उसके पास मौजूद टैग, तत्व, माप, नोट और नंबर बैज उस पंक्ति के कॉलम भरते हैं। फ़्रीहैंड निशान और डिवाइडर केवल चिह्न रहते हैं। बिना फ़ोटो के देखी गई बातों के लिए पंक्तियाँ हाथ से भी जोड़ी जा सकती हैं।",
+    "help_rep_rows_d":"दोष टैब से रखा गया हर दोष एक पंक्ति बनाता है, जिसे रिपोर्ट के क्रम में 1, 2, 3… क्रमांक मिलता है। उसके पास मौजूद टैग, तत्व, माप और नोट उस पंक्ति के कॉलम भरते हैं। नंबर बैज, फ़्रीहैंड निशान और डिवाइडर केवल चिह्न रहते हैं। बिना फ़ोटो के देखी गई बातों के लिए पंक्तियाँ हाथ से भी जोड़ी जा सकती हैं।",
     "help_rep_edit_b":"प्रिंट से पहले समीक्षा",
     "help_rep_edit_d":"शीर्षक भरें, हर फ़ोटो को कैप्शन दें, फिर किसी भी सेल में टाइप करके सुधार करें। किसी पंक्ति या फ़ोटो को छोड़ने के लिए टिक हटाएँ। बदलाव याद रहते हैं; “बदलाव रीसेट करें” तालिका को फ़ोटो से दोबारा बनाता है।",
     "help_rep_print_b":"प्रिंट / PDF",
-    "help_rep_print_d":"कवर पेज, फ़ोटो शीट और दोष सूची बनाकर प्रिंट डायलॉग खोलता है — “Save as PDF” चुनें। प्रिंट के लिए फ़ोटो छोटी की जाती हैं; सामान्य एक्सपोर्ट अपरिवर्तित रहता है।",
+    "help_rep_print_d":"कवर पेज, फ़ोटो शीट और दोष सूची बनाता है, फिर प्रिंट डायलॉग खोलता है — “PDF के रूप में सहेजें” चुनें और मार्जिन डिफ़ॉल्ट पर रहने दें। प्रिंट के लिए फ़ोटो छोटी की जाती हैं; सामान्य निर्यात नहीं बदलता।",
     "undo_title":"पूर्ववत करें",
     "redo_title":"फिर से करें",
-    "photo_btn":"फ़ोटो",
     "export_one":"एक निर्यात करें",
     "export_all":"सभी निर्यात करें",
     "guide_title":"गाइड",
@@ -2888,7 +2953,7 @@ const I18N={
     "toast_pasted":"पेस्ट किया गया",
     "ctx_label_qr":"लिंक",
     "help_qr_b":"QR",
-    "help_qr_d":"फ़ोटो पर स्कैन करने योग्य कोड रखता है — एक लिंक दर्ज करें, फिर रखने के लिए टैप करें। वर्तमान स्याही रंग और S/M/L आकार का उपयोग करता है। लिंक बदलने के लिए डबल-टैप करें। हल्के रंग स्कैन होने लायक गहरे किए जाते हैं, और असली स्याही रंग का फ्रेम जुड़ता है; शैली से उलटा (रंग पर सफ़ेद कोड) चुनें, जिसे फ़ोन कैमरे पढ़ते हैं पर कुछ पुराने स्कैनर ऐप नहीं। पिछला लिंक दोबारा इस्तेमाल करने के लिए टूल पर टैप करें, नया लिंक डालने के लिए डबल-टैप करें, पिछले पाँच के लिए दबाए रखें।",
+    "help_qr_d":"फ़ोटो पर स्कैन करने योग्य कोड रखता है — एक लिंक दर्ज करें, फिर रखने के लिए टैप करें। पिछला लिंक दोबारा इस्तेमाल करने के लिए टूल पर टैप करें, नए के लिए डबल-टैप करें, पिछले पाँच के लिए दबाए रखें। स्याही का रंग (स्कैन होने लायक गहरा किया गया) और S/M/L आकार लेता है। शैली: उलटा रंग पर सफ़ेद कोड बनाता है — फ़ोन कैमरे इसे पढ़ते हैं, कुछ पुराने स्कैनर ऐप नहीं। सफ़ेद स्याही के साथ यह उल्टा काम करता है।",
     "help_pick_h":"दोष चुनना",
     "help_picktool_b":"टूल बटन",
     "help_picktool_d":"पिछला दोष दोबारा तैयार करने और तुरंत लगाने के लिए टैप करें। सूची खोलने के लिए डबल-टैप करें। हाल के पाँच देखने के लिए दबाकर रखें — हर एक उसी स्थिति स्तर के साथ जिस पर उसे लगाया गया था।",
@@ -2923,7 +2988,7 @@ const I18N={
     "about_licence_h":"लाइसेंस",
     "about_report_h":"बग की रिपोर्ट करें",
     "about_support_h":"इस टूल का समर्थन करें",
-    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — पुल-निरीक्षण फ़ोटो एनोटेशन। आपके डिवाइस पर स्थानीय रूप से काम करता है, कुछ भी अपलोड नहीं होता।",
+    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — फ़ोटो, नक्शे और प्लान पर मार्कअप, माप और प्रिंट करने योग्य रिपोर्ट के साथ। फ़ील्ड कार्य के लिए बना, निजता को ध्यान में रखकर: सब कुछ आपके डिवाइस पर ही रहता है।",
     "about_licence":"<a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a> के अंतर्गत जारी। लेखक को श्रेय देने की शर्त पर उपयोग, साझा और अनुकूलन के लिए स्वतंत्र।",
     "about_support":"यह टूल निःशुल्क है। यदि यह आपका समय बचाता है, तो आपका योगदान इसे बनाए रखने में मदद करता है।",
     "save":"सेव करें",
@@ -2943,7 +3008,6 @@ const I18N={
     "favourite":"पसंदीदा",
     "tab_tags":"टैग",
     "tab_elements":"तत्व",
-    "uses_current_ink":"वर्तमान स्याही रंग का उपयोग करता है",
     "no_matching_elements":"कोई मिलान तत्व नहीं।",
     "name_repeated_elements":"बार-बार आने वाले तत्वों को एक बार नाम दें — जैसे \"बीम B3\" — फिर हर फ़ोटो में समान लेबल के लिए टैप करें।",
     "no_matches_custom":"कोई मिलान नहीं। टाइप किया गया शब्द रखने के लिए जोड़ें दबाएं।",
@@ -2952,7 +3016,6 @@ const I18N={
     "new_divider_body":"संरचनाओं को अलग करने के लिए एल्बम में एक शीर्षक वाला फ़ोल्डर कार्ड जोड़ा जाता है। बाकी के साथ निर्यात होता है; डिफ़ॉल्ट रूप से रिपोर्ट से बाहर।",
     "structure_site_placeholder":"संरचना / साइट का नाम",
     "date_id_inspector_placeholder":"तारीख़ · आईडी · निरीक्षक (वैकल्पिक)",
-    "background_label":"पृष्ठभूमि",
     "folder_label":"फ़ोल्डर",
     "add_to_album":"एल्बम में जोड़ें",
     "dimension_title":"आयाम",
@@ -2960,7 +3023,6 @@ const I18N={
     "number_title":"संख्या",
     "length_measured_title":"लंबाई (मापी गई)",
     "area_measured_title":"क्षेत्र (मापा गया)",
-    "are_you_sure":"क्या आप वाकई चाहते हैं?",
     "confirm_btn":"पुष्टि करें",
     "remove_photo_title":"फ़ोटो हटाएं?",
     "remove_photo_body":"\"{name}\" और उसके मार्कअप को सत्र से हटा दिया जाएगा।",
@@ -3069,9 +3131,9 @@ const I18N={
     "help_startover_d":"सभी फ़ोटो और एनोटेशन मिटाता है और खाली सत्र पर लौटता है।",
     "help_around_h":"नेविगेशन",
     "help_zoom_b":"ज़ूम और पैन",
-    "help_zoom_d":"ज़ूम के लिए पिंच करें या स्क्रॉल करें; दो उंगलियों से खींचें, या +, फ़िट, − बटन का उपयोग करें। फ़िट फ़ोटो को फिर से केंद्रित करता है। मूल आकार में बीच से ज़ूम करने के लिए फ़िट पर डबल-टैप करें। JPG या PNG चुनकर निर्यात करने के लिए एक निर्यात करें या सभी निर्यात करें को दबाए रखें।",
+    "help_zoom_d":"ज़ूम के लिए पिंच या स्क्रॉल करें; दो उंगलियों से खींचें, या +, फ़िट, − बटन इस्तेमाल करें। फ़िट फ़ोटो को फिर से बीच में लाता है; मूल आकार में बीच से ज़ूम के लिए उस पर डबल-टैप करें।",
     "help_photos_b":"फ़ोटो",
-    "help_photos_d":"नीचे थंबनेल लोड की गई फ़ोटो के बीच स्विच करते हैं। सब कुछ इस डिवाइस पर अपने आप सेव हो जाता है — कुछ भी अपलोड नहीं होता। विवरण के लिए थंबनेल पर डबल-टैप करें (या राइट-क्लिक करें): कैप्शन, स्थान, रिपोर्ट में शामिल करें, बाएँ/दाएँ ले जाएँ, हटाएँ। यही पैनल सभी फ़ोटो पर कैप्शन और ली गई तारीख दिखा सकता है।",
+    "help_photos_d":"नीचे के थंबनेल फ़ोटो बदलते हैं; कुंजियाँ 1–9 और 0 भी यही करती हैं। सब कुछ इस डिवाइस पर अपने आप सहेजा जाता है — कुछ भी अपलोड नहीं होता।",
     "help_keys_h":"कीबोर्ड शॉर्टकट",
     "help_k_select":"चयन",
     "help_k_text":"टेक्स्ट",
@@ -3088,6 +3150,27 @@ const I18N={
     "help_k_undo":"पूर्ववत करें",
     "help_k_redo":"फिर से करें",
     "help_k_esc":"चयन हटाएं / रद्द करें",
+    "help_g_h":"जेस्चर",
+    "help_g_tool_b":"टूल बटन",
+    "help_g_tool_d":"टूल इस्तेमाल करने के लिए टैप करें। उसकी मुख्य सेटिंग के लिए डबल-टैप करें; हाल की चीज़ों के लिए दबाए रखें। नारंगी बिंदु अतिरिक्त सुविधाओं वाले बटन दिखाता है; तीन बार इस्तेमाल के बाद यह हट जाता है।",
+    "help_g_photo_b":"फ़ोटो पर",
+    "help_g_photo_d":"कोई भी टूल चालू हो, किसी भी निशान पर टैप करके उसे चुनें और खींचें। उसका टेक्स्ट या मान बदलने के लिए डबल-टैप करें। चयन टूल में उसे दबाए रखें (या राइट-क्लिक करें) — रंग, आकार, संपादन, डुप्लिकेट और हटाने के लिए।",
+    "help_g_armed_b":"चुने गए मान",
+    "help_g_armed_d":"दबाए रखने वाली सूची से चुना गया मान एक बार इस्तेमाल होता है — अगली रेखा, नोट या कोण में — फिर डायलॉग लौट आता है। टूलबार उसे प्रतीक्षा में दिखाता है; साफ़ करें उसे हटा देता है।",
+    "help_photos_h":"फ़ोटो और निर्यात",
+    "help_pdet_b":"फ़ोटो विवरण",
+    "help_pdet_d":"विवरण खोलने के लिए थंबनेल पर डबल-टैप करें (या राइट-क्लिक करें): कैप्शन, स्थान, रिपोर्ट में शामिल करें, बाएँ या दाएँ ले जाएँ, हटाएँ। ली गई तारीख फ़ोटो फ़ाइल से पढ़ी जाती है।",
+    "help_strip_b":"फ़ोटो पर कैप्शन और तारीख",
+    "help_strip_d":"उसी पैनल में, फ़ोटो पर विकल्प हर फ़ोटो पर कैप्शन और स्थान, तारीख या दोनों लिखता है — नीचे बाएँ या ऊपर बाएँ। ये निर्यात और रिपोर्ट में दिखते हैं। डिफ़ॉल्ट रूप से बंद।",
+    "help_export_b":"निर्यात",
+    "help_export_d":"एक निर्यात करें मौजूदा फ़ोटो को उसके मार्कअप के साथ पूरे रिज़ॉल्यूशन में सहेजता है; सभी निर्यात करें हर फ़ोटो सहेजता है। पास के मेनू में JPG या PNG चुनें, या चुनने और निर्यात करने के लिए किसी भी बटन को दबाए रखें।",
+    "help_msize_b":"मार्कअप आकार",
+    "help_msize_d":"सभी नए मार्कअप को 75% से 150% तक बदलने के लिए S, M या L को दबाए रखें। पहले से रखे निशान अपना आकार बनाए रखते हैं।",
+    "help_rep_setup_b":"रिपोर्ट सेटअप",
+    "help_rep_setup_d":"रिपोर्ट शीर्ष में स्लाइडर बटन: हेडर फ़ील्ड और कॉलम का नाम बदलें या छिपाएँ, स्थिति पैमाने का नाम बदलें, खंड चालू या बंद करें — संकरे पेज मार्जिन सहित — और सब कुछ प्रीसेट के रूप में सहेजें। प्रीसेट फ़ाइल के रूप में निर्यात और आयात होते हैं, ताकि पूरी टीम एक ही इस्तेमाल करे।",
+    "help_rep_csv_b":"CSV",
+    "help_rep_csv_d":"निष्कर्ष तालिका को Excel या Sheets के लिए फ़ाइल के रूप में सहेजता है, PDF जैसी ही पंक्तियों और क्रमांकों के साथ।",
+    "help_k_qr":"QR",
     "value_ph_dim":"उदा. 0.35",
     "value_ph_angle":"उदा. 45",
     "value_ph_number":"उदा. B3",
@@ -3115,13 +3198,15 @@ const I18N={
     "ctx_label_angle":"कोण",
     "ctx_label_number":"संख्या",
     "ctx_label_unit":"इकाई",
-    "scale_colon":"स्केल: {value} px/mm"
+    "scale_colon":"स्केल: {value} px/mm",
+    "toast_save_failed":"इस डिवाइस पर सहेजा नहीं गया — स्टोरेज भरा हो सकता है। अपना काम एक्सपोर्ट करें।",
+    "toast_restore_skip":"नहीं खुलीं फ़ोटो: {n} — अगली बार के लिए रखी गईं",
+    "toast_export_skip":"एक्सपोर्ट नहीं हुई फ़ोटो: {n}"
   },
   ar:{
     "rep_add_row":"إضافة صف",
     "report_title":"تقرير",
     "report_btn":"تقرير",
-    "rep_exp":"تجريبي",
     "rep_print":"طباعة / PDF",
     "rep_reset":"إعادة تعيين التعديلات",
     "rep_header":"ترويسة التقرير",
@@ -3233,14 +3318,13 @@ const I18N={
     "rep_print_hint":"في مربّع الطباعة اختر «حفظ بصيغة PDF». أوقف الرأس والتذييل للحصول على صفحة أنظف.",
     "help_report_h":"التقرير",
     "help_rep_rows_b":"ما الذي يملأ الجدول",
-    "help_rep_rows_d":"كل عيب يُوضع من تبويب «العيوب» ينشئ صفًا واحدًا. والوسوم والعناصر والقياسات والملاحظات وشارات الأرقام القريبة منه تملأ أعمدة ذلك الصف. أما الرسم الحر والفواصل فتبقى للتوضيح فقط. ويمكن أيضًا كتابة صفوف يدويًا لما لوحظ دون تصوير.",
+    "help_rep_rows_d":"كل عيب يُوضع من تبويب «العيوب» ينشئ صفًا واحدًا، مرقّمًا 1، 2، 3… بترتيب التقرير. والوسوم والعناصر والقياسات والملاحظات القريبة منه تملأ أعمدة ذلك الصف. أما شارات الأرقام والرسم الحر والفواصل فتبقى للتوضيح فقط. ويمكن أيضًا كتابة صفوف يدويًا لما لوحظ دون تصوير.",
     "help_rep_edit_b":"المراجعة قبل الطباعة",
     "help_rep_edit_d":"املأ الترويسة، وأضف تعليقًا لكل صورة، ثم صحّح أي خانة بالكتابة فيها. أزل علامة الاختيار لاستبعاد صف أو صورة. تُحفظ التعديلات؛ و«إعادة تعيين التعديلات» تعيد بناء الجدول من الصور.",
     "help_rep_print_b":"طباعة / PDF",
-    "help_rep_print_d":"ينشئ صفحة غلاف وصفحات صور وجدول عيوب، ثم يفتح مربّع الطباعة — اختر «حفظ بصيغة PDF». تُصغَّر الصور للطباعة؛ ولا يتغيّر التصدير العادي.",
+    "help_rep_print_d":"ينشئ صفحة غلاف وصفحات صور وجدول عيوب، ثم يفتح نافذة الطباعة — اختر «حفظ بتنسيق PDF» واترك الهوامش على الافتراضي. تُصغَّر الصور للطباعة؛ لا يتغير التصدير العادي.",
     "undo_title":"تراجع",
     "redo_title":"إعادة",
-    "photo_btn":"صورة",
     "export_one":"تصدير واحدة",
     "export_all":"تصدير الكل",
     "guide_title":"الدليل",
@@ -3316,7 +3400,7 @@ const I18N={
     "toast_pasted":"تم اللصق",
     "ctx_label_qr":"الرابط",
     "help_qr_b":"رمز QR",
-    "help_qr_d":"يضع رمزًا قابلاً للمسح على الصورة — أدخل رابطًا ثم اضغط لوضعه. يستخدم لون الحبر الحالي والحجم S/M/L. اضغط مرتين لتغيير الرابط. تُغمَّق الألوان الفاتحة بالقدر الكافي للمسح، مع إطار بلون الحبر نفسه؛ ويبدّل النمط إلى معكوس (رمز أبيض على لون)، تقرؤه كاميرات الهواتف لكن بعض تطبيقات المسح القديمة لا تقرؤه. اضغط على الأداة لإعادة استخدام آخر رابط، واضغط مرتين لإدخال رابط جديد، واضغط مطولًا لآخر خمسة روابط.",
+    "help_qr_d":"يضع رمزًا قابلاً للمسح على الصورة — أدخل رابطًا ثم اضغط لوضعه. اضغط على الأداة لإعادة استخدام آخر رابط، ومرتين لرابط جديد، ومطولًا لآخر خمسة. يأخذ لون الحبر (مغمَّقًا بالقدر الكافي للمسح) والحجم S/M/L. النمط: معكوس يضع رمزًا أبيض على لون — تقرؤه كاميرات الهواتف، لا بعض تطبيقات المسح القديمة. مع الحبر الأبيض يعمل بالعكس.",
     "help_pick_h":"اختيار العيوب",
     "help_picktool_b":"زر الأداة",
     "help_picktool_d":"انقره لإعادة تجهيز آخر عيب ووضعه مباشرة. انقر نقرًا مزدوجًا لفتح القائمة. استمر بالضغط لعرض آخر خمسة، كل منها بالحالة التي استُخدم بها.",
@@ -3351,7 +3435,7 @@ const I18N={
     "about_licence_h":"الترخيص",
     "about_report_h":"الإبلاغ عن خطأ",
     "about_support_h":"ادعم هذه الأداة",
-    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — التعليق على صور فحص الجسور. يعمل محليًا على جهازك، ولا يتم رفع أي شيء.",
+    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — ترميز الصور والخرائط والمخططات مع القياسات والتقارير القابلة للطباعة. مصمَّم للعمل الميداني وخاص بطبيعته: كل شيء يبقى على جهازك.",
     "about_licence":"منشور بموجب <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a>. حرّ في الاستخدام والمشاركة والتعديل، شريطة نسب العمل إلى المؤلف.",
     "about_support":"الأداة مجانية. إذا وفّرت وقتك، فإن مساهمتك تساعد على استمرار صيانتها.",
     "save":"حفظ",
@@ -3371,7 +3455,6 @@ const I18N={
     "favourite":"مفضّل",
     "tab_tags":"الوسوم",
     "tab_elements":"العناصر",
-    "uses_current_ink":"يستخدم لون الحبر الحالي",
     "no_matching_elements":"لا توجد عناصر مطابقة.",
     "name_repeated_elements":"سمِّ العناصر المتكررة مرة واحدة — مثل \"عارضة B3\" — ثم اضغط لتسميتها بنفس الاسم في كل صورة.",
     "no_matches_custom":"لا توجد نتائج. انقر «إضافة» للإبقاء على ما كتبته.",
@@ -3380,7 +3463,6 @@ const I18N={
     "new_divider_body":"تُضاف بطاقة مجلد تحمل عنوانًا إلى ألبومك للفصل بين المنشآت. تُصدَّر مع بقية الصور، وتُستبعد من التقرير افتراضيًا.",
     "structure_site_placeholder":"اسم المنشأة / الموقع",
     "date_id_inspector_placeholder":"التاريخ · المعرّف · المفتش (اختياري)",
-    "background_label":"الخلفية",
     "folder_label":"مجلد",
     "add_to_album":"إضافة إلى الألبوم",
     "dimension_title":"البُعد",
@@ -3388,7 +3470,6 @@ const I18N={
     "number_title":"الرقم",
     "length_measured_title":"الطول (مقاس)",
     "area_measured_title":"المساحة (مقاسة)",
-    "are_you_sure":"هل أنت متأكد؟",
     "confirm_btn":"تأكيد",
     "remove_photo_title":"إزالة الصورة؟",
     "remove_photo_body":"سيتم إزالة \"{name}\" وعلاماته من الجلسة.",
@@ -3497,9 +3578,9 @@ const I18N={
     "help_startover_d":"يمحو جميع الصور والعلامات ويعود إلى جلسة فارغة.",
     "help_around_h":"التنقل",
     "help_zoom_b":"التكبير والتحريك",
-    "help_zoom_d":"قرّب/باعد أصابعك أو مرّر للتكبير؛ اسحب بإصبعين، أو استخدم أزرار +، احتواء، −. يعيد \"احتواء\" توسيط الصورة. انقر مرتين على زر الاحتواء للتكبير إلى الحجم الكامل في المنتصف. اضغط مطولًا على تصدير واحدة أو تصدير الكل لاختيار JPG أو PNG والتصدير.",
+    "help_zoom_d":"قرّب بالقرص أو التمرير؛ اسحب بإصبعين، أو استخدم أزرار + والاحتواء و−. يعيد الاحتواء توسيط الصورة؛ انقر عليه مرتين للتكبير إلى الحجم الكامل في المنتصف.",
     "help_photos_b":"الصور",
-    "help_photos_d":"تُبدّل الصور المصغّرة أسفل الشاشة بين الصور المحمّلة. يُحفظ كل شيء تلقائيًا على هذا الجهاز — لا يُرفع شيء إلى الإنترنت. انقر مرتين على صورة مصغرة (أو انقر بالزر الأيمن) لعرض تفاصيلها: التعليق، الموقع، التضمين في التقرير، النقل يسارًا/يمينًا، الإزالة. يمكن للوحة نفسها عرض التعليق وتاريخ الالتقاط على جميع الصور.",
+    "help_photos_d":"الصور المصغرة في الأسفل تبدّل بين الصور، وكذلك المفاتيح 1–9 و0. يُحفظ كل شيء تلقائيًا على هذا الجهاز — لا يُرفع أي شيء.",
     "help_keys_h":"اختصارات لوحة المفاتيح",
     "help_k_select":"تحديد",
     "help_k_text":"نص",
@@ -3516,6 +3597,27 @@ const I18N={
     "help_k_undo":"تراجع",
     "help_k_redo":"إعادة",
     "help_k_esc":"إلغاء التحديد / إلغاء",
+    "help_g_h":"الإيماءات",
+    "help_g_tool_b":"أزرار الأدوات",
+    "help_g_tool_d":"اضغط لاستخدام أداة. اضغط مرتين لإعدادها الرئيسي، واضغط مطولًا لعناصرك الأخيرة. تشير نقطة برتقالية إلى الأزرار ذات الخيارات الإضافية، وتختفي بعد ثلاثة استخدامات.",
+    "help_g_photo_b":"على الصورة",
+    "help_g_photo_d":"اضغط على أي علامة لتحديدها وسحبها أيًّا كانت الأداة النشطة. اضغط عليها مرتين لتغيير نصها أو قيمتها. في أداة التحديد، اضغط عليها مطولًا (أو انقر بالزر الأيمن) لقائمة اللون والحجم والتعديل والتكرار والحذف.",
+    "help_g_armed_b":"القيم المختارة",
+    "help_g_armed_d":"تُستخدم القيمة المختارة من قائمة الضغط المطوّل مرة واحدة — للخط أو الملاحظة أو الزاوية التالية — ثم تعود نافذة الحوار. يعرضها شريط الأدوات في الانتظار، ويُلغيها زر المسح.",
+    "help_photos_h":"الصور والتصدير",
+    "help_pdet_b":"تفاصيل الصورة",
+    "help_pdet_d":"انقر مرتين على صورة مصغرة (أو انقر بالزر الأيمن) لفتح تفاصيلها: التعليق، الموقع، التضمين في التقرير، النقل يمينًا أو يسارًا، الإزالة. يُقرأ تاريخ الالتقاط من ملف الصورة.",
+    "help_strip_b":"التعليق والتاريخ على الصور",
+    "help_strip_d":"في اللوحة نفسها، يكتب خيار «على الصور» التعليق والموقع أو التاريخ أو كليهما على كل صورة — أسفل اليسار أو أعلى اليسار. يظهران في الصور المصدَّرة وفي التقرير. متوقف افتراضيًا.",
+    "help_export_b":"التصدير",
+    "help_export_d":"«تصدير واحدة» تحفظ الصورة الحالية بدقتها الكاملة مع علاماتها، و«تصدير الكل» تحفظ كل الصور. اختر JPG أو PNG من القائمة المجاورة، أو اضغط مطولًا على أيٍّ من الزرين للاختيار والتصدير دفعة واحدة.",
+    "help_msize_b":"حجم العلامات",
+    "help_msize_d":"اضغط مطولًا على S أو M أو L لتغيير حجم كل العلامات الجديدة بين 75% و150%. تحتفظ العلامات الموضوعة مسبقًا بحجمها.",
+    "help_rep_setup_b":"إعداد التقرير",
+    "help_rep_setup_d":"زر المنزلقات في رأس التقرير: أعد تسمية حقول الرأس والأعمدة أو أخفِها، وأعد تسمية مقياس الحالة، وشغّل الأقسام أو أوقفها — ومنها الهوامش الضيقة — واحفظ كل ذلك كإعداد مسبق. تُصدَّر الإعدادات المسبقة وتُستورد كملف، ليتشارك الفريق كله واحدًا.",
+    "help_rep_csv_b":"CSV",
+    "help_rep_csv_d":"يحفظ جدول النتائج كملف لـ Excel أو Sheets، بنفس الصفوف والأرقام الموجودة في ملف PDF.",
+    "help_k_qr":"QR",
     "value_ph_dim":"مثال: 0.35",
     "value_ph_angle":"مثال: 45",
     "value_ph_number":"مثال: B3",
@@ -3543,13 +3645,15 @@ const I18N={
     "ctx_label_angle":"زاوية",
     "ctx_label_number":"رقم",
     "ctx_label_unit":"الوحدة",
-    "scale_colon":"المقياس: {value} بكسل/مم"
+    "scale_colon":"المقياس: {value} بكسل/مم",
+    "toast_save_failed":"لم يُحفظ على هذا الجهاز — قد تكون مساحة التخزين ممتلئة. صدّر عملك.",
+    "toast_restore_skip":"صور لم تُفتح: {n} — محفوظة للمرة القادمة",
+    "toast_export_skip":"صور لم تُصدَّر: {n}"
   },
   ru:{
     "rep_add_row":"Добавить строку",
     "report_title":"Отчёт",
     "report_btn":"Отчёт",
-    "rep_exp":"Экспериментально",
     "rep_print":"Печать / PDF",
     "rep_reset":"Сбросить правки",
     "rep_header":"Шапка отчёта",
@@ -3661,14 +3765,13 @@ const I18N={
     "rep_print_hint":"В окне печати выберите «Сохранить как PDF». Отключите колонтитулы для более чистой страницы.",
     "help_report_h":"Отчёт",
     "help_rep_rows_b":"Чем заполняется таблица",
-    "help_rep_rows_d":"Каждый дефект, поставленный на вкладке «Дефекты», даёт одну строку. Ближайшие метки, конструктивные элементы, измерения, заметки и номерные значки заполняют столбцы этой строки. Рисунок от руки и разделители остаются оформлением. Строки можно также добавить вручную для замеченного, но не сфотографированного.",
+    "help_rep_rows_d":"Каждый дефект, поставленный на вкладке «Дефекты», даёт одну строку с номером 1, 2, 3… по порядку отчёта. Ближайшие метки, конструктивные элементы, измерения и заметки заполняют столбцы этой строки. Номерные значки, рисунок от руки и разделители остаются оформлением. Строки можно также добавить вручную для замеченного, но не сфотографированного.",
     "help_rep_edit_b":"Проверка перед печатью",
     "help_rep_edit_d":"Заполните шапку, подпишите каждое фото, затем исправьте любую ячейку, вводя текст прямо в ней. Снимите галочку, чтобы исключить строку или фото. Правки сохраняются; «Сбросить правки» пересобирает таблицу из фотографий.",
     "help_rep_print_b":"Печать / PDF",
-    "help_rep_print_d":"Собирает титульную страницу, фотолисты и ведомость дефектов и открывает окно печати — выберите «Сохранить как PDF». Фото уменьшаются для печати; обычный экспорт не меняется.",
+    "help_rep_print_d":"Создаёт титульный лист, листы с фото и перечень дефектов, затем открывает диалог печати — выберите «Сохранить как PDF» и оставьте поля «По умолчанию». Фото уменьшаются для печати; обычный экспорт не меняется.",
     "undo_title":"Отменить",
     "redo_title":"Повторить",
-    "photo_btn":"Фото",
     "export_one":"Экспорт одного",
     "export_all":"Экспорт всех",
     "guide_title":"Инструкция",
@@ -3744,7 +3847,7 @@ const I18N={
     "toast_pasted":"Вставлено",
     "ctx_label_qr":"Ссылка",
     "help_qr_b":"QR",
-    "help_qr_d":"Размещает сканируемый код на фото — введите ссылку, затем нажмите для размещения. Использует текущий цвет чернил и размер S/M/L. Двойное нажатие меняет ссылку. Светлые цвета затемняются ровно настолько, чтобы код читался, и получают рамку точного цвета; «Стиль» включает инверсию (белый код на цвете) — её читают камеры телефонов, но не некоторые старые сканеры. Нажмите инструмент, чтобы снова использовать последнюю ссылку, дважды — чтобы ввести новую, удерживайте — для пяти последних.",
+    "help_qr_d":"Размещает сканируемый код на фото — введите ссылку, затем нажмите для размещения. Касание инструмента — последняя ссылка, двойное — новая, удержание — пять последних. Берёт цвет чернил (затемнённый ровно настолько, чтобы код читался) и размер S/M/L. «Стиль: инверсный» — белый код на цвете: его читают камеры телефонов, но не некоторые старые сканеры. С белыми чернилами — наоборот.",
     "help_pick_h":"Выбор дефектов",
     "help_picktool_b":"Кнопка инструмента",
     "help_picktool_d":"Нажмите, чтобы вернуть последний дефект и сразу поставить его. Двойное нажатие открывает список. Удержание показывает пять недавних, каждый с тем состоянием, с которым он использовался.",
@@ -3779,7 +3882,7 @@ const I18N={
     "about_licence_h":"Лицензия",
     "about_report_h":"Сообщить об ошибке",
     "about_support_h":"Поддержать инструмент",
-    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — разметка фотографий для обследования мостов. Работает локально на вашем устройстве, ничего не загружается.",
+    "about_intro":"<b style=\"color:var(--text)\">Mark<span style=\"color:var(--accent)\">up</span></b> — разметка фото, карт и планов с измерениями и отчётами для печати. Создано для работы в поле, приватно по умолчанию: всё остаётся на вашем устройстве.",
     "about_licence":"Распространяется по лицензии <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a>. Свободно использовать, делиться и адаптировать при условии указания автора.",
     "about_support":"Инструмент бесплатный. Если он экономит ваше время, поддержка помогает его развивать.",
     "save":"Сохранить",
@@ -3799,7 +3902,6 @@ const I18N={
     "favourite":"В избранное",
     "tab_tags":"Метки",
     "tab_elements":"Конструктивные элементы",
-    "uses_current_ink":"Использует текущий цвет",
     "no_matching_elements":"Совпадений не найдено.",
     "name_repeated_elements":"Назовите повторяющийся элемент один раз — например «Балка B3» — затем нажимайте, чтобы подписывать его одинаково на каждом фото.",
     "no_matches_custom":"Совпадений нет. Нажмите «Добавить», чтобы сохранить введённое.",
@@ -3808,7 +3910,6 @@ const I18N={
     "new_divider_body":"В альбом добавляется карточка-папка с заголовком для разделения объектов. Экспортируется вместе с остальными; по умолчанию не входит в отчёт.",
     "structure_site_placeholder":"Название объекта / участка",
     "date_id_inspector_placeholder":"Дата · ID · инспектор (необязательно)",
-    "background_label":"Фон",
     "folder_label":"Папка",
     "add_to_album":"Добавить в альбом",
     "dimension_title":"Размер",
@@ -3816,7 +3917,6 @@ const I18N={
     "number_title":"Номер",
     "length_measured_title":"Длина (измерено)",
     "area_measured_title":"Площадь (измерено)",
-    "are_you_sure":"Вы уверены?",
     "confirm_btn":"Подтвердить",
     "remove_photo_title":"Удалить фото?",
     "remove_photo_body":"«{name}» и разметка будут удалены из сессии.",
@@ -3925,9 +4025,9 @@ const I18N={
     "help_startover_d":"Удаляет все фото и аннотации, возвращая к пустой сессии.",
     "help_around_h":"Навигация",
     "help_zoom_b":"Масштаб и панорамирование",
-    "help_zoom_d":"Сведите пальцы или прокрутите для масштабирования; перетаскивайте двумя пальцами или используйте кнопки +, «по размеру», −. «По размеру» центрирует фото. Двойное касание кнопки «По размеру» увеличивает до полного размера по центру. Удерживайте «Экспорт одного» или «Экспорт всех», чтобы выбрать JPG или PNG и экспортировать.",
+    "help_zoom_d":"Масштаб — щипком или колёсиком; перемещение — двумя пальцами или кнопками +, «По размеру», −. «По размеру» центрирует фото; двойное касание увеличивает до полного размера по центру.",
     "help_photos_b":"Фото",
-    "help_photos_d":"Миниатюры внизу переключают между загруженными фото. Всё сохраняется на этом устройстве автоматически — ничего не загружается в сеть. Двойное касание миниатюры (или правый щелчок) открывает её данные: подпись, место, включение в отчёт, сдвиг влево/вправо, удаление. Там же можно показать подпись и дату съёмки на всех фото.",
+    "help_photos_d":"Миниатюры внизу переключают фото; клавиши 1–9 и 0 тоже. Всё автоматически сохраняется на этом устройстве — ничего не загружается.",
     "help_keys_h":"Горячие клавиши",
     "help_k_select":"Выбор",
     "help_k_text":"Текст",
@@ -3944,6 +4044,27 @@ const I18N={
     "help_k_undo":"Отменить",
     "help_k_redo":"Повторить",
     "help_k_esc":"Снять выделение / отмена",
+    "help_g_h":"Жесты",
+    "help_g_tool_b":"Кнопки инструментов",
+    "help_g_tool_d":"Касание включает инструмент. Двойное касание — его главная настройка; удержание — недавние элементы. Оранжевая точка отмечает кнопки с дополнительными жестами и исчезает после трёх использований.",
+    "help_g_photo_b":"На фото",
+    "help_g_photo_d":"Коснитесь любой пометки, чтобы выбрать и перетащить её, какой бы инструмент ни был включён. Двойное касание меняет её текст или значение. В инструменте «Выбор» удерживайте её (или щёлкните правой кнопкой) — цвет, размер, изменить, дублировать, удалить.",
+    "help_g_armed_b":"Выбранные значения",
+    "help_g_armed_d":"Значение из списка по удержанию используется один раз — следующей линией, заметкой или углом, — затем снова появляется диалог. Панель показывает его в ожидании; «Очистить» его сбрасывает.",
+    "help_photos_h":"Фото и экспорт",
+    "help_pdet_b":"Данные фото",
+    "help_pdet_d":"Двойное касание миниатюры (или правый щелчок) открывает её данные: подпись, место, включение в отчёт, сдвиг влево или вправо, удаление. Дата съёмки читается из файла фото.",
+    "help_strip_b":"Подпись и дата на фото",
+    "help_strip_d":"В той же панели «На фото» выводит подпись и место, дату или всё вместе на каждое фото — слева внизу или слева вверху. Они попадают в экспорт и в отчёт. По умолчанию выключено.",
+    "help_export_b":"Экспорт",
+    "help_export_d":"«Экспорт одного» сохраняет текущее фото в полном разрешении с разметкой; «Экспорт всех» — все фото. JPG или PNG выбирается в меню рядом, либо удерживайте любую из кнопок, чтобы выбрать и сразу экспортировать.",
+    "help_msize_b":"Размер разметки",
+    "help_msize_d":"Удерживайте S, M или L, чтобы масштабировать всю новую разметку от 75% до 150%. Уже размещённые пометки сохраняют свой размер.",
+    "help_rep_setup_b":"Настройка отчёта",
+    "help_rep_setup_d":"Кнопка с ползунками в заголовке «Отчёта»: переименуйте или скройте поля шапки и столбцы, переименуйте шкалу состояния, включите или выключите разделы — в том числе узкие поля страницы — и сохраните всё как пресет. Пресеты экспортируются и импортируются файлом, чтобы вся команда работала с одним.",
+    "help_rep_csv_b":"CSV",
+    "help_rep_csv_d":"Сохраняет таблицу дефектов файлом для Excel или Sheets — с теми же строками и номерами, что в PDF.",
+    "help_k_qr":"QR",
     "value_ph_dim":"напр. 0.35",
     "value_ph_angle":"напр. 45",
     "value_ph_number":"напр. B3",
@@ -3971,7 +4092,10 @@ const I18N={
     "ctx_label_angle":"Угол",
     "ctx_label_number":"Номер",
     "ctx_label_unit":"Единица",
-    "scale_colon":"Масштаб: {value} px/мм"
+    "scale_colon":"Масштаб: {value} px/мм",
+    "toast_save_failed":"Не сохранено на устройстве — возможно, память заполнена. Экспортируйте работу.",
+    "toast_restore_skip":"Не открыто фото: {n} — сохранены до следующего раза",
+    "toast_export_skip":"Не экспортировано фото: {n}"
   }
 };
 const TERM_TR={
@@ -4725,7 +4849,7 @@ const S = {
   counters:{}, angleDraft:null, polyDraft:null, polyFill:true, tipBy:{pen:'off',note:'off'}, armedAng:null, recentAng:[], stamp:{cap:false,date:false,pos:'bl'}, mscale:1, qrStyle:'n', fillBy:{text:true,note:true,dim:true,angle:true,measure:true}, lastScale:null, recentQr:[], numPrefix:'',
   armedLen:null, armedNote:null, recentLen:[], recentNote:[],
   armedDefect:null, armedLbl:null, recent:[], recentLbl:[], favs:[], tagsOwn:[],
-  photos:[], curId:null, elements:[], personal:[], perCat:{},
+  photos:[], held:[], curId:null, elements:[], personal:[], perCat:{},
   undo:[], redo:[], pending:null,
   scale:null, measMode:'line', units:{dim:'mm',mline:'auto',marea:'auto'}, repCfg:{preset:'bridge',names:{},off:{},sec:{}}, repPresets:[], cams:[],
   rep:{ structure:'', ref:'', date:'', inspector:'', weather:'', loclink:'', overall:'',
@@ -5404,6 +5528,7 @@ function trySelect(ip){
   else { beginEdit(); act={mode:'move',id:h.id,start:ip,orig:clone(getObj(h.id))}; }
   render(); return true;
 }
+const r1=v=>Math.round(v*10)/10;
 function onDown(p){
   pendingDlg=null;
   const ip=toImg(p.x,p.y);
@@ -5411,8 +5536,11 @@ function onDown(p){
   if(now-lastTap<320 && lastTapPt && Math.hypot(p.x-lastTapPt.x,p.y-lastTapPt.y)<24){
     // double-tap: close polygon / measure-area draft, or edit hit object
     if(S.polyDraft&&S.polyDraft.pts.length>=3){
-      if(S.polyDraft.pts.length>3)S.polyDraft.pts.pop();
-      if(S.polyDraft.measure) closeMArea(); else if(S.tool==='poly') closePoly();
+      const dp=S.polyDraft.pts, n=dp.length;
+      // a double tap on the last corner adds it twice — drop the copy, keep a new corner
+      if(Math.hypot(dp[n-1].x-dp[n-2].x,dp[n-1].y-dp[n-2].y)*S.view.s<24) dp.pop();
+      if(dp.length>=3){ if(S.polyDraft.measure) closeMArea(); else if(S.tool==='poly') closePoly(); }
+      else render();
       lastTap=0; return;
     }
     const h=hitTest(ip); if(h){ const o=getObj(h.id);
@@ -5495,7 +5623,7 @@ function onDown(p){
     let o;
     if(S.tool==='note') o={id:newId(),type:'note',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),text:'',size:fontPx(),fill:S.fillBy.note,tip:S.tipBy.note};
     else if(S.tool==='dim') o={id:newId(),type:'dim',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),value:'',unit:S.units.dim||'mm',size:fontPx(),fill:S.fillBy.dim,ends:S.style.dimEnds};
-    else o={id:newId(),type:'pen',pts:[{x:ip.x,y:ip.y}],color:S.style.color,w:widthPx(),tip:S.tipBy.pen};
+    else o={id:newId(),type:'pen',pts:[{x:r1(ip.x),y:r1(ip.y)}],color:S.style.color,w:widthPx(),tip:S.tipBy.pen};
     if(o.type==='dim'&&S.armedLen){ o.value=S.armedLen.v; o.unit=S.armedLen.u; o._arm=1; }
     if(o.type==='note'&&S.armedNote){ o.text=S.armedNote; o._arm=1; }
     act={mode:'draw',o,startImg:ip}; S.objects.push(o); render();
@@ -5524,7 +5652,7 @@ function onMove(p){
   if(act.mode==='angleB'){ if(S.angleDraft){S.angleDraft.bx=ip.x;S.angleDraft.by=ip.y;} render(); return; }
   if(act.mode==='draw'){ const o=act.o;
     if(o.type==='note'||o.type==='dim'||o.type==='mline'){ o.x2=ip.x; o.y2=ip.y; }
-    else if(o.type==='pen'){ const l=o.pts[o.pts.length-1]; if(Math.hypot(ip.x-l.x,ip.y-l.y)>2/S.view.s) o.pts.push({x:ip.x,y:ip.y}); }
+    else if(o.type==='pen'){ const l=o.pts[o.pts.length-1]; if(Math.hypot(ip.x-l.x,ip.y-l.y)>2/S.view.s) o.pts.push({x:r1(ip.x),y:r1(ip.y)}); }
     render(); return;
   }
   if(act.mode==='label'){ const o=getObj(act.id); const dx=ip.x-act.start.x, dy=ip.y-act.start.y; o.lx=act.orig.lx+dx; o.ly=act.orig.ly+dy; render(); return; }
@@ -5547,7 +5675,7 @@ function onUp(){
       beginEdit();
       const o={id:newId(),type:'angle',vx:d.vx,vy:d.vy,ax:d.ax,ay:d.ay,bx:d.bx,by:d.by,color:S.style.color,w:widthPx(),value:'',unit:'°',size:fontPx(),fill:S.fillBy.angle};
       if(S.armedAng){ o.value=S.armedAng; S.armedAng=null; pushAng(o.value); }
-      S.objects.push(o); S.sel=o.id; commit(); syncCtx(); S.angleDraft=null; render(); if(!o.value) editValue(o); else updateTextCtl();
+      S.objects.push(o); S.sel=o.id; commit(); syncCtx(); S.angleDraft=null; render(); if(!o.value){ freshId=o.id; editValue(o); } else updateTextCtl();
     } else { if(d){d.bx=null;d.by=null;} toast(t('toast_draw_the_second_side')); render(); }
     act=null; return;
   }
@@ -5561,8 +5689,8 @@ function onUp(){
     if(pre&&o.type==='note'){ S.armedNote=null; pushNote(o.text); }
     S.sel=o.id; commit(); syncCtx(); render();
     if(pre){ updateTextCtl(); act=null; return; }
-    if(o.type==='dim'){ editValue(o); act=null; return; }
-    if(o.type==='note'){ editLabel(); act=null; return; }
+    if(o.type==='dim'){ freshId=o.id; editValue(o); act=null; return; }
+    if(o.type==='note'){ freshId=o.id; editLabel(); act=null; return; }
   } else if(act.mode==='move'||act.mode==='handle'||act.mode==='label'){ commit(); }
   act=null;
 }
@@ -5582,23 +5710,29 @@ function moveHandle(o,i,ip){
 }
 
 // ── Text label editing ──────────────────────────────────
-let editTarget=null, editIsNew=false;
+let editTarget=null, editIsNew=false, freshId=null, lblFresh=false, valFresh=false;
 function editLabel(existingNew){
-  if(existingNew){ editTarget=existingNew; editIsNew=true; $('txtTitle').textContent=t('add_label'); $('txtInput').value=''; $('txtOk').textContent=t('add'); }
-  else { const o=getObj(S.sel); if(!o||(o.type!=='text'&&o.type!=='note'&&o.type!=='tag'))return; editTarget=o; editIsNew=false; $('txtTitle').textContent= o.type==='note'?t('note_text'):t('edit_label'); $('txtInput').value=o.text||''; $('txtOk').textContent=t('save'); }
+  lblFresh=false;
+  if(existingNew){ freshId=null; editTarget=existingNew; editIsNew=true; $('txtTitle').textContent=t('add_label'); $('txtInput').value=''; $('txtOk').textContent=t('add'); }
+  else { const o=getObj(S.sel); if(!o||(o.type!=='text'&&o.type!=='note'&&o.type!=='tag'))return; editTarget=o; editIsNew=false; lblFresh=(o.id===freshId); freshId=null; $('txtTitle').textContent= o.type==='note'?t('note_text'):t('edit_label'); $('txtInput').value=o.text||''; $('txtOk').textContent=t('save'); }
   showOverlay('txtOverlay'); focusField('txtInput');
 }
 function commitLabel(){
   const v=$('txtInput').value.trim();
   if(editIsNew){ if(v){ beginEdit(); editTarget.text=v; S.objects.push(editTarget); S.sel=editTarget.id; commit(); syncCtx();
     if(editTarget.type==='text') pushLbl(v,'text',editTarget.color,''); } }
+  else if(lblFresh){ lblFresh=false;
+    if(v){ editTarget.text=v; dirty(); if(editTarget.type==='note') pushNote(v); }
+    else { dropFresh(editTarget); toast(t('toast_removed_text_required')); } }
   else { if(v){ beginEdit(); editTarget.text=v; commit(); if(editTarget.type==='note') pushNote(v); }
     else { beginEdit(); setObjects(S.objects.filter(o=>o!==editTarget)); S.sel=null; commit(); syncCtx(); toast(t('toast_removed_text_required')); } }
   hideOverlay('txtOverlay'); editTarget=null; render();
 }
+// a just-drawn object abandoned in its dialog: remove it and its placement step together
+function dropFresh(o){ setObjects(S.objects.filter(x=>x!==o)); S.undo.pop(); S.redo=[]; S.sel=null; updateUndo(); syncCtx(); render(); dirty(); }
 function cancelLabel(){
-  // a freshly drawn note with no text yet self-deletes on cancel
-  if(editTarget && !editIsNew && editTarget.type==='note' && !editTarget.text){
+  if(editTarget && !editIsNew && lblFresh && !editTarget.text){ lblFresh=false; dropFresh(editTarget); }
+  else if(editTarget && !editIsNew && editTarget.type==='note' && !editTarget.text){
     beginEdit(); setObjects(S.objects.filter(o=>o!==editTarget)); S.sel=null; commit(); syncCtx(); render();
   }
   hideOverlay('txtOverlay'); editTarget=null;
@@ -5642,7 +5776,7 @@ function updateQr(){ $('qrcur').textContent = S.armedQR ? S.armedQR.text : t('ch
 // ── Value editing (dimension / angle / number) ──────────
 let valTarget=null, valUnit='mm';
 function editValue(o){
-  valTarget=o; const unitsEl=$('valUnits'), inp=$('valInput');
+  valTarget=o; valFresh=(o.id===freshId); freshId=null; const unitsEl=$('valUnits'), inp=$('valInput');
   inp.readOnly=false;
   if(o.type==='mline'||o.type==='marea'){
     const isArea=o.type==='marea';
@@ -5676,10 +5810,10 @@ function commitValue(){
     S.units[valTarget.type]=valUnit; saveUnits();
     commit(); hideOverlay('valOverlay'); valTarget=null; render(); return;
   }
-  const v=$('valInput').value.trim(); beginEdit();
-  if(valTarget.type==='number'){ const m=v.match(/^([^\d]{0,4})(\d+)$/); if(m){ valTarget.pre=m[1]; valTarget.n=parseInt(m[2],10); } }
+  const v=$('valInput').value.trim(), fresh=valFresh; valFresh=false; if(!fresh) beginEdit();
+  if(valTarget.type==='number'){ const m=v.match(/^([^\d]{0,4})(\d+)$/); if(m){ if(m[1]||!/^\d+$/.test(v)) valTarget.pre=m[1]; valTarget.n=parseInt(m[2],10); } }
   else { valTarget.value=v; if(valTarget.type==='dim'){ valTarget.unit=valUnit; S.units.dim=valUnit; saveUnits(); pushLen(v,valUnit); } if(valTarget.type==='angle') pushAng(v); }
-  commit(); hideOverlay('valOverlay'); valTarget=null; render();
+  if(fresh){ dirty(); updateUndo(); } else commit(); hideOverlay('valOverlay'); valTarget=null; render();
 }
 
 // ── Contextual props ────────────────────────────────────
@@ -5787,11 +5921,13 @@ function makeThumb(img){
 }
 function addPhotoFile(file,cb,kind){
   if(!file||!file.type.startsWith('image/')){ if(cb)cb(); return; }
+  if(!restored&&ready){ ready.then(()=>addPhotoFile(file,cb,kind)); return; }
   const url=URL.createObjectURL(file); const im=new Image();
   im.onload=()=>{
     const rid=pid++;
     let fn=(file.name||'').replace(/\.[^.]+$/,'').slice(0,60);
     if(!fn) fn='photo-'+rid;
+    fn=uniqName(fn);
     const rec={ id:rid, blob:file, img:im, iw:im.naturalWidth, ih:im.naturalHeight,
       baseW:Math.max(2,Math.round(Math.max(im.naturalWidth,im.naturalHeight)/450)),
       fileName:fn,
@@ -5805,6 +5941,7 @@ function addPhotoFile(file,cb,kind){
   im.onerror=()=>{ toast(t('toast_could_not_read_file',{name:(file.name||'an image')})); URL.revokeObjectURL(url); if(cb)cb(); };
   im.src=url;
 }
+function uniqName(fn){ const has=n=>S.photos.some(p=>p.fileName===n); if(!has(fn)) return fn; let i=2; while(has(fn+'_'+i)) i++; return fn+'_'+i; }
 let pasteN=0;
 function addPastedBlob(blob,cb){
   const type=blob.type||'image/png';
@@ -5850,7 +5987,8 @@ function switchTo(id){
   act=null; pinch=null; pendingDlg=null;
   // close editing modals safely — a half-created label must not leak into another photo
   if(editTarget){
-    if(!editIsNew && editTarget.type==='note' && !editTarget.text) S.objects=S.objects.filter(o=>o!==editTarget);
+    if(!editIsNew && editTarget.type==='note' && !editTarget.text){ S.objects=S.objects.filter(o=>o!==editTarget); if(lblFresh) S.undo.pop(); }
+    lblFresh=false;
     editTarget=null; hideOverlay('txtOverlay');
   }
   if(valTarget){ valTarget=null; hideOverlay('valOverlay'); }
@@ -5951,14 +6089,17 @@ function anchorSave(items){
     setTimeout(()=>URL.revokeObjectURL(u),5000); setTimeout(next,450); };
   next();
 }
+// iOS Safari refuses canvases over 16.7 MP; larger photos export scaled to fit
+let CANVAS_MAX=IS_IOS?16000000:250000000;
 function renderRec(rec){ // flatten one photo record → Promise<blob>
   return new Promise(res=>{
-    const c=document.createElement('canvas'); c.width=rec.iw; c.height=rec.ih; const cx=c.getContext('2d');
+    const k=Math.min(1,Math.sqrt(CANVAS_MAX/(rec.iw*rec.ih))), tf={s:k,ox:0,oy:0};
+    const c=document.createElement('canvas'); c.width=Math.max(1,Math.floor(rec.iw*k)); c.height=Math.max(1,Math.floor(rec.ih*k)); const cx=c.getContext('2d');
     if(S.fmt!=='png'){ cx.fillStyle='#ffffff'; cx.fillRect(0,0,c.width,c.height); }
-    cx.drawImage(rec.img,0,0);
-    drawStamp(cx,rec,{s:1,ox:0,oy:0});
+    cx.drawImage(rec.img,0,0,c.width,c.height);
+    drawStamp(cx,rec,tf);
     const savedSel=S.sel, savedBase=S.baseW; S.sel=null; S.baseW=rec.baseW;
-    for(const o of rec.objects) drawObj(cx,o,{s:1,ox:0,oy:0});
+    for(const o of rec.objects) drawObj(cx,o,tf);
     S.sel=savedSel; S.baseW=savedBase;
     c.toBlob(res, S.fmt==='png'?'image/png':'image/jpeg', 0.92);
   });
@@ -5973,18 +6114,19 @@ async function exportAll(){
   if(!S.photos.length)return; stashCur();
   const ext=S.fmt==='png'?'png':'jpg';
   toast(t('toast_exporting_n',{n:S.photos.length}));
-  const items=[];
+  const items=[]; let bad=0;
   for(const rec of S.photos){            // sequential — one full-res canvas at a time
     const blob=await renderRec(rec);
-    if(blob) items.push({blob,name:rec.fileName+'_markup.'+ext});
+    if(blob) items.push({blob,name:rec.fileName+'_markup.'+ext}); else bad++;
   }
-  if(items.length) saveBlobs(items); else toast(t('toast_export_failed'));
+  if(items.length) saveBlobs(items);
+  if(!items.length) toast(t('toast_export_failed')); else if(bad) toast(t('toast_export_skip',{n:bad}));
 }
 
 // ── Persistence (IndexedDB auto-save) ───────────────────
 // Blobs are written once per photo under 'blob:<id>' — the frequently-saved
 // 'current' record holds only metadata + annotations, so edits stay cheap.
-let db=null, dirtyT=null;
+let db=null, dirtyT=null, dbTried=false, restored=false, restoreGen=0, ready=null;
 function openDB(){ return new Promise(res=>{
   try{
     const rq=indexedDB.open('fieldmarkup',1);
@@ -5992,23 +6134,26 @@ function openDB(){ return new Promise(res=>{
     rq.onsuccess=()=>res(rq.result); rq.onerror=()=>res(null);
   }catch(e){ res(null); }
 });}
-function idbPut(key,val){ if(!db)return; try{ db.transaction('session','readwrite').objectStore('session').put(val,key); }catch(e){} }
+let saveWarned=false;
+function saveFail(){ if(saveWarned) return; saveWarned=true; toast(t('toast_save_failed')); }
+function idbPut(key,val){ if(!db)return; try{ const tx=db.transaction('session','readwrite'); tx.onerror=tx.onabort=saveFail; tx.objectStore('session').put(val,key); }catch(e){ saveFail(); } }
 function idbDel(key){ if(!db)return; try{ db.transaction('session','readwrite').objectStore('session').delete(key); }catch(e){} }
 function idbGet(key){ return new Promise(res=>{ if(!db)return res(null);
   try{ const rq=db.transaction('session','readonly').objectStore('session').get(key);
     rq.onsuccess=()=>res(rq.result); rq.onerror=()=>res(null); }catch(e){ res(null); } }); }
 function persistBlob(rec){ idbPut('blob:'+rec.id, rec.blob); }
-function dirty(){ clearTimeout(dirtyT); dirtyT=setTimeout(saveSession,1000); }
+function dirty(){ clearTimeout(dirtyT); dirtyT=setTimeout(saveSession,1000); if(!db&&dbTried&&S.photos.length) saveFail(); }
 function saveSession(){
   if(!db)return; stashCur();
-  idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counters:p.counters||{},scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',taken:p.taken||null,repEx:!!p.repEx,kind:p.kind||'photo'})),
+  idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counters:p.counters||{},scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',taken:p.taken||null,repEx:!!p.repEx,kind:p.kind||'photo'})).concat(S.held),
     curId:S.curId, favs:S.favs, recent:S.recent, recentLbl:S.recentLbl, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, recentLen:S.recentLen, recentNote:S.recentNote, recentQr:S.recentQr, recentAng:S.recentAng, rep:S.rep, uid, pid });
 }
 function clearSession(){ if(!db)return; try{ const st=db.transaction('session','readwrite').objectStore('session'), rq=st.getAllKeys();
   rq.onsuccess=()=>{ (rq.result||[]).forEach(k=>{ if(k!=='lang'&&k!=='units'&&k!=='stamp'&&k!=='mscale'&&k!=='repcfg'&&k!=='reppresets') st.delete(k); }); }; }catch(e){} }
 async function restoreSession(){
+  const gen=restoreGen;
   const d=await idbGet('current'); if(!d||!d.photos||!d.photos.length)return;
-  uid=d.uid||uid; pid=d.pid||pid;
+  uid=Math.max(uid,d.uid||0); pid=Math.max(pid,d.pid||0);
   S.favs=migFavs(d.favs); S.recent=migRecent(d.recent); S.recentLbl=(d.recentLbl||[]).filter(x=>x&&x.t); S.elements=d.elements||[]; S.personal=migList(d.personal); S.perCat=d.perCat||{}; S.tagsOwn=d.tagsOwn||[];
   S.favs=S.favs.filter(f=>f.t!=='Review'); S.recentLbl=S.recentLbl.filter(x=>x.t!=='Review');
   S.numPrefix=d.numPrefix||''; $('numpre').value=S.numPrefix;
@@ -6029,21 +6174,24 @@ async function restoreSession(){
       im.src=url;
     });
     if(rec){ if(rec.taken===undefined){ rec.taken=null; if(rec.kind==='photo') readTaken(blob).then(d=>{ if(d){ rec.taken=d; dirty(); } }); } recs.push(rec); }
+    else S.held.push(pd);   // could not be decoded now: keep its markup for the next start
   }
-  if(!recs.length)return;
-  if(S.photos.length){ return; } // user already started a new session while restoring — don't clobber it
-  S.photos=recs;
-  switchTo(recs.some(p=>p.id===d.curId)?d.curId:recs[0].id);
-  toast(t('toast_session_restored'));
+  if(gen!==restoreGen){ S.held=[]; return; }
+  if(recs.length){
+    S.photos=recs.concat(S.photos);
+    switchTo(recs.some(p=>p.id===d.curId)?d.curId:recs[0].id);
+  }
+  if(S.held.length) toast(t('toast_restore_skip',{n:S.held.length}));
+  else if(recs.length) toast(t('toast_session_restored'));
 }
-openDB().then(d=>{ db=d; idbGet('lang').then(l=>{ if(l) setLang(l,true); });
+ready=openDB().then(d=>{ db=d; dbTried=true; idbGet('lang').then(l=>{ if(l) setLang(l,true); });
   idbGet('reppresets').then(a=>{ if(Array.isArray(a)) S.repPresets=a.filter(p=>p&&p.id&&p.name);
     return idbGet('repcfg'); }).then(c=>{ if(c&&typeof c==='object') S.repCfg={preset:c.preset||'bridge',names:c.names||{},off:c.off||{},sec:c.sec||{}};
     if(!PRESETS[S.repCfg.preset]&&!ownPreset(S.repCfg.preset)) S.repCfg.preset='bridge'; });
   idbGet('mscale').then(v=>{ if(MSCALES.indexOf(v)>=0){ S.mscale=v; mscaleSync(); } });
   idbGet('stamp').then(v=>{ if(v&&typeof v==='object'){ S.stamp={cap:!!v.cap,date:!!v.date,pos:v.pos==='tl'?'tl':'bl'}; render(); } });
   idbGet('units').then(u=>{ if(u&&typeof u==='object') ['dim','mline','marea'].forEach(k=>{ if(typeof u[k]==='string') S.units[k]=u[k]; }); });
-  restoreSession(); });
+  return restoreSession(); }).catch(()=>{}).then(()=>{ restored=true; });
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'&&S.photos.length){ clearTimeout(dirtyT); saveSession(); } });
 
 // ── Overlays / toast ────────────────────────────────────
@@ -6565,7 +6713,7 @@ function setTool(tl){
   if(tl==='angle')toast(t('toast_draw_first_then_second'));
   if(tl==='measure'){ updateMeasCtl(); if(!(S.scale&&S.scale.pxMm>0)) toast(t('toast_set_scale_to_measure')); }
   if(tl!=='select'){S.sel=null;syncCtx();}
-  updatePolyCtl(); updateTextCtl(); updateQrCtl();
+  updatePolyCtl(); updateTextCtl(); updateQrCtl(); updateTipCtl(); updateMeasCtl();
   render();
 }
 function numN(){ const n=S.counters[S.numPrefix]; return (n>0)?n:1; }
@@ -6771,6 +6919,7 @@ $('paste2').onclick=pasteFromClipboard;
 document.addEventListener('paste',e=>{
   const a=document.activeElement;
   if(a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA'||a.isContentEditable)) return;
+  if(document.querySelector('.overlay.show')) return;
   if(pasteFromEvent(e)) e.preventDefault();
 });
 $('shoot').onclick=()=>$('cam').click();
@@ -6851,7 +7000,7 @@ $('clearall').onclick=()=>{
   commit(); updateNext(); syncCtx(); render();
 };
 $('startover').onclick=()=>confirmBox(t('start_over_title'), t('start_over_body'),()=>{
-  S.photos=[]; S.curId=null; S.img=null; S.objects=[]; S.sel=null; S.undo=[]; S.redo=[];
+  S.photos=[]; S.held=[]; restoreGen++; S.curId=null; S.img=null; S.objects=[]; S.sel=null; S.undo=[]; S.redo=[];
   S.counters={}; S.armedLen=null; S.armedNote=null; S.recentLen=[]; S.recentNote=[]; S.recentQr=[]; S.recentAng=[]; S.armedAng=null; S.lastScale=null; S.angleDraft=null; S.polyDraft=null; S.armedDefect=null; S.armedLbl=null; S.armedQR=null; S.elements=[]; S.personal=[]; S.perCat={}; S.recent=[]; S.recentLbl=[]; S.favs=[]; S.tagsOwn=[];
   S.scale=null; S.measMode='line';
   S.rep={ structure:'', ref:'', date:'', inspector:'', weather:'', loclink:'', overall:'', sheets:true, perPage:1, schedule:true, stampNums:true, ov:{}, manual:[] };
@@ -6993,6 +7142,7 @@ const TOOL_KEYS={s:'select',t:'text',d:'pen',l:'dim',n:'note',p:'poly',g:'angle'
 window.addEventListener('keydown',e=>{
   const tgt=e.target;
   if(tgt&&((tgt.tagName==='INPUT'&&tgt.type!=='checkbox')||tgt.tagName==='TEXTAREA'||tgt.tagName==='SELECT'))return; // typing — never hijack
+  if($('cfmOverlay').classList.contains('show')&&['repOverlay','rsOverlay','calOverlay','pdOverlay'].some(id=>$(id).classList.contains('show'))){ if(e.key==='Escape'){ hideOverlay('cfmOverlay'); cfmCb=null; } return; }
   if($('rsOverlay').classList.contains('show')&&!$('cfmOverlay').classList.contains('show')){ if(e.key==='Escape')closeSetup(); return; }
   if($('repOverlay').classList.contains('show')&&!$('cfmOverlay').classList.contains('show')){ if(e.key==='Escape')hideOverlay('repOverlay'); return; }
   if($('aboutOverlay').classList.contains('show')){ if(e.key==='Escape')hideOverlay('aboutOverlay'); return; }
@@ -7024,7 +7174,8 @@ window.addEventListener('keydown',e=>{
 // ══ Measure: cameras, scale, calibration ════════════════
 // Shared with Digital Crack Gauge: same key + same {id,name,note,k,p,rmsePct,points,date} shape.
 const CAM_KEY='dcg_scale_profiles_v1';
-function loadCams(){ try{ const r=localStorage.getItem(CAM_KEY); if(r){ const a=JSON.parse(r); if(Array.isArray(a)) S.cams=a.filter(p=>p&&p.id&&p.name&&isFinite(p.k)&&isFinite(p.p)); } }catch(e){ S.cams=[]; } }
+function cleanPts(a){ return Array.isArray(a)?a.filter(s=>s&&[s.d,s.w,s.span,s.r].every(v=>typeof v==='number'&&isFinite(v))).map(s=>({d:s.d,w:s.w,span:s.span,r:s.r})).slice(0,5):[]; }
+function loadCams(){ try{ const r=localStorage.getItem(CAM_KEY); if(r){ const a=JSON.parse(r); if(Array.isArray(a)) S.cams=a.filter(p=>p&&p.id&&p.name&&isFinite(p.k)&&isFinite(p.p)).map(p=>Object.assign(p,{points:cleanPts(p.points)})); } }catch(e){ S.cams=[]; } }
 function saveCams(){ try{ localStorage.setItem(CAM_KEY, JSON.stringify(S.cams)); }catch(e){} }
 function fitPow(points){
   const pts=points.filter(p=>p.d>0&&p.r>0); if(pts.length<2)return null;
@@ -7051,7 +7202,7 @@ function safeName(s){ return String(s||'').trim().replace(/[^a-zA-Z0-9]+/g,'-').
 let scaleReturnCam=null;
 function fillCamOptions(sel,selectedId){
   sel.innerHTML='<option value="">'+(sel.id==='scaleCam'?t('select_camera_option'):t('no_camera_selected_option'))+'</option>'+
-    S.cams.map(c=>'<option value="'+c.id+'">'+esc(c.name)+'</option>').join('');
+    S.cams.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>').join('');
   sel.value=selectedId||'';
 }
 function lastScaleRef(){
@@ -7212,9 +7363,9 @@ function onCalCamSelect(){
   $('calCamDelete').style.display=id?'':'none'; $('calExportOne').style.display=id?'':'none';
   const info=$('calCamInfo');
   if(!cam){ info.textContent=''; return; }
-  info.innerHTML='r = '+cam.k.toFixed(3)+' · d^'+cam.p.toFixed(3)+(cam.rmsePct!=null?'  ·  fit ±'+cam.rmsePct.toFixed(1)+'%':'')+(cam.note?'  ·  '+esc(cam.note||""):'');
+  info.innerHTML='r = '+cam.k.toFixed(3)+' · d^'+cam.p.toFixed(3)+(cam.rmsePct!=null&&isFinite(cam.rmsePct)?'  ·  fit ±'+(+cam.rmsePct).toFixed(1)+'%':'')+(cam.note?'  ·  '+esc(cam.note||""):'');
   // load its shots for editing
-  calS.shots=(cam.points||[]).map(s=>({...s})); calS.editId=cam.id;
+  calS.shots=cleanPts(cam.points); calS.editId=cam.id;
   $('calName').value=cam.name; $('calCamNote').value=cam.note||'';
   renderCalShots();
 }
@@ -7234,8 +7385,8 @@ function importCams(file){
     const arr = Array.isArray(data) ? data : (Array.isArray(data.profiles) ? data.profiles : [data]);
     let n=0;
     arr.forEach(c=>{ if(c&&c.name&&isFinite(c.k)&&isFinite(c.p)){
-      const cam={ id:c.id&&!camById(c.id)?c.id:('cam'+Date.now().toString(36)+Math.random().toString(36).slice(2,5)),
-        name:String(c.name).slice(0,40), note:String(c.note||'').slice(0,120), k:+c.k, p:+c.p, rmsePct:(c.rmsePct!=null?+c.rmsePct:null), points:Array.isArray(c.points)?c.points:[], date:c.date||new Date().toISOString().slice(0,10) };
+      const cam={ id:(typeof c.id==='string'&&/^[\w-]{1,40}$/.test(c.id)&&!camById(c.id))?c.id:('cam'+Date.now().toString(36)+Math.random().toString(36).slice(2,5)),
+        name:String(c.name).slice(0,40), note:String(c.note||'').slice(0,120), k:+c.k, p:+c.p, rmsePct:(c.rmsePct!=null&&isFinite(+c.rmsePct)?+c.rmsePct:null), points:cleanPts(c.points), date:c.date||new Date().toISOString().slice(0,10) };
       const dup=camById(cam.id); if(dup)Object.assign(dup,cam); else S.cams.push(cam); n++;
     }});
     saveCams(); fillCamOptions($('calCamSelect'),''); toast(n? t('toast_imported_cameras',{n:n}) : t('toast_no_valid_cameras'));
@@ -7404,7 +7555,7 @@ function harvest(){
     const objs=rec.objects||[];
     const rad=0.30*Math.min(rec.iw,rec.ih);
     const inPhoto=c=>c.x>=0&&c.y>=0&&c.x<=rec.iw&&c.y<=rec.ih;
-    const cand=objs.filter(o=>isFinding(o)&&inPhoto(anchorOf(o))).map(f=>({o:f,c:anchorOf(f),el:[],act:[],ext:[],com:[],num:null}));
+    const cand=objs.filter(o=>isFinding(o)&&inPhoto(anchorOf(o))).map(f=>({o:f,c:anchorOf(f),el:[],act:[],ext:[],com:[]}));
     const loose=[], elems=[];
     for(const o of objs){
       if(isFinding(o)) continue;
@@ -7412,18 +7563,16 @@ function harvest(){
       if(o.type==='tag') bucket=tagBucket(o);
       else if(o.type==='mline'||o.type==='marea'||o.type==='dim'||o.type==='angle') bucket='ext';
       else if(o.type==='note'||o.type==='text') bucket='com';
-      else if(o.type==='number') bucket='num';
       else continue;
-      const txt=(bucket==='num')?'':auxText(o);
-      if(bucket!=='num'&&!txt) continue;
+      const txt=auxText(o);
+      if(!txt) continue;
       const c=anchorOf(o);
       if(!inPhoto(c)) continue;
       if(bucket==='el'){ elems.push({c:c,txt:txt}); continue; }
       let best=null,bd=Infinity;
       for(const cd of cand){ const d=Math.hypot(c.x-cd.c.x,c.y-cd.c.y); if(d<bd){bd=d;best=cd;} }
       if(!best||bd>rad){ if(bucket==='com'||bucket==='ext') loose.push(txt); continue; }
-      if(bucket==='num'){ if(best.num==null) best.num=numLabel(o); }
-      else best[bucket].push(txt);
+      best[bucket].push(txt);
     }
     // element chips name a location: every finding takes its nearest one, no distance limit
     if(elems.length) for(const cd of cand){
@@ -7434,14 +7583,14 @@ function harvest(){
     const rows=cand.map(cd=>{
       const row=rowFromOv(String(cd.o.id),{ el:cd.el.join(', '), grp:trCat(cd.o.grp||''), def:cd.o.text||'',
         cs:SEV_CS[cd.o.sev]||'', ext:cd.ext.join(' · '), com:cd.com.join('; '), act:cd.act.join(', ') });
-      row.pi=pi; row.oid=cd.o.id; row.badge=cd.num; return row;
+      row.pi=pi; row.oid=cd.o.id; return row;
     });
     blocks.push({pi:pi, rec:rec, rows:rows, loose:loose, ex:!!rec.repEx});
   });
   S.baseW=savedBase;
   let n=0;
   for(const b of blocks){ if(b.ex) continue; b.n=++n;
-    for(const r of b.rows){ if(r.ex) continue; if(r.badge!=null) r.item=r.badge; else r.item=String(seq++); } }
+    for(const r of b.rows){ if(!r.ex) r.item=String(seq++); } }
   // rows typed by hand in the review screen — no photo behind them
   repManual=(S.rep.manual||[]).map(id=>rowFromOv(id,{el:'',grp:'',def:'',cs:'',ext:'',com:'',act:''}));
   for(const r of repManual){ if(!r.ex) r.item=String(seq++); }
@@ -7624,7 +7773,7 @@ function repImg(rec,rows,maxPx){
   drawStamp(cx,rec,tf);
   for(const o of rec.objects) drawObj(cx,o,tf);
   if(S.rep.stampNums){
-    for(const row of rows){ if(row.ex||row.badge!=null||!row.item) continue;
+    for(const row of rows){ if(row.ex||!row.item) continue;
       const o=rec.objects.find(z=>z.id===row.oid); if(o) stampNum(cx,o,tf,row.item); }
   }
   S.sel=savedSel; S.baseW=savedBase;
@@ -7637,7 +7786,7 @@ function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'
 // one printed row's cells, in setup order; the group sub-line only where asked
 function colCells(x,withGrp){ return visCols().map(k=>'<td>'+(k==='cs'?csTd(x.cs):
   esc(x[k]||'')+(k==='def'&&withGrp&&rcSec('grp')&&x.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.grp)+'</span>':''))+'</td>').join(''); }
-const MARKUP_VER='1.5.8';
+const MARKUP_VER='1.5.10';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
@@ -7742,7 +7891,7 @@ function reportFileName(){
   return parts.join(' - ').replace(/[\\/:*?"<>|\u0000-\u001f]+/g,'-').replace(/\s+/g,' ').trim().slice(0,120);
 }
 // findings as CSV: a header block, a blank line, then one row per finding in report order
-function csvCell(v){ let x=String(v==null?'':v); if(/^[=+@\t\r]/.test(x)) x="'"+x; return '"'+x.replace(/"/g,'""')+'"'; }
+function csvCell(v){ let x=String(v==null?'':v); if(/^[=+@\t\r]/.test(x)||(/^-/.test(x)&&!/^-\d+([.,]\d+)?$/.test(x))) x="'"+x; return '"'+x.replace(/"/g,'""')+'"'; }
 function csvSep(){ try{ return (1.5).toLocaleString(navigator.language||undefined).indexOf(',')>=0?';':','; }catch(e){ return ','; } }
 function exportCSV(){
   repBlocks=harvest();
@@ -7771,7 +7920,13 @@ function applyPageCss(){
   el.textContent='@media print{@page{size:A4;margin:'+(repNarrow()?'12mm':'26mm 25.5mm')+'}}';
   $('reportDoc').classList.toggle('wide',!repNarrow());
 }
+let printBusy=false;
 async function printReport(){
+  if(printBusy) return; printBusy=true; $('repPrint').disabled=true;
+  try{ await buildAndPrint(); }
+  finally{ setTimeout(()=>{ printBusy=false; $('repPrint').disabled=false; },1200); }
+}
+async function buildAndPrint(){
   const r=S.rep, doc=$('reportDoc');
   applyPageCss();
   repBlocks=harvest();                       // pick up anything typed into the review table
@@ -7889,9 +8044,13 @@ function stageChanged(){
   if(!w||!h) return;
   const ae=document.activeElement;
   const kb=ae&&(ae.tagName==='INPUT'||ae.tagName==='TEXTAREA');
+  const ow=cssW, oh=cssH;
   resize();
   if(S.img&&!kb&&(w!==lastFitW||h!==lastFitH)){
-    clearTimeout(refitT); refitT=setTimeout(()=>{ resize(); fit(); },120);
+    const atFit=Math.abs(S.view.s-S.fitS)<=S.fitS*1e-3;
+    const big=!lastFitW||Math.abs(w-lastFitW)>lastFitW*0.15||Math.abs(h-lastFitH)>lastFitH*0.15;
+    if(atFit||big){ clearTimeout(refitT); refitT=setTimeout(()=>{ resize(); fit(); },120); }
+    else if(ow&&oh){ S.view.ox+=(w-ow)/2; S.view.oy+=(h-oh)/2; render(); }
   }
 }
 // dvh goes stale on Android when the URL bar or the keyboard moves, and the app shell is
