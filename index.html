@@ -126,6 +126,21 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .objmenu .oic svg{width:17px;height:17px}
 .defmenu.objmenu .oic:disabled{opacity:.3;pointer-events:none}
 .defmenu.objmenu .odel{color:#ff6b6b}
+.objmenu .orow:first-child{justify-content:space-between}
+.defmenu.objmenu .oic{width:40px;height:36px;color:#d5dbe1;border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.05)}
+.defmenu.objmenu .oic:hover{background:rgba(255,255,255,.1)}
+.objmenu .oic svg{width:21px;height:21px;stroke-width:2.3}
+.objmenu .oseg{border-color:rgba(255,255,255,.16)}
+.defmenu.objmenu .oseg button{height:36px;color:#d5dbe1}
+.defmenu.objmenu .oseg button+button{border-inline-start-color:rgba(255,255,255,.16)}
+.objmenu .ovd{background:rgba(255,255,255,.12)}
+.defmenu.objmenu.pastemenu{padding:6px}
+.props .seg.iseg button{width:38px;padding:0;display:grid;place-items:center;color:#c9d1d9}
+.props .seg.iseg button.on{color:var(--accent)}
+.seg.iseg svg,.mini.ibtn svg{width:20px;height:20px;stroke-width:2.6}
+.mini.ibtn{width:38px;padding:0;justify-content:center;color:#c9d1d9}
+.mini.ibtn.on{background:var(--accent-soft);border-color:var(--panel-border);color:var(--accent)}
+.ctx .divider.tipdiv{height:22px;margin:0 2px}
 
 .empty{
   position:absolute;inset:0;display:flex;flex-direction:column;
@@ -391,18 +406,52 @@ body.hasfine .emotip{display:block}
 .calbody{overflow-y:auto;padding-right:2px}
 .calsec{margin-bottom:16px}
 .calsec h4{font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
-.planum-note{font-size:11px;line-height:1.45;margin:2px 0 6px 2px;unicode-bidi:plaintext}
+.planum-note{font-size:11px;line-height:1.45;margin:2px 0 6px 2px}
 .planum-note.pl-ok{color:#7fdbe4}
 .planum-note.pl-warn{color:#fbbf24}
 .planum-chip{display:inline-block;padding:1px 8px;border-radius:9px;background:rgba(16,185,129,0.18);border:1px solid rgba(52,211,153,0.55);color:#34d399;font-size:10px;font-weight:600;letter-spacing:.03em;white-space:nowrap}
 .calrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:8px}
 .calrow input[type=number],.calrow input[type=text]{height:34px;padding:0 10px;border-radius:var(--r-sm);background:rgba(0,0,0,.3);border:1px solid var(--panel-border);color:var(--text);font-size:13px;font-family:var(--font-ui)}
 .calrow select{height:34px;padding:0 8px;border-radius:var(--r-sm);background:rgba(0,0,0,.3);border:1px solid var(--panel-border);color:var(--text);font-size:13px;font-family:var(--font-ui);max-width:100%}
-#calCanvasWrap{display:none;margin-bottom:8px}
+#calCanvasWrap{display:none;margin-bottom:12px}
+.planum-chip.warn{background:rgba(245,166,35,.16);border-color:rgba(251,191,36,.6);color:#fbbf24}
+.calbox{border:1px solid var(--panel-border);border-radius:10px;padding:10px 12px;margin-bottom:12px;background:rgba(0,0,0,.14)}
+.calbox h4{font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.calsel{width:100%;height:36px;padding:0 8px;border-radius:var(--r-sm);background:rgba(0,0,0,.3);border:1px solid var(--panel-border);color:var(--text);font-size:13px;font-family:var(--font-ui);margin-bottom:8px}
+.calbtns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.btn.sm{height:32px;padding:0 11px;font-size:12px;white-space:nowrap}
+.caltips{border:1px solid var(--accent-soft);background:rgba(245,166,35,.06);border-radius:8px;padding:9px 12px;margin-bottom:12px}
+.caltips-t{background:none;border:none;cursor:pointer;padding:0;font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;font-family:var(--font-ui)}
+#calTipsBody{margin-top:8px}
+.caltip{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:6px;padding-inline-start:20px;position:relative}
+.caltip::before{content:'💡';position:absolute;inset-inline-start:0;top:0}
+.calprompt{border:1.5px dashed var(--panel-border);border-radius:10px;padding:18px 12px;text-align:center;margin-bottom:12px}
+.calprompt svg{display:block;margin:0 auto 8px}
+.calprompt .big{font-size:14px;color:var(--text);font-weight:600;margin-bottom:2px}
+.calprompt .small{font-size:12px;color:var(--muted);margin-bottom:10px}
+.calzoom2{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px}
+.calform{border:1px solid var(--panel-border);border-radius:10px;padding:12px;margin-bottom:12px;background:rgba(255,255,255,.03)}
+.calstep{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text);font-weight:600;margin-bottom:10px}
+.calstep .stepn{flex:none;display:inline-block;background:var(--accent);color:#1a1206;font-size:11px;border-radius:50%;width:20px;height:20px;text-align:center;line-height:20px}
+.calpair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
+.calfield{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);min-width:0}
+.calfield input,.calinp{width:100%;height:36px;padding:0 10px;border-radius:var(--r-sm);background:rgba(0,0,0,.3);border:1px solid var(--panel-border);color:var(--text);font-size:13px;font-family:var(--font-ui)}
+.calinp{margin-bottom:8px}
+.calspan{font-size:12px;color:var(--muted);margin:4px 0 10px;padding:8px 10px;border-radius:6px;background:rgba(0,0,0,.25);min-height:16px;line-height:1.45}
+.calspan strong{color:var(--accent)}
+.calfield>span:first-child{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.calfield .planum-chip{padding:1px 6px}
+@media (max-width:480px){
+  #calOverlay{padding:8px}
+  #calOverlay .modal.calm{padding:16px 12px;max-height:calc(var(--apph,100dvh) - 16px)}
+  .calbox,.calform{padding:10px}
+  .calpair{grid-template-columns:1.25fr 1fr;gap:8px}
+}
+#calLoupe{position:fixed;width:150px;height:150px;border-radius:50%;border:2px solid var(--accent);box-shadow:0 4px 18px rgba(0,0,0,.55);pointer-events:none;z-index:9999;display:none;background:#0c0f12}
 #calCanvasWrap.show{display:block}
 #calCanvas{display:block;width:100%;border-radius:10px;border:1px solid var(--panel-border);touch-action:none;user-select:none;cursor:crosshair;background:#0c0f12}
-.calzoom{display:flex;gap:8px;align-items:center;font-size:11px;color:var(--muted);margin-top:6px}
-.calzoom button{height:26px;padding:0 10px;border-radius:var(--r-sm);background:rgba(0,0,0,.25);border:1px solid var(--panel-border);color:var(--muted);font-size:11px;cursor:pointer;font-family:var(--font-ui)}
+.calzoom{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:8px}
+.calzoom button{min-height:30px;white-space:nowrap;padding:4px 11px;border-radius:var(--r-sm);background:rgba(0,0,0,.25);border:1px solid var(--panel-border);color:var(--muted);font-size:11px;cursor:pointer;font-family:var(--font-ui)}
 .shotitem{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text);padding:6px 8px;border-radius:var(--r-sm);background:rgba(0,0,0,.22);margin-bottom:5px}
 .shotitem .resid{margin-left:auto;font-weight:600}
 .shotitem .rm{background:none;border:none;color:var(--danger);cursor:pointer;font-size:15px;line-height:1;padding:0 2px}
@@ -799,7 +848,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About &amp; support" aria-label="About &amp; support" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.6.0 · multilingual</span>
+        <span class="ver">v1.6.2 · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -917,7 +966,10 @@ body.hasfine .emotip{display:block}
     <div class="ctx hidden" id="tipctl">
       <span class="lbl" id="tiplbl" data-i18n="tip_label">Tip</span>
       <span class="lbl" id="endlbl" style="display:none" data-i18n="ends_label">Ends</span>
-      <div class="seg" id="tipseg"><button data-tip="off" class="on" data-i18n="tip_off">Off</button><button data-tip="arrow" data-i18n="tip_arrow">Arrow</button><button data-tip="round" data-i18n="tip_round">Round</button><button data-tip="bars" style="display:none" data-i18n="ends_bars">Bars</button><button data-tip="arrows" style="display:none" data-i18n="ends_arrows">Arrows</button></div>
+      <div class="seg iseg" id="tipseg"><button data-tip="off" class="on" title="Off" aria-label="Off" data-i18n-title="tip_off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M4 12h16"/></svg></button><button data-tip="arrow" title="Arrow" aria-label="Arrow" data-i18n-title="tip_arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h10"/><path d="M3 12l8-5v10z" fill="currentColor" stroke-width="1.5"/></svg></button><button data-tip="round" title="Round" aria-label="Round" data-i18n-title="tip_round"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M10 12h10"/><circle cx="6.5" cy="12" r="3.6" fill="currentColor" stroke="none"/></svg></button><button data-tip="bars" style="display:none" title="Bars" aria-label="Bars" data-i18n-title="ends_bars"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M4 12h16M4 6v12M20 6v12"/></svg></button><button data-tip="arrows" style="display:none" title="Arrows" aria-label="Arrows" data-i18n-title="ends_arrows"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6"/><path d="M2 12l7-4.5v9z" fill="currentColor" stroke-width="1.5"/><path d="M22 12l-7-4.5v9z" fill="currentColor" stroke-width="1.5"/></svg></button></div>
+      <button class="mini ibtn" id="tipends" title="Tip at start" aria-label="Tip at start"></button>
+      <span class="divider tipdiv" id="smoothdiv"></span>
+      <button class="mini ibtn" id="pensmooth" title="Smooth: Off" aria-label="Smooth: Off"></button>
     </div>
     <div class="ctx hidden" id="defctl">
       <span class="lbl" data-i18n="defect_label">Defect</span>
@@ -1016,7 +1068,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.6.0</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.6.2</span></div>
   </nav>
 </div>
 
@@ -1208,7 +1260,7 @@ body.hasfine .emotip{display:block}
       <span>m</span>
       <span class="planum-chip" id="scalePlChip" style="display:none" data-i18n="from_planum">from Planum</span>
     </div>
-    <div class="planum-note" id="scalePl" dir="ltr" style="display:none"></div>
+    <div class="planum-note" id="scalePl" style="display:none"></div>
     <div id="scaleReadout" style="font-size:13px;color:var(--muted);min-height:18px;margin:2px 0 2px 2px"></div>
     <button class="btn ghost" id="scaleCalib" style="height:32px;font-size:12px;margin-top:4px" data-i18n="calibrate_new_camera">+ Calibrate a new camera…</button>
     <div class="actions">
@@ -1224,67 +1276,75 @@ body.hasfine .emotip{display:block}
     <button class="gclose" id="calClose" aria-label="Close">&times;</button>
     <h3 data-i18n="cal_title">Camera calibration — distance to resolution</h3>
     <div class="calbody">
-      <div class="calnote" data-i18n="cal_note">Teach the tool your camera's resolution at different distances. Photograph an object of known size at several known distances, mark it on each shot, then save the camera. Afterwards you can scale any photo from just the distance. Use the same lens/zoom you'll measure with, and photos at the same resolution.</div>
+      <div class="calnote" data-i18n="cal_note">Teach the tool your camera's resolution at different distances, then scale any photo from distance alone — no reference object needed.</div>
 
-      <div class="calsec">
-        <h4 data-i18n="saved_cameras">Saved cameras</h4>
-        <div class="calrow">
-          <select id="calCamSelect" style="flex:1;min-width:180px"><option value="" data-i18n="no_camera_selected_option">— No camera selected —</option></select>
-          <button class="btn ghost" id="calCamDelete" style="height:32px;font-size:12px;display:none" data-i18n="delete_btn">Delete</button>
-        </div>
-        <div class="calrow">
-          <button class="btn ghost" id="calExportOne" style="height:30px;font-size:12px;display:none" data-i18n="export_this">↓ Export this</button>
-          <button class="btn ghost" id="calExportAll" style="height:30px;font-size:12px" data-i18n="export_all2">↓ Export all</button>
-          <button class="btn ghost" id="calImport" style="height:30px;font-size:12px" data-i18n="import_btn">↑ Import</button>
+      <div class="calbox">
+        <h4 data-i18n="saved_cameras">Saved camera profiles</h4>
+        <select id="calCamSelect" class="calsel"><option value="" data-i18n="no_camera_selected_option">— No profile selected —</option></select>
+        <div class="calbtns">
+          <button class="btn ghost sm" id="calCamDelete" disabled data-i18n="delete_btn">Delete</button>
+          <button class="btn ghost sm" id="calExportOne" disabled data-i18n="export_this">↓ Export this</button>
+          <button class="btn ghost sm" id="calExportAll" data-i18n="export_all2">↓ Export all</button>
+          <button class="btn ghost sm" id="calImport" data-i18n="import_btn">↑ Import</button>
           <input type="file" id="calImportFile" accept=".json,application/json" style="display:none">
         </div>
         <div id="calCamInfo" style="font-size:11px;color:var(--muted)"></div>
       </div>
 
-      <div class="calsec">
-        <h4 data-i18n="add_calibration_shots">Add calibration shots</h4>
-        <button class="btn" id="calLoad" style="height:34px;font-size:13px;margin-bottom:8px" data-i18n="load_calibration_photo">📷 Load calibration photo</button>
-        <input type="file" id="calFile" accept="image/*" style="display:none">
-        <div id="calCanvasWrap">
-          <canvas id="calCanvas"></canvas>
-          <div class="calzoom">
-            <button id="calReset" data-i18n="reset_view">Reset view</button>
-            <span id="calZoom" style="font-family:monospace;color:var(--text)">1.0×</span>
-            <span id="calHint" data-i18n="cal_hint">Tap the two edges of the object · drag to pan · pinch/scroll to zoom</span>
-          </div>
+      <div class="caltips">
+        <button class="caltips-t" id="calTipsBtn" type="button"><span id="calTipsArr">▾</span> <span data-i18n="cal_tips">Tips</span></button>
+        <div id="calTipsBody">
+          <div class="caltip" data-i18n="cal_tip1">Calibrate across the distance range you expect to actually use the camera at.</div>
+          <div class="caltip" data-i18n="cal_tip2">Photograph from far away first, then halve the distance each shot — e.g. 8 m, then 4 m, then 2 m. This spreads the points evenly for a robust fit.</div>
+          <div class="caltip" data-i18n="cal_tip3">Use the same zoom/focal length for every shot and for real measurements later.</div>
+          <div class="caltip" data-i18n="cal_tip4">Measure each distance with a laser meter for best accuracy — the smaller the distance error, the more accurate every measurement you make with this profile.</div>
         </div>
-        <div id="calSpan" style="font-size:12px;color:var(--muted);margin-bottom:8px"></div>
-        <div class="calrow">
-          <span style="min-width:56px" data-i18n="distance_field">Distance</span>
-          <input id="calDist" type="number" min="0.01" step="any" inputmode="decimal" placeholder="e.g. 2.0" style="width:100px"><span>m</span>
-          <span style="min-width:48px;margin-left:6px" data-i18n="width_field">Width</span>
-          <input id="calWidth" type="number" min="0.01" step="any" inputmode="decimal" placeholder="e.g. 300" style="width:100px"><span>mm</span>
-        </div>
-        <div><span class="planum-chip" id="calPlChip" style="display:none" data-i18n="from_planum">from Planum</span></div>
-        <div class="planum-note" id="calPl" dir="ltr" style="display:none"></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn primary" id="calAdd" style="height:32px;font-size:12px" data-i18n="add_this_shot">Add this shot</button>
-          <button class="btn ghost" id="calClear" style="height:32px;font-size:12px" data-i18n="clear_points">Clear points</button>
-        </div>
-        <div id="calShots" style="margin-top:10px"></div>
-        <div id="calFit" style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5"></div>
       </div>
 
-      <div class="calsec">
-        <h4 data-i18n="save_camera_section">Save camera</h4>
-        <div class="calrow">
-          <input id="calName" type="text" maxlength="40" placeholder="Camera name — e.g. Phone 1× lens" style="flex:1;min-width:180px" data-i18n-placeholder="camera_name_placeholder">
-        </div>
-        <div class="calrow">
-          <input id="calCamNote" type="text" maxlength="120" placeholder="Optional note — e.g. calibrated 1–8 m" style="flex:1;min-width:180px" data-i18n-placeholder="optional_note_placeholder">
-        </div>
-        <button class="btn primary" id="calSave" style="height:34px;font-size:13px" data-i18n="save_camera_btn">Save camera</button>
-        <button class="btn ghost" id="calResetAll" style="height:34px;font-size:13px" data-i18n="reset_shots">Reset shots</button>
-        <div id="calMsg" class="calmsg"></div>
+      <div id="calPrompt" class="calprompt">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p class="big" data-i18n="load_calibration_photo">Load calibration photo</p>
+        <p class="small" data-i18n="cal_load_sub">a photo of a known-width object at a known distance</p>
+        <button class="btn primary" id="calLoad" data-i18n="cal_browse">Browse files…</button>
       </div>
+      <input type="file" id="calFile" accept="image/*" style="display:none">
+      <div id="calCanvasWrap">
+        <canvas id="calCanvas"></canvas>
+        <div class="calzoom">
+          <button id="calReset" data-i18n="reset_view">Reset view</button>
+          <button id="calClear" data-i18n="clear_points">Reset points</button>
+          <button id="calChange" data-i18n="cal_change_photo">↻ Change photo</button>
+          <span id="calZoom" style="font-family:monospace;color:var(--text)">1.0×</span>
+        </div>
+        <div class="calzoom2"><span id="calHint" data-i18n="cal_hint">Pinch or scroll to zoom · drag to pan</span><span id="calMeta" dir="ltr"></span></div>
+      </div>
+
+      <div class="calform">
+        <div class="calstep"><span class="stepn">1</span><span data-i18n="cal_step1">Enter this shot's distance and the known object's width</span></div>
+        <div class="calpair">
+          <label class="calfield"><span><span data-i18n="distance_field">Distance (m)</span> <span class="planum-chip" id="calPlChip" style="display:none" data-i18n="from_planum">from Planum</span></span><input id="calDist" type="number" min="0.01" step="any" inputmode="decimal" placeholder="e.g. 8.000"></label>
+          <label class="calfield"><span data-i18n="width_field">Object width (mm)</span><input id="calWidth" type="number" min="0.01" step="any" inputmode="decimal" placeholder="e.g. 50.000"></label>
+        </div>
+        <div class="planum-note" id="calPl" style="display:none"></div>
+        <div class="calstep" style="margin-top:10px"><span class="stepn">2</span><span data-i18n="cal_step2">Tap the two edges of the object on the photo</span></div>
+        <div id="calSpan" class="calspan"></div>
+        <button class="btn primary" id="calAdd" data-i18n="add_this_shot">Add this shot</button>
+      </div>
+
+      <div id="calShots"></div>
+      <div id="calFit" style="font-size:12px;color:var(--muted);margin:6px 0 10px;line-height:1.5"></div>
+
+      <input id="calName" class="calinp" type="text" maxlength="40" data-i18n-placeholder="camera_name_placeholder" placeholder="Camera &amp; lens — e.g. iPhone 15 main 1×">
+      <input id="calCamNote" class="calinp" type="text" maxlength="120" data-i18n-placeholder="optional_note_placeholder" placeholder="Optional note — settings, site, date">
+      <div class="calbtns">
+        <button class="btn primary" id="calSave" data-i18n="save_camera_btn">Save camera profile</button>
+        <button class="btn ghost" id="calResetAll" data-i18n="reset_shots">Reset calibration</button>
+      </div>
+      <div id="calMsg" class="calmsg"></div>
     </div>
   </div>
 </div>
+<canvas id="calLoupe"></canvas>
 
 <!-- help / guide -->
 <div class="overlay" id="aboutOverlay">
@@ -1330,16 +1390,16 @@ body.hasfine .emotip{display:block}
       <div class="gsec">
         <h4 data-i18n="help_g_h">Gestures</h4>
         <div class="grow"><b data-i18n="help_g_tool_b">Tool buttons</b><span data-i18n="help_g_tool_d">Tap to use a tool. Double-tap for its main setting; hold for your recent items. An orange dot marks the buttons that have extras — it goes after three uses.</span></div>
-        <div class="grow"><b data-i18n="help_g_photo_b">On the photo</b><span data-i18n="help_g_photo_d">Tap any mark to select it and drag it, whatever tool is on. Double-tap it to change its text or value. In Select, hold it (or right-click) for colour, size, edit, duplicate and delete.</span></div>
+        <div class="grow"><b data-i18n="help_g_photo_b">On the photo</b><span data-i18n="help_g_photo_d">Tap any mark to select it and drag it, whatever tool is on. Double-tap it to change its text or value. In Select, hold it (or right-click) for colour, size, edit, duplicate, copy, paste and delete. Once something is copied, hold an empty spot (or right-click it) to paste there.</span></div>
         <div class="grow"><b data-i18n="help_g_armed_b">Picked values</b><span data-i18n="help_g_armed_d">A value picked from a hold list is used once — by the next line, note or angle — then the dialog comes back. The toolbar shows it waiting; Clear drops it.</span></div>
       </div>
       <div class="gsec">
         <h4 data-i18n="help_tools_h">Tools</h4>
-        <div class="grow"><b data-i18n="help_select_b">Select</b><span data-i18n="help_select_d">Tap an annotation to move, recolour, resize, or delete it. Drag its handles to reshape. Hold an annotation (or right-click it) for a menu: colour, size, edit, duplicate, delete.</span></div>
+        <div class="grow"><b data-i18n="help_select_b">Select</b><span data-i18n="help_select_d">Tap an annotation to move, recolour, resize, or delete it. Drag its handles to reshape. Hold an annotation (or right-click it) for a menu: colour, delete, size, edit, duplicate, copy and paste.</span></div>
         <div class="grow"><b data-i18n="help_text_b">Text &amp; Tag</b><span data-i18n="help_text_d">Tap the photo to type a label in place. Double-tap the tool for the tags and elements list, hold it for the last five things you placed. Anything picked is placed once and then released, so the next tap types again; the props strip shows what is waiting, and Clear drops it. Tags and elements take the text style, so Fill and the ink swatch apply to them, and the recents remember the colour each was last placed in.</span></div>
-        <div class="grow"><b data-i18n="help_draw_b">Draw</b><span data-i18n="help_draw_d">Freehand ink for circling or sketching. Double-tap the tool to step the start tip: Off, Arrow, Round.</span></div>
+        <div class="grow"><b data-i18n="help_draw_b">Draw</b><span data-i18n="help_draw_d">Freehand ink for circling or sketching. Double-tap the tool to step the tip: Off, Arrow, Round. Beside the tip icons, the ends button puts the tip at the start, the end or both ends, and Smooth rounds out the stroke. Both apply to the selected stroke too, and Smooth can be switched back off.</span></div>
         <div class="grow"><b data-i18n="help_length_b">Length</b><span data-i18n="help_length_d">Drag a measured line. Short bars mark each end. Enter a value and pick a unit (mm, m, in, ft) — the number rides alongside the line. Hold the tool for your last five values: pick one and the next line takes it without the dialog. Double-tap the tool to switch the ends between bars and arrows.</span></div>
-        <div class="grow"><b data-i18n="help_measure_b">Measure</b><span data-i18n="help_measure_d">Auto-measures real size from a calibrated camera. Set a scale once (pick a camera + enter distance), then draw a line for length or an area for a polygon — the value is computed for you. Double-tap a measurement to change its unit. Double-tap the tool to set the scale; a new photo starts from the camera and distance you used last.</span></div>
+        <div class="grow"><b data-i18n="help_measure_b">Measure</b><span data-i18n="help_measure_d">Auto-measures real size from a calibrated camera. Set a scale once (pick a camera + enter distance), then draw a line for length or an area for a polygon — the value is computed for you. Double-tap a measurement to change its unit. Double-tap the tool to set the scale; a new photo starts from the camera you used last; the distance starts empty unless the photo has a Planum reading.</span></div>
         <div class="grow"><b data-i18n="help_calib_b">Calibrate camera</b><span data-i18n="help_calib_d">In Measure, open Cameras… to teach the tool your camera. Photograph an object of known width at several known distances, mark it on each, and save. Reuse the saved camera on any photo — no ruler needed in the shot.</span></div>
         <div class="grow"><b data-i18n="help_note_b">Note</b><span data-i18n="help_note_d">A leader line from a point to a text label. The line meets the label on its near side, so it always points cleanly at the target. Hold the tool for your last five notes: pick one and the next note takes it without typing. Double-tap the tool to step the tip: Off, Arrow, Round.</span></div>
         <div class="grow"><b data-i18n="help_polygon_b">Polygon</b><span data-i18n="help_polygon_d">Tap to drop corners; use Close shape to finish. Shade an area or ring a region. Double-tap the tool to switch Fill on or off.</span></div>
@@ -1364,7 +1424,7 @@ body.hasfine .emotip{display:block}
         <div class="grow"><b data-i18n="help_pdet_b">Photo details</b><span data-i18n="help_pdet_d">Double-tap a thumbnail (or right-click it) to open its details: caption, location, include in the report, move left or right, remove. The date taken is read from the photo file.</span></div>
         <div class="grow"><b data-i18n="help_strip_b">Caption and date on photos</b><span data-i18n="help_strip_d">In the same panel, On photos writes the caption and location, the date, or both onto every photo — bottom-left or top-left. They appear in exports and in the report. Off by default.</span></div>
         <div class="grow"><b data-i18n="help_export_b">Export</b><span data-i18n="help_export_d">Export one saves the current photo at full resolution with its markup; Export all saves every photo. Pick JPG or PNG in the menu beside them, or hold either button to pick and export in one go.</span></div>
-        <div class="grow"><b data-i18n="help_paste_b">Paste</b><span data-i18n="help_paste_d">Adds an image copied to the clipboard as a new photo. Press Ctrl/Cmd+V, or use the Paste button. Phones will ask for clipboard permission the first time.</span></div>
+        <div class="grow"><b data-i18n="help_paste_b">Paste</b><span data-i18n="help_paste_d">Adds an image copied to the clipboard as a new photo. Press Ctrl/Cmd+V, or use the Paste button. Phones will ask for clipboard permission the first time. Marks copied with Ctrl/Cmd+C or the hold menu paste with Ctrl/Cmd+V onto any photo in this session, in the same place relative to the photo; measurements keep their values and numbers keep their number.</span></div>
       </div>
       <div class="gsec">
         <h4 data-i18n="help_options_h">Options</h4>
@@ -1396,7 +1456,8 @@ body.hasfine .emotip{display:block}
           <span><kbd>G</kbd> <span data-i18n="help_k_angle">Angle</span></span><span><kbd>#</kbd> <span data-i18n="help_k_number">Number</span></span><span><kbd>F</kbd> <span data-i18n="help_k_defect">Defect</span></span><span><kbd>Q</kbd> <span data-i18n="help_k_qr">QR</span></span>
           <span><kbd>1</kbd>–<kbd>9</kbd>, <kbd>0</kbd> <span data-i18n="help_k_photo">Photo 1–10</span></span>
           <span><kbd>Del</kbd> <span data-i18n="help_k_delete">Delete selected</span></span><span><kbd>Ctrl</kbd>+<kbd>Z</kbd> <span data-i18n="help_k_undo">Undo</span></span>
-          <span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> <span data-i18n="help_k_redo">Redo</span></span><span><kbd>Esc</kbd> <span data-i18n="help_k_esc">Deselect / cancel</span></span>
+          <span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> <span data-i18n="help_k_redo">Redo</span></span>
+          <span><kbd>Ctrl</kbd>+<kbd>C</kbd> <span data-i18n="help_k_copy">Copy mark</span></span><span><kbd>Ctrl</kbd>+<kbd>V</kbd> <span data-i18n="help_k_paste">Paste mark or photo</span></span><span><kbd>Esc</kbd> <span data-i18n="help_k_esc">Deselect / cancel</span></span>
         </div>
       </div>
     </div>
@@ -1640,7 +1701,7 @@ const I18N={
     "help_pickur_b":"Unrated",
     "help_pickur_d":"The sixth condition, in blue. For a defect you can see but cannot judge — no access, obscured, or wanting a second opinion. It prints as UR in the schedule and is counted in its own column rather than folded into CS1.",
     "help_paste_b":"Paste",
-    "help_paste_d":"Adds an image copied to the clipboard as a new photo. Press Ctrl/Cmd+V, or use the Paste button. Phones will ask for clipboard permission the first time.",
+    "help_paste_d":"Adds an image copied to the clipboard as a new photo. Press Ctrl/Cmd+V, or use the Paste button. Phones will ask for clipboard permission the first time. Marks copied with Ctrl/Cmd+C or the hold menu paste with Ctrl/Cmd+V onto any photo in this session, in the same place relative to the photo; measurements keep their values and numbers keep their number.",
     "add_label":"Add label",
     "edit_label":"Edit label",
     "note_text":"Note text",
@@ -1702,6 +1763,27 @@ const I18N={
     "set_scale_body":"Pick a calibrated camera and enter the camera-to-subject distance. Resolution is predicted from the camera's calibration — no reference object needed in this photo.",
     "camera_label":"Camera",
     "distance_label":"Distance",
+    "pl_offset":"Offset {v}",
+    "pl_mode":"{m} mode",
+    "pl_m_distance":"Distance",
+    "pl_m_continuous":"Continuous",
+    "pl_m_angle":"Angle",
+    "pl_m_level":"Level",
+    "pl_m_ih":"Indirect height",
+    "pl_m_il":"Indirect length",
+    "pl_nodist":"no distance recorded",
+    "pl_unknown":"reading type “{t}” not recognised; not filled in",
+    "pl_resized":"photo resized or cropped since capture ({a} → {b}); not filled in",
+    "cal_tips":"Tips",
+    "cal_tip1":"Calibrate across the distance range you expect to actually use the camera at.",
+    "cal_tip2":"Photograph from far away first, then halve the distance each shot — e.g. 8 m, then 4 m, then 2 m. This spreads the points evenly for a robust fit.",
+    "cal_tip3":"Use the same zoom/focal length for every shot and for real measurements later.",
+    "cal_tip4":"Measure each distance with a laser meter for best accuracy — the smaller the distance error, the more accurate every measurement you make with this profile.",
+    "cal_load_sub":"a photo of a known-width object at a known distance",
+    "cal_browse":"Browse files…",
+    "cal_change_photo":"↻ Change photo",
+    "cal_step1":"Enter this shot's distance and the known object's width",
+    "cal_step2":"Tap the two edges of the object on the photo",
     "from_planum":"from Planum",
     "select_camera_option":"— Select a camera —",
     "calibrate_new_camera":"+ Calibrate a new camera…",
@@ -1710,25 +1792,23 @@ const I18N={
     "predicted_resolution":"Predicted resolution: {value} px/mm",
     "could_not_compute":"Could not compute.",
     "cal_title":"Camera calibration — distance to resolution",
-    "cal_note":"Teach the tool your camera's resolution at different distances. Photograph an object of known size at several known distances, mark it on each shot, then save the camera. Afterwards you can scale any photo from just the distance. Use the same lens/zoom you'll measure with, and photos at the same resolution.",
-    "saved_cameras":"Saved cameras",
-    "no_camera_selected_option":"— No camera selected —",
+    "cal_note":"Teach the tool your camera's resolution at different distances, then scale any photo from distance alone — no reference object needed.",
+    "saved_cameras":"Saved camera profiles",
+    "no_camera_selected_option":"— No profile selected —",
     "export_this":"↓ Export this",
     "export_all2":"↓ Export all",
     "import_btn":"↑ Import",
-    "add_calibration_shots":"Add calibration shots",
-    "load_calibration_photo":"📷 Load calibration photo",
+    "load_calibration_photo":"Load calibration photo",
     "reset_view":"Reset view",
-    "cal_hint":"Tap the two edges of the object · drag to pan · pinch/scroll to zoom",
-    "distance_field":"Distance",
-    "width_field":"Width",
+    "cal_hint":"Pinch or scroll to zoom · drag to pan",
+    "distance_field":"Distance (m)",
+    "width_field":"Object width (mm)",
     "add_this_shot":"Add this shot",
-    "clear_points":"Clear points",
-    "save_camera_section":"Save camera",
-    "camera_name_placeholder":"Camera name — e.g. Phone 1× lens",
-    "optional_note_placeholder":"Optional note — e.g. calibrated 1–8 m",
-    "save_camera_btn":"Save camera",
-    "reset_shots":"Reset shots",
+    "clear_points":"Reset points",
+    "camera_name_placeholder":"Camera & lens — e.g. iPhone 15 main 1×",
+    "optional_note_placeholder":"Optional note — settings, site, date",
+    "save_camera_btn":"Save camera profile",
+    "reset_shots":"Reset calibration",
     "no_shots_yet":"No shots yet. Add 3–5 across your distance range.",
     "toast_tap_add_points":"Tap to add points · tap the first point to close",
     "toast_need_3_points":"Need at least 3 points",
@@ -1775,15 +1855,15 @@ const I18N={
     "toast_no_cameras_export":"No cameras to export",
     "help_tools_h":"Tools",
     "help_select_b":"Select",
-    "help_select_d":"Tap an annotation to move, recolour, resize, or delete it. Drag its handles to reshape. Hold an annotation (or right-click it) for a menu: colour, size, edit, duplicate, delete.",
+    "help_select_d":"Tap an annotation to move, recolour, resize, or delete it. Drag its handles to reshape. Hold an annotation (or right-click it) for a menu: colour, delete, size, edit, duplicate, copy and paste.",
     "help_text_b":"Text & Tag",
     "help_text_d":"Tap the photo to type a label in place. Double-tap the tool for the tags and elements list, hold it for the last five things you placed. Anything picked is placed once and then released, so the next tap types again; the props strip shows what is waiting, and Clear drops it. Tags and elements take the text style, so Fill and the ink swatch apply to them, and the recents remember the colour each was last placed in.",
     "help_draw_b":"Draw",
-    "help_draw_d":"Freehand ink for circling or sketching. Double-tap the tool to step the start tip: Off, Arrow, Round.",
+    "help_draw_d":"Freehand ink for circling or sketching. Double-tap the tool to step the tip: Off, Arrow, Round. Beside the tip icons, the ends button puts the tip at the start, the end or both ends, and Smooth rounds out the stroke. Both apply to the selected stroke too, and Smooth can be switched back off.",
     "help_length_b":"Length",
     "help_length_d":"Drag a measured line. Short bars mark each end. Enter a value and pick a unit (mm, m, in, ft) — the number rides alongside the line. Hold the tool for your last five values: pick one and the next line takes it without the dialog. Double-tap the tool to switch the ends between bars and arrows.",
     "help_measure_b":"Measure",
-    "help_measure_d":"Auto-measures real size from a calibrated camera. Set a scale once (pick a camera + enter distance), then draw a line for length or an area for a polygon — the value is computed for you. Double-tap a measurement to change its unit. Double-tap the tool to set the scale; a new photo starts from the camera and distance you used last.",
+    "help_measure_d":"Auto-measures real size from a calibrated camera. Set a scale once (pick a camera + enter distance), then draw a line for length or an area for a polygon — the value is computed for you. Double-tap a measurement to change its unit. Double-tap the tool to set the scale; a new photo starts from the camera you used last; the distance starts empty unless the photo has a Planum reading.",
     "help_calib_b":"Calibrate camera",
     "help_calib_d":"In Measure, open Cameras… to teach the tool your camera. Photograph an object of known width at several known distances, mark it on each, and save. Reuse the saved camera on any photo — no ruler needed in the shot.",
     "help_note_b":"Note",
@@ -1832,7 +1912,7 @@ const I18N={
     "help_g_tool_b":"Tool buttons",
     "help_g_tool_d":"Tap to use a tool. Double-tap for its main setting; hold for your recent items. An orange dot marks the buttons that have extras — it goes after three uses.",
     "help_g_photo_b":"On the photo",
-    "help_g_photo_d":"Tap any mark to select it and drag it, whatever tool is on. Double-tap it to change its text or value. In Select, hold it (or right-click) for colour, size, edit, duplicate and delete.",
+    "help_g_photo_d":"Tap any mark to select it and drag it, whatever tool is on. Double-tap it to change its text or value. In Select, hold it (or right-click) for colour, size, edit, duplicate, copy, paste and delete. Once something is copied, hold an empty spot (or right-click it) to paste there.",
     "help_g_armed_b":"Picked values",
     "help_g_armed_d":"A value picked from a hold list is used once — by the next line, note or angle — then the dialog comes back. The toolbar shows it waiting; Clear drops it.",
     "help_photos_h":"Photos & export",
@@ -1853,9 +1933,9 @@ const I18N={
     "value_ph_angle":"e.g. 45",
     "value_ph_number":"e.g. B3",
     "toast_imported_cameras":"Imported {n} camera(s)",
-    "cal_point_a_set":"Point A set — tap the opposite edge for B.",
-    "cal_tap_two_edges":"Tap the two edges of the known object.",
-    "cal_object_spans":"Object spans <strong>{span} px</strong>. Enter distance &amp; width, then add the shot.",
+    "cal_point_a_set":"Now tap <strong>point B</strong> on the opposite edge.",
+    "cal_tap_two_edges":"Tap <strong>point A</strong> on one edge of the known object.",
+    "cal_object_spans":"Object spans <strong>{span} px</strong>. Drag A or B to adjust, or tap elsewhere to start again. Then “{add}”.",
     "cal_fit_failed":"Fit failed — distances must differ.",
     "cal_add_3rd_shot":"Add a 3rd shot for a fit-quality estimate.",
     "cal_fit_quality":"Fit quality: ",
@@ -1879,7 +1959,17 @@ const I18N={
     "scale_colon":"Scale: {value} px/mm",
     "toast_save_failed":"Not saved on this device — storage may be full. Export your work.",
     "toast_restore_skip":"Photos not opened: {n} — kept for next time",
-    "toast_export_skip":"Photos not exported: {n}"
+    "toast_export_skip":"Photos not exported: {n}",
+    "copy_btn":"Copy",
+    "toast_copied":"Copied — paste on any photo",
+    "tip_at_start":"Tip at start",
+    "tip_at_end":"Tip at end",
+    "tip_at_both":"Tips at both ends",
+    "smooth_on":"Smooth: On",
+    "smooth_off":"Smooth: Off",
+    "qr_dense":"dense — use size L",
+    "help_k_copy":"Copy mark",
+    "help_k_paste":"Paste mark or photo"
   },
   zh:{
     "rep_add_row":"添加行",
@@ -2093,7 +2183,7 @@ const I18N={
     "help_pickur_b":"未评定",
     "help_pickur_d":"第六种状态，蓝色。用于能看到但无法判断的缺陷：无法接近、被遮挡，或需要他人复核。在明细表中打印为 UR，并单独统计，不计入 CS1。",
     "help_paste_b":"粘贴",
-    "help_paste_d":"将复制到剪贴板的图片添加为新照片。按 Ctrl/Cmd+V，或使用粘贴按钮。手机首次使用时会请求剪贴板权限。",
+    "help_paste_d":"将复制到剪贴板的图片添加为新照片。按 Ctrl/Cmd+V，或使用粘贴按钮。手机首次使用时会请求剪贴板权限。用 Ctrl/Cmd+C 或长按菜单复制的标注，可用 Ctrl/Cmd+V 粘贴到本次会话的任意照片上，位置与照片保持相对一致；测量值保持不变，编号保持原号。",
     "add_label":"添加标签",
     "edit_label":"编辑标签",
     "note_text":"备注文字",
@@ -2159,6 +2249,27 @@ const I18N={
     "set_scale_body":"选择一台已校准的相机，并输入相机到目标的距离。分辨率将根据相机校准数据推算——本照片中无需参照物。",
     "camera_label":"相机",
     "distance_label":"距离",
+    "pl_offset":"偏移 {v}",
+    "pl_mode":"{m}模式",
+    "pl_m_distance":"距离",
+    "pl_m_continuous":"连续",
+    "pl_m_angle":"角度",
+    "pl_m_level":"水平",
+    "pl_m_ih":"间接高度",
+    "pl_m_il":"间接长度",
+    "pl_nodist":"未记录距离",
+    "pl_unknown":"未识别的读数类型“{t}”；未填入",
+    "pl_resized":"拍摄后照片已缩放或裁剪（{a} → {b}）；未填入",
+    "cal_tips":"提示",
+    "cal_tip1":"在您实际预计使用相机的距离范围内进行校准。",
+    "cal_tip2":"先从远处拍摄，然后每次将距离减半——例如 8 m、4 m、2 m。这样数据点分布均匀，拟合更可靠。",
+    "cal_tip3":"每张校准照片及之后的实际测量都使用相同的变焦/焦距。",
+    "cal_tip4":"使用激光测距仪测量每个距离以获得最佳精度——距离误差越小，使用此配置进行的每次测量就越准确。",
+    "cal_load_sub":"在已知距离处拍摄的已知宽度物体的照片",
+    "cal_browse":"浏览文件…",
+    "cal_change_photo":"↻ 更换照片",
+    "cal_step1":"输入本次拍摄的距离和已知物体的宽度",
+    "cal_step2":"在照片上点击物体的两个边缘",
     "from_planum":"来自 Planum",
     "select_camera_option":"—选择相机—",
     "calibrate_new_camera":"+ 校准新相机…",
@@ -2167,25 +2278,23 @@ const I18N={
     "predicted_resolution":"预测分辨率：{value} 像素/毫米",
     "could_not_compute":"无法计算。",
     "cal_title":"相机校准——距离与分辨率",
-    "cal_note":"让工具学习您相机在不同距离下的分辨率。在几个已知距离处拍摄一个已知尺寸的物体，在每张照片上标记它，然后保存该相机。之后只需输入距离即可为任意照片设置比例。请使用您测量时相同的镜头/变焦倍率，并保持照片分辨率一致。",
-    "saved_cameras":"已保存的相机",
-    "no_camera_selected_option":"—未选择相机—",
+    "cal_note":"让工具学习您相机在不同距离下的分辨率，之后仅凭距离即可为任意照片设置比例——无需参照物。",
+    "saved_cameras":"已保存的相机配置",
+    "no_camera_selected_option":"— 未选择配置 —",
     "export_this":"↓ 导出此项",
     "export_all2":"↓ 导出全部",
     "import_btn":"↑ 导入",
-    "add_calibration_shots":"添加校准照片",
-    "load_calibration_photo":"📷 加载校准照片",
+    "load_calibration_photo":"加载校准照片",
     "reset_view":"重置视图",
-    "cal_hint":"点击物体的两个边缘·拖动平移·捏合/滚动缩放",
-    "distance_field":"距离",
-    "width_field":"宽度",
+    "cal_hint":"捏合或滚动缩放 · 拖动平移",
+    "distance_field":"距离 (m)",
+    "width_field":"物体宽度 (mm)",
     "add_this_shot":"添加此照片",
-    "clear_points":"清除标记点",
-    "save_camera_section":"保存相机",
-    "camera_name_placeholder":"相机名称——例如：手机 1倍镜头",
-    "optional_note_placeholder":"备注（可选）——例如：已校准1–8米",
-    "save_camera_btn":"保存相机",
-    "reset_shots":"重置照片",
+    "clear_points":"重置点",
+    "camera_name_placeholder":"相机和镜头——例如 iPhone 15 主摄 1×",
+    "optional_note_placeholder":"可选备注——设置、现场、日期",
+    "save_camera_btn":"保存相机配置",
+    "reset_shots":"重置校准",
     "no_shots_yet":"暂无照片。请在您的距离范围内添加3–5张。",
     "toast_tap_add_points":"点击添加顶点·点击第一个点闭合",
     "toast_need_3_points":"至少需要3个点",
@@ -2232,15 +2341,15 @@ const I18N={
     "toast_no_cameras_export":"没有可导出的相机",
     "help_tools_h":"工具",
     "help_select_b":"选择",
-    "help_select_d":"点击标注即可移动、改色、调整大小或删除。拖动控制点可改变形状。长按标注（或右键单击）可打开菜单：颜色、大小、编辑、复制、删除。",
+    "help_select_d":"点击标注即可移动、改色、调整大小或删除。拖动控制点可改变形状。长按标注（或右键单击）可打开菜单：颜色、删除、大小、编辑、创建副本、复制、粘贴。",
     "help_text_b":"文字与标签",
     "help_text_d":"点按照片即可就地输入文字标注。双击该工具可打开标签与部位列表，长按可显示最近放置的五项。所选内容放置一次后即自动释放，因此下一次点按会重新进入输入；属性栏会显示待放置的内容，点击“清除”可取消。标签与部位采用文字样式，因此填充与墨色同样适用，最近列表也会记住每项上次使用的颜色。",
     "help_draw_b":"绘制",
-    "help_draw_d":"自由绘制，用于圈画或勾画。双击工具可切换起点样式：无、箭头、圆点。",
+    "help_draw_d":"自由绘制，用于圈画或勾画。双击工具可切换端点样式：无、箭头、圆点。端点图标旁的端头按钮可将端点放在起点、终点或两端，“平滑”可让笔画更圆顺。两者也作用于选中的笔画，平滑可随时关闭。",
     "help_length_b":"长度",
     "help_length_d":"拖出一条测量线，两端有短横标记。输入数值并选择单位（毫米、米、英寸、英尺）——数字会显示在线条旁边。长按工具可选最近五个数值：选中后，下一条线直接使用该数值，不弹出对话框。双击工具可在短横与箭头端点之间切换。",
     "help_measure_b":"测量",
-    "help_measure_d":"根据已校准的相机自动测量实际尺寸。设置一次比例（选择相机并输入距离），然后绘制线段测长度或多边形测面积——数值会自动计算。双击测量结果可更改单位。双击工具可设置比例；新照片会沿用上次使用的相机和距离。",
+    "help_measure_d":"根据已校准的相机自动测量实际尺寸。设置一次比例（选择相机并输入距离），然后绘制线段测长度或多边形测面积——数值会自动计算。双击测量结果可更改单位。双击工具可设置比例；新照片会沿用上次使用的相机；除非照片带有 Planum 读数，否则距离为空。",
     "help_calib_b":"校准相机",
     "help_calib_d":"在\"测量\"中打开\"相机…\"来让工具学习您的相机。在几个已知距离处拍摄一个已知宽度的物体，逐一标记后保存。之后在任意照片中复用已保存的相机——拍摄时无需放置直尺。",
     "help_note_b":"备注",
@@ -2289,7 +2398,7 @@ const I18N={
     "help_g_tool_b":"工具按钮",
     "help_g_tool_d":"点击使用工具。双击打开其主要设置；长按显示最近使用的项目。橙色圆点标出带有额外功能的按钮，使用三次后消失。",
     "help_g_photo_b":"在照片上",
-    "help_g_photo_d":"无论当前是什么工具，点击任一标注即可选中并拖动。双击可修改其文字或数值。在“选择”工具中长按（或右键单击）可打开菜单：颜色、大小、编辑、复制、删除。",
+    "help_g_photo_d":"无论当前是什么工具，点击任一标注即可选中并拖动。双击可修改其文字或数值。在“选择”工具中长按（或右键单击）可打开菜单：颜色、大小、编辑、创建副本、复制、粘贴和删除。复制后，长按空白处（或右键单击）即可粘贴到该处。",
     "help_g_armed_b":"预选的数值",
     "help_g_armed_d":"从长按列表中选取的数值只使用一次——用于下一条线、注释或角度——之后对话框会再次出现。工具栏会显示待用的数值；“清除”可取消。",
     "help_photos_h":"照片与导出",
@@ -2310,9 +2419,9 @@ const I18N={
     "value_ph_angle":"例如：45",
     "value_ph_number":"例如：B3",
     "toast_imported_cameras":"已导入{n}台相机",
-    "cal_point_a_set":"A点已设置——请点击对边设置B点。",
-    "cal_tap_two_edges":"请点击已知物体的两个边缘。",
-    "cal_object_spans":"物体跨度为<strong>{span} 像素</strong>。请输入距离和宽度，然后添加该照片。",
+    "cal_point_a_set":"现在在对边点击<strong>B 点</strong>。",
+    "cal_tap_two_edges":"在已知物体的一个边缘上点击<strong>A 点</strong>。",
+    "cal_object_spans":"物体跨度为<strong>{span} 像素</strong>。拖动 A 或 B 进行调整，或点击其他位置重新开始。然后点击“{add}”。",
     "cal_fit_failed":"拟合失败——距离必须不同。",
     "cal_add_3rd_shot":"添加第3张照片以估算拟合质量。",
     "cal_fit_quality":"拟合质量：",
@@ -2328,7 +2437,7 @@ const I18N={
     "language_tooltip":"语言",
     "ctx_label_text":"文字",
     "ctx_label_edit":"编辑",
-    "duplicate":"复制",
+    "duplicate":"创建副本",
     "ctx_label_value":"数值",
     "ctx_label_angle":"角度",
     "ctx_label_number":"编号",
@@ -2336,7 +2445,17 @@ const I18N={
     "scale_colon":"比例：{value} 像素/毫米",
     "toast_save_failed":"未能保存到本设备——存储空间可能已满。请导出你的工作。",
     "toast_restore_skip":"未能打开的照片：{n} —— 已保留，下次再试",
-    "toast_export_skip":"未导出的照片：{n}"
+    "toast_export_skip":"未导出的照片：{n}",
+    "copy_btn":"复制",
+    "toast_copied":"已复制——可粘贴到任意照片",
+    "tip_at_start":"端点在起点",
+    "tip_at_end":"端点在终点",
+    "tip_at_both":"两端都有端点",
+    "smooth_on":"平滑：开",
+    "smooth_off":"平滑：关",
+    "qr_dense":"较密——请用 L 尺寸",
+    "help_k_copy":"复制标注",
+    "help_k_paste":"粘贴标注或照片"
   },
   es:{
     "rep_add_row":"Añadir fila",
@@ -2550,7 +2669,7 @@ const I18N={
     "help_pickur_b":"Sin evaluar",
     "help_pickur_d":"El sexto estado, en azul. Para un defecto que se ve pero no se puede calificar: sin acceso, tapado o a la espera de una segunda opinión. Se imprime como UR en el listado y se cuenta en su propia columna, no dentro de CS1.",
     "help_paste_b":"Pegar",
-    "help_paste_d":"Añade como foto nueva una imagen copiada al portapapeles. Pulsa Ctrl/Cmd+V o usa el botón Pegar. Los móviles pedirán permiso del portapapeles la primera vez.",
+    "help_paste_d":"Añade como foto nueva una imagen copiada al portapapeles. Pulsa Ctrl/Cmd+V o usa el botón Pegar. Los móviles pedirán permiso del portapapeles la primera vez. Las marcas copiadas con Ctrl/Cmd+C o con el menú de pulsación larga se pegan con Ctrl/Cmd+V en cualquier foto de esta sesión, en el mismo lugar relativo a la foto; las mediciones conservan su valor y los números, su número.",
     "add_label":"Añadir etiqueta",
     "edit_label":"Editar etiqueta",
     "note_text":"Texto de la nota",
@@ -2616,6 +2735,27 @@ const I18N={
     "set_scale_body":"Elija una cámara calibrada e introduzca la distancia de la cámara al objeto. La resolución se predice a partir de la calibración de la cámara; no se necesita un objeto de referencia en esta foto.",
     "camera_label":"Cámara",
     "distance_label":"Distancia",
+    "pl_offset":"Desfase {v}",
+    "pl_mode":"modo {m}",
+    "pl_m_distance":"distancia",
+    "pl_m_continuous":"continuo",
+    "pl_m_angle":"ángulo",
+    "pl_m_level":"nivel",
+    "pl_m_ih":"altura indirecta",
+    "pl_m_il":"longitud indirecta",
+    "pl_nodist":"no se registró distancia",
+    "pl_unknown":"tipo de lectura «{t}» no reconocido; no se rellenó",
+    "pl_resized":"foto redimensionada o recortada desde la captura ({a} → {b}); no se rellenó",
+    "cal_tips":"Consejos",
+    "cal_tip1":"Calibre en el rango de distancias en el que realmente espera usar la cámara.",
+    "cal_tip2":"Fotografíe primero desde lejos y luego reduzca la distancia a la mitad en cada toma, p. ej. 8 m, luego 4 m, luego 2 m. Así los puntos quedan bien repartidos para un ajuste robusto.",
+    "cal_tip3":"Use el mismo zoom/distancia focal en todas las tomas y en las mediciones reales posteriores.",
+    "cal_tip4":"Mida cada distancia con un medidor láser para la máxima precisión: cuanto menor sea el error de distancia, más precisa será cada medición que haga con este perfil.",
+    "cal_load_sub":"una foto de un objeto de ancho conocido a una distancia conocida",
+    "cal_browse":"Buscar archivos…",
+    "cal_change_photo":"↻ Cambiar foto",
+    "cal_step1":"Introduzca la distancia de esta toma y el ancho del objeto conocido",
+    "cal_step2":"Toque los dos bordes del objeto en la foto",
     "from_planum":"de Planum",
     "select_camera_option":"— Seleccione una cámara —",
     "calibrate_new_camera":"+ Calibrar una cámara nueva…",
@@ -2624,25 +2764,23 @@ const I18N={
     "predicted_resolution":"Resolución prevista: {value} px/mm",
     "could_not_compute":"No se pudo calcular.",
     "cal_title":"Calibración de cámara — distancia a resolución",
-    "cal_note":"Enseñe a la herramienta la resolución de su cámara a distintas distancias. Fotografíe un objeto de tamaño conocido a varias distancias conocidas, márquelo en cada toma y guarde la cámara. Después podrá escalar cualquier foto solo con la distancia. Use la misma lente/zoom con la que medirá, y fotos con la misma resolución.",
-    "saved_cameras":"Cámaras guardadas",
-    "no_camera_selected_option":"— Ninguna cámara seleccionada —",
+    "cal_note":"Enseñe a la herramienta la resolución de su cámara a distintas distancias y luego escale cualquier foto solo con la distancia, sin objeto de referencia.",
+    "saved_cameras":"Perfiles de cámara guardados",
+    "no_camera_selected_option":"— Ningún perfil seleccionado —",
     "export_this":"↓ Exportar esta",
     "export_all2":"↓ Exportar todas",
     "import_btn":"↑ Importar",
-    "add_calibration_shots":"Añadir tomas de calibración",
-    "load_calibration_photo":"📷 Cargar foto de calibración",
+    "load_calibration_photo":"Cargar foto de calibración",
     "reset_view":"Restablecer vista",
-    "cal_hint":"Toque los dos bordes del objeto · arrastre para desplazar · pellizque/desplace para zoom",
-    "distance_field":"Distancia",
-    "width_field":"Ancho",
+    "cal_hint":"Pellizque o desplace para zoom · arrastre para mover",
+    "distance_field":"Distancia (m)",
+    "width_field":"Ancho del objeto (mm)",
     "add_this_shot":"Añadir esta toma",
-    "clear_points":"Borrar puntos",
-    "save_camera_section":"Guardar cámara",
-    "camera_name_placeholder":"Nombre de la cámara — p. ej. Lente 1× del teléfono",
-    "optional_note_placeholder":"Nota opcional — p. ej. calibrado 1–8 m",
-    "save_camera_btn":"Guardar cámara",
-    "reset_shots":"Restablecer tomas",
+    "clear_points":"Restablecer puntos",
+    "camera_name_placeholder":"Cámara y lente — p. ej. iPhone 15 principal 1×",
+    "optional_note_placeholder":"Nota opcional — ajustes, sitio, fecha",
+    "save_camera_btn":"Guardar perfil de cámara",
+    "reset_shots":"Restablecer calibración",
     "no_shots_yet":"Aún no hay tomas. Añada de 3 a 5 en su rango de distancias.",
     "toast_tap_add_points":"Toque para añadir puntos · toque el primer punto para cerrar",
     "toast_need_3_points":"Se necesitan al menos 3 puntos",
@@ -2689,15 +2827,15 @@ const I18N={
     "toast_no_cameras_export":"No hay cámaras para exportar",
     "help_tools_h":"Herramientas",
     "help_select_b":"Seleccionar",
-    "help_select_d":"Toque una anotación para moverla, cambiar su color, redimensionarla o eliminarla. Arrastre sus asas para remodelarla. Mantenga pulsada una anotación (o haga clic derecho) para un menú: color, tamaño, editar, duplicar, eliminar.",
+    "help_select_d":"Toque una anotación para moverla, cambiar su color, redimensionarla o eliminarla. Arrastre sus asas para remodelarla. Mantenga pulsada una anotación (o haga clic derecho) para un menú: color, eliminar, tamaño, editar, duplicar, copiar y pegar.",
     "help_text_b":"Texto y etiqueta",
     "help_text_d":"Toque la foto para escribir una etiqueta en ese punto. Toque dos veces la herramienta para la lista de etiquetas y elementos, o manténgala pulsada para las últimas cinco cosas que colocó. Lo que elija se coloca una vez y se libera, así que el siguiente toque vuelve a escribir; la barra de propiedades muestra lo que está en espera y Borrar lo descarta. Las etiquetas y los elementos usan el estilo de texto, así que Relleno y el color de tinta se les aplican, y los recientes recuerdan el color con el que se colocó cada uno.",
     "help_draw_b":"Dibujar",
-    "help_draw_d":"Trazo libre para encerrar en un círculo o esbozar. Toque dos veces la herramienta para cambiar la punta inicial: No, Flecha, Redonda.",
+    "help_draw_d":"Trazo libre para encerrar en un círculo o esbozar. Toque dos veces la herramienta para cambiar la punta: Sin, Flecha, Punto. Junto a los iconos de punta, el botón de extremos la pone al inicio, al final o en ambos extremos, y Suavizar redondea el trazo. Ambos se aplican también al trazo seleccionado, y Suavizar se puede volver a desactivar.",
     "help_length_b":"Longitud",
     "help_length_d":"Arrastre una línea medida. Barras cortas marcan cada extremo. Introduzca un valor y elija una unidad (mm, m, in, ft); el número aparece junto a la línea. Mantenga pulsada la herramienta para ver sus cinco últimos valores: elija uno y la siguiente línea lo toma sin el diálogo. Toque dos veces la herramienta para alternar los extremos entre barras y flechas.",
     "help_measure_b":"Medir",
-    "help_measure_d":"Mide automáticamente el tamaño real a partir de una cámara calibrada. Defina una escala una vez (elija una cámara e introduzca la distancia), luego dibuje una línea para la longitud o un área con un polígono; el valor se calcula por usted. Toque dos veces una medida para cambiar su unidad. Toque dos veces la herramienta para definir la escala; una foto nueva parte de la cámara y la distancia usadas la última vez.",
+    "help_measure_d":"Mide automáticamente el tamaño real a partir de una cámara calibrada. Defina una escala una vez (elija una cámara e introduzca la distancia), luego dibuje una línea para la longitud o un área con un polígono; el valor se calcula por usted. Toque dos veces una medida para cambiar su unidad. Toque dos veces la herramienta para definir la escala; una foto nueva parte de la última cámara usada; la distancia queda vacía salvo que la foto tenga una lectura de Planum.",
     "help_calib_b":"Calibrar cámara",
     "help_calib_d":"En Medir, abra Cámaras… para enseñar a la herramienta su cámara. Fotografíe un objeto de ancho conocido a varias distancias conocidas, márquelo en cada una y guarde. Reutilice la cámara guardada en cualquier foto; no se necesita regla en la toma.",
     "help_note_b":"Nota",
@@ -2746,7 +2884,7 @@ const I18N={
     "help_g_tool_b":"Botones de herramienta",
     "help_g_tool_d":"Toque para usar una herramienta. Toque dos veces para su ajuste principal; manténgala pulsada para sus elementos recientes. Un punto naranja marca los botones con extras y desaparece tras tres usos.",
     "help_g_photo_b":"En la foto",
-    "help_g_photo_d":"Toque cualquier marca para seleccionarla y arrastrarla, sea cual sea la herramienta activa. Tóquela dos veces para cambiar su texto o valor. En Seleccionar, manténgala pulsada (o haga clic derecho) para color, tamaño, editar, duplicar y eliminar.",
+    "help_g_photo_d":"Toque cualquier marca para seleccionarla y arrastrarla, sea cual sea la herramienta activa. Tóquela dos veces para cambiar su texto o valor. En Seleccionar, manténgala pulsada (o haga clic derecho) para color, tamaño, editar, duplicar, copiar, pegar y eliminar. Con algo copiado, mantenga pulsado un punto vacío (o haga clic derecho) para pegarlo allí.",
     "help_g_armed_b":"Valores elegidos",
     "help_g_armed_d":"Un valor elegido de una lista de pulsación larga se usa una vez —en la siguiente línea, nota o ángulo— y luego vuelve el diálogo. La barra lo muestra en espera; Borrar lo descarta.",
     "help_photos_h":"Fotos y exportación",
@@ -2767,9 +2905,9 @@ const I18N={
     "value_ph_angle":"p. ej. 45",
     "value_ph_number":"p. ej. B3",
     "toast_imported_cameras":"Se importaron {n} cámara(s)",
-    "cal_point_a_set":"Punto A definido — toque el borde opuesto para B.",
-    "cal_tap_two_edges":"Toque los dos bordes del objeto conocido.",
-    "cal_object_spans":"El objeto abarca <strong>{span} px</strong>. Introduzca la distancia y el ancho, luego añada la toma.",
+    "cal_point_a_set":"Ahora toque el <strong>punto B</strong> en el borde opuesto.",
+    "cal_tap_two_edges":"Toque el <strong>punto A</strong> en un borde del objeto conocido.",
+    "cal_object_spans":"El objeto abarca <strong>{span} px</strong>. Arrastre A o B para ajustar, o toque en otro sitio para empezar de nuevo. Después, «{add}».",
     "cal_fit_failed":"Ajuste fallido — las distancias deben ser diferentes.",
     "cal_add_3rd_shot":"Añada una 3.ª toma para estimar la calidad del ajuste.",
     "cal_fit_quality":"Calidad del ajuste: ",
@@ -2793,7 +2931,17 @@ const I18N={
     "scale_colon":"Escala: {value} px/mm",
     "toast_save_failed":"No se guardó en este dispositivo: puede que el almacenamiento esté lleno. Exporte su trabajo.",
     "toast_restore_skip":"Fotos no abiertas: {n}; se conservan para la próxima vez",
-    "toast_export_skip":"Fotos no exportadas: {n}"
+    "toast_export_skip":"Fotos no exportadas: {n}",
+    "copy_btn":"Copiar",
+    "toast_copied":"Copiado: péguelo en cualquier foto",
+    "tip_at_start":"Punta al inicio",
+    "tip_at_end":"Punta al final",
+    "tip_at_both":"Puntas en ambos extremos",
+    "smooth_on":"Suavizar: activado",
+    "smooth_off":"Suavizar: desactivado",
+    "qr_dense":"denso: use el tamaño L",
+    "help_k_copy":"Copiar marca",
+    "help_k_paste":"Pegar marca o foto"
   },
   hi:{
     "rep_add_row":"पंक्ति जोड़ें",
@@ -3007,7 +3155,7 @@ const I18N={
     "help_pickur_b":"अनिर्धारित",
     "help_pickur_d":"छठा स्थिति स्तर — नीला। उस दोष के लिए जो दिखता है पर आँका नहीं जा सकता: पहुँच नहीं, ढका हुआ, या दूसरी राय चाहिए। सूची में UR छपता है और अलग स्तंभ में गिना जाता है, CS1 में नहीं।",
     "help_paste_b":"पेस्ट करें",
-    "help_paste_d":"क्लिपबोर्ड में कॉपी की गई छवि को नई फ़ोटो के रूप में जोड़ता है। Ctrl/Cmd+V दबाएँ, या पेस्ट बटन का उपयोग करें। फ़ोन पहली बार क्लिपबोर्ड अनुमति माँगेंगे।",
+    "help_paste_d":"क्लिपबोर्ड पर कॉपी की गई छवि को नई फ़ोटो के रूप में जोड़ता है। Ctrl/Cmd+V दबाएँ, या पेस्ट बटन का उपयोग करें। पहली बार फ़ोन क्लिपबोर्ड अनुमति माँगेंगे। Ctrl/Cmd+C या होल्ड मेनू से कॉपी किए गए निशान Ctrl/Cmd+V से इस सत्र की किसी भी फ़ोटो पर, फ़ोटो के सापेक्ष उसी जगह पेस्ट होते हैं; माप अपने मान और नंबर अपनी संख्या बनाए रखते हैं।",
     "add_label":"लेबल जोड़ें",
     "edit_label":"लेबल संपादित करें",
     "note_text":"नोट टेक्स्ट",
@@ -3073,6 +3221,27 @@ const I18N={
     "set_scale_body":"एक कैलिब्रेटेड कैमरा चुनें और कैमरे से विषय की दूरी दर्ज करें। रिज़ॉल्यूशन कैमरे के कैलिब्रेशन से अनुमानित होता है — इस फ़ोटो में किसी संदर्भ वस्तु की आवश्यकता नहीं।",
     "camera_label":"कैमरा",
     "distance_label":"दूरी",
+    "pl_offset":"ऑफ़सेट {v}",
+    "pl_mode":"{m} मोड",
+    "pl_m_distance":"दूरी",
+    "pl_m_continuous":"सतत",
+    "pl_m_angle":"कोण",
+    "pl_m_level":"लेवल",
+    "pl_m_ih":"अप्रत्यक्ष ऊँचाई",
+    "pl_m_il":"अप्रत्यक्ष लंबाई",
+    "pl_nodist":"कोई दूरी दर्ज नहीं",
+    "pl_unknown":"रीडिंग प्रकार “{t}” पहचाना नहीं गया; भरा नहीं गया",
+    "pl_resized":"कैप्चर के बाद फ़ोटो का आकार बदला या क्रॉप किया गया ({a} → {b}); भरा नहीं गया",
+    "cal_tips":"सुझाव",
+    "cal_tip1":"उसी दूरी सीमा में कैलिब्रेट करें जिसमें आप वास्तव में कैमरे का उपयोग करने की उम्मीद करते हैं।",
+    "cal_tip2":"पहले दूर से फ़ोटो लें, फिर हर शॉट में दूरी आधी करें — जैसे 8 m, फिर 4 m, फिर 2 m। इससे बिंदु समान रूप से फैलते हैं और फिट मज़बूत होता है।",
+    "cal_tip3":"हर शॉट और बाद के वास्तविक मापों के लिए समान ज़ूम/फ़ोकल लंबाई का उपयोग करें।",
+    "cal_tip4":"सर्वोत्तम सटीकता के लिए हर दूरी लेज़र मीटर से मापें — दूरी की त्रुटि जितनी कम होगी, इस प्रोफ़ाइल से किया गया हर माप उतना ही सटीक होगा।",
+    "cal_load_sub":"ज्ञात दूरी पर ज्ञात चौड़ाई वाली वस्तु की फ़ोटो",
+    "cal_browse":"फ़ाइलें ब्राउज़ करें…",
+    "cal_change_photo":"↻ फ़ोटो बदलें",
+    "cal_step1":"इस शॉट की दूरी और ज्ञात वस्तु की चौड़ाई दर्ज करें",
+    "cal_step2":"फ़ोटो पर वस्तु के दोनों किनारों पर टैप करें",
     "from_planum":"Planum से",
     "select_camera_option":"— कैमरा चुनें —",
     "calibrate_new_camera":"+ नया कैमरा कैलिब्रेट करें…",
@@ -3081,25 +3250,23 @@ const I18N={
     "predicted_resolution":"अनुमानित रिज़ॉल्यूशन: {value} px/mm",
     "could_not_compute":"गणना नहीं हो सकी।",
     "cal_title":"कैमरा कैलिब्रेशन — दूरी से रिज़ॉल्यूशन",
-    "cal_note":"अलग-अलग दूरियों पर अपने कैमरे का रिज़ॉल्यूशन टूल को सिखाएं। ज्ञात आकार की वस्तु को कई ज्ञात दूरियों पर फ़ोटो करें, हर शॉट पर उसे चिह्नित करें, फिर कैमरा सेव करें। इसके बाद आप केवल दूरी से किसी भी फ़ोटो को स्केल कर सकते हैं। मापते समय वही लेंस/ज़ूम और समान रिज़ॉल्यूशन की फ़ोटो का उपयोग करें।",
-    "saved_cameras":"सेव किए गए कैमरे",
-    "no_camera_selected_option":"— कोई कैमरा चयनित नहीं —",
+    "cal_note":"अलग-अलग दूरियों पर अपने कैमरे का रिज़ॉल्यूशन टूल को सिखाएं, फिर केवल दूरी से किसी भी फ़ोटो को स्केल करें — किसी संदर्भ वस्तु की ज़रूरत नहीं।",
+    "saved_cameras":"सहेजे गए कैमरा प्रोफ़ाइल",
+    "no_camera_selected_option":"— कोई प्रोफ़ाइल नहीं चुनी गई —",
     "export_this":"↓ इसे निर्यात करें",
     "export_all2":"↓ सभी निर्यात करें",
     "import_btn":"↑ आयात करें",
-    "add_calibration_shots":"कैलिब्रेशन शॉट जोड़ें",
-    "load_calibration_photo":"📷 कैलिब्रेशन फ़ोटो लोड करें",
+    "load_calibration_photo":"कैलिब्रेशन फ़ोटो लोड करें",
     "reset_view":"व्यू रीसेट करें",
-    "cal_hint":"वस्तु के दोनों किनारों पर टैप करें · घसीटकर पैन करें · पिंच/स्क्रॉल से ज़ूम करें",
-    "distance_field":"दूरी",
-    "width_field":"चौड़ाई",
+    "cal_hint":"ज़ूम के लिए पिंच या स्क्रॉल करें · पैन के लिए घसीटें",
+    "distance_field":"दूरी (m)",
+    "width_field":"वस्तु की चौड़ाई (mm)",
     "add_this_shot":"यह शॉट जोड़ें",
-    "clear_points":"पॉइंट साफ़ करें",
-    "save_camera_section":"कैमरा सेव करें",
-    "camera_name_placeholder":"कैमरे का नाम — उदा. फ़ोन 1× लेंस",
-    "optional_note_placeholder":"वैकल्पिक नोट — उदा. 1–8 मी कैलिब्रेटेड",
-    "save_camera_btn":"कैमरा सेव करें",
-    "reset_shots":"शॉट रीसेट करें",
+    "clear_points":"पॉइंट रीसेट करें",
+    "camera_name_placeholder":"कैमरा और लेंस — जैसे iPhone 15 मुख्य 1×",
+    "optional_note_placeholder":"वैकल्पिक नोट — सेटिंग, स्थल, तारीख",
+    "save_camera_btn":"कैमरा प्रोफ़ाइल सहेजें",
+    "reset_shots":"कैलिब्रेशन रीसेट करें",
     "no_shots_yet":"अभी तक कोई शॉट नहीं। अपनी दूरी सीमा में 3–5 जोड़ें।",
     "toast_tap_add_points":"पॉइंट जोड़ने के लिए टैप करें · बंद करने के लिए पहले पॉइंट पर टैप करें",
     "toast_need_3_points":"कम से कम 3 पॉइंट चाहिए",
@@ -3146,15 +3313,15 @@ const I18N={
     "toast_no_cameras_export":"निर्यात के लिए कोई कैमरा नहीं",
     "help_tools_h":"टूल्स",
     "help_select_b":"चयन",
-    "help_select_d":"किसी एनोटेशन को टैप करके उसे हिलाएं, रंग बदलें, आकार बदलें या हटाएं। आकार बदलने के लिए उसके हैंडल खींचें। मेनू के लिए किसी एनोटेशन को दबाए रखें (या राइट-क्लिक करें): रंग, आकार, संपादन, डुप्लिकेट, हटाएं।",
+    "help_select_d":"किसी एनोटेशन को खिसकाने, रंग बदलने, आकार बदलने या हटाने के लिए उस पर टैप करें। आकार बदलने के लिए उसके हैंडल खींचें। मेनू के लिए एनोटेशन को दबाए रखें (या राइट-क्लिक करें): रंग, हटाएँ, आकार, संपादित करें, डुप्लिकेट, कॉपी और पेस्ट।",
     "help_text_b":"टेक्स्ट और टैग",
     "help_text_d":"फ़ोटो पर टैप करके वहीं लेबल लिखें। टूल पर दो बार टैप करने से टैग और घटक की सूची खुलती है, दबाकर रखने पर पिछली पाँच रखी गई चीज़ें दिखती हैं। चुनी गई चीज़ एक बार रखने के बाद छूट जाती है, इसलिए अगला टैप फिर से टाइपिंग खोलता है; प्रॉपर्टी पट्टी दिखाती है कि क्या प्रतीक्षा में है और “साफ़ करें” उसे हटा देता है। टैग और घटक टेक्स्ट शैली लेते हैं, इसलिए भराव और स्याही का रंग उन पर लागू होते हैं, और हाल की सूची हर प्रविष्टि का पिछला रंग याद रखती है।",
     "help_draw_b":"ड्रा",
-    "help_draw_d":"घेरने या स्केच करने के लिए फ्रीहैंड ड्रॉइंग। शुरुआती सिरा बदलने के लिए टूल पर डबल-टैप करें: बंद, तीर, गोल।",
+    "help_draw_d":"घेरने या स्केच करने के लिए फ्रीहैंड ड्रॉइंग। सिरा बदलने के लिए टूल पर डबल-टैप करें: बंद, तीर, गोल। सिरे के आइकनों के पास वाला बटन सिरे को शुरुआत, अंत या दोनों सिरों पर रखता है, और स्मूद रेखा को गोलाई देता है। दोनों चयनित रेखा पर भी लागू होते हैं, और स्मूद को फिर से बंद किया जा सकता है।",
     "help_length_b":"लंबाई",
     "help_length_d":"मापी गई रेखा खींचें। हर सिरे पर छोटी पट्टियाँ होती हैं। मान दर्ज करें और इकाई चुनें (मिमी, मी, इंच, फीट) — संख्या रेखा के साथ दिखती है। पिछले पाँच मानों के लिए टूल को दबाए रखें: एक चुनें और अगली रेखा उसे बिना डायलॉग के ले लेगी। सिरों को पट्टी और तीर के बीच बदलने के लिए टूल पर डबल-टैप करें।",
     "help_measure_b":"मापें",
-    "help_measure_d":"कैलिब्रेटेड कैमरे से वास्तविक आकार अपने आप मापता है। एक बार स्केल सेट करें (कैमरा चुनें + दूरी दर्ज करें), फिर लंबाई के लिए रेखा या क्षेत्र के लिए बहुभुज बनाएं — मान अपने आप गणना हो जाता है। इकाई बदलने के लिए माप पर डबल-टैप करें। स्केल सेट करने के लिए टूल पर डबल-टैप करें; नई फ़ोटो पिछली बार इस्तेमाल किए गए कैमरे और दूरी से शुरू होती है।",
+    "help_measure_d":"कैलिब्रेटेड कैमरे से वास्तविक आकार अपने आप मापता है। एक बार स्केल सेट करें (कैमरा चुनें + दूरी दर्ज करें), फिर लंबाई के लिए रेखा या क्षेत्र के लिए बहुभुज बनाएं — मान अपने आप गणना हो जाता है। इकाई बदलने के लिए माप पर डबल-टैप करें। स्केल सेट करने के लिए टूल पर डबल-टैप करें; नई फ़ोटो पिछली बार इस्तेमाल किए गए कैमरे से शुरू होती है; दूरी खाली रहती है, जब तक फ़ोटो में Planum रीडिंग न हो।",
     "help_calib_b":"कैमरा कैलिब्रेट करें",
     "help_calib_d":"मापें में, कैमरे… खोलकर टूल को अपना कैमरा सिखाएं। ज्ञात चौड़ाई की वस्तु को कई ज्ञात दूरियों पर फ़ोटो करें, हर एक पर चिह्नित करें, और सेव करें। सेव किए गए कैमरे को किसी भी फ़ोटो में दोबारा उपयोग करें — शॉट में रूलर की ज़रूरत नहीं।",
     "help_note_b":"नोट",
@@ -3203,7 +3370,7 @@ const I18N={
     "help_g_tool_b":"टूल बटन",
     "help_g_tool_d":"टूल इस्तेमाल करने के लिए टैप करें। उसकी मुख्य सेटिंग के लिए डबल-टैप करें; हाल की चीज़ों के लिए दबाए रखें। नारंगी बिंदु अतिरिक्त सुविधाओं वाले बटन दिखाता है; तीन बार इस्तेमाल के बाद यह हट जाता है।",
     "help_g_photo_b":"फ़ोटो पर",
-    "help_g_photo_d":"कोई भी टूल चालू हो, किसी भी निशान पर टैप करके उसे चुनें और खींचें। उसका टेक्स्ट या मान बदलने के लिए डबल-टैप करें। चयन टूल में उसे दबाए रखें (या राइट-क्लिक करें) — रंग, आकार, संपादन, डुप्लिकेट और हटाने के लिए।",
+    "help_g_photo_d":"कोई भी टूल चालू हो, किसी निशान पर टैप करके उसे चुनें और खींचें। उसका टेक्स्ट या मान बदलने के लिए डबल-टैप करें। सेलेक्ट में, रंग, आकार, संपादन, डुप्लिकेट, कॉपी, पेस्ट और हटाने के लिए उसे दबाए रखें (या राइट-क्लिक करें)। कुछ कॉपी करने के बाद, वहाँ पेस्ट करने के लिए किसी खाली जगह को दबाए रखें (या राइट-क्लिक करें)।",
     "help_g_armed_b":"चुने गए मान",
     "help_g_armed_d":"दबाए रखने वाली सूची से चुना गया मान एक बार इस्तेमाल होता है — अगली रेखा, नोट या कोण में — फिर डायलॉग लौट आता है। टूलबार उसे प्रतीक्षा में दिखाता है; साफ़ करें उसे हटा देता है।",
     "help_photos_h":"फ़ोटो और निर्यात",
@@ -3224,9 +3391,9 @@ const I18N={
     "value_ph_angle":"उदा. 45",
     "value_ph_number":"उदा. B3",
     "toast_imported_cameras":"{n} कैमरा आयात हुए",
-    "cal_point_a_set":"पॉइंट A सेट हुआ — B के लिए विपरीत किनारे पर टैप करें।",
-    "cal_tap_two_edges":"ज्ञात वस्तु के दोनों किनारों पर टैप करें।",
-    "cal_object_spans":"वस्तु का विस्तार <strong>{span} px</strong> है। दूरी और चौड़ाई दर्ज करें, फिर शॉट जोड़ें।",
+    "cal_point_a_set":"अब विपरीत किनारे पर <strong>पॉइंट B</strong> टैप करें।",
+    "cal_tap_two_edges":"ज्ञात वस्तु के एक किनारे पर <strong>पॉइंट A</strong> टैप करें।",
+    "cal_object_spans":"वस्तु का विस्तार <strong>{span} px</strong> है। समायोजित करने के लिए A या B को घसीटें, या फिर से शुरू करने के लिए कहीं और टैप करें। फिर “{add}”।",
     "cal_fit_failed":"फिट विफल — दूरियाँ अलग होनी चाहिए।",
     "cal_add_3rd_shot":"फिट-गुणवत्ता अनुमान के लिए तीसरा शॉट जोड़ें।",
     "cal_fit_quality":"फिट गुणवत्ता: ",
@@ -3250,7 +3417,17 @@ const I18N={
     "scale_colon":"स्केल: {value} px/mm",
     "toast_save_failed":"इस डिवाइस पर सहेजा नहीं गया — स्टोरेज भरा हो सकता है। अपना काम एक्सपोर्ट करें।",
     "toast_restore_skip":"नहीं खुलीं फ़ोटो: {n} — अगली बार के लिए रखी गईं",
-    "toast_export_skip":"एक्सपोर्ट नहीं हुई फ़ोटो: {n}"
+    "toast_export_skip":"एक्सपोर्ट नहीं हुई फ़ोटो: {n}",
+    "copy_btn":"कॉपी करें",
+    "toast_copied":"कॉपी हो गया — किसी भी फ़ोटो पर पेस्ट करें",
+    "tip_at_start":"शुरुआत में सिरा",
+    "tip_at_end":"अंत में सिरा",
+    "tip_at_both":"दोनों सिरों पर",
+    "smooth_on":"स्मूद: चालू",
+    "smooth_off":"स्मूद: बंद",
+    "qr_dense":"घना — L आकार चुनें",
+    "help_k_copy":"निशान कॉपी करें",
+    "help_k_paste":"निशान या फ़ोटो पेस्ट करें"
   },
   ar:{
     "rep_add_row":"إضافة صف",
@@ -3270,8 +3447,8 @@ const I18N={
     "rep_options":"المحتويات",
     "rep_sheets":"صفحات الصور",
     "rep_per_page":"لكل صفحة",
-    "rep_schedule":"جدول العيوب",
-    "rep_stamp":"ترقيم العيوب على صور التقرير",
+    "rep_schedule":"جدول الأخطاء",
+    "rep_stamp":"ترقيم الأخطاء على صور التقرير",
     "rep_photos":"الصور",
     "rep_location_ph":"الموقع / الكيلومتر",
     "rep_caption_ph":"تعليق",
@@ -3287,12 +3464,12 @@ const I18N={
     "move_right":"نقل لليسار",
     "rep_findings":"النتائج",
     "rep_none":"لا توجد نتائج بعد.",
-    "rep_none_body":"يظهر صف لكل عيب يُوضع من تبويب «العيوب». أما الوسوم والعناصر فتملأ الأعمدة ولا تنشئ صفوفًا.",
+    "rep_none_body":"يظهر صف لكل خطأ يُوضع من تبويب «الأخطاء». أما الوسوم والعناصر فتملأ الأعمدة ولا تنشئ صفوفًا.",
     "rep_no_photos":"حمّل صورة أولًا.",
     "col_item":"رقم",
     "col_photo":"الصورة",
     "col_element":"العنصر",
-    "col_defect":"العيب",
+    "col_defect":"الخطأ",
     "col_cs":"حالة العنصر",
     "rep_page_n_of_m":"صفحة {n} من {m}",
     "rep_cont":"(تابع)",
@@ -3331,7 +3508,7 @@ const I18N={
     "pb_w4":"عاجل / غير آمن",
     "pb_w5":"لم يُفحص",
     "rep_setup_cs":"مقياس الحالة",
-    "rep_setup_cs_hint":"يُطبع الرمز في التقرير؛ ويظهر الرمز والكلمة عند اختيار العيب. أزل العلامة عن الحالات التي لا تستخدمها.",
+    "rep_setup_cs_hint":"يُطبع الرمز في التقرير؛ ويظهر الرمز والكلمة عند اختيار الخطأ. أزل العلامة عن الحالات التي لا تستخدمها.",
     "rep_setup":"إعداد التقرير",
     "rep_setup_hint":"أزل العلامة للإخفاء. اكتب لإعادة التسمية — اتركه فارغًا لاستخدام اسم القالب.",
     "rep_setup_title_lbl":"عنوان التقرير",
@@ -3341,7 +3518,7 @@ const I18N={
     "sec_summary":"مربعات الملخص في الغلاف",
     "sec_qr":"رابط الموقع كرمز QR",
     "sec_phtbl":"جدول النتائج أسفل كل صورة",
-    "sec_grp":"المجموعة تحت اسم العيب",
+    "sec_grp":"المجموعة تحت اسم الخطأ",
     "sec_narrow":"هوامش صفحة ضيقة (12 مم)",
     "rep_setup_reset":"استعادة القالب",
     "rep_setup_reset_title":"استعادة القالب؟",
@@ -3367,18 +3544,18 @@ const I18N={
     "rep_print_hint":"في مربّع الطباعة اختر «حفظ بصيغة PDF». أوقف الرأس والتذييل للحصول على صفحة أنظف.",
     "help_report_h":"التقرير",
     "help_rep_rows_b":"ما الذي يملأ الجدول",
-    "help_rep_rows_d":"كل عيب يُوضع من تبويب «العيوب» ينشئ صفًا واحدًا، مرقّمًا 1، 2، 3… بترتيب التقرير. والوسوم والعناصر والقياسات والملاحظات القريبة منه تملأ أعمدة ذلك الصف. أما شارات الأرقام والرسم الحر والفواصل فتبقى للتوضيح فقط. ويمكن أيضًا كتابة صفوف يدويًا لما لوحظ دون تصوير.",
+    "help_rep_rows_d":"كل خطأ يُوضع من تبويب «الأخطاء» ينشئ صفًا واحدًا، مرقّمًا 1، 2، 3… بترتيب التقرير. والوسوم والعناصر والقياسات والملاحظات القريبة منه تملأ أعمدة ذلك الصف. أما شارات الأرقام والرسم الحر والفواصل فتبقى للتوضيح فقط. ويمكن أيضًا كتابة صفوف يدويًا لما لوحظ دون تصوير.",
     "help_rep_edit_b":"المراجعة قبل الطباعة",
     "help_rep_edit_d":"املأ الترويسة، وأضف تعليقًا لكل صورة، ثم صحّح أي خانة بالكتابة فيها. أزل علامة الاختيار لاستبعاد صف أو صورة. تُحفظ التعديلات؛ و«إعادة تعيين التعديلات» تعيد بناء الجدول من الصور.",
     "help_rep_print_b":"طباعة / PDF",
-    "help_rep_print_d":"ينشئ صفحة غلاف وصفحات صور وجدول عيوب، ثم يفتح نافذة الطباعة — اختر «حفظ بتنسيق PDF» واترك الهوامش على الافتراضي. تُصغَّر الصور للطباعة؛ لا يتغير التصدير العادي.",
+    "help_rep_print_d":"ينشئ صفحة غلاف وصفحات صور وجدول أخطاء، ثم يفتح نافذة الطباعة — اختر «حفظ بتنسيق PDF» واترك الهوامش على الافتراضي. تُصغَّر الصور للطباعة؛ لا يتغير التصدير العادي.",
     "undo_title":"تراجع",
     "redo_title":"إعادة",
     "export_one":"تصدير واحدة",
     "export_all":"تصدير الكل",
     "guide_title":"الدليل",
     "empty_title":"حمّل صورة للبدء",
-    "empty_body":"أفلت صور الموقع هنا، أو اخترها من الجهاز، أو التقط صورًا جديدة. يبقى كل شيء على هذا الجهاز ويُحفظ تلقائيًا — لا يُرفع شيء إلى الإنترنت.",
+    "empty_body":"أحضر صور الموقع هنا، أو اخترها من الجهاز، أو التقط صورًا جديدة. يبقى كل شيء على هذا الجهاز ويُحفظ تلقائيًا — لا يُرفع شيء إلى الإنترنت.",
     "choose_photo":"اختر صورة",
     "new_photo":"صورة جديدة",
     "zoom_in":"تكبير",
@@ -3401,7 +3578,7 @@ const I18N={
     "tip_arrow":"سهم",
     "tip_round":"دائرة",
     "fill_off":"التعبئة: متوقفة",
-    "defect_label":"العيب",
+    "defect_label":"الخطأ",
     "choose_ellipsis":"اختر…",
     "change":"تغيير",
     "line":"خط",
@@ -3428,7 +3605,7 @@ const I18N={
     "tool_polygon":"مضلع",
     "tool_angle":"زاوية",
     "tool_number":"رقم",
-    "tool_defect":"عيب",
+    "tool_defect":"خطأ",
     "paste_btn":"لصق",
     "emoji_tip":"الرموز التعبيرية: اضغط Win + ‎.‎ على ويندوز، أو Control + Command + Space على ماك.",
     "tool_qr":"رمز QR",
@@ -3450,21 +3627,21 @@ const I18N={
     "ctx_label_qr":"الرابط",
     "help_qr_b":"رمز QR",
     "help_qr_d":"يضع رمزًا قابلاً للمسح على الصورة — أدخل رابطًا ثم اضغط لوضعه. اضغط على الأداة لإعادة استخدام آخر رابط، ومرتين لرابط جديد، ومطولًا لآخر خمسة. يأخذ لون الحبر (مغمَّقًا بالقدر الكافي للمسح) والحجم S/M/L. النمط: معكوس يضع رمزًا أبيض على لون — تقرؤه كاميرات الهواتف، لا بعض تطبيقات المسح القديمة. مع الحبر الأبيض يعمل بالعكس.",
-    "help_pick_h":"اختيار العيوب",
+    "help_pick_h":"اختيار الأخطاء",
     "help_picktool_b":"زر الأداة",
-    "help_picktool_d":"انقره لإعادة تجهيز آخر عيب ووضعه مباشرة. انقر نقرًا مزدوجًا لفتح القائمة. استمر بالضغط لعرض آخر خمسة، كل منها بالحالة التي استُخدم بها.",
+    "help_picktool_d":"انقره لإعادة تجهيز آخر خطأ ووضعه مباشرة. انقر نقرًا مزدوجًا لفتح القائمة. استمر بالضغط لعرض آخر خمسة، كل منها بالحالة التي استُخدم بها.",
     "help_picklist_b":"القائمة",
-    "help_picklist_d":"قائمة العيوب شبكة واحدة، وفوقها فئات المواد في صفّين، و★ المفضلة تجمع اختياراتك. انقر مربعًا لتجهيزه؛ استمر بالضغط عليه لاختيار الحالة ووضعه بحركة واحدة، أو لإضافته إلى المفضلة. الوسوم والعناصر لها قائمتها الخاصة ضمن «نص ووسم».",
+    "help_picklist_d":"قائمة الأخطاء شبكة واحدة، وفوقها فئات المواد في صفّين، و★ المفضلة تجمع اختياراتك. انقر مربعًا لتجهيزه؛ استمر بالضغط عليه لاختيار الحالة ووضعه بحركة واحدة، أو لإضافته إلى المفضلة. الوسوم والعناصر لها قائمتها الخاصة ضمن «نص ووسم».",
     "help_picksearch_b":"البحث والإضافة",
     "help_picksearch_d":"حقل واحد يؤدي الأمرين. الكتابة تُصفّي المربعات ضمن الفئة المحددة، و× يمحو ما كتبته بنقرة واحدة. يضيء زر الإضافة عندما لا يطابق ما كتبته شيئًا: فيحتفظ به لبقية العمل ويجهّزه فورًا. المصطلحات التي تضيفها تظهر في الشبكة نفسها بلون مختلف — استمر بالضغط على أحدها لإزالته، أو انقر ▾ لإسناده إلى مواد فيُصفّى مثل المصطلحات المدمجة. الوسوم والعناصر تستخدم الحقل نفسه وزر الإضافة نفسه.",
     "help_pickcs_b":"الحالة",
-    "help_pickcs_d":"الزر في القائمة يحدد حالة العيب التالي. انقره للتنقل بين بلون القلم وCS1 وCS2 وCS3 وCS4 وغير مُقيَّم؛ واستمر بالضغط لاختيار واحدة مباشرة. المربع الملون في الشريط يفعل الشيء نفسه للعيب المجهّز.",
+    "help_pickcs_d":"الزر في القائمة يحدد حالة الخطأ التالي. انقره للتنقل بين بلون القلم وCS1 وCS2 وCS3 وCS4 وغير مُقيَّم؛ واستمر بالضغط لاختيار واحدة مباشرة. المربع الملون في الشريط يفعل الشيء نفسه للخطأ المجهّز.",
     "help_pickink_b":"اللون والحالة",
-    "help_pickink_d":"في العيب يمثل اللون الحالة: الأخضر CS1، الأصفر CS2، البرتقالي CS3، الأحمر CS4، الأزرق غير مُقيَّم. ينطبق على العيب المحدد، أو على العيب المجهّز إن لم يكن هناك تحديد. الأبيض والأسود تعطي CS1. أما العلامات الأخرى — الملاحظات والأسهم والنصوص — فتأخذ اللون فقط.",
+    "help_pickink_d":"في الخطأ يمثل اللون الحالة: الأخضر CS1، الأصفر CS2، البرتقالي CS3، الأحمر CS4، الأزرق غير مُقيَّم. ينطبق على الخطأ المحدد، أو على الخطأ المجهّز إن لم يكن هناك تحديد. الأبيض والأسود تعطي CS1. أما العلامات الأخرى — الملاحظات والأسهم والنصوص — فتأخذ اللون فقط.",
     "help_pickur_b":"غير مُقيَّم",
-    "help_pickur_d":"الحالة السادسة، باللون الأزرق. لعيب يُرى ولا يمكن تقديره: لا يوجد وصول، أو محجوب، أو يحتاج رأيًا ثانيًا. يُطبع UR في الجدول ويُحسب في خانة مستقلة لا ضمن CS1.",
+    "help_pickur_d":"الحالة السادسة، باللون الأزرق. لخطأ يُرى ولا يمكن تقديره: لا يوجد وصول، أو محجوب، أو يحتاج رأيًا ثانيًا. يُطبع UR في الجدول ويُحسب في خانة مستقلة لا ضمن CS1.",
     "help_paste_b":"لصق",
-    "help_paste_d":"يضيف صورة منسوخة إلى الحافظة كصورة جديدة. اضغط Ctrl/Cmd+V أو استخدم زر اللصق. ستطلب الهواتف إذن الحافظة في المرة الأولى.",
+    "help_paste_d":"يضيف صورة منسوخة إلى الحافظة كصورة جديدة. اضغط Ctrl/Cmd+V، أو استخدم زر اللصق. ستطلب الهواتف إذن الحافظة في المرة الأولى. العلامات المنسوخة بـ Ctrl/Cmd+C أو من قائمة الضغط المطول تُلصق بـ Ctrl/Cmd+V على أي صورة في هذه الجلسة، في الموضع نفسه نسبةً إلى الصورة؛ تحتفظ القياسات بقيمها والأرقام بأرقامها.",
     "add_label":"إضافة تسمية",
     "edit_label":"تعديل التسمية",
     "note_text":"نص الملاحظة",
@@ -3488,7 +3665,7 @@ const I18N={
     "about_licence":"منشور بموجب <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY 4.0</a>. حرّ في الاستخدام والمشاركة والتعديل، شريطة نسب العمل إلى المؤلف.",
     "about_support":"الأداة مجانية. إذا وفّرت وقتك، فإن مساهمتك تساعد على استمرار صيانتها.",
     "save":"حفظ",
-    "defects_title":"العيوب",
+    "defects_title":"الأخطاء",
     "tags_elements_title":"الوسوم والعناصر",
     "no_recent_labels":"لا يوجد شيء حديث",
     "label_label":"تسمية",
@@ -3498,9 +3675,9 @@ const I18N={
     "mat_favs":"المفضلة",
     "no_favs_yet":"استمر بالضغط على مربع لإضافته إلى المفضلة.",
     "mat_all":"الكل",
-    "pick_more":"كل العيوب…",
+    "pick_more":"كل الأخطاء…",
     "pick_more_tags":"كل الوسوم…",
-    "no_recent_defects":"لا عيوب حديثة",
+    "no_recent_defects":"لا أخطاء حديثة",
     "favourite":"مفضّل",
     "tab_tags":"الوسوم",
     "tab_elements":"العناصر",
@@ -3530,6 +3707,27 @@ const I18N={
     "set_scale_body":"اختر كاميرا معايرة وأدخل المسافة بين الكاميرا والهدف. تُتوقَّع الدقة من معايرة الكاميرا — لا حاجة لجسم مرجعي في هذه الصورة.",
     "camera_label":"الكاميرا",
     "distance_label":"المسافة",
+    "pl_offset":"الإزاحة {v}",
+    "pl_mode":"وضع {m}",
+    "pl_m_distance":"المسافة",
+    "pl_m_continuous":"المستمر",
+    "pl_m_angle":"الزاوية",
+    "pl_m_level":"التسوية",
+    "pl_m_ih":"الارتفاع غير المباشر",
+    "pl_m_il":"الطول غير المباشر",
+    "pl_nodist":"لم تُسجَّل مسافة",
+    "pl_unknown":"نوع القراءة «{t}» غير معروف؛ لم يُملأ",
+    "pl_resized":"تم تغيير حجم الصورة أو قصّها منذ الالتقاط ({a} → {b})؛ لم يُملأ",
+    "cal_tips":"نصائح",
+    "cal_tip1":"عاير عبر نطاق المسافات الذي تتوقع أن تستخدم الكاميرا عنده فعليًا.",
+    "cal_tip2":"صوّر من بعيد أولًا، ثم اقسم المسافة على اثنين في كل لقطة — مثل 8 m ثم 4 m ثم 2 m. هذا يوزّع النقاط بالتساوي للحصول على ملاءمة متينة.",
+    "cal_tip3":"استخدم نفس التكبير/البعد البؤري في كل لقطة وفي القياسات الفعلية لاحقًا.",
+    "cal_tip4":"قِس كل مسافة بمقياس ليزر للحصول على أفضل دقة — كلما قلّ خطأ المسافة، زادت دقة كل قياس تجريه بهذا الملف.",
+    "cal_load_sub":"صورة لجسم معروف العرض على مسافة معروفة",
+    "cal_browse":"استعراض الملفات…",
+    "cal_change_photo":"↻ تغيير الصورة",
+    "cal_step1":"أدخل مسافة هذه اللقطة وعرض الجسم المعروف",
+    "cal_step2":"اضغط على حافتي الجسم في الصورة",
     "from_planum":"من Planum",
     "select_camera_option":"— اختر كاميرا —",
     "calibrate_new_camera":"+ معايرة كاميرا جديدة…",
@@ -3538,25 +3736,23 @@ const I18N={
     "predicted_resolution":"الدقة المتوقعة: {value} بكسل/مم",
     "could_not_compute":"تعذّر الحساب.",
     "cal_title":"معايرة الكاميرا — المسافة إلى الدقة",
-    "cal_note":"علّم الأداة دقة كاميرتك عند مسافات مختلفة. صوّر جسمًا معروف الحجم عند عدة مسافات معروفة، وحدده في كل لقطة، ثم احفظ الكاميرا. بعد ذلك يمكنك ضبط مقياس أي صورة بمجرد إدخال المسافة. استخدم نفس العدسة/التقريب الذي ستقيس به، وصورًا بنفس الدقة.",
-    "saved_cameras":"الكاميرات المحفوظة",
-    "no_camera_selected_option":"— لم يتم اختيار كاميرا —",
+    "cal_note":"علّم الأداة دقة كاميرتك عند مسافات مختلفة، ثم اضبط مقياس أي صورة من المسافة وحدها — دون الحاجة إلى جسم مرجعي.",
+    "saved_cameras":"ملفات الكاميرا المحفوظة",
+    "no_camera_selected_option":"— لم يُحدَّد ملف —",
     "export_this":"↓ تصدير هذه",
     "export_all2":"↓ تصدير الكل",
     "import_btn":"↑ استيراد",
-    "add_calibration_shots":"إضافة لقطات معايرة",
-    "load_calibration_photo":"📷 تحميل صورة المعايرة",
+    "load_calibration_photo":"تحميل صورة المعايرة",
     "reset_view":"إعادة ضبط العرض",
-    "cal_hint":"اضغط على حافتي الجسم · اسحب للتحريك · قرّب/باعد أصابعك أو مرّر للتكبير",
-    "distance_field":"المسافة",
-    "width_field":"العرض",
+    "cal_hint":"قرّب بإصبعين أو بالتمرير · اسحب للتحريك",
+    "distance_field":"المسافة (m)",
+    "width_field":"عرض الجسم (mm)",
     "add_this_shot":"إضافة هذه اللقطة",
-    "clear_points":"مسح النقاط",
-    "save_camera_section":"حفظ الكاميرا",
-    "camera_name_placeholder":"اسم الكاميرا — مثال: عدسة الهاتف 1×",
-    "optional_note_placeholder":"ملاحظة اختيارية — مثال: معايرة 1–8 م",
-    "save_camera_btn":"حفظ الكاميرا",
-    "reset_shots":"إعادة ضبط اللقطات",
+    "clear_points":"إعادة تعيين النقاط",
+    "camera_name_placeholder":"الكاميرا والعدسة — مثل iPhone 15 الرئيسية 1×",
+    "optional_note_placeholder":"ملاحظة اختيارية — الإعدادات، الموقع، التاريخ",
+    "save_camera_btn":"حفظ ملف الكاميرا",
+    "reset_shots":"إعادة تعيين المعايرة",
     "no_shots_yet":"لا توجد لقطات بعد. أضف 3–5 عبر نطاق المسافة لديك.",
     "toast_tap_add_points":"اضغط لإضافة نقاط · اضغط على النقطة الأولى للإغلاق",
     "toast_need_3_points":"يلزم 3 نقاط على الأقل",
@@ -3603,15 +3799,15 @@ const I18N={
     "toast_no_cameras_export":"لا توجد كاميرات للتصدير",
     "help_tools_h":"الأدوات",
     "help_select_b":"تحديد",
-    "help_select_d":"اضغط على أي علامة لتحريكها أو تغيير لونها أو تغيير حجمها أو حذفها. اسحب مقابضها لإعادة تشكيلها. اضغط مطولًا على علامة (أو انقر بزر الفأرة الأيمن) لقائمة: اللون، الحجم، التعديل، التكرار، الحذف.",
+    "help_select_d":"انقر على تعليق لنقله أو تغيير لونه أو حجمه أو حذفه. اسحب مقابضه لإعادة تشكيله. اضغط مطولًا على التعليق (أو انقر بزر الفأرة الأيمن) لفتح قائمة: اللون، الحذف، الحجم، التحرير، التكرار، النسخ واللصق.",
     "help_text_b":"نص ووسم",
     "help_text_d":"انقر الصورة لكتابة تسمية في مكانها. انقر نقرتين على الأداة لفتح قائمة الوسوم والعناصر، أو استمر بالضغط لعرض آخر خمسة عناصر وضعتها. ما تختاره يوضع مرة واحدة ثم يُحرَّر، فتعود النقرة التالية إلى الكتابة؛ ويعرض شريط الخصائص ما هو بالانتظار، و«مسح» يلغيه. تأخذ الوسوم والعناصر نمط النص، فيسري عليها التعبئة ولون القلم، وتتذكر القائمة الحديثة لون كل عنصر عند وضعه آخر مرة.",
     "help_draw_b":"رسم",
-    "help_draw_d":"رسم حر للتحويط أو التخطيط. انقر مرتين على الأداة لتبديل طرف البداية: بلا، سهم، دائري.",
+    "help_draw_d":"رسم حر للتحويط أو التخطيط. انقر مرتين على الأداة لتبديل الطرف: بدون، سهم، دائرة. بجانب أيقونات الطرف، يضع زر الأطراف الطرف في البداية أو النهاية أو الجهتين، ويجعل التنعيم الخط أكثر استدارة. ينطبق كلاهما على الخط المحدد أيضًا، ويمكن إيقاف التنعيم مجددًا.",
     "help_length_b":"الطول",
     "help_length_d":"اسحب خطًا مقاسًا. تُحدَّد كل نهاية بشريط قصير. أدخل قيمة واختر وحدة (مم، م، بوصة، قدم) — يظهر الرقم بجانب الخط. اضغط مطولًا على الأداة لآخر خمس قيم: اختر واحدة وسيأخذها الخط التالي دون نافذة الحوار. انقر مرتين على الأداة للتبديل بين الأشرطة والأسهم في الطرفين.",
     "help_measure_b":"قياس",
-    "help_measure_d":"يقيس الحجم الفعلي تلقائيًا من كاميرا معايرة. اضبط المقياس مرة واحدة (اختر كاميرا وأدخل المسافة)، ثم ارسم خطًا للطول أو مساحة لمضلع — تُحسب القيمة تلقائيًا. اضغط مرتين على القياس لتغيير وحدته. اضغط مرتين على الأداة لضبط المقياس؛ تبدأ الصورة الجديدة بالكاميرا والمسافة المستخدمتين آخر مرة.",
+    "help_measure_d":"يقيس الحجم الفعلي تلقائيًا من كاميرا معايرة. اضبط المقياس مرة واحدة (اختر كاميرا وأدخل المسافة)، ثم ارسم خطًا للطول أو مساحة لمضلع — تُحسب القيمة تلقائيًا. اضغط مرتين على القياس لتغيير وحدته. اضغط مرتين على الأداة لضبط المقياس؛ تبدأ الصورة الجديدة بالكاميرا المستخدمة آخر مرة؛ وتبقى المسافة فارغة ما لم تحتوِ الصورة على قراءة Planum.",
     "help_calib_b":"معايرة الكاميرا",
     "help_calib_d":"في القياس، افتح الكاميرات… لتعليم الأداة كاميرتك. صوّر جسمًا معروف العرض عند عدة مسافات معروفة، وحدده في كل منها، ثم احفظ. أعد استخدام الكاميرا المحفوظة في أي صورة — لا حاجة لمسطرة في اللقطة.",
     "help_note_b":"ملاحظة",
@@ -3621,9 +3817,9 @@ const I18N={
     "help_angle_b":"زاوية",
     "help_angle_d":"ارسم جانبًا من الزاوية، ثم الثاني. تُكتب الزاوية المقاسة على القوس. اضغط مطولًا على الأداة لآخر خمس زوايا: اختر واحدة وستأخذها الزاوية التالية دون نافذة الحوار.",
     "help_number_b":"رقم",
-    "help_number_d":"يضع علامات تزداد تلقائيًا لوسيلة إيضاح أو جدول عيوب. لكل بادئة عدّها الخاص في كل صورة (B1، B2… P1، P2…). انقر مرتين على الأداة للتنقل بين البادئات: بلا، A، B، P، S، J، H؛ واضغط مطولًا لاختيار واحدة أو إعادة الضبط. اكتب في التالي للبدء من أي رقم. مسح الكل يعيد ضبط العد.",
-    "help_defect_b":"عيب",
-    "help_defect_d":"وسوم بلون حالة العنصر. انقر الأداة لإعادة استخدام آخر عيب، وانقر نقرًا مزدوجًا لعرض القائمة الكاملة، واستمر بالضغط لعرض آخر خمسة. في القائمة، انقر مربعًا لوضعه بحالة CS المعروضة، أو استمر بالضغط على المربع لاختيار الحالة وإضافته إلى المفضلة.",
+    "help_number_d":"يضع علامات تزداد تلقائيًا لوسيلة إيضاح أو جدول أخطاء. لكل بادئة عدّها الخاص في كل صورة (B1، B2… P1، P2…). انقر مرتين على الأداة للتنقل بين البادئات: بلا، A، B، P، S، J، H؛ واضغط مطولًا لاختيار واحدة أو إعادة الضبط. اكتب في التالي للبدء من أي رقم. مسح الكل يعيد ضبط العد.",
+    "help_defect_b":"خطأ",
+    "help_defect_d":"وسوم بلون حالة العنصر. انقر الأداة لإعادة استخدام آخر خطأ، وانقر نقرًا مزدوجًا لعرض القائمة الكاملة، واستمر بالضغط لعرض آخر خمسة. في القائمة، انقر مربعًا لوضعه بحالة CS المعروضة، أو استمر بالضغط على المربع لاختيار الحالة وإضافته إلى المفضلة.",
     "help_options_h":"الخيارات",
     "help_fill_b":"التعبئة",
     "help_fill_d":"في الأدوات التي تحمل نصًا، يبدّل الخلفية الصلبة خلف النص. عند الإيقاف يستبدلها بمخطط واضح بحيث تظهر الصورة من خلاله مع بقائه مقروءًا.",
@@ -3650,7 +3846,7 @@ const I18N={
     "help_k_polygon":"مضلع",
     "help_k_angle":"زاوية",
     "help_k_number":"رقم",
-    "help_k_defect":"عيب",
+    "help_k_defect":"خطأ",
     "help_k_photo":"صورة 1–10",
     "help_k_delete":"حذف المحدد",
     "help_k_undo":"تراجع",
@@ -3660,7 +3856,7 @@ const I18N={
     "help_g_tool_b":"أزرار الأدوات",
     "help_g_tool_d":"اضغط لاستخدام أداة. اضغط مرتين لإعدادها الرئيسي، واضغط مطولًا لعناصرك الأخيرة. تشير نقطة برتقالية إلى الأزرار ذات الخيارات الإضافية، وتختفي بعد ثلاثة استخدامات.",
     "help_g_photo_b":"على الصورة",
-    "help_g_photo_d":"اضغط على أي علامة لتحديدها وسحبها أيًّا كانت الأداة النشطة. اضغط عليها مرتين لتغيير نصها أو قيمتها. في أداة التحديد، اضغط عليها مطولًا (أو انقر بالزر الأيمن) لقائمة اللون والحجم والتعديل والتكرار والحذف.",
+    "help_g_photo_d":"انقر على أي علامة لتحديدها وسحبها، أيًّا كانت الأداة. انقر مرتين لتغيير نصها أو قيمتها. في أداة التحديد، اضغط عليها مطولًا (أو انقر بزر الفأرة الأيمن) للون والحجم والتحرير والتكرار والنسخ واللصق والحذف. بعد نسخ شيء، اضغط مطولًا على مكان فارغ (أو انقر بزر الفأرة الأيمن) للصقه هناك.",
     "help_g_armed_b":"القيم المختارة",
     "help_g_armed_d":"تُستخدم القيمة المختارة من قائمة الضغط المطوّل مرة واحدة — للخط أو الملاحظة أو الزاوية التالية — ثم تعود نافذة الحوار. يعرضها شريط الأدوات في الانتظار، ويُلغيها زر المسح.",
     "help_photos_h":"الصور والتصدير",
@@ -3681,9 +3877,9 @@ const I18N={
     "value_ph_angle":"مثال: 45",
     "value_ph_number":"مثال: B3",
     "toast_imported_cameras":"تم استيراد {n} كاميرا",
-    "cal_point_a_set":"تم تحديد النقطة A — اضغط على الحافة المقابلة لتحديد B.",
-    "cal_tap_two_edges":"اضغط على حافتي الجسم المعروف.",
-    "cal_object_spans":"يمتد الجسم <strong>{span} بكسل</strong>. أدخل المسافة والعرض، ثم أضف اللقطة.",
+    "cal_point_a_set":"الآن اضغط على <strong>النقطة B</strong> عند الحافة المقابلة.",
+    "cal_tap_two_edges":"اضغط على <strong>النقطة A</strong> عند إحدى حافتي الجسم المعروف.",
+    "cal_object_spans":"يمتد الجسم <strong>{span} بكسل</strong>. اسحب A أو B للضبط، أو اضغط في مكان آخر للبدء من جديد. ثم «{add}».",
     "cal_fit_failed":"فشلت المطابقة — يجب أن تختلف المسافات.",
     "cal_add_3rd_shot":"أضف لقطة ثالثة لتقدير جودة المطابقة.",
     "cal_fit_quality":"جودة المطابقة: ",
@@ -3707,7 +3903,17 @@ const I18N={
     "scale_colon":"المقياس: {value} بكسل/مم",
     "toast_save_failed":"لم يُحفظ على هذا الجهاز — قد تكون مساحة التخزين ممتلئة. صدّر عملك.",
     "toast_restore_skip":"صور لم تُفتح: {n} — محفوظة للمرة القادمة",
-    "toast_export_skip":"صور لم تُصدَّر: {n}"
+    "toast_export_skip":"صور لم تُصدَّر: {n}",
+    "copy_btn":"نسخ",
+    "toast_copied":"تم النسخ — الصقه على أي صورة",
+    "tip_at_start":"الطرف في البداية",
+    "tip_at_end":"الطرف في النهاية",
+    "tip_at_both":"طرفان في الجهتين",
+    "smooth_on":"تنعيم: تشغيل",
+    "smooth_off":"تنعيم: إيقاف",
+    "qr_dense":"كثيف — استخدم الحجم L",
+    "help_k_copy":"نسخ العلامة",
+    "help_k_paste":"لصق علامة أو صورة"
   },
   ru:{
     "rep_add_row":"Добавить строку",
@@ -3921,7 +4127,7 @@ const I18N={
     "help_pickur_b":"Не оценено",
     "help_pickur_d":"Шестое состояние — синее. Для дефекта, который виден, но не поддаётся оценке: нет доступа, закрыт обзор или нужно второе мнение. В ведомости печатается как UR и считается отдельно, не внутри CS1.",
     "help_paste_b":"Вставить",
-    "help_paste_d":"Добавляет изображение из буфера обмена как новое фото. Нажмите Ctrl/Cmd+V или кнопку «Вставить». Телефоны при первом использовании запросят разрешение на доступ к буферу.",
+    "help_paste_d":"Добавляет изображение из буфера обмена как новое фото. Нажмите Ctrl/Cmd+V или кнопку «Вставить». Телефоны запросят доступ к буферу обмена при первом использовании. Метки, скопированные через Ctrl/Cmd+C или меню удержания, вставляются через Ctrl/Cmd+V на любое фото этой сессии — в то же место относительно фото; измерения сохраняют значения, номера — свой номер.",
     "add_label":"Добавить подпись",
     "edit_label":"Изменить подпись",
     "note_text":"Текст заметки",
@@ -3987,6 +4193,27 @@ const I18N={
     "set_scale_body":"Выберите откалиброванную камеру и введите расстояние от камеры до объекта. Разрешение рассчитывается по калибровке камеры — эталонный объект в этом кадре не нужен.",
     "camera_label":"Камера",
     "distance_label":"Расстояние",
+    "pl_offset":"Смещение {v}",
+    "pl_mode":"режим «{m}»",
+    "pl_m_distance":"Расстояние",
+    "pl_m_continuous":"Непрерывный",
+    "pl_m_angle":"Угол",
+    "pl_m_level":"Уровень",
+    "pl_m_ih":"Косвенная высота",
+    "pl_m_il":"Косвенная длина",
+    "pl_nodist":"расстояние не записано",
+    "pl_unknown":"тип показания «{t}» не распознан; не подставлено",
+    "pl_resized":"фото изменено или обрезано после съёмки ({a} → {b}); не подставлено",
+    "cal_tips":"Советы",
+    "cal_tip1":"Калибруйте в том диапазоне расстояний, на котором вы реально будете снимать.",
+    "cal_tip2":"Сначала снимайте издалека, затем каждый раз вдвое ближе — например 8 м, затем 4 м, затем 2 м. Так точки распределяются равномерно и подбор получается надёжным.",
+    "cal_tip3":"Используйте один и тот же зум/фокусное расстояние для всех снимков и для последующих измерений.",
+    "cal_tip4":"Измеряйте каждое расстояние лазерным дальномером для максимальной точности — чем меньше ошибка расстояния, тем точнее каждое измерение с этим профилем.",
+    "cal_load_sub":"фото объекта известной ширины на известном расстоянии",
+    "cal_browse":"Выбрать файл…",
+    "cal_change_photo":"↻ Сменить фото",
+    "cal_step1":"Введите расстояние для этого снимка и ширину известного объекта",
+    "cal_step2":"Коснитесь двух краёв объекта на фото",
     "from_planum":"из Planum",
     "select_camera_option":"— Выберите камеру —",
     "calibrate_new_camera":"+ Откалибровать новую камеру…",
@@ -3995,25 +4222,23 @@ const I18N={
     "predicted_resolution":"Расчётное разрешение: {value} px/мм",
     "could_not_compute":"Не удалось рассчитать.",
     "cal_title":"Калибровка камеры — расстояние и разрешение",
-    "cal_note":"Обучите инструмент разрешению вашей камеры на разных расстояниях. Сфотографируйте объект известного размера на нескольких известных расстояниях, отметьте его на каждом снимке и сохраните камеру. После этого можно масштабировать любое фото, указав только расстояние. Используйте тот же объектив/зум, которым будете измерять, и снимки с одинаковым разрешением.",
-    "saved_cameras":"Сохранённые камеры",
-    "no_camera_selected_option":"— Камера не выбрана —",
+    "cal_note":"Научите инструмент разрешению вашей камеры на разных расстояниях, а затем задавайте масштаб любого фото только по расстоянию — эталонный объект не нужен.",
+    "saved_cameras":"Сохранённые профили камер",
+    "no_camera_selected_option":"— Профиль не выбран —",
     "export_this":"↓ Экспорт этой",
     "export_all2":"↓ Экспорт всех",
     "import_btn":"↑ Импорт",
-    "add_calibration_shots":"Добавить калибровочные снимки",
-    "load_calibration_photo":"📷 Загрузить калибровочное фото",
+    "load_calibration_photo":"Загрузить калибровочное фото",
     "reset_view":"Сбросить вид",
-    "cal_hint":"Коснитесь двух краёв объекта · перетащите для панорамирования · сведите/прокрутите для масштабирования",
-    "distance_field":"Расстояние",
-    "width_field":"Ширина",
+    "cal_hint":"Масштаб — щипком или колёсиком · перетаскивание — сдвиг",
+    "distance_field":"Расстояние (м)",
+    "width_field":"Ширина объекта (мм)",
     "add_this_shot":"Добавить снимок",
-    "clear_points":"Очистить точки",
-    "save_camera_section":"Сохранить камеру",
-    "camera_name_placeholder":"Название камеры — напр. Телефон, объектив 1×",
-    "optional_note_placeholder":"Необязательная заметка — напр. откалибровано 1–8 м",
-    "save_camera_btn":"Сохранить камеру",
-    "reset_shots":"Сбросить снимки",
+    "clear_points":"Сбросить точки",
+    "camera_name_placeholder":"Камера и объектив — напр. iPhone 15 основная 1×",
+    "optional_note_placeholder":"Заметка (необязательно) — настройки, объект, дата",
+    "save_camera_btn":"Сохранить профиль камеры",
+    "reset_shots":"Сбросить калибровку",
     "no_shots_yet":"Пока нет снимков. Добавьте 3–5 в вашем диапазоне расстояний.",
     "toast_tap_add_points":"Нажимайте, чтобы добавить точки · нажмите на первую точку, чтобы замкнуть",
     "toast_need_3_points":"Нужно минимум 3 точки",
@@ -4060,15 +4285,15 @@ const I18N={
     "toast_no_cameras_export":"Нет камер для экспорта",
     "help_tools_h":"Инструменты",
     "help_select_b":"Выбор",
-    "help_select_d":"Нажмите на аннотацию, чтобы переместить, изменить цвет, размер или удалить её. Перетаскивайте маркеры, чтобы изменить форму. Удерживайте аннотацию (или щёлкните правой кнопкой) для меню: цвет, размер, изменить, дублировать, удалить.",
+    "help_select_d":"Коснитесь аннотации, чтобы переместить, перекрасить, изменить размер или удалить её. Перетаскивайте маркеры, чтобы изменить форму. Удерживайте аннотацию (или щёлкните правой кнопкой) для меню: цвет, удаление, размер, правка, дублирование, копирование и вставка.",
     "help_text_b":"Текст и метка",
     "help_text_d":"Нажмите на фото, чтобы ввести подпись на месте. Двойное нажатие на инструмент открывает список меток и элементов, удержание показывает последние пять поставленных записей. Выбранное ставится один раз и освобождается, поэтому следующее нажатие снова открывает ввод; в строке свойств видно, что ожидает, а «Очистить» убирает его. Метки и элементы используют стиль текста, поэтому заливка и цвет чернил действуют и на них, а список последних запоминает цвет каждой записи.",
     "help_draw_b":"Рисование",
-    "help_draw_d":"Произвольное рисование для обводки или наброска. Двойное касание инструмента меняет начало линии: нет, стрелка, точка.",
+    "help_draw_d":"Произвольное рисование для обводки или наброска. Двойное касание инструмента меняет наконечник: нет, стрелка, точка. Кнопка рядом со значками наконечника ставит его в начало, в конец или на оба конца, а «Сглаживание» делает линию плавнее. Оба параметра применяются и к выбранной линии; сглаживание можно снова выключить.",
     "help_length_b":"Длина",
     "help_length_d":"Проведите измерительную линию. Короткие штрихи отмечают её концы. Введите значение и выберите единицу (мм, м, дюйм, фут) — число отображается рядом с линией. Удерживайте инструмент, чтобы выбрать одно из пяти последних значений: следующая линия получит его без диалога. Двойное касание инструмента переключает концы: штрихи или стрелки.",
     "help_measure_b":"Измерение",
-    "help_measure_d":"Автоматически измеряет реальный размер по откалиброванной камере. Задайте масштаб один раз (выберите камеру и введите расстояние), затем нарисуйте линию для длины или область для полигона — значение рассчитается само. Дважды нажмите на измерение, чтобы сменить единицу. Двойное касание инструмента задаёт масштаб; новое фото начинается с последних использованных камеры и расстояния.",
+    "help_measure_d":"Автоматически измеряет реальный размер по откалиброванной камере. Задайте масштаб один раз (выберите камеру и введите расстояние), затем нарисуйте линию для длины или область для полигона — значение рассчитается само. Дважды нажмите на измерение, чтобы сменить единицу. Двойное касание инструмента задаёт масштаб; новое фото начинается с последней использованной камеры; расстояние остаётся пустым, если в фото нет показания Planum.",
     "help_calib_b":"Калибровка камеры",
     "help_calib_d":"В разделе «Измерение» откройте «Камеры…», чтобы обучить инструмент вашей камере. Сфотографируйте объект известной ширины на нескольких известных расстояниях, отметьте его на каждом снимке и сохраните. Используйте сохранённую камеру для любых фото — линейка в кадре не нужна.",
     "help_note_b":"Заметка",
@@ -4117,7 +4342,7 @@ const I18N={
     "help_g_tool_b":"Кнопки инструментов",
     "help_g_tool_d":"Касание включает инструмент. Двойное касание — его главная настройка; удержание — недавние элементы. Оранжевая точка отмечает кнопки с дополнительными жестами и исчезает после трёх использований.",
     "help_g_photo_b":"На фото",
-    "help_g_photo_d":"Коснитесь любой пометки, чтобы выбрать и перетащить её, какой бы инструмент ни был включён. Двойное касание меняет её текст или значение. В инструменте «Выбор» удерживайте её (или щёлкните правой кнопкой) — цвет, размер, изменить, дублировать, удалить.",
+    "help_g_photo_d":"Коснитесь любой метки, чтобы выбрать и перетащить её, какой бы инструмент ни был включён. Двойное касание меняет её текст или значение. В режиме «Выбор» удерживайте её (или щёлкните правой кнопкой) для цвета, размера, правки, дублирования, копирования, вставки и удаления. Когда что-то скопировано, удерживайте пустое место (или щёлкните правой кнопкой), чтобы вставить туда.",
     "help_g_armed_b":"Выбранные значения",
     "help_g_armed_d":"Значение из списка по удержанию используется один раз — следующей линией, заметкой или углом, — затем снова появляется диалог. Панель показывает его в ожидании; «Очистить» его сбрасывает.",
     "help_photos_h":"Фото и экспорт",
@@ -4138,9 +4363,9 @@ const I18N={
     "value_ph_angle":"напр. 45",
     "value_ph_number":"напр. B3",
     "toast_imported_cameras":"Импортировано камер: {n}",
-    "cal_point_a_set":"Точка A установлена — коснитесь противоположного края для точки B.",
-    "cal_tap_two_edges":"Коснитесь двух краёв известного объекта.",
-    "cal_object_spans":"Объект занимает <strong>{span} px</strong>. Введите расстояние и ширину, затем добавьте снимок.",
+    "cal_point_a_set":"Теперь коснитесь <strong>точки B</strong> на противоположном краю.",
+    "cal_tap_two_edges":"Коснитесь <strong>точки A</strong> на одном краю известного объекта.",
+    "cal_object_spans":"Объект занимает <strong>{span} px</strong>. Перетащите A или B для уточнения или коснитесь в другом месте, чтобы начать заново. Затем «{add}».",
     "cal_fit_failed":"Аппроксимация не удалась — расстояния должны отличаться.",
     "cal_add_3rd_shot":"Добавьте 3-й снимок для оценки качества аппроксимации.",
     "cal_fit_quality":"Качество аппроксимации: ",
@@ -4164,7 +4389,17 @@ const I18N={
     "scale_colon":"Масштаб: {value} px/мм",
     "toast_save_failed":"Не сохранено на устройстве — возможно, память заполнена. Экспортируйте работу.",
     "toast_restore_skip":"Не открыто фото: {n} — сохранены до следующего раза",
-    "toast_export_skip":"Не экспортировано фото: {n}"
+    "toast_export_skip":"Не экспортировано фото: {n}",
+    "copy_btn":"Копировать",
+    "toast_copied":"Скопировано — вставьте на любое фото",
+    "tip_at_start":"Наконечник в начале",
+    "tip_at_end":"Наконечник в конце",
+    "tip_at_both":"Наконечники на обоих концах",
+    "smooth_on":"Сглаживание: вкл.",
+    "smooth_off":"Сглаживание: выкл.",
+    "qr_dense":"плотный — выберите размер L",
+    "help_k_copy":"Копировать метку",
+    "help_k_paste":"Вставить метку или фото"
   }
 };
 const TERM_TR={
@@ -4572,7 +4807,7 @@ const TERM_TR={
     "Graffiti":"كتابات (غرافيتي)",
     "Water staining":"بقع مياه",
     "Pothole":"حفرة",
-    "Wearing-surface defect":"عيب في طبقة السطح",
+    "Wearing-surface defect":"خطأ في طبقة السطح",
     "Excessive deflection":"انحراف مفرط (ترخيم زائد)",
     "Erosion":"تآكل تربة (انجراف)",
     "Loose connection":"وصلة مفكوكة",
@@ -4872,6 +5107,7 @@ function applyI18n(){
   if($('rsOverlay')&&$('rsOverlay').classList.contains('show')&&typeof renderSetup==='function') renderSetup();
   if(typeof render==='function') render();
   if($('calOverlay')&&$('calOverlay').classList.contains('show')&&typeof renderCalShots==='function') renderCalShots();
+  try{ calUpdateSpan(); renderCalPlanum(); renderScalePlanum(); calTipsApply($('calTipsBody').style.display==='none'); }catch(e){}
 }
 function renderLangMenu(){
   const m=$('langMenu');
@@ -4915,7 +5151,7 @@ const S = {
   objects:[], sel:null, tool:'select', armedQR:null,
   style:{color:INKS[0], w:'M', tip:'off', dimEnds:'bars'},
   fmt:'jpg',
-  counters:{}, angleDraft:null, polyDraft:null, polyFill:true, tipBy:{pen:'off',note:'off'}, armedAng:null, recentAng:[], stamp:{cap:false,date:false,pos:'bl'}, mscale:1, qrStyle:'n', fillBy:{text:true,note:true,dim:true,angle:true,measure:true}, lastScale:null, recentQr:[], numPrefix:'',
+  counters:{}, angleDraft:null, polyDraft:null, polyFill:true, tipBy:{pen:'off',note:'off'}, penEnds:'start', penSmooth:false, armedAng:null, recentAng:[], stamp:{cap:false,date:false,pos:'bl'}, mscale:1, qrStyle:'n', fillBy:{text:true,note:true,dim:true,angle:true,measure:true}, lastScale:null, recentQr:[], numPrefix:'',
   armedLen:null, armedNote:null, recentLen:[], recentNote:[],
   armedDefect:null, armedLbl:null, recent:[], recentLbl:[], favs:[], tagsOwn:[],
   photos:[], held:[], curId:null, elements:[], personal:[], perCat:{},
@@ -5174,11 +5410,52 @@ function drawPolyDraft(ctx,tf){
     ctx.lineWidth=2; ctx.strokeStyle='#1a1206'; ctx.stroke();
   }
 }
+// Smooth: resample the raw stroke at an even step, then blur it with repeated [1,2,1] passes,
+// ends pinned. Image space, so the curve is the same at any zoom and in exports.
+const _smC=new WeakMap();
+function smoothPts(o){
+  const p=o.pts, n=p.length; if(n<3) return p;
+  const key=n+'|'+o.w+'|'+S.baseW+'|'+p[0].x+','+p[0].y+'|'+p[n-1].x+','+p[n-1].y;
+  const c=_smC.get(o); if(c&&c.key===key) return c.pts;
+  let L=0; for(let i=1;i<n;i++) L+=Math.hypot(p[i].x-p[i-1].x,p[i].y-p[i-1].y);
+  const w=Math.max(0.5,o.w||1);
+  // blur width: a few stroke widths, never less than the photo's base unit, never more than 6% of the stroke
+  const sig=Math.min(Math.max(4*w, 3*S.baseW, L*0.02), Math.max(w, L*0.06));
+  const step=Math.max(0.5, w*0.75, sig/3, L/800);
+  const r=[{x:p[0].x,y:p[0].y}]; let need=step;
+  for(let i=1;i<n;i++){
+    const a=p[i-1], b=p[i], d=Math.hypot(b.x-a.x,b.y-a.y); if(!d) continue;
+    let tt=0;
+    while(d-tt>=need){ tt+=need; const f=tt/d; r.push({x:a.x+(b.x-a.x)*f, y:a.y+(b.y-a.y)*f}); need=step; }
+    need-=d-tt;
+  }
+  const lp=p[n-1], lr=r[r.length-1];
+  if(Math.hypot(lp.x-lr.x,lp.y-lr.y)>step*0.25) r.push({x:lp.x,y:lp.y}); else r[r.length-1]={x:lp.x,y:lp.y};
+  let out=r;
+  if(r.length>=3){
+    const passes=Math.max(2,Math.min(30,Math.round(2*Math.pow(sig/step,2))));
+    for(let k=0;k<passes;k++){
+      const q=out.slice();
+      for(let i=1;i<out.length-1;i++) q[i]={x:(out[i-1].x+2*out[i].x+out[i+1].x)/4, y:(out[i-1].y+2*out[i].y+out[i+1].y)/4};
+      out=q;
+    }
+  }
+  _smC.set(o,{key,pts:out}); return out;
+}
+function penEnds(o){ return o.te==='end'||o.te==='both'?o.te:'start'; }
 function drawPen(ctx,o,tf){
   if(o.pts.length<2) return;
-  const pts=o.pts.map(pt=>mapPt(tf,pt.x,pt.y)), w=mapLen(tf,o.w);
-  strokePath(ctx, o.tip==='arrow'?trimPath(pts,ARROW_INSET(w)):pts, w, o.color);
-  if(o.tip&&o.tip!=='off') drawTip(ctx,pts[0],outAngle(pts,w),w,o.color,o.tip);
+  const src=o.sm?smoothPts(o):o.pts;
+  const pts=src.map(pt=>mapPt(tf,pt.x,pt.y)), w=mapLen(tf,o.w);
+  const tip=(o.tip&&o.tip!=='off')?o.tip:null, at=penEnds(o);
+  const atS=tip&&at!=='end', atE=tip&&at!=='start';
+  let line=pts;
+  if(tip==='arrow'){ const ins=ARROW_INSET(w);
+    if(atS) line=trimPath(line,ins);
+    if(atE) line=trimPath(line.slice().reverse(),ins).reverse(); }
+  strokePath(ctx, line, w, o.color);
+  if(atS) drawTip(ctx,pts[0],outAngle(pts,w),w,o.color,tip);
+  if(atE){ const rv=pts.slice().reverse(); drawTip(ctx,rv[0],outAngle(rv,w),w,o.color,tip); }
 }
 function drawText(ctx,o,tf){ const p=mapPt(tf,o.x,o.y); chipAt(ctx,o.text,p.x,p.y,o.color,mapLen(tf,o.size),o.fill); }
 function roundRect(ctx,x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
@@ -5416,7 +5693,8 @@ const QRGen=(()=>{
     return best;
   };
 })();
-const QR_MAX=300, QR_QUIET=4;
+const QR_MAX=1000, QR_QUIET=4;
+const qrBytes=v=>{ try{ return new TextEncoder().encode(v||'').length; }catch(e){ return (v||'').length; } };
 const qrCache=new Map();
 function qrMatrix(text){
   if(!text)return null;
@@ -5553,6 +5831,9 @@ let holdT=null, holdP=null, lastPtrType='', holdAt=0;
 function cancelHold(){ clearTimeout(holdT); holdT=null; holdP=null; }
 function fireHold(){
   holdT=null; if(!act||S.tool!=='select') return;
+  if(act.mode==='pan'){ const p=holdP; holdP=null; if(!p||!clip) return;
+    S.view.ox=act.ox; S.view.oy=act.oy; act=null; lastTap=0; holdAt=Date.now(); render();
+    const r=canvas.getBoundingClientRect(); openPasteMenu(r.left+p.x, r.top+p.y, toImg(p.x,p.y)); return; }
   const o=getObj(act.id); if(!o){ holdP=null; return; }
   if(act.mode==='move'){ const i=S.objects.indexOf(o), c=clone(act.orig); if(i>=0){ S.objects[i]=c; const r=curRec(); if(r) r.objects=S.objects; } }
   else if(act.mode==='label'){ o.lx=act.orig.lx; o.ly=act.orig.ly; }
@@ -5581,7 +5862,8 @@ canvas.addEventListener('pointerup',up); canvas.addEventListener('pointercancel'
 canvas.addEventListener('contextmenu',e=>{
   e.preventDefault();
   if(lastPtrType!=='mouse'||!S.img||act||Date.now()-holdAt<800) return;
-  const p=getPos(e), h=hitTest(toImg(p.x,p.y)); if(!h) return;
+  const p=getPos(e), ip=toImg(p.x,p.y), h=hitTest(ip);
+  if(!h){ if(!S.polyDraft&&!S.angleDraft) openPasteMenu(e.clientX,e.clientY,ip); return; }
   if(S.tool!=='select') setTool('select');
   S.sel=h.id; syncCtx(); render(); openObjMenu(e.clientX,e.clientY);
 });
@@ -5626,7 +5908,7 @@ function onDown(p){
     else if(h&&h.part==='label'){ S.sel=h.id; const o=getObj(h.id); const lp=labelPos(o); beginEdit(); act={mode:'label',id:h.id,start:ip,orig:{lx:lp.x,ly:lp.y}}; syncCtx(); }
     else if(h){ S.sel=h.id; beginEdit(); act={mode:'move',id:h.id,start:ip,orig:clone(getObj(h.id))}; syncCtx(); }
     else { S.sel=null; syncCtx(); act={mode:'pan',sx:p.x,sy:p.y,ox:S.view.ox,oy:S.view.oy}; }
-    if(h&&h.handle==null&&lastPtrType!=='mouse'){ cancelHold(); holdP=p; holdT=setTimeout(fireHold,450); }
+    if(((h&&h.handle==null)||(!h&&clip))&&lastPtrType!=='mouse'){ cancelHold(); holdP=p; holdT=setTimeout(fireHold,450); }
     render();
   } else if(S.tool==='text'){
     act=null; if(trySelect(ip)) return;
@@ -5692,7 +5974,7 @@ function onDown(p){
     let o;
     if(S.tool==='note') o={id:newId(),type:'note',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),text:'',size:fontPx(),fill:S.fillBy.note,tip:S.tipBy.note};
     else if(S.tool==='dim') o={id:newId(),type:'dim',x1:ip.x,y1:ip.y,x2:ip.x,y2:ip.y,color:S.style.color,w:widthPx(),value:'',unit:S.units.dim||'mm',size:fontPx(),fill:S.fillBy.dim,ends:S.style.dimEnds};
-    else o={id:newId(),type:'pen',pts:[{x:r1(ip.x),y:r1(ip.y)}],color:S.style.color,w:widthPx(),tip:S.tipBy.pen};
+    else o={id:newId(),type:'pen',pts:[{x:r1(ip.x),y:r1(ip.y)}],color:S.style.color,w:widthPx(),tip:S.tipBy.pen,te:S.penEnds!=='start'?S.penEnds:undefined,sm:S.penSmooth?1:undefined};
     if(o.type==='dim'&&S.armedLen){ o.value=S.armedLen.v; o.unit=S.armedLen.u; o._arm=1; }
     if(o.type==='note'&&S.armedNote){ o.text=S.armedNote; o._arm=1; }
     act={mode:'draw',o,startImg:ip}; S.objects.push(o); render();
@@ -5819,16 +6101,16 @@ function openQr(o){
 function commitQr(){
   const v=$('qrInput').value.trim();
   if(!v){ toast(t('toast_qr_empty')); return; }
-  if(v.length>QR_MAX || !qrMatrix(v)){ qrCountSync(); toast(t('toast_qr_long')); try{ $('qrInput').focus({preventScroll:true}); }catch(e){} return; }
+  if(qrBytes(v)>QR_MAX || !qrMatrix(v)){ qrCountSync(); toast(t('toast_qr_long')); try{ $('qrInput').focus({preventScroll:true}); }catch(e){} return; }
   if(qrTarget){ beginEdit(); qrTarget.text=v; commit(); render(); }
   else { S.armedQR={text:v}; updateQr(); toast(t('toast_tap_to_place')); }
   pushQr(v);
   qrTarget=null; hideOverlay('qrOverlay');
 }
 function cancelQr(){ qrTarget=null; hideOverlay('qrOverlay'); }
-function qrCountSync(){ const n=$('qrInput').value.trim().length, el=$('qrCount'), over=n>QR_MAX;
+function qrCountSync(){ const n=qrBytes($('qrInput').value.trim()), el=$('qrCount'), over=n>QR_MAX;
   el.classList.toggle('over',over);
-  el.textContent = !n ? '' : over ? (n+' / '+QR_MAX+' · '+t('toast_qr_long')) : (n+' / '+QR_MAX); }
+  el.textContent = !n ? '' : over ? (n+' / '+QR_MAX+' · '+t('toast_qr_long')) : (n+' / '+QR_MAX+(n>300?' · '+t('qr_dense'):'')); }
 function pushQr(v){ if(!v) return; S.recentQr=[v].concat(S.recentQr.filter(x=>x!==v)).slice(0,8); dirty(); }
 function qrShort(v){ return v.length>34 ? v.slice(0,20)+'…'+v.slice(-12) : v; }
 function qrTap(){ if(S.armedQR) return; if(S.recentQr.length){ S.armedQR={text:S.recentQr[0]}; updateQr(); updateQrCtl(); toast(t('toast_tap_to_place')); } else openQr(null); }
@@ -5957,6 +6239,24 @@ function updateTipCtl(){
     b.style.display=mine?'':'none';
     b.classList.toggle('on', mine&&b.dataset.tip===cur);
   });
+  const pen=!ends && (o ? o.type==='pen' : S.tool==='pen');
+  const at=(o&&o.type==='pen')?penEnds(o):S.penEnds, sm=(o&&o.type==='pen')?!!o.sm:S.penSmooth;
+  const eb=$('tipends');
+  eb.style.display=(pen&&cur!=='off')?'':'none';
+  if(pen&&cur!=='off'){ eb.innerHTML=endsSvg(cur,at); const tt=t('tip_at_'+at); eb.title=tt; eb.setAttribute('aria-label',tt); }
+  $('smoothdiv').style.display=pen?'':'none';
+  const sb=$('pensmooth'); sb.style.display=pen?'':'none';
+  if(pen){ sb.innerHTML=sm?SM_ON_SVG:SM_OFF_SVG; sb.classList.toggle('on',sm); const tt=t(sm?'smooth_on':'smooth_off'); sb.title=tt; sb.setAttribute('aria-label',tt); }
+}
+const SM_OFF_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="stroke-width:2.4"><path d="M3 16l4-8 4 7 4-9 6 10"/></svg>';
+const SM_ON_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M2.5 15c3.2-8 6.3-8 9.5 0s6.3 8 9.5 0"/></svg>';
+function endsSvg(kind,at){
+  const s=at!=='end', e=at!=='start', both=s&&e;
+  const ah=(x,d)=>both?'<path d="M'+x+' 12l'+(7*d)+'-4.5v9z" fill="currentColor" stroke-width="1.5"/>':'<path d="M'+x+' 12l'+(8*d)+'-5v10z" fill="currentColor" stroke-width="1.5"/>';
+  const dot=x=>'<circle cx="'+x+'" cy="12" r="'+(both?3.3:3.6)+'" fill="currentColor" stroke="none"/>';
+  const head=(x,d)=>kind==='round'?dot(x+3.5*d):ah(x,d);
+  const x1=s?(kind==='round'?(both?8:10):(both?9:10)):3, x2=e?(kind==='round'?(both?16:14):(both?15:14)):21;
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M'+x1+' 12H'+x2+'"/>'+(s?head(both?2:3,1):'')+(e?head(both?22:21,-1):'')+'</svg>';
 }
 function updatePolyCtl(){
   const o=S.sel!=null?getObj(S.sel):null;
@@ -6096,40 +6396,42 @@ function planumWhen(v){
   const M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],p=n=>String(n).padStart(2,'0');
   return `${d.getDate()} ${M[d.getMonth()]} ${p(d.getHours())}:${p(d.getMinutes())}`;
 }
-function planumAssess(pl,meta){
+const PL_MODE={'distance':'pl_m_distance','continuous':'pl_m_continuous','angle':'pl_m_angle','level':'pl_m_level','indirect height':'pl_m_ih','indirect length':'pl_m_il'};
+function planumAssess(pl){
   if(!pl)return null;
+  const j=a=>a.filter(Boolean).map(x=>'\u2068'+x+'\u2069').join(' · ');
   const head='Planum'+(pl.counter!==null?` #${pl.counter}`:'');
-  const dTxt=pl.dist!==null?`${pl.dist.toFixed(4)} m`+(pl.z!==null?` (Z ${+pl.z.toFixed(1)} mm)`:''):'';
-  const tail=[pl.meter,planumWhen(pl.time)].filter(Boolean).map(x=>' · '+x).join('');
-  let why='';
-  if(pl.kind==='nodist')why=`${pl.type} reading — no distance recorded`;
-  else if(pl.kind==='tilted')why=`${pl.type} ${dTxt} — along a tilted beam; not filled in`;
-  else if(pl.kind==='unknown')why=`${dTxt} — reading type ${pl.type?'“'+pl.type+'” ':''}not recognised; not filled in`;
-  else if(meta&&pl.w&&pl.h){
-    const W=meta.origW,H=meta.origH;
-    if(!((W===pl.w&&H===pl.h)||(W===pl.h&&H===pl.w)))why=`${dTxt} — photo resized or cropped since capture (${pl.w}×${pl.h} → ${W}×${H}); not filled in`;
-  }
-  if(why)return{ok:false,fill:null,text:`⚠ ${head} · ${why}${tail}`};
-  return{ok:true,fill:+pl.dist.toFixed(5),text:`${head} · ${dTxt}${tail}`};
+  const mk=PL_MODE[String(pl.type||'').toLowerCase()], mode=t('pl_mode',{m:mk?t(mk):(pl.type||'?')});
+  const dist=pl.dist!==null?`${pl.dist.toFixed(4)} m`:'', off=pl.z!==null?t('pl_offset',{v:'\u2066'+(+pl.z.toFixed(1))+' mm\u2069'}):'';
+  const tail=[pl.meter,planumWhen(pl.time)];
+  if(pl.kind==='nodist')return{ok:false,warn:true,fill:null,text:'⚠ '+j([head,mode+' — '+t('pl_nodist')].concat(tail))};
+  if(pl.kind==='unknown')return{ok:false,warn:true,fill:null,text:'⚠ '+j([head,dist,off,t('pl_unknown',{t:pl.type||'?'})].concat(tail))};
+  if(pl.w&&pl.h&&pl.ow&&pl.oh&&!((pl.ow===pl.w&&pl.oh===pl.h)||(pl.ow===pl.h&&pl.oh===pl.w)))
+    return{ok:false,warn:true,fill:null,text:'⚠ '+j([head,dist,off,t('pl_resized',{a:'\u2066'+pl.w+'×'+pl.h,b:pl.ow+'×'+pl.oh+'\u2069'})].concat(tail))};
+  const fill=+pl.dist.toFixed(5);
+  if(pl.kind==='tilted')return{ok:true,warn:true,fill,text:'⚠ '+j([head,dist,off,mode].concat(tail))};
+  return{ok:true,warn:false,fill,text:j([head,dist,off].concat(tail))};
 }
 function planumChipOn(a,inp){return !!(a&&a.ok&&inp&&Math.abs(parseFloat(inp.value)-a.fill)<1e-9);}
 function plClean(o){
-  if(!o||typeof o!=='object'||typeof o.text!=='string'||!o.text)return null;
-  const ok=o.ok===true,fill=+o.fill;
-  if(ok&&!(fill>0&&fill<10000))return null;
-  return{ok,fill:ok?fill:null,text:o.text.slice(0,300)};
+  if(!o||typeof o!=='object'||['ok','nodist','tilted','unknown'].indexOf(o.kind)<0)return null;
+  const n=v=>(typeof v==='number'&&isFinite(v))?v:null, st=(v,m)=>typeof v==='string'?v.slice(0,m):'', pi=v=>{const x=n(v);return x>0?Math.round(x):null;};
+  const dist=n(o.dist); if(o.kind!=='nodist'&&!(dist>0&&dist<10000))return null;
+  return{kind:o.kind,type:st(o.type,40),dist:(dist>0&&dist<10000)?dist:null,z:n(o.z),counter:n(o.counter)!==null?Math.round(o.counter):null,
+    meter:st(o.meter,40),time:st(o.time,40),w:pi(o.w),h:pi(o.h),ow:pi(o.ow),oh:pi(o.oh)};
 }
 function plShow(a,noteId,chipId,inpId){
   const n=$(noteId),c=$(chipId);
-  if(n){n.textContent=a?a.text:'';n.className='planum-note'+(a?(a.ok?' pl-ok':' pl-warn'):'');n.style.display=a?'':'none';}
-  if(c)c.style.display=planumChipOn(a,$(inpId))?'':'none';
+  if(n){n.textContent=a?a.text:'';n.className='planum-note'+(a?(a.warn?' pl-warn':' pl-ok'):'');n.style.display=a?'':'none';}
+  if(c){c.style.display=planumChipOn(a,$(inpId))?'':'none';c.classList.toggle('warn',!!(a&&a.warn));}
 }
 let scaleDistEdited=false;
-function renderScalePlanum(){ const r=curRec(); plShow(r&&r.pl,'scalePl','scalePlChip','scaleDist'); }
-function renderCalPlanum(){ plShow(calS.pl,'calPl','calPlChip','calDist'); }
+function renderScalePlanum(){ const r=curRec(); plShow(planumAssess(r&&r.pl),'scalePl','scalePlChip','scaleDist'); }
+function renderCalPlanum(){ plShow(planumAssess(calS.pl),'calPl','calPlChip','calDist'); }
 function plArrived(rec){
   if(rec.id!==S.curId||!$('scaleOverlay').classList.contains('show'))return;
-  if(rec.pl&&rec.pl.ok&&!S.scale&&!scaleDistEdited){ $('scaleDist').value=String(rec.pl.fill); updateScaleReadout(); }
+  const a=planumAssess(rec.pl);
+  if(a&&a.ok&&!S.scale&&!scaleDistEdited){ $('scaleDist').value=String(a.fill); updateScaleReadout(); }
   renderScalePlanum();
 }
 async function fitImg(file){
@@ -6167,7 +6469,7 @@ function addPhotoFile(file,cb,kind,batch){
       objects:[], undo:[], redo:[], counters:{}, scale:null, kind:kind||'photo',
       caption:'', loc:'', repEx:(kind==='divider'), taken:null, thumb:makeThumb(im) };
     if(!kind||kind==='photo') readTaken(file).then(d=>{ if(d){ rec.taken=d; dirty(); pdSync(); if(S.stamp.date) render(); } });
-    pp.then(pl=>{ const a=planumAssess(pl,{origW:r.w,origH:r.h}); if(a){ rec.pl=a; dirty(); plArrived(rec); } });
+    pp.then(pl=>{ if(pl){ rec.pl=Object.assign({},pl,{ow:r.w,oh:r.h}); dirty(); plArrived(rec); } });
     S.photos.push(rec);
     persistBlob(rec);
     if(batch){ batch.ok++; if(r.ds<1){ batch.rs++; batch.mp=r.mp; } }
@@ -6414,7 +6716,7 @@ async function restoreSession(){
       im.onerror=()=>{ URL.revokeObjectURL(url); res(null); };
       im.src=url;
     });
-    if(rec){ if(pd.pl===undefined&&rec.kind==='photo'&&rec.ds===1) readPlanum(blob).then(pl=>{ const a=planumAssess(pl,{origW:rec.iw,origH:rec.ih}); if(a){ rec.pl=a; dirty(); plArrived(rec); } });
+    if(rec){ if((pd.pl===undefined||(pd.pl&&!pd.pl.kind))&&rec.kind==='photo'&&rec.ds===1) readPlanum(blob).then(pl=>{ if(pl){ rec.pl=Object.assign({},pl,{ow:rec.iw,oh:rec.ih}); dirty(); plArrived(rec); } });
       if(rec.taken===undefined){ rec.taken=null; if(rec.kind==='photo') readTaken(blob).then(d=>{ if(d){ rec.taken=d; dirty(); } }); } recs.push(rec); }
     else S.held.push(pd);   // could not be decoded now: keep its markup for the next start
   }
@@ -6783,7 +7085,7 @@ function updateDef(){
 }
 
 // ── recent-defect menu, held on the rail button ──
-function closeDefMenu(){ $('defMenu').classList.remove('show','objmenu'); }
+function closeDefMenu(){ $('defMenu').classList.remove('show','objmenu','pastemenu'); }
 function openLblMenu(btn){
   const m=$('defMenu'), rec=S.recentLbl.slice(0,5);
   let h='';
@@ -6967,6 +7269,7 @@ const TIP_GLYPH={arrow:'\u2192',round:'\u25CF',arrows:'\u2194'};
 function tipBadges(){
   const set=(id,v)=>{ const e=$(id); if(!e) return; const g=TIP_GLYPH[v]||''; e.textContent=g; e.style.display=g?'':'none'; };
   set('tipb_pen',S.tipBy.pen); set('tipb_note',S.tipBy.note); set('tipb_dim',S.style.dimEnds);
+  const pb=$('tipb_pen'); if(pb&&S.penEnds==='both'&&S.tipBy.pen!=='off') pb.textContent=S.tipBy.pen==='arrow'?'↔':'●●';
 }
 function cycleTip(tool){
   if(tool==='dim'){ const i=END_OPTS.indexOf(S.style.dimEnds); S.style.dimEnds=END_OPTS[(i+1)%END_OPTS.length];
@@ -7019,15 +7322,57 @@ function objMenuSync(){
 }
 function openObjMenu(x,y){
   const o=S.sel!=null?getObj(S.sel):null; if(!o) return;
-  const m=$('defMenu'); m.classList.add('objmenu');
+  const m=$('defMenu'); m.classList.remove('pastemenu'); m.classList.add('objmenu');
   const canEdit=$('editText').style.display!=='none';
   const ic=id=>{ const v=$(id).querySelector('svg'); return v?v.outerHTML:''; };
-  let h='<div class="orow">'+INKS.map((c,i)=>'<button class="osw" data-oink="'+i+'" style="background:'+c+'" title="'+c+'"></button>').join('')+'</div>';
+  const btn=(a,k,svg,cls,off)=>'<button class="oic'+(cls?' '+cls:'')+'" data-oact="'+a+'" title="'+esc(t(k))+'" aria-label="'+esc(t(k))+'"'+(off?' disabled':'')+'>'+svg+'</button>';
+  let h='<div class="orow">'+INKS.map((c,i)=>'<button class="osw" data-oink="'+i+'" style="background:'+c+'" title="'+c+'"></button>').join('');
+  h+='<span class="ovd"></span>'+btn('del','delete_btn',ic('del'),'odel')+'</div>';
   h+='<div class="orow"><div class="oseg">'+['S','M','L'].map(w=>'<button data-osz="'+w+'">'+w+'</button>').join('')+'</div><span class="ovd"></span>';
-  h+='<button class="oic" data-oact="edit" title="'+esc(t('ctx_label_edit'))+'" aria-label="'+esc(t('ctx_label_edit'))+'"'+(canEdit?'':' disabled')+'>'+ic('editText')+'</button>';
-  h+='<button class="oic" data-oact="dup" title="'+esc(t('duplicate'))+'" aria-label="'+esc(t('duplicate'))+'">'+DUP_SVG+'</button>';
-  h+='<button class="oic odel" data-oact="del" title="'+esc(t('delete_btn'))+'" aria-label="'+esc(t('delete_btn'))+'">'+ic('del')+'</button></div>';
+  h+=btn('edit','ctx_label_edit',ic('editText'),'',!canEdit);
+  h+=btn('dup','duplicate',DUP_SVG);
+  h+=btn('copy','copy_btn',COPY_SVG);
+  h+=btn('paste','paste_btn',PASTE_SVG,'',!clip)+'</div>';
   m.innerHTML=h; m.classList.add('show'); objMenuSync(); placeAt(m,x,y);
+}
+function openPasteMenu(x,y,ip){
+  if(!clip) return false;
+  const m=$('defMenu'); m.classList.add('objmenu','pastemenu');
+  m.innerHTML='<button class="oic" data-oact="pasteat" title="'+esc(t('paste_btn'))+'" aria-label="'+esc(t('paste_btn'))+'">'+PASTE_SVG+'</button>';
+  m._at=ip; m.classList.add('show'); placeAt(m,x,y); return true;
+}
+const COPY_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="8" height="4" rx="1"/><path d="M16 5h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"/><path d="M12 11v6M9 14h6"/></svg>';
+const PASTE_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="8" height="4" rx="1"/><path d="M16 5h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"/><path d="M12 10v7M9 14l3 3 3-3"/></svg>';
+
+// ── Copy / paste marks (session only; survives photo switches) ──
+let clip=null;
+const XK=['x','x1','x2','vx','ax','bx','lx'], YK=['y','y1','y2','vy','ay','by','ly'], LK=['w','size','r'];
+function copySel(quiet){
+  const o=S.sel!=null?getObj(S.sel):null; if(!o) return false;
+  clip={o:clone(o), pid:S.curId, iw:S.iw, ih:S.ih, bw:S.baseW, n:0};
+  if(!quiet) toast(t('toast_copied'));
+  return true;
+}
+// map the copy into this photo: same relative centre (or the given point), sizes by the baseW ratio
+function pasteClip(at){
+  if(!clip||!S.img) return false;
+  const c=clone(clip.o); c.id=newId();
+  const k=S.baseW/(clip.bw||S.baseW);
+  const b=bboxImg(clip.o), ocx=b.x+b.w/2, ocy=b.y+b.h/2;
+  let cx, cy;
+  if(at){ cx=at.x; cy=at.y; }
+  else if(clip.pid===S.curId){ clip.n++; const d=Math.max(8,Math.round(Math.min(S.iw,S.ih)*0.03))*clip.n; cx=ocx+d; cy=ocy+d; }
+  else { cx=ocx/clip.iw*S.iw; cy=ocy/clip.ih*S.ih; }
+  const fx=v=>cx+(v-ocx)*k, fy=v=>cy+(v-ocy)*k;
+  XK.forEach(q=>{ if(typeof c[q]==='number') c[q]=fx(c[q]); });
+  YK.forEach(q=>{ if(typeof c[q]==='number') c[q]=fy(c[q]); });
+  if(Array.isArray(c.pts)) c.pts=c.pts.map(p=>({x:r1(fx(p.x)),y:r1(fy(p.y))}));
+  LK.forEach(q=>{ if(typeof c[q]==='number') c[q]=c[q]*k; });
+  // measured marks keep the value they had: the scale moves with the geometry
+  if(c.pxMm>0) c.pxMm=c.pxMm*k;
+  if(S.tool!=='select') setTool('select');
+  beginEdit(); S.objects.push(c); S.sel=c.id; commit();
+  syncCtx(); render(); return true;
 }
 function dupSel(){
   const o=S.sel!=null?getObj(S.sel):null; if(!o) return;
@@ -7106,8 +7451,12 @@ $('defMenu').addEventListener('click',e=>{
   const xf=e.target.closest('[data-xfmt]'); if(xf){ const m=$('defMenu'), run=m._run; closeDefMenu(); setFmt(xf.dataset.xfmt); if(run) run(); return; }
   const oi=e.target.closest('[data-oink]'); if(oi){ const sw=document.querySelectorAll('#swatches .swatch')[+oi.dataset.oink]; if(sw) sw.click(); objMenuSync(); return; }
   const oz=e.target.closest('[data-osz]'); if(oz){ const wb=document.querySelector('.wbtn[data-w="'+oz.dataset.osz+'"]'); if(wb) wb.click(); objMenuSync(); return; }
-  const oa=e.target.closest('[data-oact]'); if(oa){ const a=oa.dataset.oact; closeDefMenu();
-    if(a==='edit') $('editText').onclick(); else if(a==='dup') dupSel(); else if(a==='del') $('del').onclick(); return; }
+  const oa=e.target.closest('[data-oact]'); if(oa){ const a=oa.dataset.oact, at=$('defMenu')._at; $('defMenu')._at=null; closeDefMenu();
+    if(a==='edit') $('editText').onclick(); else if(a==='dup') dupSel(); else if(a==='del') $('del').onclick();
+    else if(a==='copy'){ if(copySel()){ copyArm=true; try{ document.execCommand('copy'); }catch(err){} copyArm=false; } }
+    else if(a==='paste') pasteClip(null);
+    else if(a==='pasteat') pasteClip(at||null);
+    return; }
   const np=e.target.closest('[data-npfx]'); if(np){ closeDefMenu(); setPrefix(np.dataset.npfx); toast(t('toast_next_val',{v:S.numPrefix+numN()})); return; }
   if(e.target.closest('[data-nreset]')){ closeDefMenu(); resetNum(); return; }
   const qi=e.target.closest('[data-qridx]'); if(qi){ closeDefMenu(); const x=S.recentQr[+qi.dataset.qridx]; if(x){ S.armedQR={text:x}; pushQr(x); updateQr(); updateQrCtl(); toast(t('toast_tap_to_place')); } return; }
@@ -7162,7 +7511,22 @@ document.addEventListener('paste',e=>{
   const a=document.activeElement;
   if(a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA'||a.isContentEditable)) return;
   if(document.querySelector('.overlay.show')) return;
+  // an image on the clipboard is a new photo; otherwise a copied mark
   if(pasteFromEvent(e)) e.preventDefault();
+  else if(clip&&pasteClip(null)) e.preventDefault();
+});
+let copyArm=false;
+document.addEventListener('copy',e=>{
+  const a=document.activeElement;
+  if(!copyArm){
+    if(a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA'||a.isContentEditable)) return;
+    if(document.querySelector('.overlay.show')) return;
+    const sel=window.getSelection&&window.getSelection(); if(sel&&String(sel).trim()) return;
+    if(!copySel()) return;
+  }
+  // replace the system clipboard too, so a stale image there cannot win the next Ctrl+V
+  const o=clip&&clip.o; if(!o||!e.clipboardData) return;
+  try{ e.clipboardData.setData('text/plain', String(o.text||o.value||('Markup '+o.type))); e.preventDefault(); }catch(err){}
 });
 $('shoot').onclick=()=>$('cam').click();
 $('file').onchange=e=>{ addFiles(e.target.files); e.target.value=''; };
@@ -7227,6 +7591,21 @@ document.querySelectorAll('#tipseg button').forEach(b=>b.addEventListener('click
   }
   updateTipCtl(); tipBadges(); render();
 }));
+const ENDS_AT=['start','end','both'];
+$('tipends').onclick=()=>{
+  const o=S.sel!=null?getObj(S.sel):null, mine=o&&o.type==='pen';
+  const cur=mine?penEnds(o):S.penEnds, nx=ENDS_AT[(ENDS_AT.indexOf(cur)+1)%ENDS_AT.length];
+  S.penEnds=nx;
+  if(mine){ beginEdit(); if(nx==='start') delete o.te; else o.te=nx; commit(); }
+  updateTipCtl(); tipBadges(); render();
+};
+$('pensmooth').onclick=()=>{
+  const o=S.sel!=null?getObj(S.sel):null, mine=o&&o.type==='pen';
+  const nx=!(mine?!!o.sm:S.penSmooth);
+  S.penSmooth=nx;
+  if(mine){ beginEdit(); if(nx) o.sm=1; else delete o.sm; commit(); }
+  updateTipCtl(); render();
+};
 $('textfill').onclick=()=>{
   const o=S.sel!=null?getObj(S.sel):null;
   const isTextObj=o&&(o.type==='text'||o.type==='note'||o.type==='dim'||o.type==='angle'||o.type==='mline'||o.type==='marea'||(o.type==='tag'&&!isDefectObj(o)));
@@ -7456,8 +7835,8 @@ function openScaleModal(){
   if(!S.cams.length){ toast(t('toast_no_cameras_yet')); openCal(true); return; }
   const ref=S.scale||lastScaleRef();
   fillCamOptions($('scaleCam'), ref?ref.profileId:'');
-  $('scaleDist').value = ref?ref.distance:'';
-  const rc=curRec(), a=rc&&rc.pl; scaleDistEdited=false;
+  $('scaleDist').value = S.scale?S.scale.distance:'';
+  const rc=curRec(), a=planumAssess(rc&&rc.pl); scaleDistEdited=false;
   if(a&&a.ok&&!S.scale) $('scaleDist').value=String(a.fill);
   renderScalePlanum();
   updateScaleReadout();
@@ -7526,16 +7905,41 @@ function calPlacePoint(pos){
 }
 function calUpdateSpan(){
   const el=$('calSpan');
-  if(calS.pts.length<2){ el.textContent = calS.img ? (calS.pts.length===1?t('cal_point_a_set'):t('cal_tap_two_edges')) : ''; return; }
-  const span=calSpanPx();
-  el.innerHTML=t('cal_object_spans',{span:span.toFixed(1)});
+  if(!calS.img){ el.innerHTML='<span style="opacity:.7">'+esc(t('toast_load_cal_photo_first'))+'</span>'; return; }
+  if(calS.pts.length<2){ el.innerHTML=t(calS.pts.length===1?'cal_point_a_set':'cal_tap_two_edges'); return; }
+  el.innerHTML=t('cal_object_spans',{span:calSpanPx().toFixed(1),add:esc(t('add_this_shot'))});
 }
 function calSpanPx(){ if(calS.pts.length<2)return 0; const a=calS.pts[0],b=calS.pts[1]; return Math.hypot(b.x-a.x,b.y-a.y)/(calS.ds||1); }
 
+const CAL_TIPS_KEY='mk_cal_tips_v1';
+function calTipsApply(c){ $('calTipsBody').style.display=c?'none':''; $('calTipsArr').textContent=c?(document.documentElement.dir==='rtl'?'◂':'▸'):'▾'; }
+let calDrag=null;
+function calHit(p,rad){ let best=-1,bd=rad; calS.pts.forEach((q,i)=>{ const d=Math.hypot(q.x*calS.view.s+calS.view.ox-p.x,q.y*calS.view.s+calS.view.oy-p.y); if(d<=bd){bd=d;best=i;} }); return best; }
+function calLoupe(ip,cx,cy){
+  const lp=$('calLoupe'), img=calS.img; if(!lp||!img) return;
+  const L=150,MAG=4,dpr=Math.min(window.devicePixelRatio||1,2),D=Math.round(L*dpr);
+  if(lp.width!==D||lp.height!==D){ lp.width=D; lp.height=D; }
+  const span=L/(MAG*calS.view.s), nw=calS.iw, nh=calS.ih, c=lp.getContext('2d');
+  c.setTransform(1,0,0,1,0,0); c.fillStyle='#0c0f12'; c.fillRect(0,0,D,D); c.imageSmoothingEnabled=false;
+  let sx=ip.x-span/2, sy=ip.y-span/2, sw=span, sh=span; const f=D/span; let dx=0,dy=0,dw=D,dh=D;
+  if(sx<0){ dx=-sx*f; dw-=dx; sw+=sx; sx=0; }
+  if(sy<0){ dy=-sy*f; dh-=dy; sh+=sy; sy=0; }
+  if(sx+sw>nw){ const o=sx+sw-nw; sw-=o; dw-=o*f; }
+  if(sy+sh>nh){ const o=sy+sh-nh; sh-=o; dh-=o*f; }
+  if(sw>0&&sh>0&&dw>0&&dh>0) c.drawImage(img,sx,sy,sw,sh,dx,dy,dw,dh);
+  const m=D/2,a=4*dpr,b=16*dpr; c.strokeStyle='#f5a623'; c.lineWidth=1.5*dpr; c.beginPath();
+  c.moveTo(m-b,m); c.lineTo(m-a,m); c.moveTo(m+a,m); c.lineTo(m+b,m); c.moveTo(m,m-b); c.lineTo(m,m-a); c.moveTo(m,m+a); c.lineTo(m,m+b); c.stroke();
+  let left=cx-L/2, top=cy-L-50; if(top<8) top=cy+50;
+  left=Math.max(8,Math.min(window.innerWidth-L-8,left));
+  lp.style.left=left+'px'; lp.style.top=top+'px'; lp.style.display='block';
+}
+function calLoupeHide(){ const lp=$('calLoupe'); if(lp) lp.style.display='none'; }
 function openCal(fromScale){
   calReturnToScale=!!fromScale;
   fillCamOptions($('calCamSelect'),'');
-  $('calCamDelete').style.display='none'; $('calExportOne').style.display='none'; $('calCamInfo').textContent='';
+  $('calCamDelete').disabled=true; $('calExportOne').disabled=true; $('calCamInfo').textContent='';
+  let tc=false; try{ tc=localStorage.getItem(CAL_TIPS_KEY)==='1'; }catch(e){} calTipsApply(tc);
+  calUpdateSpan(); renderCalPlanum();
   showOverlay('calOverlay');
   requestAnimationFrame(()=>{ calResize(); if(calS.img)calFit(); });
 }
@@ -7550,11 +7954,12 @@ function calLoadImage(file){
   fitImg(file).then(r=>{
     if(!r){ toast(fi==='heic'?fmtMsg(file,'heic'):t('toast_could_not_read_image'),4000); return; }
     const im=r.im; calS.img=im; calS.iw=im.naturalWidth; calS.ih=im.naturalHeight; calS.ds=r.ds; calS.pts=[];
-    if(planumChipOn(calS.pl,$('calDist'))) $('calDist').value='';
+    if(planumChipOn(planumAssess(calS.pl),$('calDist'))) $('calDist').value='';
     calS.pl=null; renderCalPlanum();
-    pp.then(pl=>{ if(calS.img!==im) return; const a=planumAssess(pl,{origW:r.w,origH:r.h}); calS.pl=a;
+    pp.then(pl=>{ if(calS.img!==im) return; calS.pl=pl?Object.assign({},pl,{ow:r.w,oh:r.h}):null; const a=planumAssess(calS.pl);
       if(a&&a.ok) $('calDist').value=String(a.fill); renderCalPlanum(); });
-    $('calCanvasWrap').classList.add('show');
+    $('calCanvasWrap').classList.add('show'); $('calPrompt').style.display='none';
+    $('calMeta').textContent=r.w+'×'+r.h+' · '+(r.mp/1e6).toFixed(1)+' MP';
     if(r.ds<1) toast(t('toast_resized',{mp:Math.round(r.mp/1e6)}),3500);
     requestAnimationFrame(()=>{ calResize(); calFit(); calUpdateZoom(); calUpdateSpan(); });
   });
@@ -7612,7 +8017,7 @@ function calResetShots(){
 }
 function onCalCamSelect(){
   const id=$('calCamSelect').value, cam=camById(id);
-  $('calCamDelete').style.display=id?'':'none'; $('calExportOne').style.display=id?'':'none';
+  $('calCamDelete').disabled=!id; $('calExportOne').disabled=!id;
   const info=$('calCamInfo');
   if(!cam){ info.textContent=''; return; }
   info.innerHTML='r = '+cam.k.toFixed(3)+' · d^'+cam.p.toFixed(3)+(cam.rmsePct!=null&&isFinite(cam.rmsePct)?'  ·  fit ±'+(+cam.rmsePct).toFixed(1)+'%':'')+(cam.note?'  ·  '+esc(cam.note||""):'');
@@ -7662,6 +8067,8 @@ $('scaleDist').addEventListener('keydown',e=>{ if(e.key==='Enter')applyScale(); 
 $('calClose').onclick=closeCal;
 $('calOverlay').addEventListener('click',e=>{ if(e.target.id==='calOverlay')closeCal(); });
 $('calLoad').onclick=()=>$('calFile').click();
+$('calChange').onclick=()=>$('calFile').click();
+$('calTipsBtn').onclick=()=>{ const c=$('calTipsBody').style.display!=='none'; calTipsApply(c); try{ localStorage.setItem(CAL_TIPS_KEY,c?'1':'0'); }catch(e){} };
 $('calDist').addEventListener('input',renderCalPlanum);
 $('calFile').onchange=e=>{ if(e.target.files[0])calLoadImage(e.target.files[0]); e.target.value=''; };
 $('calAdd').onclick=calAddShot;
@@ -7678,13 +8085,19 @@ $('calImportFile').onchange=e=>{ if(e.target.files[0])importCams(e.target.files[
 $('calReset').onclick=()=>{ calFit(); calUpdateZoom(); };
 // calibration canvas gestures
 calCanvas.addEventListener('pointerdown',e=>{ if(!calS.img)return; calCanvas.setPointerCapture(e.pointerId); calPts.set(e.pointerId,calPos(e));
-  if(calPts.size===2){ const a=[...calPts.values()]; calPinch={d:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y), mid:{x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2}, anchor:calToImg((a[0].x+a[1].x)/2,(a[0].y+a[1].y)/2), s:calS.view.s}; calDown=null; return; }
-  calDown=calPos(e); calMoved=false; });
-calCanvas.addEventListener('pointermove',e=>{ if(!calPts.has(e.pointerId))return; calPts.set(e.pointerId,calPos(e));
+  if(calPts.size===2){ calDrag=null; calLoupeHide(); const a=[...calPts.values()]; calPinch={d:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y), mid:{x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2}, anchor:calToImg((a[0].x+a[1].x)/2,(a[0].y+a[1].y)/2), s:calS.view.s}; calDown=null; return; }
+  const p=calPos(e), touch=e.pointerType!=='mouse', hit=calHit(p,touch?24:12);
+  if(hit>=0){ calDrag={i:hit,touch}; calDown=null; if(touch) calLoupe(calS.pts[hit],e.clientX,e.clientY); else calCanvas.style.cursor='grabbing'; return; }
+  calDown=p; calMoved=false; });
+calCanvas.addEventListener('pointermove',e=>{
+  if(!calPts.has(e.pointerId)){ if(e.pointerType==='mouse'&&calS.img) calCanvas.style.cursor=calHit(calPos(e),12)>=0?'grab':'crosshair'; return; }
+  calPts.set(e.pointerId,calPos(e));
+  if(calDrag&&calPts.size===1){ const p=calPos(e), ip=calToImg(p.x,p.y); calS.pts[calDrag.i]=ip; calRender(); calUpdateSpan(); if(calDrag.touch) calLoupe(ip,e.clientX,e.clientY); return; }
   if(calPinch){ const a=[...calPts.values()]; if(a.length<2)return; const d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y), mid={x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2};
     calS.view.s=calClampScale(calPinch.s*d/calPinch.d); calS.view.ox=mid.x-calPinch.anchor.x*calS.view.s; calS.view.oy=mid.y-calPinch.anchor.y*calS.view.s; calUpdateZoom(); calRender(); return; }
   if(calDown){ const p=calPos(e); if(Math.hypot(p.x-calDown.x,p.y-calDown.y)>4){ calMoved=true; calS.view.ox+=p.x-calDown.x; calS.view.oy+=p.y-calDown.y; calDown=p; calRender(); } } });
 function calUp(e){ calPts.delete(e.pointerId); if(calPinch&&calPts.size<2)calPinch=null;
+  if(calDrag){ if(!calPts.size){ calDrag=null; calLoupeHide(); calCanvas.style.cursor='crosshair'; } calDown=null; return; }
   if(calDown&&!calMoved){ calPlacePoint(calDown); } calDown=null; }
 calCanvas.addEventListener('pointerup',calUp); calCanvas.addEventListener('pointercancel',calUp);
 calCanvas.addEventListener('wheel',e=>{ if(!calS.img)return; e.preventDefault(); const p=calPos(e), before=calToImg(p.x,p.y), f=e.deltaY<0?1.1:1/1.1;
@@ -8039,7 +8452,7 @@ function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'
 // one printed row's cells, in setup order; the group sub-line only where asked
 function colCells(x,withGrp){ return visCols().map(k=>'<td>'+(k==='cs'?csTd(x.cs):
   esc(x[k]||'')+(k==='def'&&withGrp&&rcSec('grp')&&x.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.grp)+'</span>':''))+'</td>').join(''); }
-const MARKUP_VER='1.6.0';
+const MARKUP_VER='1.6.2';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
@@ -8197,7 +8610,7 @@ async function buildAndPrint(){
 
     // ── cover ──
     const link=fv('loclink').trim();
-    const qr=(link&&rcSec('qr')&&link.length<=QR_MAX)?qrDataURL(link,360):'';
+    const qr=(link&&rcSec('qr')&&qrBytes(link)<=QR_MAX)?qrDataURL(link,360):'';
     const metaRows=['structure','ref','date','inspector','weather'].map(k=>[fldName(k),fv(k)]);
     if(link&&!qr) metaRows.push([fldName('loclink'),link]);   // no QR (switched off or too long) — print it as text
     let meta=metaRows.filter(m=>m[1]).map(m=>'<tr><td>'+esc(m[0])+'</td><td>'+esc(m[1])+'</td></tr>').join('');
