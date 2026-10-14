@@ -391,6 +391,10 @@ body.hasfine .emotip{display:block}
 .calbody{overflow-y:auto;padding-right:2px}
 .calsec{margin-bottom:16px}
 .calsec h4{font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.planum-note{font-size:11px;line-height:1.45;margin:2px 0 6px 2px;unicode-bidi:plaintext}
+.planum-note.pl-ok{color:#7fdbe4}
+.planum-note.pl-warn{color:#fbbf24}
+.planum-chip{display:inline-block;padding:1px 8px;border-radius:9px;background:rgba(16,185,129,0.18);border:1px solid rgba(52,211,153,0.55);color:#34d399;font-size:10px;font-weight:600;letter-spacing:.03em;white-space:nowrap}
 .calrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:8px}
 .calrow input[type=number],.calrow input[type=text]{height:34px;padding:0 10px;border-radius:var(--r-sm);background:rgba(0,0,0,.3);border:1px solid var(--panel-border);color:var(--text);font-size:13px;font-family:var(--font-ui)}
 .calrow select{height:34px;padding:0 8px;border-radius:var(--r-sm);background:rgba(0,0,0,.3);border:1px solid var(--panel-border);color:var(--text);font-size:13px;font-family:var(--font-ui);max-width:100%}
@@ -795,7 +799,7 @@ body.hasfine .emotip{display:block}
       <button class="infobtn" id="about" title="About &amp; support" aria-label="About &amp; support" data-i18n-title="about_title">i</button>
       <div class="brand">
         <h1>Mark<b>up</b></h1>
-        <span class="ver">v1.5.10 · multilingual</span>
+        <span class="ver">v1.6.0 · multilingual</span>
       </div>
     </div>
     <div class="tb-actions">
@@ -1012,7 +1016,7 @@ body.hasfine .emotip{display:block}
     
       <span class="hk">Q</span>
     </button>
-    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.5.10</span></div>
+    <div class="brandfoot" aria-hidden="true">Mark<b>up</b><span class="fv">v1.6.0</span></div>
   </nav>
 </div>
 
@@ -1202,7 +1206,9 @@ body.hasfine .emotip{display:block}
       <span style="min-width:64px" data-i18n="distance_label">Distance</span>
       <input id="scaleDist" type="number" min="0.01" step="any" inputmode="decimal" placeholder="e.g. 2.5" style="width:110px">
       <span>m</span>
+      <span class="planum-chip" id="scalePlChip" style="display:none" data-i18n="from_planum">from Planum</span>
     </div>
+    <div class="planum-note" id="scalePl" dir="ltr" style="display:none"></div>
     <div id="scaleReadout" style="font-size:13px;color:var(--muted);min-height:18px;margin:2px 0 2px 2px"></div>
     <button class="btn ghost" id="scaleCalib" style="height:32px;font-size:12px;margin-top:4px" data-i18n="calibrate_new_camera">+ Calibrate a new camera…</button>
     <div class="actions">
@@ -1254,6 +1260,8 @@ body.hasfine .emotip{display:block}
           <span style="min-width:48px;margin-left:6px" data-i18n="width_field">Width</span>
           <input id="calWidth" type="number" min="0.01" step="any" inputmode="decimal" placeholder="e.g. 300" style="width:100px"><span>mm</span>
         </div>
+        <div><span class="planum-chip" id="calPlChip" style="display:none" data-i18n="from_planum">from Planum</span></div>
+        <div class="planum-note" id="calPl" dir="ltr" style="display:none"></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn primary" id="calAdd" style="height:32px;font-size:12px" data-i18n="add_this_shot">Add this shot</button>
           <button class="btn ghost" id="calClear" style="height:32px;font-size:12px" data-i18n="clear_points">Clear points</button>
@@ -1352,6 +1360,7 @@ body.hasfine .emotip{display:block}
       <div class="gsec">
         <h4 data-i18n="help_photos_h">Photos &amp; export</h4>
         <div class="grow"><b data-i18n="help_photos_b">Photos</b><span data-i18n="help_photos_d">Thumbnails along the bottom switch between photos; keys 1–9 and 0 do the same. Everything is saved on this device automatically — nothing is uploaded.</span></div>
+        <div class="grow"><b data-i18n="help_formats_b">Formats</b><span data-i18n="help_formats_d">JPG, PNG, WebP and AVIF. iPhone HEIC photos open in Safari; in other browsers save them as JPG first. TIFF and SVG are not supported. Photos over 12 MP are reduced to 12 MP when added — plenty for markup and reports; your original file is not changed. Camera scales still measure correctly.</span></div>
         <div class="grow"><b data-i18n="help_pdet_b">Photo details</b><span data-i18n="help_pdet_d">Double-tap a thumbnail (or right-click it) to open its details: caption, location, include in the report, move left or right, remove. The date taken is read from the photo file.</span></div>
         <div class="grow"><b data-i18n="help_strip_b">Caption and date on photos</b><span data-i18n="help_strip_d">In the same panel, On photos writes the caption and location, the date, or both onto every photo — bottom-left or top-left. They appear in exports and in the report. Off by default.</span></div>
         <div class="grow"><b data-i18n="help_export_b">Export</b><span data-i18n="help_export_d">Export one saves the current photo at full resolution with its markup; Export all saves every photo. Pick JPG or PNG in the menu beside them, or hold either button to pick and export in one go.</span></div>
@@ -1693,6 +1702,7 @@ const I18N={
     "set_scale_body":"Pick a calibrated camera and enter the camera-to-subject distance. Resolution is predicted from the camera's calibration — no reference object needed in this photo.",
     "camera_label":"Camera",
     "distance_label":"Distance",
+    "from_planum":"from Planum",
     "select_camera_option":"— Select a camera —",
     "calibrate_new_camera":"+ Calibrate a new camera…",
     "apply_btn":"Apply",
@@ -1727,6 +1737,15 @@ const I18N={
     "toast_removed_text_required":"Removed — text is required",
     "toast_could_not_read_file":"Could not read {name}",
     "toast_photos_loaded":"{n} photos loaded",
+    "help_formats_b":"Formats",
+    "help_formats_d":"JPG, PNG, WebP and AVIF. iPhone HEIC photos open in Safari; in other browsers save them as JPG first. TIFF and SVG are not supported. Photos over 12 MP are reduced to 12 MP when added — plenty for markup and reports; your original file is not changed. Camera scales still measure correctly.",
+    "toast_resized":"Photo reduced to 12 MP (was {mp} MP)",
+    "toast_n_resized":"{n} reduced to 12 MP",
+    "toast_n_unsupported":"{n} files not supported — see Guide",
+    "toast_fmt_heic":"{name}: this browser cannot open HEIC — save it as JPG",
+    "toast_fmt_tiff":"{name}: TIFF is not supported — save it as JPG or PNG",
+    "toast_fmt_svg":"{name}: SVG is not supported — save it as PNG",
+    "toast_fmt_unsupported":"{name}: not a supported image",
     "toast_export_failed":"Export failed",
     "toast_exported":"Exported {fmt}",
     "toast_exporting_n":"Exporting {n} photos…",
@@ -2140,6 +2159,7 @@ const I18N={
     "set_scale_body":"选择一台已校准的相机，并输入相机到目标的距离。分辨率将根据相机校准数据推算——本照片中无需参照物。",
     "camera_label":"相机",
     "distance_label":"距离",
+    "from_planum":"来自 Planum",
     "select_camera_option":"—选择相机—",
     "calibrate_new_camera":"+ 校准新相机…",
     "apply_btn":"应用",
@@ -2174,6 +2194,15 @@ const I18N={
     "toast_removed_text_required":"已移除——文字为必填项",
     "toast_could_not_read_file":"无法读取{name}",
     "toast_photos_loaded":"已加载{n}张照片",
+    "help_formats_b":"格式",
+    "help_formats_d":"支持 JPG、PNG、WebP 和 AVIF。iPhone 的 HEIC 照片可在 Safari 中打开；在其他浏览器中请先另存为 JPG。不支持 TIFF 和 SVG。超过 12 MP 的照片在添加时会缩小到 12 MP——足够用于标注和报告；原始文件不会改变。相机比例尺的测量仍然准确。",
+    "toast_resized":"照片已缩小至 12 MP（原为 {mp} MP）",
+    "toast_n_resized":"{n} 张已缩小至 12 MP",
+    "toast_n_unsupported":"{n} 个文件不受支持——见指南",
+    "toast_fmt_heic":"{name}：此浏览器无法打开 HEIC——请另存为 JPG",
+    "toast_fmt_tiff":"{name}：不支持 TIFF——请另存为 JPG 或 PNG",
+    "toast_fmt_svg":"{name}：不支持 SVG——请另存为 PNG",
+    "toast_fmt_unsupported":"{name}：不是受支持的图片",
     "toast_export_failed":"导出失败",
     "toast_exported":"已导出{fmt}",
     "toast_exporting_n":"正在导出{n}张照片…",
@@ -2587,6 +2616,7 @@ const I18N={
     "set_scale_body":"Elija una cámara calibrada e introduzca la distancia de la cámara al objeto. La resolución se predice a partir de la calibración de la cámara; no se necesita un objeto de referencia en esta foto.",
     "camera_label":"Cámara",
     "distance_label":"Distancia",
+    "from_planum":"de Planum",
     "select_camera_option":"— Seleccione una cámara —",
     "calibrate_new_camera":"+ Calibrar una cámara nueva…",
     "apply_btn":"Aplicar",
@@ -2621,6 +2651,15 @@ const I18N={
     "toast_removed_text_required":"Eliminado — el texto es obligatorio",
     "toast_could_not_read_file":"No se pudo leer {name}",
     "toast_photos_loaded":"{n} fotos cargadas",
+    "help_formats_b":"Formatos",
+    "help_formats_d":"JPG, PNG, WebP y AVIF. Las fotos HEIC del iPhone se abren en Safari; en otros navegadores guárdalas antes como JPG. TIFF y SVG no son compatibles. Las fotos de más de 12 MP se reducen a 12 MP al añadirlas: suficiente para marcar e informes; el archivo original no cambia. Las escalas de cámara siguen midiendo correctamente.",
+    "toast_resized":"Foto reducida a 12 MP (era de {mp} MP)",
+    "toast_n_resized":"{n} reducidas a 12 MP",
+    "toast_n_unsupported":"{n} archivos no compatibles: ver Guía",
+    "toast_fmt_heic":"{name}: este navegador no abre HEIC; guárdala como JPG",
+    "toast_fmt_tiff":"{name}: TIFF no es compatible; guárdala como JPG o PNG",
+    "toast_fmt_svg":"{name}: SVG no es compatible; guárdala como PNG",
+    "toast_fmt_unsupported":"{name}: no es una imagen compatible",
     "toast_export_failed":"Error al exportar",
     "toast_exported":"Exportado {fmt}",
     "toast_exporting_n":"Exportando {n} fotos…",
@@ -3034,6 +3073,7 @@ const I18N={
     "set_scale_body":"एक कैलिब्रेटेड कैमरा चुनें और कैमरे से विषय की दूरी दर्ज करें। रिज़ॉल्यूशन कैमरे के कैलिब्रेशन से अनुमानित होता है — इस फ़ोटो में किसी संदर्भ वस्तु की आवश्यकता नहीं।",
     "camera_label":"कैमरा",
     "distance_label":"दूरी",
+    "from_planum":"Planum से",
     "select_camera_option":"— कैमरा चुनें —",
     "calibrate_new_camera":"+ नया कैमरा कैलिब्रेट करें…",
     "apply_btn":"लागू करें",
@@ -3068,6 +3108,15 @@ const I18N={
     "toast_removed_text_required":"हटाया गया — टेक्स्ट आवश्यक है",
     "toast_could_not_read_file":"{name} पढ़ा नहीं जा सका",
     "toast_photos_loaded":"{n} फ़ोटो लोड हुईं",
+    "help_formats_b":"फ़ॉर्मैट",
+    "help_formats_d":"JPG, PNG, WebP और AVIF। iPhone की HEIC फ़ोटो Safari में खुलती हैं; अन्य ब्राउज़रों में पहले उन्हें JPG के रूप में सहेजें। TIFF और SVG समर्थित नहीं हैं। 12 MP से बड़ी फ़ोटो जोड़ते समय 12 MP तक छोटी की जाती हैं — मार्कअप और रिपोर्ट के लिए पर्याप्त; आपकी मूल फ़ाइल नहीं बदलती। कैमरा स्केल फिर भी सही माप देते हैं।",
+    "toast_resized":"फ़ोटो 12 MP तक छोटी की गई ({mp} MP थी)",
+    "toast_n_resized":"{n} फ़ोटो 12 MP तक छोटी की गईं",
+    "toast_n_unsupported":"{n} फ़ाइलें समर्थित नहीं — गाइड देखें",
+    "toast_fmt_heic":"{name}: यह ब्राउज़र HEIC नहीं खोल सकता — JPG के रूप में सहेजें",
+    "toast_fmt_tiff":"{name}: TIFF समर्थित नहीं — JPG या PNG के रूप में सहेजें",
+    "toast_fmt_svg":"{name}: SVG समर्थित नहीं — PNG के रूप में सहेजें",
+    "toast_fmt_unsupported":"{name}: समर्थित छवि नहीं है",
     "toast_export_failed":"निर्यात विफल",
     "toast_exported":"{fmt} निर्यात हुआ",
     "toast_exporting_n":"{n} फ़ोटो निर्यात हो रही हैं…",
@@ -3481,6 +3530,7 @@ const I18N={
     "set_scale_body":"اختر كاميرا معايرة وأدخل المسافة بين الكاميرا والهدف. تُتوقَّع الدقة من معايرة الكاميرا — لا حاجة لجسم مرجعي في هذه الصورة.",
     "camera_label":"الكاميرا",
     "distance_label":"المسافة",
+    "from_planum":"من Planum",
     "select_camera_option":"— اختر كاميرا —",
     "calibrate_new_camera":"+ معايرة كاميرا جديدة…",
     "apply_btn":"تطبيق",
@@ -3515,6 +3565,15 @@ const I18N={
     "toast_removed_text_required":"تمت الإزالة — النص مطلوب",
     "toast_could_not_read_file":"تعذّرت قراءة {name}",
     "toast_photos_loaded":"تم تحميل {n} صورة",
+    "help_formats_b":"الصيغ",
+    "help_formats_d":"JPG وPNG وWebP وAVIF. صور HEIC من iPhone تُفتح في Safari؛ في المتصفحات الأخرى احفظها بصيغة JPG أولًا. صيغتا TIFF وSVG غير مدعومتين. الصور الأكبر من 12 ميغابكسل تُصغَّر إلى 12 ميغابكسل عند إضافتها — وهذا كافٍ للتعليقات والتقارير؛ ولا يتغيّر ملفك الأصلي. تبقى قياسات مقياس الكاميرا صحيحة.",
+    "toast_resized":"صُغّرت الصورة إلى 12 ميغابكسل (كانت {mp} ميغابكسل)",
+    "toast_n_resized":"صُغّرت {n} صور إلى 12 ميغابكسل",
+    "toast_n_unsupported":"{n} ملفات غير مدعومة — راجع الدليل",
+    "toast_fmt_heic":"{name}: هذا المتصفح لا يفتح HEIC — احفظها بصيغة JPG",
+    "toast_fmt_tiff":"{name}: صيغة TIFF غير مدعومة — احفظها بصيغة JPG أو PNG",
+    "toast_fmt_svg":"{name}: صيغة SVG غير مدعومة — احفظها بصيغة PNG",
+    "toast_fmt_unsupported":"{name}: ليست صورة مدعومة",
     "toast_export_failed":"فشل التصدير",
     "toast_exported":"تم تصدير {fmt}",
     "toast_exporting_n":"جارٍ تصدير {n} صورة…",
@@ -3928,6 +3987,7 @@ const I18N={
     "set_scale_body":"Выберите откалиброванную камеру и введите расстояние от камеры до объекта. Разрешение рассчитывается по калибровке камеры — эталонный объект в этом кадре не нужен.",
     "camera_label":"Камера",
     "distance_label":"Расстояние",
+    "from_planum":"из Planum",
     "select_camera_option":"— Выберите камеру —",
     "calibrate_new_camera":"+ Откалибровать новую камеру…",
     "apply_btn":"Применить",
@@ -3962,6 +4022,15 @@ const I18N={
     "toast_removed_text_required":"Удалено — текст обязателен",
     "toast_could_not_read_file":"Не удалось прочитать {name}",
     "toast_photos_loaded":"Загружено фото: {n}",
+    "help_formats_b":"Форматы",
+    "help_formats_d":"JPG, PNG, WebP и AVIF. Фото HEIC с iPhone открываются в Safari; в других браузерах сначала сохраните их как JPG. TIFF и SVG не поддерживаются. Фото больше 12 Мп при добавлении уменьшаются до 12 Мп — этого достаточно для разметки и отчётов; исходный файл не меняется. Масштаб по камере по-прежнему измеряет верно.",
+    "toast_resized":"Фото уменьшено до 12 Мп (было {mp} Мп)",
+    "toast_n_resized":"Уменьшено до 12 Мп: {n}",
+    "toast_n_unsupported":"Не поддерживается файлов: {n} — см. Инструкцию",
+    "toast_fmt_heic":"{name}: этот браузер не открывает HEIC — сохраните как JPG",
+    "toast_fmt_tiff":"{name}: TIFF не поддерживается — сохраните как JPG или PNG",
+    "toast_fmt_svg":"{name}: SVG не поддерживается — сохраните как PNG",
+    "toast_fmt_unsupported":"{name}: неподдерживаемое изображение",
     "toast_export_failed":"Ошибка экспорта",
     "toast_exported":"Экспортировано {fmt}",
     "toast_exporting_n":"Экспорт {n} фото…",
@@ -5919,27 +5988,192 @@ function makeThumb(img){
   const tx=t.getContext('2d'); tx.fillStyle='#ffffff'; tx.fillRect(0,0,t.width,t.height);
   tx.drawImage(img,0,0,t.width,t.height); return t.toDataURL('image/jpeg',0.7);
 }
-function addPhotoFile(file,cb,kind){
-  if(!file||!file.type.startsWith('image/')){ if(cb)cb(); return; }
-  if(!restored&&ready){ ready.then(()=>addPhotoFile(file,cb,kind)); return; }
-  const url=URL.createObjectURL(file); const im=new Image();
-  im.onload=()=>{
-    const rid=pid++;
+const MAX_PX=12e6, IMG_EXT=/\.(jpe?g|png|webp|avif|gif|bmp)$/i;
+function fmtIssue(f){
+  const ty=(f.type||'').toLowerCase(), nm=(f.name||'').toLowerCase();
+  if(/hei[cf]/.test(ty)||/\.hei[cf]$/.test(nm)) return 'heic';
+  if(/tiff/.test(ty)||/\.tiff?$/.test(nm)) return 'tiff';
+  if(/svg/.test(ty)||/\.svg$/.test(nm)) return 'svg';
+  if(ty.startsWith('image/')||(!ty&&IMG_EXT.test(nm))) return '';
+  return 'other';
+}
+function fmtMsg(f,k){ return t({heic:'toast_fmt_heic',tiff:'toast_fmt_tiff',svg:'toast_fmt_svg'}[k]||'toast_fmt_unsupported',{name:(f&&f.name)||''}); }
+function loadImgBlob(b){ return new Promise(res=>{ const u=URL.createObjectURL(b), im=new Image();
+  im.onload=()=>{ URL.revokeObjectURL(u); res(im); }; im.onerror=()=>{ URL.revokeObjectURL(u); res(null); }; im.src=u; }); }
+/* Planum laser distance read from photo metadata */
+const PLANUM_NS='https://volkov596.github.io/ns/planum/';
+const PLANUM_SCAN=2*1024*1024;
+async function readPlanum(file){
+  try{
+    if(!file||typeof file.slice!=='function')return null;
+    const u8=new Uint8Array(await file.slice(0,PLANUM_SCAN).arrayBuffer());
+    return planumFromJpeg(u8);
+  }catch(e){return null;}
+}
+function plStarts(u8,o,str){
+  if(o+str.length>u8.length)return false;
+  for(let i=0;i<str.length;i++)if(u8[o+i]!==str.charCodeAt(i))return false;
+  return true;
+}
+function planumFromJpeg(u8){
+  if(u8.length<4||u8[0]!==0xFF||u8[1]!==0xD8)return null;
+  const XH='http://ns.adobe.com/xap/1.0/\0';
+  let p=2,xmp=null,exif=null;
+  while(p+4<=u8.length){
+    if(u8[p]!==0xFF)break;
+    const m=u8[p+1];
+    if(m===0xFF){p++;continue;}
+    if(m===0xDA||m===0xD9)break;
+    if((m>=0xD0&&m<=0xD7)||m===0x01){p+=2;continue;}
+    const L=(u8[p+2]<<8)|u8[p+3];
+    if(L<2)break;
+    const a=p+4,b=Math.min(u8.length,p+2+L);
+    if(m===0xE1){
+      if(!xmp&&plStarts(u8,a,XH))xmp=u8.subarray(a+XH.length,b);
+      else if(!exif&&plStarts(u8,a,'Exif\0\0'))exif=u8.subarray(a+6,b);
+    }
+    p+=2+L;
+  }
+  let rec=null;
+  if(xmp){try{rec=planumFromXmp(new TextDecoder('utf-8').decode(xmp));}catch(e){rec=null;}}
+  if(!rec&&exif){try{rec=planumFromExif(exif);}catch(e){rec=null;}}
+  return rec?planumNormalise(rec):null;
+}
+function planumFromXmp(txt){
+  if(txt.indexOf(PLANUM_NS)<0)return null;
+  const doc=new DOMParser().parseFromString(txt.replace(/\0+$/,''),'application/xml');
+  if(doc.getElementsByTagName('parsererror').length)return null;
+  const inNs=n=>!!n.namespaceURI&&n.namespaceURI.indexOf(PLANUM_NS)===0;
+  const all=Array.from(doc.getElementsByTagName('*'));
+  const els=all.filter(inNs);
+  const js=els.find(el=>el.localName==='json');
+  if(js){
+    try{const o=JSON.parse(js.textContent);if(o&&typeof o==='object'&&!Array.isArray(o))return o;}catch(e){}
+  }
+  const o={};let n=0;
+  els.forEach(el=>{if(!el.children.length&&el.localName!=='json'){o[el.localName]=el.textContent.trim();n++;}});
+  all.forEach(el=>Array.from(el.attributes).forEach(at=>{if(inNs(at)&&!(at.localName in o)){o[at.localName]=at.value;n++;}}));
+  return n?o:null;
+}
+function planumFromExif(t){
+  if(t.length<8)return null;
+  const le=t[0]===0x49&&t[1]===0x49;
+  if(!le&&!(t[0]===0x4D&&t[1]===0x4D))return null;
+  const dv=new DataView(t.buffer,t.byteOffset,t.byteLength);
+  const u16=o=>dv.getUint16(o,le),u32=o=>dv.getUint32(o,le);
+  const find=(ifd,tag)=>{
+    const n=u16(ifd);
+    for(let i=0;i<n;i++){const e=ifd+2+i*12;if(u16(e)===tag)return{count:u32(e+4),off:e+8};}
+    return null;
+  };
+  const ex=find(u32(4),0x8769);if(!ex)return null;
+  const uc=find(u32(ex.off),0x9286);if(!uc||uc.count<=8)return null;
+  const start=u32(uc.off);
+  if(start+uc.count>t.length)return null;
+  const b=t.subarray(start,start+uc.count);
+  const pre=String.fromCharCode.apply(null,b.subarray(0,8));
+  if(pre!=='ASCII\0\0\0'&&pre!=='\0\0\0\0\0\0\0\0')return null;
+  const str=new TextDecoder('utf-8').decode(b.subarray(8)).replace(/\0+$/,'').trim();
+  if(str[0]!=='{')return null;
+  const o=JSON.parse(str);
+  if(!o||typeof o!=='object'||Array.isArray(o))return null;
+  if(!/planum/i.test(String(o.app||''))&&!(o.counter!=null&&o.type!=null))return null;
+  return o;
+}
+function planumNormalise(o){
+  const num=v=>{if(v===null||v===undefined||v===''||typeof v==='boolean')return null;const x=+v;return isFinite(x)?x:null;};
+  const type=String(o.type==null?'':o.type).trim().slice(0,40),t=type.toLowerCase();
+  let dist=num(o.distance_m);if(dist!==null&&!(dist>0&&dist<10000))dist=null;
+  const kind=(t==='angle'||t==='level')?'nodist':(t==='distance'||t==='continuous')?'ok':(t==='indirect height'||t==='indirect length')?'tilted':'unknown';
+  if(kind!=='nodist'&&dist===null)return null;
+  const cnt=num(o.counter),w=num(o.photo_width),h=num(o.photo_height);
+  return{kind,type,dist,z:num(o.offset_z_mm),counter:cnt!==null?Math.round(cnt):null,
+    meter:String(o.meter_model==null?'':o.meter_model).trim().slice(0,40),time:String(o.time==null?'':o.time),
+    w:w>0?Math.round(w):null,h:h>0?Math.round(h):null};
+}
+function planumWhen(v){
+  const d=new Date(v);if(!v||isNaN(d))return '';
+  const M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],p=n=>String(n).padStart(2,'0');
+  return `${d.getDate()} ${M[d.getMonth()]} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+function planumAssess(pl,meta){
+  if(!pl)return null;
+  const head='Planum'+(pl.counter!==null?` #${pl.counter}`:'');
+  const dTxt=pl.dist!==null?`${pl.dist.toFixed(4)} m`+(pl.z!==null?` (Z ${+pl.z.toFixed(1)} mm)`:''):'';
+  const tail=[pl.meter,planumWhen(pl.time)].filter(Boolean).map(x=>' · '+x).join('');
+  let why='';
+  if(pl.kind==='nodist')why=`${pl.type} reading — no distance recorded`;
+  else if(pl.kind==='tilted')why=`${pl.type} ${dTxt} — along a tilted beam; not filled in`;
+  else if(pl.kind==='unknown')why=`${dTxt} — reading type ${pl.type?'“'+pl.type+'” ':''}not recognised; not filled in`;
+  else if(meta&&pl.w&&pl.h){
+    const W=meta.origW,H=meta.origH;
+    if(!((W===pl.w&&H===pl.h)||(W===pl.h&&H===pl.w)))why=`${dTxt} — photo resized or cropped since capture (${pl.w}×${pl.h} → ${W}×${H}); not filled in`;
+  }
+  if(why)return{ok:false,fill:null,text:`⚠ ${head} · ${why}${tail}`};
+  return{ok:true,fill:+pl.dist.toFixed(5),text:`${head} · ${dTxt}${tail}`};
+}
+function planumChipOn(a,inp){return !!(a&&a.ok&&inp&&Math.abs(parseFloat(inp.value)-a.fill)<1e-9);}
+function plClean(o){
+  if(!o||typeof o!=='object'||typeof o.text!=='string'||!o.text)return null;
+  const ok=o.ok===true,fill=+o.fill;
+  if(ok&&!(fill>0&&fill<10000))return null;
+  return{ok,fill:ok?fill:null,text:o.text.slice(0,300)};
+}
+function plShow(a,noteId,chipId,inpId){
+  const n=$(noteId),c=$(chipId);
+  if(n){n.textContent=a?a.text:'';n.className='planum-note'+(a?(a.ok?' pl-ok':' pl-warn'):'');n.style.display=a?'':'none';}
+  if(c)c.style.display=planumChipOn(a,$(inpId))?'':'none';
+}
+let scaleDistEdited=false;
+function renderScalePlanum(){ const r=curRec(); plShow(r&&r.pl,'scalePl','scalePlChip','scaleDist'); }
+function renderCalPlanum(){ plShow(calS.pl,'calPl','calPlChip','calDist'); }
+function plArrived(rec){
+  if(rec.id!==S.curId||!$('scaleOverlay').classList.contains('show'))return;
+  if(rec.pl&&rec.pl.ok&&!S.scale&&!scaleDistEdited){ $('scaleDist').value=String(rec.pl.fill); updateScaleReadout(); }
+  renderScalePlanum();
+}
+async function fitImg(file){
+  const im=await loadImgBlob(file); if(!im) return null;
+  const w=im.naturalWidth, h=im.naturalHeight, keep={im,blob:file,ds:1,mp:w*h,w,h};
+  if(!(w*h>MAX_PX)) return keep;
+  try{
+    const k=Math.sqrt(MAX_PX/(w*h)), png=/png/i.test(file.type||'');
+    const c=document.createElement('canvas'); c.width=Math.max(1,Math.floor(w*k)); c.height=Math.max(1,Math.floor(h*k));
+    const cx=c.getContext('2d'); cx.imageSmoothingQuality='high';
+    if(!png){ cx.fillStyle='#ffffff'; cx.fillRect(0,0,c.width,c.height); }
+    cx.drawImage(im,0,0,c.width,c.height);
+    const b=await new Promise(r=>c.toBlob(r,png?'image/png':'image/jpeg',0.92));
+    c.width=c.height=1;
+    if(!b) return keep;
+    const im2=await loadImgBlob(b); if(!im2) return keep;
+    return {im:im2,blob:b,ds:im2.naturalWidth/w,mp:w*h,w,h};
+  }catch(e){ return keep; }
+}
+function addPhotoFile(file,cb,kind,batch){
+  const fi=file?fmtIssue(file):'other';
+  const bad=msg=>{ if(batch) batch.bad.push(msg); else toast(msg,4000); if(cb)cb(); };
+  if(fi&&fi!=='heic'){ bad(fmtMsg(file,fi)); return; }
+  if(!restored&&ready){ ready.then(()=>addPhotoFile(file,cb,kind,batch)); return; }
+  const pp=(!kind||kind==='photo')?readPlanum(file):Promise.resolve(null);
+  fitImg(file).then(r=>{
+    if(!r){ bad(fi==='heic'?fmtMsg(file,'heic'):t('toast_could_not_read_file',{name:(file.name||'an image')})); return; }
+    const im=r.im, rid=pid++;
     let fn=(file.name||'').replace(/\.[^.]+$/,'').slice(0,60);
     if(!fn) fn='photo-'+rid;
     fn=uniqName(fn);
-    const rec={ id:rid, blob:file, img:im, iw:im.naturalWidth, ih:im.naturalHeight,
+    const rec={ id:rid, blob:r.blob, img:im, iw:im.naturalWidth, ih:im.naturalHeight, ds:r.ds,
       baseW:Math.max(2,Math.round(Math.max(im.naturalWidth,im.naturalHeight)/450)),
       fileName:fn,
       objects:[], undo:[], redo:[], counters:{}, scale:null, kind:kind||'photo',
       caption:'', loc:'', repEx:(kind==='divider'), taken:null, thumb:makeThumb(im) };
     if(!kind||kind==='photo') readTaken(file).then(d=>{ if(d){ rec.taken=d; dirty(); pdSync(); if(S.stamp.date) render(); } });
-    S.photos.push(rec); URL.revokeObjectURL(url);
+    pp.then(pl=>{ const a=planumAssess(pl,{origW:r.w,origH:r.h}); if(a){ rec.pl=a; dirty(); plArrived(rec); } });
+    S.photos.push(rec);
     persistBlob(rec);
+    if(batch){ batch.ok++; if(r.ds<1){ batch.rs++; batch.mp=r.mp; } }
+    else if(r.ds<1) toast(t('toast_resized',{mp:Math.round(r.mp/1e6)}),3500);
     switchTo(rec.id); dirty(); if(cb)cb();
-  };
-  im.onerror=()=>{ toast(t('toast_could_not_read_file',{name:(file.name||'an image')})); URL.revokeObjectURL(url); if(cb)cb(); };
-  im.src=url;
+  });
 }
 function uniqName(fn){ const has=n=>S.photos.some(p=>p.fileName===n); if(!has(fn)) return fn; let i=2; while(has(fn+'_'+i)) i++; return fn+'_'+i; }
 let pasteN=0;
@@ -5974,9 +6208,16 @@ async function pasteFromClipboard(){
   if(n) toast(t('toast_pasted')); else toast(t('toast_no_clip_img'));
 }
 function addFiles(list){
-  const files=[...list].filter(f=>f.type.startsWith('image/'));
+  const files=[...list];
   if(!files.length) return;
-  let i=0; const next=()=>{ if(i<files.length) addPhotoFile(files[i++],next); else if(files.length>1) toast(t('toast_photos_loaded',{n:files.length})); };
+  const b={ok:0,rs:0,mp:0,bad:[]};
+  let i=0; const next=()=>{ if(i<files.length){ addPhotoFile(files[i++],next,null,b); return; }
+    const parts=[];
+    if(b.ok>1) parts.push(t('toast_photos_loaded',{n:b.ok}));
+    if(b.rs) parts.push(b.ok===1?t('toast_resized',{mp:Math.round(b.mp/1e6)}):t('toast_n_resized',{n:b.rs}));
+    if(b.bad.length) parts.push(b.bad.length===1?b.bad[0]:t('toast_n_unsupported',{n:b.bad.length}));
+    if(parts.length) toast(parts.join(' · '),(b.rs||b.bad.length)?4000:1700);
+  };
   next();
 }
 function switchTo(id){
@@ -6145,7 +6386,7 @@ function persistBlob(rec){ idbPut('blob:'+rec.id, rec.blob); }
 function dirty(){ clearTimeout(dirtyT); dirtyT=setTimeout(saveSession,1000); if(!db&&dbTried&&S.photos.length) saveFail(); }
 function saveSession(){
   if(!db)return; stashCur();
-  idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counters:p.counters||{},scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',taken:p.taken||null,repEx:!!p.repEx,kind:p.kind||'photo'})).concat(S.held),
+  idbPut('current',{ photos:S.photos.map(p=>({id:p.id,fileName:p.fileName,objects:p.objects,counters:p.counters||{},scale:p.scale||null,caption:p.caption||'',loc:p.loc||'',taken:p.taken||null,repEx:!!p.repEx,kind:p.kind||'photo',ds:p.ds||1,pl:p.pl||null})).concat(S.held),
     curId:S.curId, favs:S.favs, recent:S.recent, recentLbl:S.recentLbl, elements:S.elements, personal:S.personal, perCat:S.perCat, tagsOwn:S.tagsOwn, fmt:S.fmt, numPrefix:S.numPrefix, recentLen:S.recentLen, recentNote:S.recentNote, recentQr:S.recentQr, recentAng:S.recentAng, rep:S.rep, uid, pid });
 }
 function clearSession(){ if(!db)return; try{ const st=db.transaction('session','readwrite').objectStore('session'), rq=st.getAllKeys();
@@ -6165,15 +6406,16 @@ async function restoreSession(){
     const blob=await idbGet('blob:'+pd.id); if(!blob) continue;
     const rec=await new Promise(res=>{
       const url=URL.createObjectURL(blob); const im=new Image();
-      im.onload=()=>{ res({ id:pd.id, blob, img:im, iw:im.naturalWidth, ih:im.naturalHeight,
+      im.onload=()=>{ res({ id:pd.id, blob, img:im, iw:im.naturalWidth, ih:im.naturalHeight, ds:(pd.ds>0&&pd.ds<=1)?pd.ds:1,
         baseW:Math.max(2,Math.round(Math.max(im.naturalWidth,im.naturalHeight)/450)),
         fileName:pd.fileName, objects:pd.objects||[], undo:[], redo:[], counters:migCounters(pd,d.numPrefix||''), scale:pd.scale||null,
-        caption:pd.caption||'', loc:pd.loc||'', repEx:!!pd.repEx, kind:pd.kind||'photo', taken:(pd.taken===undefined?undefined:pd.taken), thumb:makeThumb(im) });
+        caption:pd.caption||'', loc:pd.loc||'', repEx:!!pd.repEx, kind:pd.kind||'photo', taken:(pd.taken===undefined?undefined:pd.taken), pl:plClean(pd.pl), thumb:makeThumb(im) });
         URL.revokeObjectURL(url); };
       im.onerror=()=>{ URL.revokeObjectURL(url); res(null); };
       im.src=url;
     });
-    if(rec){ if(rec.taken===undefined){ rec.taken=null; if(rec.kind==='photo') readTaken(blob).then(d=>{ if(d){ rec.taken=d; dirty(); } }); } recs.push(rec); }
+    if(rec){ if(pd.pl===undefined&&rec.kind==='photo'&&rec.ds===1) readPlanum(blob).then(pl=>{ const a=planumAssess(pl,{origW:rec.iw,origH:rec.ih}); if(a){ rec.pl=a; dirty(); plArrived(rec); } });
+      if(rec.taken===undefined){ rec.taken=null; if(rec.kind==='photo') readTaken(blob).then(d=>{ if(d){ rec.taken=d; dirty(); } }); } recs.push(rec); }
     else S.held.push(pd);   // could not be decoded now: keep its markup for the next start
   }
   if(gen!==restoreGen){ S.held=[]; return; }
@@ -6202,7 +6444,7 @@ function hideOverlay(id){ $(id).classList.remove('show'); scheduleAppSync(); }
 let cfmCb=null;
 function confirmBox(title,body,cb){ $('cfmTitle').textContent=title; $('cfmBody').textContent=body; cfmCb=cb; showOverlay('cfmOverlay'); }
 let toastT=null;
-function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),1700); }
+function toast(msg,ms){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),ms||1700); }
 
 // ── Defect vocabulary (working list; align to NZTA / AS when grounding) ──
 const MATS=[['con','Concrete'],['stl','Steel'],['tmb','Timber'],['mas','Masonry'],['brg','Bearing'],['jnt','Joint'],['pav','Pavement'],['bld','Building'],['gen','General']];
@@ -7215,6 +7457,9 @@ function openScaleModal(){
   const ref=S.scale||lastScaleRef();
   fillCamOptions($('scaleCam'), ref?ref.profileId:'');
   $('scaleDist').value = ref?ref.distance:'';
+  const rc=curRec(), a=rc&&rc.pl; scaleDistEdited=false;
+  if(a&&a.ok&&!S.scale) $('scaleDist').value=String(a.fill);
+  renderScalePlanum();
   updateScaleReadout();
   showOverlay('scaleOverlay');
 }
@@ -7222,14 +7467,14 @@ function updateScaleReadout(){
   const cam=camById($('scaleCam').value), d=parseFloat($('scaleDist').value), out=$('scaleReadout');
   if(!cam){ out.textContent=''; return; }
   if(!(d>0)){ out.innerHTML='<span style="opacity:.6">'+t('enter_distance_predict')+'</span>'; return; }
-  const r=resFromCam(cam,d);
+  const rc=curRec(), r=resFromCam(cam,d)*((rc&&rc.ds)||1);
   out.innerHTML = (r&&r>0) ? t('predicted_resolution',{value:r.toFixed(2)}) : '<span style="color:#ff6b6b">'+t('could_not_compute')+'</span>';
 }
 function applyScale(){
   const cam=camById($('scaleCam').value), d=parseFloat($('scaleDist').value);
   if(!cam){ toast(t('toast_select_camera')); return; }
   if(!(d>0)){ toast(t('toast_enter_distance_m')); return; }
-  const r=resFromCam(cam,d);
+  const rc=curRec(), r=resFromCam(cam,d)*((rc&&rc.ds)||1);
   if(!(r>0)){ toast(t('toast_could_not_compute_res')); return; }
   S.scale={profileId:cam.id, distance:d, pxMm:r}; S.lastScale=S.scale; const rec=curRec(); if(rec)rec.scale=S.scale;
   hideOverlay('scaleOverlay'); updateMeasCtl(); dirty();
@@ -7238,7 +7483,7 @@ function applyScale(){
 
 // ── Calibration overlay + its own canvas ────────────────
 const calCanvas=$('calCanvas'), calCtx=calCanvas.getContext('2d');
-const calS={ img:null, iw:0, ih:0, view:{s:1,ox:0,oy:0}, fitS:1, pts:[], shots:[], editId:null };
+const calS={ img:null, iw:0, ih:0, ds:1, pl:null, view:{s:1,ox:0,oy:0}, fitS:1, pts:[], shots:[], editId:null };
 let calReturnToScale=false, calDpr=1;
 const calPts=new Map(); let calPinch=null, calDown=null, calMoved=false;
 
@@ -7282,10 +7527,10 @@ function calPlacePoint(pos){
 function calUpdateSpan(){
   const el=$('calSpan');
   if(calS.pts.length<2){ el.textContent = calS.img ? (calS.pts.length===1?t('cal_point_a_set'):t('cal_tap_two_edges')) : ''; return; }
-  const a=calS.pts[0],b=calS.pts[1], span=Math.hypot(b.x-a.x,b.y-a.y);
+  const span=calSpanPx();
   el.innerHTML=t('cal_object_spans',{span:span.toFixed(1)});
 }
-function calSpanPx(){ if(calS.pts.length<2)return 0; const a=calS.pts[0],b=calS.pts[1]; return Math.hypot(b.x-a.x,b.y-a.y); }
+function calSpanPx(){ if(calS.pts.length<2)return 0; const a=calS.pts[0],b=calS.pts[1]; return Math.hypot(b.x-a.x,b.y-a.y)/(calS.ds||1); }
 
 function openCal(fromScale){
   calReturnToScale=!!fromScale;
@@ -7299,13 +7544,20 @@ function closeCal(){
   if(calReturnToScale){ calReturnToScale=false; if(S.cams.length) openScaleModal(); }
 }
 function calLoadImage(file){
-  if(!file||!file.type.startsWith('image/')) return;
-  const url=URL.createObjectURL(file); const im=new Image();
-  im.onload=()=>{ calS.img=im; calS.iw=im.naturalWidth; calS.ih=im.naturalHeight; calS.pts=[];
-    $('calCanvasWrap').classList.add('show'); URL.revokeObjectURL(url);
-    requestAnimationFrame(()=>{ calResize(); calFit(); calUpdateZoom(); calUpdateSpan(); }); };
-  im.onerror=()=>{ toast(t('toast_could_not_read_image')); URL.revokeObjectURL(url); };
-  im.src=url;
+  const fi=file?fmtIssue(file):'other';
+  if(fi&&fi!=='heic'){ toast(fmtMsg(file,fi),4000); return; }
+  const pp=readPlanum(file);
+  fitImg(file).then(r=>{
+    if(!r){ toast(fi==='heic'?fmtMsg(file,'heic'):t('toast_could_not_read_image'),4000); return; }
+    const im=r.im; calS.img=im; calS.iw=im.naturalWidth; calS.ih=im.naturalHeight; calS.ds=r.ds; calS.pts=[];
+    if(planumChipOn(calS.pl,$('calDist'))) $('calDist').value='';
+    calS.pl=null; renderCalPlanum();
+    pp.then(pl=>{ if(calS.img!==im) return; const a=planumAssess(pl,{origW:r.w,origH:r.h}); calS.pl=a;
+      if(a&&a.ok) $('calDist').value=String(a.fill); renderCalPlanum(); });
+    $('calCanvasWrap').classList.add('show');
+    if(r.ds<1) toast(t('toast_resized',{mp:Math.round(r.mp/1e6)}),3500);
+    requestAnimationFrame(()=>{ calResize(); calFit(); calUpdateZoom(); calUpdateSpan(); });
+  });
 }
 function calAddShot(){
   const d=parseFloat($('calDist').value), w=parseFloat($('calWidth').value);
@@ -7317,7 +7569,7 @@ function calAddShot(){
   if(!(r>0)){ toast(t('toast_span_zero')); return; }
   if(calS.shots.length>=5){ toast(t('toast_max_5_shots')); return; }
   calS.shots.push({d,w,span:+span.toFixed(2),r});
-  calS.pts=[]; $('calDist').value=''; $('calWidth').value='';
+  calS.pts=[]; $('calDist').value=''; $('calWidth').value=''; calS.pl=null; renderCalPlanum();
   calRender(); calUpdateSpan(); renderCalShots();
   toast(t('toast_shot_added'));
 }
@@ -7356,7 +7608,7 @@ function calSaveCam(){
 }
 function calResetShots(){
   calS.shots=[]; calS.editId=null; calS.pts=[]; $('calName').value=''; $('calCamNote').value='';
-  $('calDist').value=''; $('calWidth').value=''; calMsg('',true); renderCalShots(); calRender(); calUpdateSpan();
+  $('calDist').value=''; $('calWidth').value=''; calS.pl=null; renderCalPlanum(); calMsg('',true); renderCalShots(); calRender(); calUpdateSpan();
 }
 function onCalCamSelect(){
   const id=$('calCamSelect').value, cam=camById(id);
@@ -7401,7 +7653,7 @@ $('measclose').onclick=closeMArea;
 $('meascams').onclick=()=>openCal(false);
 // scale modal
 $('scaleCam').onchange=updateScaleReadout;
-$('scaleDist').addEventListener('input',updateScaleReadout);
+$('scaleDist').addEventListener('input',()=>{ scaleDistEdited=true; updateScaleReadout(); renderScalePlanum(); });
 $('scaleCancel').onclick=()=>hideOverlay('scaleOverlay');
 $('scaleOk').onclick=applyScale;
 $('scaleCalib').onclick=()=>{ hideOverlay('scaleOverlay'); openCal(true); };
@@ -7410,6 +7662,7 @@ $('scaleDist').addEventListener('keydown',e=>{ if(e.key==='Enter')applyScale(); 
 $('calClose').onclick=closeCal;
 $('calOverlay').addEventListener('click',e=>{ if(e.target.id==='calOverlay')closeCal(); });
 $('calLoad').onclick=()=>$('calFile').click();
+$('calDist').addEventListener('input',renderCalPlanum);
 $('calFile').onchange=e=>{ if(e.target.files[0])calLoadImage(e.target.files[0]); e.target.value=''; };
 $('calAdd').onclick=calAddShot;
 $('calClear').onclick=()=>{ calS.pts=[]; calRender(); calUpdateSpan(); };
@@ -7786,7 +8039,7 @@ function SCH_HEAD(){ return '<thead><tr><th style="width:11mm">'+t('col_item')+'
 // one printed row's cells, in setup order; the group sub-line only where asked
 function colCells(x,withGrp){ return visCols().map(k=>'<td>'+(k==='cs'?csTd(x.cs):
   esc(x[k]||'')+(k==='def'&&withGrp&&rcSec('grp')&&x.grp?'<br><span style="color:#666;font-size:7.5pt">'+esc(x.grp)+'</span>':''))+'</td>').join(''); }
-const MARKUP_VER='1.5.10';
+const MARKUP_VER='1.6.0';
 const MARKUP_URL='volkov596.github.io/markup/';
 
 function newPage(cls){
